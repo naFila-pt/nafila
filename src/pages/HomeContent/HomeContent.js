@@ -10,7 +10,7 @@ import { Home as HomeIcon } from "@material-ui/icons";
 
 import authentication from "../../services/authentication";
 
-import EmptyState from "../EmptyState";
+import EmptyState from "../../components/EmptyState";
 
 class HomeContent extends Component {
   signInWithEmailLink = () => {
