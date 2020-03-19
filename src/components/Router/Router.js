@@ -4,10 +4,9 @@ import PropTypes from "prop-types";
 
 import { BrowserRouter, Switch, Redirect, Route } from "react-router-dom";
 
-import HomeContent from "../HomeContent";
-import AdminContent from "../AdminContent";
-import UserContent from "../UserContent";
-import NotFoundContent from "../NotFoundContent";
+import HomeContent from "../../pages/HomeContent";
+import AdminContent from "../../pages/AdminContent";
+import NotFoundContent from "../../pages/NotFoundContent";
 
 class Router extends Component {
   render() {
@@ -32,10 +31,6 @@ class Router extends Component {
             ) : (
               <Redirect to="/" />
             )}
-          </Route>
-
-          <Route path="/user/:userId">
-            {user ? <UserContent /> : <Redirect to="/" />}
           </Route>
 
           <Route>
