@@ -55,7 +55,7 @@
     ]
   },
   "config": {
-    "title": "Safe queue",
+    "title": "naFila",
     "theme": {
       "primaryColor": "blue",
       "secondaryColor": "red",

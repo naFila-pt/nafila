@@ -25,8 +25,8 @@ jobs:
         node-version: '12.x'
     - run: npm install
     - run: npm run build
-    - uses: w9jds/firebase-action@master
-      with:
-        args: deploy --only hosting --project safequeue
-      env:
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+    # - uses: w9jds/firebase-action@master
+    #   with:
+    #     args: deploy --project safequeue
+    #   env:
+    #     FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
