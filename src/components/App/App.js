@@ -12,7 +12,6 @@ import appearance from "../../services/appearance";
 
 import ErrorBoundary from "../ErrorBoundary";
 import LaunchScreen from "../LaunchScreen";
-import Bar from "../Bar";
 import Router from "../Router";
 import DialogHost from "../DialogHost";
 
@@ -248,8 +247,7 @@ class App extends Component {
       performingAction,
       theme,
       user,
-      userData,
-      roles
+      userData
     } = this.state;
 
     const {
@@ -272,25 +270,7 @@ class App extends Component {
 
           {ready && (
             <>
-              <Router
-                user={user}
-                roles={roles}
-                bar={
-                  <Bar
-                    performingAction={performingAction}
-                    theme={theme}
-                    user={user}
-                    userData={userData}
-                    roles={roles}
-                    onSignUpClick={() => this.openDialog("signUpDialog")}
-                    onSignInClick={() => this.openDialog("signInDialog")}
-                    onAboutClick={() => this.openDialog("aboutDialog")}
-                    onSettingsClick={() => this.openDialog("settingsDialog")}
-                    onSignOutClick={() => this.openDialog("signOutDialog")}
-                  />
-                }
-                openSnackbar={this.openSnackbar}
-              />
+              <Router user={user} />
 
               <DialogHost
                 performingAction={performingAction}
