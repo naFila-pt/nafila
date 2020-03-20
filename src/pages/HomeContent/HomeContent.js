@@ -1,97 +1,42 @@
-import React, { Component } from "react";
-
-import PropTypes from "prop-types";
-
+import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
+import SwipeableViews from "react-swipeable-views";
+import Box from '@material-ui/core/Box';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
-import { auth } from "../../firebase";
+const View = ({ children, handleNextView, disableNavigationNext }) => (
+  <Box display="flex" width={1} height="100%" alignItems="center">
+    <div style={{ flex: 1, textAlign: "center" }}>{children}</div>
+    {!disableNavigationNext && <NavigateNextIcon onClick={handleNextView} />}
+  </Box>
+)
 
-import { Home as HomeIcon } from "@material-ui/icons";
+const HomeContent = () => {
+  const [index, setIndex] = useState(0);
 
-import authentication from "../../services/authentication";
-
-import EmptyState from "../../components/EmptyState";
-
-class HomeContent extends Component {
-  signInWithEmailLink = () => {
-    const { user } = this.props;
-
-    if (user) {
-      return;
-    }
-
-    const emailLink = window.location.href;
-
-    if (!emailLink) {
-      return;
-    }
-
-    if (auth.isSignInWithEmailLink(emailLink)) {
-      let emailAddress = localStorage.getItem("emailAddress");
-
-      if (!emailAddress) {
-        this.props.history.push("/");
-
-        return;
-      }
-
-      authentication
-        .signInWithEmailLink(emailAddress, emailLink)
-        .then(value => {
-          const user = value.user;
-          const displayName = user.displayName;
-          const emailAddress = user.email;
-
-          this.props.openSnackbar(
-            `Signed in as ${displayName || emailAddress}`
-          );
-        })
-        .catch(reason => {
-          const code = reason.code;
-          const message = reason.message;
-
-          switch (code) {
-            case "auth/expired-action-code":
-            case "auth/invalid-email":
-            case "auth/user-disabled":
-              this.props.openSnackbar(message);
-              break;
-
-            default:
-              this.props.openSnackbar(message);
-              return;
-          }
-        })
-        .finally(() => {
-          this.props.history.push("/");
-        });
-    }
-  };
-
-  render() {
-    // Properties
-    const { user } = this.props;
-
-    if (user) {
-      return <EmptyState icon={<HomeIcon />} title="Home" />;
-    }
-
-    return (
-      <EmptyState
-        title="RMUIF"
-        description="Supercharged version of Create React App with all the bells and whistles"
-      />
-    );
+  const handleNextView = () => {
+    setIndex(index + 1)
   }
 
-  componentDidMount() {
-    this.signInWithEmailLink();
-  }
+  return (
+    <SwipeableViews index={index} style={{ height: "100vh" }} containerStyle={{ height: "100vh" }}>
+      <View handleNextView={handleNextView}>
+        na fila. sem fila!
+      </View>
+      <View handleNextView={handleNextView}>
+        procura o codigo na loja
+      </View>
+      <View handleNextView={handleNextView}>
+        insere o código da loja
+      </View>
+      <View handleNextView={handleNextView}>
+        insere email
+      </View>
+      <View handleNextView={handleNextView} disableNavigationNext>
+        status
+      </View>
+    </SwipeableViews>
+  );
 }
-
-HomeContent.propTypes = {
-  // Properties
-  user: PropTypes.object
-};
 
 export default withRouter(HomeContent);
