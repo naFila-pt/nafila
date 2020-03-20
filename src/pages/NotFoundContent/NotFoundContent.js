@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-
 import { FindInPage as FindInPageIcon } from "@material-ui/icons";
-
 import EmptyState from "../../components/EmptyState";
 
 class NotFoundContent extends Component {
