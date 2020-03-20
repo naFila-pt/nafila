@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import SwipeableViews from "react-swipeable-views";
+import { useTranslation } from "react-i18next";
 import Box from '@material-ui/core/Box';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
@@ -13,6 +14,7 @@ const View = ({ children, handleNextView, disableNavigationNext }) => (
 
 const HomeContent = () => {
   const [index, setIndex] = useState(0);
+  const { t } = useTranslation();
 
   const handleNextView = () => {
     setIndex(index + 1)
@@ -21,19 +23,19 @@ const HomeContent = () => {
   return (
     <SwipeableViews index={index} style={{ height: "100vh" }} containerStyle={{ height: "100vh" }}>
       <View handleNextView={handleNextView}>
-        na fila. sem fila!
+        {t("home#intro")}
       </View>
       <View handleNextView={handleNextView}>
-        procura o codigo na loja
+        {t("home#searchStoreCode")}
       </View>
       <View handleNextView={handleNextView}>
-        insere o código da loja
+        {t("home#storeCode")}
       </View>
       <View handleNextView={handleNextView}>
-        insere email
+        {t("home#insertEmail")}
       </View>
       <View handleNextView={handleNextView} disableNavigationNext>
-        status
+        {t("home#status")}
       </View>
     </SwipeableViews>
   );
