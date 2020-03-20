@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "typeface-roboto";
 import "./index.css";
+import "./i18n";
 // import * as Sentry from "@sentry/browser";
 import App from "./components/App";
 import * as serviceWorker from "./serviceWorker";
