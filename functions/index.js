@@ -1,76 +1,231 @@
 const functions = require('firebase-functions').region('europe-west1');
 const admin = require('firebase-admin');
 admin.initializeApp();
+const firestore = admin.firestore()
 
-// Create and Deploy Your First Cloud Functions
-// https://firebase.google.com/docs/functions/write-firebase-functions
 
-//enable CORS
-let onRequest = (cb) => {
-    return functions.https.onRequest((req, res)=>{
-        // Set CORS headers for preflight requests
-        // Allows GETs from origin https://nafila.pt with Authorization header
+//create queue
+exports.createQueue = functions.https.onCall(async (data, context) => {
+    //generates queueId
+    const queueId = fiveRandomChars()
+    //assigns userId as owner_id
+    if(!context.auth || !context.auth.uid) {
+        throw "You need to be logged in to create a queue"
+    }
+
+    //inserts queue
+    const queue = {owner_id:context.auth.uid, name:data.name, remainingTicketsInQueue:0, ticketTopNumber:0}
+    const queueRef = firestore.collection("queues").doc(queueId)
+
+    //updates user
+    const userRef = firestore.collection("users").doc(queue.owner_id)
+    const userDoc = await userRef.get()
+
+    const userData = userDoc.data()
+    if(!userData.queues) userData.queues = []
+    userData.queues.push(queueRef.id);
+    userData.defaultQueueName = queue.name;
     
-        res.set('Access-Control-Allow-Origin', 'https://nafila.pt');
-        res.set('Access-Control-Allow-Credentials', 'true');
-        
-        if (req.method === 'OPTIONS') {
-            // Send response to OPTIONS requests
-            res.set('Access-Control-Allow-Methods', 'GET');
-            res.set('Access-Control-Allow-Headers', '*');
-            res.set('Access-Control-Max-Age', '3600');
-            res.status(204).send('');
-        } else {
-            return cb(req, res)
-        }
-    })
-}
+    //batch commit
+    const batch = firestore.batch()
+    batch.set(queueRef, queue)
+    batch.update(userRef, userData)
+    batch.commit()
+
+    //returns queue object
+    return {queueId, queue};
+
+});
 
 //Delete queue
-exports.deleteQueue = onRequest((request, response) => {
+exports.deleteQueue = functions.https.onCall(async (data, context) => {
     //receives queueId
-    //needs to validate userId ownership of queue
+    let queueRef = firestore.collection("queues").doc(data.queueId)
+    
+    //transaction is cheaper
+    let tickets = await firestore.runTransaction(async function(transaction) {
+        let queueDoc = await transaction.get(queueRef)
+
+        //get queue
+        let queueData = queueDoc.data()
+
+        //needs to validate userId ownership of queue
+        if(queueData.owner_id !== context.auth.uid){
+            throw "Only queue owner can manually add people to the queue"
+        }
+        
+        //get all remaining tickets
+        let queryRef = await transaction.get(queueRef.collection('tickets'))
+
+        //delete queue entirely
+        transaction.delete(queueRef)
+
+        return queryRef.docs
+    })
 
     //notify every remaining person in queue of queue deletion
-    //deletes queue from collection
+    tickets.forEach((t)=>{
+        let ticketData = t.data()
+        if(!!ticketData.email){
+            //TO-DO: send notification email
+        } else if(!!ticketData.phone) {
+            //TO-DO: send notification SMS
+        }
+    })
+
+    return {deletedCount:tickets.length}
 });
 
 //Call next person in queue
-exports.callNextOnQueue = onRequest((request, response) => {
+exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
     //receives queueId
-    //needs to validate userId ownership of queue
+    let queueRef = firestore.collection("queues").doc(data.queueId)
 
-    //move queue to next person
+    //transaction is cheaper
+    let ticketData = await firestore.runTransaction(async function(transaction) {
+        let queueDoc = await transaction.get(queueRef)
 
-    //if email-based
-        //notify email
-    //if SMS-based
-        //notify via SMS
+        //get queue
+        let queueData = queueDoc.data()
+
+        //needs to validate userId ownership of queue
+        if(queueData.owner_id !== context.auth.uid){
+            throw "Only queue owner can manually add people to the queue"
+        }
+        
+        //get next ticket
+        let querySnap = await transaction.get(queueRef.collection('tickets').orderBy("number").limit(1))
+
+        //in case there is no ticket left
+        if(querySnap.empty){
+            throw "There are no active tickets in the queue"
+        }
+
+        let ticketDoc = querySnap.docs[0]
+        return await removeTicket(transaction, ticketDoc.ref, queueRef, queueData)
+        
+    })
+
+    if(!!ticketData.email){
+        //TO-DO: send notification email
+    } else if(!!ticketData.phone) {
+        //TO-DO: send notification SMS
+    }
+    
+    return ticketData
 });
 
 //Manually add person to queue
-exports.manuallyAddToQueue = onRequest((request, response) => {
+exports.manuallyAddToQueue = functions.https.onCall(async (data, context) => {
     //receives queueId
-    //needs to validate userId ownership of queue
+    let queueRef = firestore.collection("queues").doc(data.queueId)
+    var ticketRef = queueRef.collection('tickets').doc();
 
-    //add person to queue (name, SMS or email based)
-    //if name or SMS based
-        //simply add to queue
-    //if email
-        //addEmailToQueue(email)
+    //create ticket object
+    let ticketData = {}
+    if(!!data.email){
+        ticketData.email = data.email
+    } else if (!!data.phone){
+        ticketData.phone = data.phone
+    } else if (!!data.name){
+        ticketData.name = data.name
+    } else {
+        throw "Unknown ticket type"
+    }
+
+    //transaction is cheaper
+    let result = await firestore.runTransaction(async function(transaction) {
+        let queueDoc = await transaction.get(queueRef)
+
+        //get queue
+        let queueData = queueDoc.data()
+
+        //needs to validate userId ownership of queue
+        if(queueData.owner_id !== context.auth.uid){
+            throw "Only queue owner can manually add people to the queue"
+        }
+        
+        return await addTicket(transaction, ticketRef, ticketData, queueRef, queueData)
+        
+    })
+    
+    if(!!ticketData.email){
+        //TO-DO: send confirmation email
+    }
+
+    return result
     
 });
 
 //Add me to queue
-exports.addMeToQueue = onRequest(async (req, res) => {
-    // [END addMessageTrigger]
-    // Grab the text parameter.
+exports.addMeToQueue = functions.https.onCall(async (data, context) => {
+    //get the queue
+    let queueRef = firestore.collection("queues").doc(data.queueId)
+    let ticketData = {}
+    if(!data.email){
+        throw "Missing email"
+    }
+    ticketData.email = data.email
 
-    //context.auth - auth details
-    const original = req.body.data.text;
-    // Push the new message into Cloud Firestore using the Firebase Admin SDK.
-    const writeResult = await admin.firestore().collection('messages').add({original: original});
-    // Send back a message that we've succesfully written the message
-    res.json({result: `Message with ID: ${writeResult.id} added.`});
-    // [END adminSdkAdd]
+    var ticketRef = queueRef.collection('tickets').doc();
+
+    //transaction is cheaper
+    let result = await firestore.runTransaction(async function(transaction) {
+        let queueDoc = await transaction.get(queueRef)
+        let queueData = queueDoc.data()
+        return await addTicket(transaction, ticketRef, ticketData, queueRef, queueData)
+    })
+    
+    //TO-DO: send confirmation email
+
+    return result
 });
+
+//Remove me from queue
+exports.removeMeFromQueue = functions.https.onCall(async (data, context)=>{
+    //get the queue
+    let queueRef = firestore.collection("queues").doc(data.queueId)
+    //get the ticket
+    let ticketRef = queueRef.collection("tickets").doc(data.ticketId)
+
+    //transaction is cheaper
+    let result = await firestore.runTransaction(async function(transaction) {
+        let queueDoc = await transaction.get(queueRef)
+        let queueData = queueDoc.data()
+        return await removeTicket(transaction, ticketRef, queueRef, queueData)
+    })
+
+    return result
+});
+
+async function addTicket(transaction, ticketRef, ticketData, queueRef, queueData){
+
+    
+    let ticketTopNumber = queueData.ticketTopNumber+1
+    let remainingTicketsInQueue = queueData.remainingTicketsInQueue+1
+    ticketData.number = ticketTopNumber
+
+    //set ticket 
+    await transaction.set(ticketRef, ticketData);
+
+    //add ticket to count
+    await transaction.update(queueRef, {ticketTopNumber, remainingTicketsInQueue});
+
+    return {id:ticketRef.id, number:ticketTopNumber, remaining:remainingTicketsInQueue}
+}
+
+async function removeTicket(transaction, ticketRef, queueRef, queueData){
+    let ticketData = (await transaction.get(ticketRef)).data()
+
+    //remove ticket from DB
+    await transaction.delete(ticketRef)
+    //decrease counter
+    let remainingTicketsInQueue = queueData.remainingTicketsInQueue>0 ? queueData.remainingTicketsInQueue-1 : 0;
+    await transaction.update(queueRef, {remainingTicketsInQueue});
+
+    return ticketData
+}
+
+function fiveRandomChars(){
+    return Math.random().toString(36).replace(/[^0-9a-z]/, '').substring(0,5).toUpperCase()
+}
