@@ -8,15 +8,12 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 
-import bg0 from "../../assets/bg/onboarding_1.svg"; // TODO: remove
-
 const useStyles = makeStyles({
   container: {
     position: "relative",
     minWidth: "375px",
     height: "100vh",
     padding: 0,
-    backgroundImage: `url(${bg0})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "0 100%"
@@ -57,7 +54,7 @@ const useStyles = makeStyles({
   },
 });
 
-const OnBoardingLayout = ({ children }) => {
+const OnBoardingLayout = ({ children, bg }) => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
 
@@ -69,7 +66,7 @@ const OnBoardingLayout = ({ children }) => {
   }
 
   return (
-    <Container maxWidth="lg" className={classes.container}>
+    <Container maxWidth="lg" className={classes.container} style={{ backgroundImage: `url(${ bg[activeStep] })`}}>
       <Toolbar className={classes.toolbar}>
         <MenuIcon className={classes.menuIcon} />
         <p style={{ flex: "0.9", visibility: activeStep === 0 ? "hidden" : "visible" }}>na<b>fila</b></p>

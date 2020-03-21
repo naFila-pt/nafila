@@ -5,7 +5,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import OnBoardingLayout from "../../components/OnBoardingLayout";
 import Grid from "@material-ui/core/Grid";
 
-import bg0 from "../../assets/bg/onboarding_1.svg";
+import bg0 from "../../assets/bg/onboarding_0.svg";
+import bg1 from "../../assets/bg/onboarding_1.svg";
+import bg2 from "../../assets/bg/onboarding_2.svg";
+import bg3 from "../../assets/bg/onboarding_3.svg";
 
 import { ReactComponent as Logo } from "../../assets/logo.svg";
 
@@ -24,7 +27,7 @@ const OnBoardingContent = () => {
   const { t } = useTranslation();
 
   return (
-    <OnBoardingLayout>
+    <OnBoardingLayout bg={[bg0, bg1, bg2, bg3]}>
       <Grid container direction="column" className={classes.gridContainer}>
         <div style={{ textAlign: "center" }}><Logo /></div>
         <Grid item className={classes.gridItem}>
