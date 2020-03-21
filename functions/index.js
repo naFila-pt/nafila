@@ -211,7 +211,7 @@ async function addTicket(transaction, ticketRef, ticketData, queueRef, queueData
     //add ticket to count
     await transaction.update(queueRef, {ticketTopNumber, remainingTicketsInQueue});
 
-    return {id:ticketRef.id, number:ticketTopNumber, remaining:remainingTicketsInQueue}
+    return {ticketId:ticketRef.id, ticketNumber:ticketTopNumber, remainingTicketsInQueue:remainingTicketsInQueue}
 }
 
 async function removeTicket(transaction, ticketRef, queueRef, queueData){
