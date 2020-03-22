@@ -34,6 +34,13 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
     batch.update(userRef, userData)
     batch.commit()
 
+    //{{queuePosterUrl}} {{queueName}} {{queueId}}
+    await sendMail(ticketData.email, "d-6ac28f40006c4d178be4e00adae2bcb4", {
+        queueId:queueRef.id,
+        queueName: result.queueName,
+        queuePosterUrl: "https://nafila.pt/cartaz-fila/"+queueRef.id
+    })
+
     //returns queue object
     return {queueId, queue};
 
@@ -84,7 +91,7 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
     let queueRef = firestore.collection("queues").doc(data.queueId)
 
     //transaction is cheaper
-    let ticketData = await firestore.runTransaction(async function(transaction) {
+    let result = await firestore.runTransaction(async function(transaction) {
         let queueDoc = await transaction.get(queueRef)
 
         //get queue
@@ -104,17 +111,27 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
         }
 
         let ticketDoc = querySnap.docs[0]
-        return await removeTicket(transaction, ticketDoc.ref, queueRef, queueData)
+        return {
+            ticket: await removeTicket(transaction, ticketDoc.ref, queueRef, queueData),
+            queue: queueData
+        }
         
     })
 
-    if(!!ticketData.email){
-        //TO-DO: send notification email
-    } else if(!!ticketData.phone) {
+    if(!!result.ticket.email){
+        //send notification email
+        
+        //{{queueName}} {{queueId}} {{ticketNumber}}
+        await sendMail(result.ticket.email, "d-d5c90252570f4486a89e155762824850", {
+            ticketNumber: result.ticket.number,
+            queueId: queueRef.id,
+            queueName: result.queue.name
+        })
+    } else if(!!result.ticket.phone) {
         //TO-DO: send notification SMS
     }
     
-    return ticketData
+    return result.ticket
 });
 
 //Manually add person to queue
