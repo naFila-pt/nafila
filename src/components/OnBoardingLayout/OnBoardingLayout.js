@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Toolbar from '@material-ui/core/Toolbar';
+import Grid from "@material-ui/core/Grid";
 import MobileStepper from "@material-ui/core/MobileStepper";
 import Button from "@material-ui/core/Button";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -38,7 +40,7 @@ const useStyles = makeStyles({
   },
   stepper: {
     flexGrow: 1,
-    position: "absolute",
+    position: "static",
     backgroundColor: "#8464AC",
     height: "80px"
   },
@@ -54,9 +56,10 @@ const useStyles = makeStyles({
   },
 });
 
-const OnBoardingLayout = ({ children, bg }) => {
+const OnBoardingLayout = ({ children, bg, endOnBoarding }) => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
+  const { t } = useTranslation();
 
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1)
@@ -69,25 +72,32 @@ const OnBoardingLayout = ({ children, bg }) => {
     <Container maxWidth="lg" className={classes.container} style={{ backgroundImage: `url(${ bg[activeStep] })`}}>
       <Toolbar className={classes.toolbar}>
         <MenuIcon className={classes.menuIcon} />
-        <p style={{ flex: "0.9", visibility: activeStep === 0 ? "hidden" : "visible" }}>na<b>fila</b></p>
+        <p style={{ flex: "0.9", visibility: activeStep === 0 ? "hidden" : "visible" }} dangerouslySetInnerHTML={{ __html: t('appTitle') }} />
       </Toolbar>
-      {children}
-      <MobileStepper
-        variant="dots"
-        steps={4}
-        activeStep={activeStep}
-        classes={{ root: classes.stepper, dot: classes.stepperDot, dotActive: classes.stepperDotActive }}
-        backButton={
-          <Button size="small" classes={{ label: classes.stepperArrows }} onClick={handleBack} disabled={activeStep === 0} style={{ visibility: activeStep === 0 ? "hidden" : "visible" }}>
-            <ArrowBackIcon />
-          </Button>
-        }
-        nextButton={
-          <Button size="small" classes={{ label: classes.stepperArrows }} onClick={handleNext} disabled={activeStep === 5} style={{ visibility: activeStep === 3 ? "hidden" : "visible" }}>
-            <ArrowForwardIcon />
-          </Button>
-        }
-      />
+      {children[activeStep]}
+      <Grid container style={{ position: 'absolute', bottom: 0 }}>
+        <Grid item direction="column" style={{ flex: 1, textAlign: 'right', marginRight: '1em', visibility: activeStep === 3 ? "hidden" : "visible" }}>
+          <Button onClick={endOnBoarding}>Saltar</Button>
+        </Grid>
+        <Grid item style={{ width: "100%" }}>
+          <MobileStepper
+            variant="dots"
+            steps={4}
+            activeStep={activeStep}
+            classes={{ root: classes.stepper, dot: classes.stepperDot, dotActive: classes.stepperDotActive }}
+            backButton={
+              <Button size="small" classes={{ label: classes.stepperArrows }} onClick={handleBack} disabled={activeStep === 0} style={{ visibility: activeStep === 0 ? "hidden" : "visible" }}>
+                <ArrowBackIcon />
+              </Button>
+            }
+            nextButton={
+              <Button size="small" classes={{ label: classes.stepperArrows }} onClick={handleNext} disabled={activeStep === 5} style={{ visibility: activeStep === 3 ? "hidden" : "visible" }}>
+                <ArrowForwardIcon />
+              </Button>
+            }
+          />
+        </Grid>
+      </Grid>
     </Container>
   );
 }
