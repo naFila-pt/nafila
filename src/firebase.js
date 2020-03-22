@@ -27,10 +27,9 @@ export const functions = firebase.app().functions('europe-west1');
 export const performance = firebase.performance();
 
 
-//var functions = firebase.functions('europe-west1')
-//functions.useFunctionsEmulator('http://localhost:5001')
 
-(async function(){
-  var testSendMail = functions.httpsCallable('testSendMail'); 
-  console.log('testSendMail', await testSendMail())
-})()
+//functions.useFunctionsEmulator('http://localhost:5001')
+// (async function(){
+//   var testSendMail = functions.httpsCallable('testSendMail'); 
+//   console.log('testSendMail', await testSendMail())
+// })()
