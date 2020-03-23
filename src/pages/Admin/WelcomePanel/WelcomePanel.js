@@ -49,7 +49,7 @@ function WelcomePanel() {
       />
 
       <S.ButtonsContainer>
-        <Button>
+        <Button forward>
           <Link to={ADMIN_LOGIN_PATH} style={{ color: WHITE_COLOR, textDecoration: 'none' }}>
             {t('admin#intro_login')}
           </Link>
@@ -57,7 +57,7 @@ function WelcomePanel() {
 
         <br />
 
-        <Button type="HOLLOW">
+        <Button variant="secondary" forward>
           <Link to={ADMIN_SIGNUP_PATH} style={{ color: PRIMARY_COLOR, textDecoration: 'none' }}>
             {t('admin#intro_signup')}
           </Link>

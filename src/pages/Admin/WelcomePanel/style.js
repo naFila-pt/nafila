@@ -2,17 +2,15 @@ import styled from 'styled-components'
 
 export const LogoContainer = styled.div`
   text-align: center;
-  margin: 80px 0 0;
+  padding: 80px 0 0;
 `
 
 export const ButtonsContainer = styled.div`
   position: absolute;
   bottom: 5vh;
-  width: 90%;
-  margin: 0 5%;
+  width: 100%;
 
-  * {
-    font-size: 20px;
-    font-weight: 400;
+  .MuiButton-root {
+    margin-bottom: 20px;
   }
 `
