@@ -26,7 +26,7 @@ i18n
           "onboarding#insertEmail_button": "Entrar na<b>fila</b>",
 
           "home#insertCode_title": "Insere o código da tua loja",
-          "home#insertCode_inputPlaceholder": "Código nafila da loja",
+          "home#insertCode_inputPlaceholder": "Código naFila da loja",
           "home#insertCode_button": "entrar na<b>fila</b>",
           "home#ticket_store": "Loja",
           "home#ticket_current": "Agora",
