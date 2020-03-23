@@ -34,7 +34,7 @@ i18n
           "home#ticket_button": "Tirar senha",
           "home#notification_description": "Insere o teu email para receberes a <b>notificação</b>",
           "home#notification_inputPlaceholder": "Email",
-          "home#notification_description": "<b>Ao carregar em \"Continuar\"</b>, confirmas que leste e entendeste os <u>termos e condições da proteção de dados</u>",
+          "home#notification_terms": "<b>Ao carregar em \"Continuar\"</b>, confirmas que leste e entendeste os <u>termos e condições da proteção de dados</u>",
           "home#notification_button": "Continuar",
           "home#end_title": "Obrigado!",
           "home#end_description": "Vamos avisar-te quando estiver a chegar a tua vez.",

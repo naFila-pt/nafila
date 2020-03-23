@@ -66,7 +66,7 @@ const HomeContent = () => {
           <EmailNotification />
           <Typography variant="h4" dangerouslySetInnerHTML={{ __html: t('home#notification_description') }} />
           <Input placeholder={t('home#notification_inputPlaceholder')} style={{ width: '100%' }} />
-          <Typography variant="h5" dangerouslySetInnerHTML={{ __html: t('home#notification_description') }} />
+          <Typography variant="h5" dangerouslySetInnerHTML={{ __html: t('home#notification_terms') }} />
           <Button forward onClick={handleNextButton}>{t('home#notification_button')}</Button>
         </Grid>
       </Grid>
