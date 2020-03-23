@@ -6,9 +6,10 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import OnBoardingContent from "../../pages/OnBoardingContent";
 import HomeContent from "../../pages/HomeContent";
-import AdminContent from "../../pages/AdminContent";
-import PrintCodeContent from "../../pages/PrintCodeContent";
+import Admin from "../../pages/Admin";
+// import PrintCodeContent from "../../pages/PrintCodeContent";
 import NotFoundContent from "../../pages/NotFoundContent";
+import { ADMIN_WELCOME_PATH } from '../../constants/RoutesConstants'
 
 class Router extends Component {
   render() {
@@ -24,13 +25,11 @@ class Router extends Component {
             {shouldSkipOnBoarding ? <HomeContent user={user} /> : <OnBoardingContent />}
           </Route>
 
-          <Route path="/admin/code">
+          {/* <Route path="/admin/code">
             <PrintCodeContent />
-          </Route>
+          </Route> */}
 
-          <Route path="/admin">
-            <AdminContent />
-          </Route>
+          <Route path={ADMIN_WELCOME_PATH} component={Admin.WelcomePanel} />
 
           <Route>
             <NotFoundContent />
