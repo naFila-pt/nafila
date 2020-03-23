@@ -1,4 +1,6 @@
-const functions = require('firebase-functions').region('europe-west1');
+const functionsMain = require('firebase-functions');
+const config = functionsMain.config();
+const functions = functionsMain.region('europe-west1');
 const admin = require('firebase-admin');
 admin.initializeApp();
 const firestore = admin.firestore()
@@ -31,6 +33,13 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
     batch.set(queueRef, queue)
     batch.update(userRef, userData)
     batch.commit()
+
+    //{{queuePosterUrl}} {{queueName}} {{queueId}}
+    await sendMail(ticketData.email, "d-6ac28f40006c4d178be4e00adae2bcb4", {
+        queueId:queueRef.id,
+        queueName: result.queueName,
+        queuePosterUrl: "https://nafila.pt/cartaz-fila/"+queueRef.id
+    })
 
     //returns queue object
     return {queueId, queue};
@@ -82,7 +91,7 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
     let queueRef = firestore.collection("queues").doc(data.queueId)
 
     //transaction is cheaper
-    let ticketData = await firestore.runTransaction(async function(transaction) {
+    let result = await firestore.runTransaction(async function(transaction) {
         let queueDoc = await transaction.get(queueRef)
 
         //get queue
@@ -102,17 +111,27 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
         }
 
         let ticketDoc = querySnap.docs[0]
-        return await removeTicket(transaction, ticketDoc.ref, queueRef, queueData)
+        return {
+            ticket: await removeTicket(transaction, ticketDoc.ref, queueRef, queueData),
+            queue: queueData
+        }
         
     })
 
-    if(!!ticketData.email){
-        //TO-DO: send notification email
-    } else if(!!ticketData.phone) {
+    if(!!result.ticket.email){
+        //send notification email
+        
+        //{{queueName}} {{queueId}} {{ticketNumber}}
+        await sendMail(result.ticket.email, "d-d5c90252570f4486a89e155762824850", {
+            ticketNumber: result.ticket.number,
+            queueId: queueRef.id,
+            queueName: result.queue.name
+        })
+    } else if(!!result.ticket.phone) {
         //TO-DO: send notification SMS
     }
     
-    return ticketData
+    return result.ticket
 });
 
 //Manually add person to queue
@@ -145,15 +164,24 @@ exports.manuallyAddToQueue = functions.https.onCall(async (data, context) => {
             throw "Only queue owner can manually add people to the queue"
         }
         
-        return await addTicket(transaction, ticketRef, ticketData, queueRef, queueData)
+        return {
+            ticket: await addTicket(transaction, ticketRef, ticketData, queueRef, queueData),
+            queueName: queueData.name
+        }
         
     })
     
     if(!!ticketData.email){
-        //TO-DO: send confirmation email
+        //{{exitQueueUrl}} {{queueName}} {{queueId}} {{ticketNumber}}
+        await sendMail(ticketData.email, "d-e1953f198a92449f8fb3a833532cdc21", {
+            ticketNumber: result.ticket.ticketNumber,
+            queueId:queueRef.id,
+            queueName: result.queueName,
+            exitQueueUrl: "https://nafila.pt/sair/"+queueRef.id+'/'+ticketRef.id
+        })
     }
 
-    return result
+    return result.ticket
     
 });
 
@@ -173,12 +201,23 @@ exports.addMeToQueue = functions.https.onCall(async (data, context) => {
     let result = await firestore.runTransaction(async function(transaction) {
         let queueDoc = await transaction.get(queueRef)
         let queueData = queueDoc.data()
-        return await addTicket(transaction, ticketRef, ticketData, queueRef, queueData)
+        return {
+            ticket: await addTicket(transaction, ticketRef, ticketData, queueRef, queueData),
+            queueName: queueData.name
+        }
     })
     
-    //TO-DO: send confirmation email
+    //send confirmation email
 
-    return result
+    //{{exitQueueUrl}} {{queueName}} {{queueId}} {{ticketNumber}}
+    await sendMail(ticketData.email, "d-e1953f198a92449f8fb3a833532cdc21", {
+        ticketNumber: result.ticket.ticketNumber,
+        queueId:data.queueId,
+        queueName: result.queueName,
+        exitQueueUrl: "https://nafila.pt/sair/"+data.queueId+'/'+ticketRef.id
+    })
+
+    return result.ticket
 });
 
 //Remove me from queue
@@ -228,4 +267,21 @@ async function removeTicket(transaction, ticketRef, queueRef, queueData){
 
 function fiveRandomChars(){
     return Math.random().toString(36).replace(/[^0-9a-z]/, '').substring(0,5).toUpperCase()
+}
+
+async function sendMail(to, templateId, dynamic_template_data){
+    let sendGridKey = config.sendgrid.key
+    const sgMail = require('@sendgrid/mail');
+
+    sgMail.setApiKey(sendGridKey);
+
+    const msg = {
+        to,
+        from: 'no-reply@nafila.pt',
+        templateId,
+        dynamic_template_data
+    };
+
+
+    sgMail.send(msg);
 }
