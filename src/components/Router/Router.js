@@ -7,7 +7,6 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import OnBoardingContent from "../../pages/OnBoardingContent";
 import HomeContent from "../../pages/HomeContent";
 import AdminContent from "../../pages/AdminContent";
-import PrintCodeContent from "../../pages/PrintCodeContent";
 import NotFoundContent from "../../pages/NotFoundContent";
 
 class Router extends Component {
@@ -22,10 +21,6 @@ class Router extends Component {
         <Switch>
           <Route path="/" exact>
             {shouldSkipOnBoarding ? <HomeContent user={user} /> : <OnBoardingContent />}
-          </Route>
-
-          <Route path="/admin/code">
-            <PrintCodeContent />
           </Route>
 
           <Route path="/admin">
