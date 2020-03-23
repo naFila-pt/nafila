@@ -39,8 +39,13 @@ i18n
           "home#end_title": "Obrigado!",
           "home#end_description": "Vamos avisar-te quando estiver a chegar a tua vez.",
           "home#end_staysafe": "Evita o contacto. <b>Protege a tua saúde e a dos outros.</b>",
-          "home#end_closeWindow": "Podes fechar o ecrã"
+          "home#end_closeWindow": "Podes fechar o ecrã",
 
+          // Admin translations
+          "admin#intro_welcome": "Bem vindo!",
+          "admin#intro_pitch": "na<b>fila</b>. Sem filas.",
+          "admin#intro_login": "Entrar",
+          "admin#intro_signup": "Registo de Loja",
         }
       }
     },
