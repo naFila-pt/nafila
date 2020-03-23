@@ -25,11 +25,22 @@ i18n
           "onboarding#insertEmail_notification": "<b>E já está!</b><br/>Recebes um aviso quando a tua vez estiver a chegar.",
           "onboarding#insertEmail_button": "Entrar na<b>fila</b>",
 
-          "home#intro": "na fila. sem fila!",
-          "home#searchStoreCode": "procura o codigo na loja",
-          "home#storeCode": "insere o código da loja",
-          "home#insertEmail": "insere email",
-          "home#status": "status",
+          "home#insertCode_title": "Insere o código da tua loja",
+          "home#insertCode_inputPlaceholder": "Código nafila da loja",
+          "home#insertCode_button": "entrar na<b>fila</b>",
+          "home#ticket_store": "Loja",
+          "home#ticket_current": "Agora",
+          "home#ticket_queue": "na<b>fila</b>",
+          "home#ticket_button": "Tirar senha",
+          "home#notification_description": "Insere o teu email para receberes a <b>notificação</b>",
+          "home#notification_inputPlaceholder": "Email",
+          "home#notification_description": "<b>Ao carregar em \"Continuar\"</b>, confirmas que leste e entendeste os <u>termos e condições da proteção de dados</u>",
+          "home#notification_button": "Continuar",
+          "home#end_title": "Obrigado!",
+          "home#end_description": "Vamos avisar-te quando estiver a chegar a tua vez.",
+          "home#end_staysafe": "Evita o contacto. <b>Protege a tua saúde e a dos outros.</b>",
+          "home#end_closeWindow": "Podes fechar o ecrã"
+
         }
       }
     },

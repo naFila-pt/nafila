@@ -6,7 +6,6 @@ import OnBoardingLayout from "../../components/OnBoardingLayout";
 import Grid from "@material-ui/core/Grid";
 import Typography from '@material-ui/core/Typography';
 import Button from "../../components/Button";
-import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 
 import bgIntro from "../../assets/bg/user_intro.svg";
 import bgStore from "../../assets/bg/user_store.svg";
