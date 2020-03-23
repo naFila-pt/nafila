@@ -6,8 +6,9 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import OnBoardingContent from "../../pages/OnBoardingContent";
 import HomeContent from "../../pages/HomeContent";
-import AdminContent from "../../pages/AdminContent";
+import Admin from "../../pages/Admin";
 import NotFoundContent from "../../pages/NotFoundContent";
+import { ADMIN_WELCOME_PATH } from '../../constants/RoutesConstants'
 
 class Router extends Component {
   render() {
@@ -23,9 +24,7 @@ class Router extends Component {
             {shouldSkipOnBoarding ? <HomeContent user={user} /> : <OnBoardingContent />}
           </Route>
 
-          <Route path="/admin">
-            <AdminContent />
-          </Route>
+          <Route path={ADMIN_WELCOME_PATH} component={Admin.WelcomePanel} />
 
           <Route>
             <NotFoundContent />
