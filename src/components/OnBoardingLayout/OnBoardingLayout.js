@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+import Box from "@material-ui/core/Box";
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from "@material-ui/core/Grid";
 import MobileStepper from "@material-ui/core/MobileStepper";
@@ -15,7 +15,7 @@ const useStyles = makeStyles({
   container: {
     position: "relative",
     minWidth: "375px",
-    height: "100vh",
+    height: "100%",
     padding: 0,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
@@ -66,7 +66,7 @@ const OnBoardingLayout = ({ children, bg, endOnBoarding }) => {
   }
 
   return (
-    <Container maxWidth="lg" className={classes.container} style={{ backgroundImage: `url(${ bg[activeStep] })`}}>
+    <Box className={classes.container} style={{ backgroundImage: `url(${ bg[activeStep] })`}}>
       <Grid container>
         <Grid container direction="column">
           <Toolbar className={classes.toolbar}>
@@ -99,7 +99,7 @@ const OnBoardingLayout = ({ children, bg, endOnBoarding }) => {
           </Grid>
         </Grid>
       </Grid>
-    </Container>
+    </Box>
   );
 }
 
