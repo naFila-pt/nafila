@@ -1,11 +1,13 @@
 import React from 'react'
 import { Box } from '@material-ui/core'
-import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 
-const Logo = styled.div`
-  font-size: 32px;
-  padding: 35px 0;
+import LogoImage from '../../../assets/logo-mini.svg'
+
+const Logo = styled.img`
+  padding: 50px 0;
+  display: block;
+  margin: 0 auto;
 `
 
 function Layout({ children, bg, hideToolbar }) {
@@ -17,11 +19,10 @@ function Layout({ children, bg, hideToolbar }) {
       textAlign: 'center'
     }
   }
-  const { t } = useTranslation()
 
   return (
     <Box {...boxProps}>
-      {!hideToolbar && <Logo dangerouslySetInnerHTML={{ __html: t('appTitle') }} />}
+      {!hideToolbar && <Logo src={LogoImage} />}
       {children}
     </Box>
   )
