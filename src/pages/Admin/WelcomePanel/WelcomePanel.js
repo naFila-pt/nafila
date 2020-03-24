@@ -1,24 +1,17 @@
 import React from 'react'
-import { Box, Typography } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 import Button from '../../../components/Button'
 import Background from '../../../assets/bg/user_intro.svg'
 import Logo from '../../../assets/logo.svg'
+import Layout from '../Layout'
 import { PRIMARY_COLOR, WHITE_COLOR } from '../../../constants/ColorConstants'
 import { ADMIN_LOGIN_PATH, ADMIN_SIGNUP_PATH } from '../../../constants/RoutesConstants'
 
 import * as S from './style'
 
-const boxProps = {
-  width: 1,
-  height: '100%',
-  style: {
-    background: `url(${Background})`,
-    textAlign: 'center'
-  }
-}
 const typographyStyles = {
   MAIN: {
     color: PRIMARY_COLOR,
@@ -33,7 +26,7 @@ function WelcomePanel() {
   const { t } = useTranslation()
 
   return (
-    <Box {...boxProps}>
+    <Layout bg={Background} hideToolbar>
       <S.LogoContainer>
         <img src={Logo} alt="nafila logo" />
       </S.LogoContainer>
@@ -63,7 +56,7 @@ function WelcomePanel() {
           </Link>
         </Button>
       </S.ButtonsContainer>
-    </Box>
+    </Layout>
   )
 }
 
