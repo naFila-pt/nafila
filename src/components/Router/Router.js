@@ -8,7 +8,7 @@ import OnBoardingContent from "../../pages/OnBoardingContent";
 import HomeContent from "../../pages/HomeContent";
 import Admin from "../../pages/Admin";
 import NotFoundContent from "../../pages/NotFoundContent";
-import { ADMIN_WELCOME_PATH } from '../../constants/RoutesConstants'
+import { ADMIN_WELCOME_PATH, ADMIN_SIGNUP_PATH } from '../../constants/RoutesConstants'
 
 class Router extends Component {
   render() {
@@ -24,7 +24,8 @@ class Router extends Component {
             {shouldSkipOnBoarding ? <HomeContent user={user} /> : <OnBoardingContent />}
           </Route>
 
-          <Route path={ADMIN_WELCOME_PATH} component={Admin.WelcomePanel} />
+          <Route path={ADMIN_WELCOME_PATH} component={Admin.WelcomePanel} exact />
+          <Route path={ADMIN_SIGNUP_PATH} component={Admin.SignUp} exact />
 
           <Route>
             <NotFoundContent />
