@@ -15,7 +15,10 @@ const boxProps = {
   width: 1,
   height: '100%',
   style: {
-    background: `url(${Background})`,
+    backgroundImage: `url(${Background})`,
+    backgroundSize: 'cover',
+    backgroundPosition: '0 100%',
+    backgroundRepeat: 'no-repeat',
     textAlign: 'center'
   }
 }

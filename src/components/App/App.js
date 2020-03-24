@@ -4,7 +4,7 @@ import readingTime from "reading-time";
 
 import { MuiThemeProvider } from "@material-ui/core/styles";
 
-import { CssBaseline, Button, Snackbar } from "@material-ui/core";
+import { CssBaseline, Grid, Button, Snackbar } from "@material-ui/core";
 
 import { auth, firestore } from "../../firebase";
 import authentication from "../../services/authentication";
@@ -270,7 +270,11 @@ class App extends Component {
 
           {ready && (
             <>
-              <Router user={user} />
+              <Grid container alignItems="center" justify="center" style={{ height: "100vh" }}>
+                <Grid item style={{ position: "relative", width: "100%", height: "100%", maxWidth: theme.breakpoints.values.sm, maxHeight: 900 }}>
+                  <Router user={user} />
+                </Grid>
+              </Grid>
 
               <DialogHost
                 performingAction={performingAction}

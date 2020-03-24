@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+import Box from "@material-ui/core/Box";
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from "@material-ui/core/Grid";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -11,7 +11,7 @@ const useStyles = makeStyles({
   container: {
     position: "relative",
     minWidth: "375px",
-    height: "100vh",
+    height: "100%",
     padding: 0,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
@@ -32,7 +32,7 @@ const OnBoardingLayout = ({ children, bg, activeStep }) => {
   const bgUrl = bg[activeStep] ? bg[activeStep] : bg[bg.length - 1]
 
   return (
-    <Container maxWidth="lg" className={classes.container} style={{ backgroundImage: `url(${ bgUrl })`}}>
+    <Box className={classes.container} style={{ backgroundImage: `url(${ bgUrl })`}}>
       <Grid container>
         <Grid container direction="column">
           <Toolbar className={classes.toolbar}>
@@ -42,7 +42,7 @@ const OnBoardingLayout = ({ children, bg, activeStep }) => {
         </Grid>
         {children[activeStep]}
       </Grid>
-    </Container>
+    </Box>
   );
 }
 
