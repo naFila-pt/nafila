@@ -59,6 +59,12 @@ i18n
           "admin#signup_register": "Registar",
           "admin#signup_successTitle": "O seu registo foi efetuado com sucesso!",
           "admin#signup_successHeroText": "Verifique a sua caixa de email e confirme o registo, para poder começar a usar o na<b>fila</b>.",
+
+          // Admin Login
+          "admin#login_title": "Introduza os dados da Loja",
+          "admin#login_email": "Email do Lojista",
+          "admin#login_password": "Password",
+          "admin#login_recover_password": "recuperar password",
         }
       }
     },

@@ -8,7 +8,7 @@ import OnBoardingContent from "../../pages/OnBoardingContent";
 import HomeContent from "../../pages/HomeContent";
 import Admin from "../../pages/Admin";
 import NotFoundContent from "../../pages/NotFoundContent";
-import { ADMIN_WELCOME_PATH, ADMIN_SIGNUP_PATH } from '../../constants/RoutesConstants'
+import { ADMIN_WELCOME_PATH, ADMIN_SIGNUP_PATH, ADMIN_LOGIN_PATH } from '../../constants/RoutesConstants'
 
 class Router extends Component {
   render() {
@@ -26,6 +26,7 @@ class Router extends Component {
 
           <Route path={ADMIN_WELCOME_PATH} component={Admin.WelcomePanel} exact />
           <Route path={ADMIN_SIGNUP_PATH} component={Admin.SignUp} exact />
+          <Route path={ADMIN_LOGIN_PATH} component={Admin.Login} exact />
 
           <Route>
             <NotFoundContent />
