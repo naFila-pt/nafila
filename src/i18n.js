@@ -10,6 +10,7 @@ i18n
       en: {
         translation: {
           "appTitle": "na<b>fila</b>",
+          "global#return_button": "Retroceder",
 
           "onboarding#intro_welcome": "Bem Vindo!",
           "onboarding#intro_pitch": "na<b>fila</b>. Sem filas.",
@@ -46,6 +47,18 @@ i18n
           "admin#intro_pitch": "na<b>fila</b>. Sem filas.",
           "admin#intro_login": "Entrar",
           "admin#intro_signup": "Registo de Loja",
+
+          // Admin SignUp
+          "admin#signup_weakPassword": "A password tem que ter mais de 6 caracteres",
+          "admin#signup_emailInUse": "Email já se encontra registrado",
+          "admin#signup_invalidEmail": "O email que inseriu não é válido",
+          "admin#signup_operationNotAllowed": "Operação não permitida",
+          "admin#signup_checkYourEmail": "Aceda ao seu email para verificar a sua conta.",
+          "admin#signup_emailLabel": "Email do Lojista",
+          "admin#signup_passwordLabel": "Password",
+          "admin#signup_register": "Registar",
+          "admin#signup_successTitle": "O seu registo foi efetuado com sucesso!",
+          "admin#signup_successHeroText": "Verifique a sua caixa de email e confirme o registo, para poder começar a usar o na<b>fila</b>.",
         }
       }
     },
