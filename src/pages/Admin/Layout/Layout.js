@@ -16,6 +16,9 @@ function Layout({ children, bg, hideToolbar }) {
     height: 1,
     style: {
       background: `url(${bg})`,
+      backgroundSize: 'cover',
+      backgroundPosition: '0 100%',
+      backgroundRepeat: 'no-repeat',
       textAlign: 'center'
     }
   }
