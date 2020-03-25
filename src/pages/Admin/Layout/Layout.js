@@ -14,6 +14,8 @@ function Layout({ children, bg, hideToolbar }) {
   const boxProps = {
     width: 1,
     height: 1,
+    display: 'flex',
+    flexDirection: 'column',
     style: {
       background: `url(${bg})`,
       backgroundSize: 'cover',

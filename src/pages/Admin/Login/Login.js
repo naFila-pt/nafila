@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-import { Typography } from '@material-ui/core'
+import { Typography, TextField} from '@material-ui/core'
 import Input from '@material-ui/core/Input';
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
@@ -20,25 +20,61 @@ const typographyStyles = {
   }
 }
 
+const buttonStyles = {
+    color: WHITE_COLOR,
+    textDecoration: 'none',
+    background: 'none'
+}
+
+const inputProps = {
+  fullWidth: true,
+  required: true,
+}
+
 function Login() {
   const { t } = useTranslation()
+  const [fields, setFields] = useState()
+
+  const handleChange = ({ target: { name, value } }) => {
+    setFields({
+      ...fields,
+      [name]: value
+    })
+  }
+
   return (
     <Layout bg={LoginBg}>
-        <S.ContentContainer>
+        <S.Form>
             <Typography variant="h3" style={typographyStyles.TITLE}>
               {t("admin#login_title")}
             </Typography>
 
-            <Input placeholder={t('admin#login_email')} style={{ width: '100%' }} />
+            <TextField
+              label={t('admin#login_email')}
+              name="email"
+              onChange={e => handleChange(e)}
+              style={{marginTop: '25px'}}
+              {...inputProps}
+            />
 
-            <Input placeholder={t('admin#login_password')} style={{ width: '100%' }} />
+            <TextField
+              label={t('admin#login_password')}
+              type="password"
+              name="password"
+              onChange={e => handleChange(e)}
+              min="6"
+              style={{marginTop: '25px'}}
+              {...inputProps}
+            />
 
-            <a>{t('admin#login_recover_password')}</a>
+            <S.RecoverLink>
+                {t('admin#login_recover_password')}
+            </S.RecoverLink>
 
-            <Button forward style={{ color: WHITE_COLOR, textDecoration: 'none' }}>
+            <Button forward style={buttonStyles}>
                 {t('admin#intro_login')}
             </Button>
-        </S.ContentContainer>
+        </S.Form>
     </Layout>
   )
 }
