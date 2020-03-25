@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 
-const Button = ({ children, style, variant, forward, backward, onClick, dangerouslySetInnerHTML }) => {
+const Button = ({ children, style, variant, forward, backward, onClick, dangerouslySetInnerHTML, ...rest }) => {
   const styles = {
     base: {
       minWidth: '18em',
@@ -42,7 +42,7 @@ const Button = ({ children, style, variant, forward, backward, onClick, dangerou
 
   return (
     <div style={{ display: 'inline-block', background: '#fff', borderRadius: '2.13em', ...style }}>
-      <MuiButton onClick={onClick} style={variantStyle} disableRipple={variant === 'inactive' ? true : false}>
+      <MuiButton onClick={onClick} style={variantStyle} disableRipple={variant === 'inactive' ? true : false} {...rest}>
         <Grid container style={{ padding: '.4em .5em' }}>
           <ArrowBackIcon style={{ visibility: backward ? 'visible' : 'hidden' }} />
           <Grid item style={{ flex: 1 }}>
