@@ -1,9 +1,16 @@
 const functionsMain = require('firebase-functions');
 const config = functionsMain.config();
-const functions = functionsMain.region('europe-west1');
 const admin = require('firebase-admin');
 admin.initializeApp();
 const firestore = admin.firestore()
+
+const runtimeOpts = {
+    timeoutSeconds: 15,
+    memory: '128MB' //lowest cost possible
+}
+
+//low cost / high perf settings
+const functions = functionsMain.region('europe-west1').unWith(runtimeOpts);
 
 
 //create queue
@@ -35,7 +42,7 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
     batch.commit()
 
     //{{queuePosterUrl}} {{queueName}} {{queueId}}
-    await sendMail(ticketData.email, "d-6ac28f40006c4d178be4e00adae2bcb4", {
+    await sendMail([ticketData.email], "d-6ac28f40006c4d178be4e00adae2bcb4", {
         queueId:queueRef.id,
         queueName: result.queueName,
         queuePosterUrl: "https://nafila.pt/cartaz-fila/"+queueRef.id
@@ -73,14 +80,31 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
     })
 
     //notify every remaining person in queue of queue deletion
+    let emailsToNotify = []
+    let phonesToNotify = []
     tickets.forEach((t)=>{
         let ticketData = t.data()
         if(!!ticketData.email){
-            //TO-DO: send notification email
+            emailToNotify.push(ticketData.email)
         } else if(!!ticketData.phone) {
-            //TO-DO: send notification SMS
+            phonesToNotify.push(ticketData.email)
         }
-    })
+    });
+
+    //notify remaining email users
+    if(emailsToNotify.length){
+        //{{queueName}} {{queueId}}
+        await sendMail(emailsToNotify, "d-b28224dd3dac48388f8e469ed82448a8", {
+            queueId:queueRef.id,
+            queueName: result.queueName
+        })
+    }
+
+    //notify remaining phone users
+    if(phonesToNotify.length){
+        await sendSMS(phonesToNotify, "A fila '"+result.queue.name+"' ("+queueRef.id+") foi fechada pelo administrador da fila. A sua senha foi removida.")
+    }
+
 
     return {deletedCount:tickets.length}
 });
@@ -122,13 +146,14 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
         //send notification email
         
         //{{queueName}} {{queueId}} {{ticketNumber}}
-        await sendMail(result.ticket.email, "d-d5c90252570f4486a89e155762824850", {
+        await sendMail([result.ticket.email], "d-d5c90252570f4486a89e155762824850", {
             ticketNumber: result.ticket.number,
             queueId: queueRef.id,
             queueName: result.queue.name
         })
     } else if(!!result.ticket.phone) {
-        //TO-DO: send notification SMS
+        //send notification SMS
+        await sendSMS([result.ticket.phone], "Encontra-se registado na fila '"+result.queue.name+"' ("+queueRef.id+"). Irà receber uma SMS quando for chamada a sua vez.")
     }
     
     return result.ticket
@@ -173,7 +198,7 @@ exports.manuallyAddToQueue = functions.https.onCall(async (data, context) => {
     
     if(!!ticketData.email){
         //{{exitQueueUrl}} {{queueName}} {{queueId}} {{ticketNumber}}
-        await sendMail(ticketData.email, "d-e1953f198a92449f8fb3a833532cdc21", {
+        await sendMail([ticketData.email], "d-e1953f198a92449f8fb3a833532cdc21", {
             ticketNumber: result.ticket.ticketNumber,
             queueId:queueRef.id,
             queueName: result.queueName,
@@ -210,7 +235,7 @@ exports.addMeToQueue = functions.https.onCall(async (data, context) => {
     //send confirmation email
 
     //{{exitQueueUrl}} {{queueName}} {{queueId}} {{ticketNumber}}
-    await sendMail(ticketData.email, "d-e1953f198a92449f8fb3a833532cdc21", {
+    await sendMail([ticketData.email], "d-e1953f198a92449f8fb3a833532cdc21", {
         ticketNumber: result.ticket.ticketNumber,
         queueId:data.queueId,
         queueName: result.queueName,
@@ -283,5 +308,21 @@ async function sendMail(to, templateId, dynamic_template_data){
     };
 
 
-    sgMail.send(msg);
+    sgMail.sendMultiple(msg);
+}
+
+async function sendSMS(MsisdnList, strMessage){
+    var soap = require('soap');
+    var url = 'https://smspro.nos.pt/smspro/smsprows.asmx?WSDL';
+
+    var args = {
+        TenantName,
+        strUsername,
+        strPassword,
+        MsisdnList,
+        strMessage
+    }
+    soap.createClientAsync(url).then((client) => {
+        return client.SendSMS(args);
+    });
 }
