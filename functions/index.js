@@ -10,7 +10,7 @@ const runtimeOpts = {
 }
 
 //low cost / high perf settings
-const functions = functionsMain.region('europe-west1').unWith(runtimeOpts);
+const functions = functionsMain.region('europe-west1').runWith(runtimeOpts);
 
 
 //create queue
@@ -316,13 +316,13 @@ async function sendSMS(MsisdnList, strMessage){
     var url = 'https://smspro.nos.pt/smspro/smsprows.asmx?WSDL';
 
     var args = {
-        TenantName,
-        strUsername,
-        strPassword,
+        TenantName: config.smspro.tenant,
+        strUsername: config.smspro.username,
+        strPassword: config.smspro.password,
         MsisdnList,
         strMessage
     }
-    soap.createClientAsync(url).then((client) => {
+    return soap.createClientAsync(url).then((client) => {
         return client.SendSMS(args);
     });
 }
