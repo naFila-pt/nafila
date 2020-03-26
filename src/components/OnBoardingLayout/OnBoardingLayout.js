@@ -39,24 +39,30 @@ const useStyles = makeStyles({
   stepper: {
     flexGrow: 1,
     position: "static",
-    backgroundColor: "#8464AC",
+    backgroundColor: "#FFC836",
     height: "80px"
   },
   stepperDot: {
-    backgroundColor: "#fff",
+    backgroundColor: "#4C0788",
     opacity: "0.33"
   },
   stepperDotActive: {
     opacity: "1"
   },
   stepperArrows: {
-    color: "#fff"
+    color: "#4C0788"
   },
 });
 
 const OnBoardingLayout = ({ children, bg, endOnBoarding }) => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
+  const bgUrl = bg[activeStep] ? bg[activeStep] : bg[bg.length - 1]
+  const skipTestColor = [
+    '#4C0788',
+    '#FFFFFF',
+    '#A0A0A0'
+  ]
 
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1)
@@ -66,7 +72,7 @@ const OnBoardingLayout = ({ children, bg, endOnBoarding }) => {
   }
 
   return (
-    <Box className={classes.container} style={{ backgroundImage: `url(${ bg[activeStep] })`}}>
+    <Box className={classes.container} style={{ backgroundImage: `url(${ bgUrl })`}}>
       <Grid container>
         <Grid container direction="column">
           <Toolbar className={classes.toolbar}>
@@ -77,7 +83,7 @@ const OnBoardingLayout = ({ children, bg, endOnBoarding }) => {
         {children[activeStep]}
         <Grid container style={{ position: 'absolute', bottom: 0 }}>
           <Grid container direction="column" alignContent="flex-end" style={{ marginRight: '1.5em', marginBottom: '.5em', visibility: activeStep === 3 ? "hidden" : "visible" }}>
-            <Button onClick={endOnBoarding} style={{ color: '#A0A0A0' }}><b>Saltar</b></Button>
+            <Button onClick={endOnBoarding} style={{ color: skipTestColor[activeStep] }}><b>Saltar</b></Button>
           </Grid>
           <Grid item style={{ width: "100%" }}>
             <MobileStepper

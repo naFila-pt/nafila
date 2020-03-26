@@ -9,7 +9,7 @@ import Input from '@material-ui/core/Input';
 import Button from "../../components/Button";
 
 import bgStore from "../../assets/bg/user_store.svg";
-import bgMain from "../../assets/bg/user_main.svg";
+import bgMain from "../../assets/bg/main.svg";
 
 import { ReactComponent as Logo } from "../../assets/logo.svg";
 import { ReactComponent as Ticket } from "../../assets/icons/ticket.svg";

@@ -25,6 +25,10 @@ const Button = ({ children, style, variant, forward, backward, onClick, dangerou
       border: '1px #4C0788 solid',
       color: '#4C0788',
     },
+    onboarding: {
+      background: '#FFC836',
+      color: 'inherit'
+    },
   }
 
   const variantStyle = {

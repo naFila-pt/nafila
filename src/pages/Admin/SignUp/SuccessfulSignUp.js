@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../Layout'
 import Button from '../../../components/Button'
-import SignUpBg from '../../../assets/bg/user_main.svg'
+import SignUpBg from '../../../assets/bg/main.svg'
 import { ADMIN_LOGIN_PATH } from '../../../constants/RoutesConstants'
 
 const Container = styled.div`

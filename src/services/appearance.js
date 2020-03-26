@@ -186,7 +186,7 @@ const defaultTheme = createMuiTheme({
     },
     h4: {
       fontWeight: 400,
-      fontSize: '1.4em',
+      fontSize: '1.375em',
       lineHeight: '1.35em'
     },
     h5: {

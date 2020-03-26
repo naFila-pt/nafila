@@ -5,7 +5,7 @@ import Input from '@material-ui/core/Input';
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import Button from '../../../components/Button'
-import LoginBg from '../../../assets/bg/user_main.svg'
+import LoginBg from '../../../assets/bg/main.svg'
 import Logo from '../../../assets/logo.svg'
 import Layout from '../Layout'
 import { PRIMARY_COLOR, WHITE_COLOR } from '../../../constants/ColorConstants'
