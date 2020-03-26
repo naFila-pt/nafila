@@ -11,7 +11,7 @@ it("renders without crashing", () => {
 
   ReactDOM.render(
     <MemoryRouter>
-      <HomeContent title="" />
+      <HomeContent />
     </MemoryRouter>,
     div
   );

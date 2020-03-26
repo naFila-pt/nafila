@@ -2,12 +2,12 @@ import React from "react";
 
 import ReactDOM from "react-dom";
 
-import AdminContent from "./AdminContent";
+import HomeLayout from "./HomeLayout";
 
 it("renders without crashing", () => {
   const div = document.createElement("div");
 
-  ReactDOM.render(<AdminContent />, div);
+  ReactDOM.render(<HomeLayout />, div);
 
   ReactDOM.unmountComponentAtNode(div);
 });
