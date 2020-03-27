@@ -64,7 +64,6 @@ function Login() {
   }
 
   useEffect(() => {
-    console.log(auth)
     if (auth.currentUser && !auth.currentUser.emailVerified) {
       setNeedsVerification(true)
     } else if (auth.currentUser && auth.currentUser.emailVerified) {
