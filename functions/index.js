@@ -67,7 +67,7 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
 
         //needs to validate userId ownership of queue
         if(queueData.owner_id !== context.auth.uid){
-            throw "Only queue owner can manually add people to the queue"
+            throw "Only queue owner can delete the queue"
         }
         
         //get all remaining tickets
@@ -123,7 +123,7 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
 
         //needs to validate userId ownership of queue
         if(queueData.owner_id !== context.auth.uid){
-            throw "Only queue owner can manually add people to the queue"
+            throw "Only queue owner can call the next person on the queue"
         }
         
         //get next ticket
@@ -153,7 +153,7 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
         })
     } else if(!!result.ticket.phone) {
         //send notification SMS
-        await sendSMS([result.ticket.phone], "Encontra-se registado na fila '"+result.queue.name+"' ("+queueRef.id+"). Irà receber uma SMS quando for chamada a sua vez.")
+        await sendSMS([result.ticket.phone], "A sua vez chegou para ser atendido na fila '"+result.queue.name+"' ("+queueRef.id+").")
     }
     
     return result.ticket
@@ -204,6 +204,10 @@ exports.manuallyAddToQueue = functions.https.onCall(async (data, context) => {
             queueName: result.queueName,
             exitQueueUrl: "https://nafila.pt/sair/"+queueRef.id+'/'+ticketRef.id
         })
+    }
+    else if(!!ticketData.phone) {
+        //send notification SMS
+        await sendSMS([result.ticket.phone], "Encontra-se em espera na fila '"+result.queueName+"' ("+queueRef.id+"). O numero do seu ticket: "+result.ticket.ticketNumber)
     }
 
     return result.ticket
