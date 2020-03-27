@@ -27,7 +27,7 @@ const useStyles = makeStyles({
   }
 });
 
-const OnBoardingLayout = ({ children, bg, activeStep }) => {
+const OnBoardingLayout = ({ children, bg, activeStep = 0 }) => {
   const classes = useStyles();
   const bgUrl = bg[activeStep] ? bg[activeStep] : bg[bg.length - 1]
 
@@ -40,7 +40,7 @@ const OnBoardingLayout = ({ children, bg, activeStep }) => {
             { activeStep !== 0 && <LogoMini style={{ flex: 0.9 }} />}
           </Toolbar>
         </Grid>
-        {children[activeStep]}
+        {children[activeStep] || children}
       </Grid>
     </Box>
   );

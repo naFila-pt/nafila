@@ -29,13 +29,6 @@ const useStyles = makeStyles({
     fontSize: "2.24em",
     color: "rgba(0, 0, 0, .54)"
   },
-  gridContainer: {
-    alignContent: "center"
-  },
-  gridItem: {
-    textAlign: "center",
-    marginTop: "-2.5em"
-  },
   stepper: {
     flexGrow: 1,
     position: "static",
