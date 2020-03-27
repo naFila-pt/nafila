@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import OnBoardingContent from "../../pages/OnBoardingContent";
-import HomeContent from "../../pages/HomeContent";
+import { HomeContent, TermsConditions } from "../../pages/HomeContent";
 import Admin from "../../pages/Admin";
 import NotFoundContent from "../../pages/NotFoundContent";
 import { ADMIN_WELCOME_PATH, ADMIN_SIGNUP_PATH, ADMIN_LOGIN_PATH } from '../../constants/RoutesConstants'
@@ -23,6 +23,7 @@ class Router extends Component {
           <Route path="/" exact>
             {shouldSkipOnBoarding ? <HomeContent user={user} /> : <OnBoardingContent />}
           </Route>
+          <Route path="/termos-condicoes" component={TermsConditions} exact />
 
           <Route path={ADMIN_WELCOME_PATH} component={Admin.WelcomePanel} exact />
           <Route path={ADMIN_SIGNUP_PATH} component={Admin.SignUp} exact />
