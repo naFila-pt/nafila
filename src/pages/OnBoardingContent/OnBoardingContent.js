@@ -36,7 +36,7 @@ const OnBoardingContent = () => {
 
   const endOnBoarding = () => {
     localStorage.setItem('skipOnBoarding', true);
-    window.location.reload()
+    window.location.href = '/?skipIntro';
   }
 
   return (
@@ -65,7 +65,7 @@ const OnBoardingContent = () => {
       </Grid>
       <Grid container direction="column" className={classes.gridContainer}>
         <Grid item className={classes.gridItem}>
-          <Typography variant="h1" style={{ padding: '0 1em' }}>{t('onboarding#insertEmail_title')}</Typography>
+          <Typography variant="h1" style={{ color: '#FFC836', padding: '0 1em' }}>{t('onboarding#insertEmail_title')}</Typography>
           <Typography variant="h4" gutterBottom style={{ padding: '0 1em'}} dangerouslySetInnerHTML={{ __html: t('onboarding#insertEmail_description') }} />
           <EmailNotification />
           <Typography variant="h4" gutterBottom style={{ marginBottom: '2em' }} dangerouslySetInnerHTML={{ __html: t('onboarding#insertEmail_notification') }} />
