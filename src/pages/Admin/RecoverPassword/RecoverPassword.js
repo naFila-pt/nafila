@@ -9,7 +9,7 @@ import LoginBg from '../../../assets/bg/user_main.svg'
 import Logo from '../../../assets/logo.svg'
 import Layout from '../Layout'
 import { PRIMARY_COLOR, WHITE_COLOR } from '../../../constants/ColorConstants'
-import { ADMIN_RECOVERPASSWORD_PATH } from '../../../constants/RoutesConstants'
+import { ADMIN_LOGIN_PATH, ADMIN_SIGNUP_PATH } from '../../../constants/RoutesConstants'
 import * as S from './style'
 
 const typographyStyles = {
@@ -31,7 +31,7 @@ const inputProps = {
   required: true,
 }
 
-function Login() {
+function RecoverPassword() {
   const { t } = useTranslation()
   const [fields, setFields] = useState()
 
@@ -68,8 +68,8 @@ function Login() {
             />
 
             <S.RecoverLink>
-                <Link to={ADMIN_RECOVERPASSWORD_PATH} >
-                    {t('admin#login_recover_password')}
+            <Link to={ADMIN_LOGIN_PATH} style={{ color: WHITE_COLOR, textDecoration: 'none' }}>
+                {t('admin#login_recover_password')}
                 </Link>
             </S.RecoverLink>
 
@@ -81,4 +81,4 @@ function Login() {
   )
 }
 
-export default Login
+export default RecoverPassword
