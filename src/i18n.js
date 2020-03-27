@@ -65,6 +65,17 @@ i18n
           "admin#login_email": "Email do Lojista",
           "admin#login_password": "Password",
           "admin#login_recover_password": "recuperar password",
+
+          // Admin Dashboard
+          "admin#dashboard_redirectToStoreQueue": "Vai ser encaminhado para o ecrã da na<b>fila</b> da sua loja.",
+          "admin#dashboard_emailSent": "O email com o código na<b>fila</b> já foi enviado.",
+          "admin#dashboard_thanks": "Obrigado!",
+          "admin#dashboard_yourCode": "<b>O seu código</b> na<b>fila é</b>",
+          "admin#dashboard_queueName": "Nome da Fila",
+          "admin#dashboard_queueCode": "Código naFila",
+          "admin#dashboard_sendToEmail": "Enviar para o email?",
+          "admin#dashboard_yes": "Sim",
+          "admin#dashboard_no": "Não",
         }
       }
     },
