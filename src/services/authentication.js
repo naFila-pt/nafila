@@ -116,6 +116,7 @@ authentication.signUpWithEmailAddressAndPassword = (emailAddress, password) => {
               method: "password"
             });
 
+            authentication.verifyEmailAddress()
             resolve(value);
           })
           .catch(reason => {

@@ -7,11 +7,15 @@ export const RecoverLink = styled.a`
 `
 
 export const Form = styled.form`
-  text-align: center;
-  padding: 0 38px 105px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+  padding: 50px 30px;
+
+  .MuiInput-root {
+    margin-bottom: 2em;
+  }
+
+  button {
+    margin-top: 2em;
+  }
 
   .MuiTextField-root {
     border-color: ${PRIMARY_COLOR} !important;
@@ -29,4 +33,13 @@ export const Form = styled.form`
         border-color: ${PRIMARY_COLOR} !important;
       }
     }
+  }
+
+  .MuiAlert-root {
+    text-align: left;
+  }
+
+  input {
+    width: 100%;
+  }
 `
