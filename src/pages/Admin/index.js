@@ -7,7 +7,7 @@ const Admin = {
   WelcomePanel: WelcomePanel,
   SignUp: SignUp,
   Login: Login,
-  RecoverPassword: RecoverPassword,
+  RecoverPassword: RecoverPassword
 }
 
 export default Admin

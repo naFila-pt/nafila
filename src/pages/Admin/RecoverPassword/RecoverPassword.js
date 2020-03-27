@@ -8,9 +8,11 @@ import Button from '../../../components/Button'
 import LoginBg from '../../../assets/bg/user_main.svg'
 import Logo from '../../../assets/logo.svg'
 import Layout from '../Layout'
-import { PRIMARY_COLOR, WHITE_COLOR } from '../../../constants/ColorConstants'
-import { ADMIN_LOGIN_PATH, ADMIN_SIGNUP_PATH } from '../../../constants/RoutesConstants'
+import { PRIMARY_COLOR, WHITE_COLOR, BACK_BUTTON_BG_COLOR , BACK_BUTTON_TEXT_COLOR} from '../../../constants/ColorConstants'
+import { ADMIN_RECOVERPASSWORDSUCCESS_PATH, ADMIN_LOGIN_PATH } from '../../../constants/RoutesConstants'
 import * as S from './style'
+import SuccessfulRecoverPassword from './SuccessfulRecoverPassword'
+import validator from "email-validator"
 
 const typographyStyles = {
   TITLE: {
@@ -25,16 +27,27 @@ const buttonStyles = {
     textDecoration: 'none',
     background: 'none'
 }
+const backButtonStyles = {
+  color: BACK_BUTTON_TEXT_COLOR,
+  textDecoration: 'none',
+  background: BACK_BUTTON_BG_COLOR
+}
 
 const inputProps = {
   fullWidth: true,
   required: true,
 }
 
+
+
+
+
 function RecoverPassword() {
   const { t } = useTranslation()
   const [fields, setFields] = useState()
-
+  const [success, setSuccess] = useState(false)
+  const [email,setEmail] = useState("")
+  const [wrongEmailText, setWrongEmailText] = useState("") 
   const handleChange = ({ target: { name, value } }) => {
     setFields({
       ...fields,
@@ -42,39 +55,55 @@ function RecoverPassword() {
     })
   }
 
+  const sendPasswordRecoveryEmail = ( ) => {
+    //insert send email logic here
+    console.log("email ");
+    console.log(validator.validate(email));
+    if (validator.validate(email)){
+      console.log("here!");
+    setSuccess(true)}
+    else{
+      setWrongEmailText(t("admin#recoverPassword_wrongEmail"))
+
+    }
+  }
+
+  const changeEmailText= (v) =>{
+    setEmail(v);
+    setWrongEmailText("");
+  }
+
+
+  if (success) return <SuccessfulRecoverPassword email={email}/>;
+
   return (
     <Layout bg={LoginBg}>
         <S.Form>
             <Typography variant="h3" style={typographyStyles.TITLE}>
-              {t("admin#login_title")}
+              {t("admin#recoverPassword_title")}
             </Typography>
 
             <TextField
-              label={t('admin#login_email')}
+              label={t('admin#recoverPassword_email')}
               name="email"
-              onChange={e => handleChange(e)}
+              onChange={e => changeEmailText(e.target.value)}
               style={{marginTop: '25px'}}
               {...inputProps}
             />
+             <Typography variant="h5" style={{color:'red'}}>
+              {wrongEmailText}
+            </Typography>
+           
 
-            <TextField
-              label={t('admin#login_password')}
-              type="password"
-              name="password"
-              onChange={e => handleChange(e)}
-              min="6"
-              style={{marginTop: '25px'}}
-              {...inputProps}
-            />
+            <Button style={buttonStyles} onClick={sendPasswordRecoveryEmail}>
+                {t('admin#recoverPassword_recover')}
+                
+            </Button>
 
-            <S.RecoverLink>
-            <Link to={ADMIN_LOGIN_PATH} style={{ color: WHITE_COLOR, textDecoration: 'none' }}>
-                {t('admin#login_recover_password')}
+            <Button backward style={backButtonStyles}>
+              <Link to={ADMIN_LOGIN_PATH}style={{ color: BACK_BUTTON_TEXT_COLOR, textDecoration: 'none' , background: BACK_BUTTON_BG_COLOR}} >
+                {t('admin#recoverPassword_back')}
                 </Link>
-            </S.RecoverLink>
-
-            <Button forward style={buttonStyles}>
-                {t('admin#intro_login')}
             </Button>
         </S.Form>
     </Layout>
