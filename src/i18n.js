@@ -78,6 +78,19 @@ i18n
           "admin#recoverPasswordSuccess_text1": "Foi enviado um email para ",
           "admin#recoverPasswordSuccess_text2": ". Siga as instruções para recuperar a sua password.",
           "admin#recoverPasswordSuccess_return": "Voltar",
+
+          // Recover Password Change
+          "admin#recoverPasswordChange_title": "Redefinição de password",
+          "admin#recoverPasswordChange_text1": "Digite uma nova senha associada ao email ",
+          "admin#recoverPasswordChange_textbox1": "Nova password",
+          "admin#recoverPasswordChange_textbox2": "Confirmar nova password",
+          "admin#recoverPasswordChange_button": "Mudar",
+          "admin#recoverPasswordChange_errorMessage": "As passwords que introduziu não coincidem. Por favor tente de novo.",
+
+          // Recover Password Change Success
+          "admin#recoverPasswordChangeSuccess_title": "Mudança de password bem sucedida!",
+          "admin#recoverPasswordChangeSuccess_text1": "Será reencaminhado para a página principal dentro de instantes.",
+          "admin#recoverPasswordChangeSuccess_button": "Entrar",
         }
       }
     },
