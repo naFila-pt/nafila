@@ -7,6 +7,8 @@ import LoginBg from '../../../assets/bg/main.svg'
 import Layout from '../Layout'
 import { PRIMARY_COLOR, WHITE_COLOR } from '../../../constants/ColorConstants'
 import * as S from './style'
+import { ReactComponent as Logo } from "../../../assets/logo.svg";
+
 
 const typographyStyles = {
     TITLE: {
@@ -33,7 +35,7 @@ function AddConsumerPhoneSuccess() {
                 <Typography variant="h3" style={typographyStyles.TITLE}>
                     {t("main#addConsumerSuccess_title")}
                 </Typography>
-
+                <div style={{ textAlign: "center" }}><Logo /></div>
                 <p
                     style={typographyStyles.SECONDARY}
                     dangerouslySetInnerHTML={{ __html: t('main#addConsumerPhoneSuccess_text') }}

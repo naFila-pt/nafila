@@ -9,6 +9,9 @@ import { PRIMARY_COLOR, WHITE_COLOR, BACK_BUTTON_BG_COLOR, BACK_BUTTON_TEXT_COLO
 import * as S from './style'
 import AddConsumerName from "./AddConsumerName"
 import AddConsumerPhone from "./AddConsumerPhone"
+
+import { ReactComponent as Logo } from "../../../assets/logo.svg";
+
 const typographyStyles = {
   TITLE: {
     color: PRIMARY_COLOR,
@@ -46,7 +49,7 @@ function AddConsumer() {
         <Typography variant="h3" style={typographyStyles.TITLE}>
           {t("main#addConsumer_title")}
         </Typography>
-
+        <div style={{ textAlign: "center" }}><Logo /></div>
         <Button forward style={buttonStyles} onClick={() => setViewType("phone")} >
           {t("main#addConsumer_button1")}
 
