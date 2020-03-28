@@ -46,10 +46,9 @@ const HomeContent = () => {
   const { t } = useTranslation();
 
   const [activeStep, setActiveStep] = useState(initialActiveStep);
-  const [storeCodeInput, setStoreCodeInput] = useState("");
+  const [queueId, setQueueId] = useState("");
   const [userEmail, setUserEmail] = useState("");
-
-  const ticketsStoreInfo = Object.seal({
+  const [ticketsStoreInfo, setTicketsStoreInfo] = useState({
     name: null,
     currentTicket: null,
     remainingInQueue: null,
@@ -61,7 +60,7 @@ const HomeContent = () => {
   };
 
   const handleStoreCodeChange = event => {
-    setStoreCodeInput(event.target.value);
+    setQueueId(event.target.value);
   };
 
   const handleUserEmailChange = event => {
@@ -73,17 +72,22 @@ const HomeContent = () => {
     window.open("/termos-condicoes", "_blank");
   };
 
-  const handleGetStoreInfo = () => {
+  const handleGetStoreInfo = async () => {
     try {
-      const queue = firestore
+      const queue = await firestore
         .collection("queues")
-        .doc(storeCodeInput)
-        .get()
-        .data();
+        .doc(queueId.toUpperCase())
+        .get();
 
-      ticketsStoreInfo.name = queue.name;
-      ticketsStoreInfo.currentTicket = 0;
-      ticketsStoreInfo.remainingInQueue = queue.remainingTicketsInQueue;
+      const queueData = queue.data();
+
+      setTicketsStoreInfo(prevState => {
+        return {
+          ...prevState,
+          name: queueData.name,
+          remainingInQueue: queueData.remainingTicketsInQueue
+        };
+      });
 
       handleNextButton();
     } catch (e) {
@@ -96,12 +100,19 @@ const HomeContent = () => {
       const addMeToQueue = functions.httpsCallable("addMeToQueue");
 
       const queueInfo = await addMeToQueue({
-        queueId: storeCodeInput,
+        queueId: queueId.toUpperCase(),
         email: userEmail
       });
+      const queueData = queueInfo.data;
 
-      ticketsStoreInfo.remainingInQueue = queueInfo.remainingTicketsInQueue;
-      ticketsStoreInfo.ownTicketNumber = queueInfo.ticketNumber;
+      setTicketsStoreInfo(prevState => {
+        return {
+          ...prevState,
+          ownTicketNumber: queueData.ticket.number,
+          currentTicket: 0,
+          remainingInQueue: queueData.queue.remainingTicketsInQueue
+        };
+      });
 
       handleNextButton();
     } catch (e) {
@@ -146,7 +157,7 @@ const HomeContent = () => {
           <Input
             placeholder={t("home#insertCode_inputPlaceholder")}
             style={{ width: "100%", textAlign: "center", fontWeight: 900 }}
-            value={storeCodeInput}
+            value={queueId}
             onChange={handleStoreCodeChange}
           />
           <div className={classes.bottomButton}>
@@ -253,7 +264,9 @@ const HomeContent = () => {
                   color: "#fff"
                 }}
               >
-                <div style={{ fontSize: "2.5em", fontWeight: 900 }}>026</div>
+                <div style={{ fontSize: "2.5em", fontWeight: 900 }}>
+                  {ticketsStoreInfo.ownTicketNumber}
+                </div>
                 <div style={{ fontSize: "1.375em" }}>
                   {t("home#ticket_turn")}
                 </div>
