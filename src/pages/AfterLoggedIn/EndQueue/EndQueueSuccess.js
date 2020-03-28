@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
-import { Typography, TextField } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import Button from "../../../components/Button";
@@ -8,7 +8,6 @@ import LoginBg from "../../../assets/bg/main.svg";
 import Layout from "../Layout";
 import {
     PRIMARY_COLOR,
-    WHITE_COLOR,
     BACK_BUTTON_BG_COLOR,
     BACK_BUTTON_TEXT_COLOR
 } from "../../../constants/ColorConstants";
@@ -21,20 +20,10 @@ const typographyStyles = {
     }
 };
 
-const buttonStyles = {
-    color: WHITE_COLOR,
-    textDecoration: "none",
-    background: "none"
-};
 const backButtonStyles = {
     color: BACK_BUTTON_TEXT_COLOR,
     textDecoration: "none",
     background: BACK_BUTTON_BG_COLOR
-};
-
-const inputProps = {
-    fullWidth: true,
-    required: true
 };
 
 function EndQueueSuccess() {

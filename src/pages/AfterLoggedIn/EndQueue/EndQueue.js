@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Typography, TextField } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import Button from "../../../components/Button";
@@ -15,6 +15,7 @@ import {
 import Logo from "../../../assets/logo.svg";
 import * as S from "./style";
 import EndQueueSuccess from "./EndQueueSuccess";
+
 
 const typographyStyles = {
     TITLE: {
@@ -35,17 +36,16 @@ const backButtonStyles = {
     background: BACK_BUTTON_BG_COLOR
 };
 
-const inputProps = {
-    fullWidth: true,
-    required: true
-};
+
 
 function EndQueue() {
     const { t } = useTranslation();
     const [success, setSuccess] = useState(false)
 
     const confirmEndQueueButton = () => {
+
         console.log("NEEDS API CALL TO END QUEUE");
+        //functions.deleteQueue({queueId:queueId})
         setSuccess(true)
 
     }
