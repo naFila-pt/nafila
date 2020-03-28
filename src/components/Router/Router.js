@@ -7,8 +7,9 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import OnBoardingContent from "../../pages/OnBoardingContent";
 import { HomeContent, TermsConditions } from "../../pages/HomeContent";
 import Admin from "../../pages/Admin";
+import PrivateRoute from '../PrivateRoute'
 import NotFoundContent from "../../pages/NotFoundContent";
-import { ADMIN_WELCOME_PATH, ADMIN_SIGNUP_PATH, ADMIN_LOGIN_PATH, ADMIN_RECOVERPASSWORD_PATH, ADMIN_RECOVERPASSWORDCHANGE_PATH } from '../../constants/RoutesConstants'
+import * as Routes from '../../constants/RoutesConstants'
 
 class Router extends Component {
   render() {
@@ -25,11 +26,12 @@ class Router extends Component {
           </Route>
           <Route path="/termos-condicoes" component={TermsConditions} exact />
 
-          <Route path={ADMIN_WELCOME_PATH} component={Admin.WelcomePanel} exact />
-          <Route path={ADMIN_SIGNUP_PATH} component={Admin.SignUp} exact />
-          <Route path={ADMIN_LOGIN_PATH} component={Admin.Login} exact />
-          <Route path={ADMIN_RECOVERPASSWORD_PATH} component={Admin.RecoverPassword} exact />
-          <Route path={ADMIN_RECOVERPASSWORDCHANGE_PATH} component={Admin.ChangePassword} exact />
+          <Route path={Routes.ADMIN_WELCOME_PATH} component={Admin.WelcomePanel} exact />
+          <Route path={Routes.ADMIN_SIGNUP_PATH} component={Admin.SignUp} exact />
+          <Route path={Routes.ADMIN_LOGIN_PATH} component={Admin.Login} exact />
+          <Route path={Routes.ADMIN_RECOVERPASSWORD_PATH} component={Admin.RecoverPassword} exact />
+          <Route path={Routes.ADMIN_RECOVERPASSWORDCHANGE_PATH} component={Admin.ChangePassword} exact />
+          <PrivateRoute path={Routes.ADMIN_START_QUEUE_PATH} component={() => <div>...</div>} exact />
 
           <Route>
             <NotFoundContent />

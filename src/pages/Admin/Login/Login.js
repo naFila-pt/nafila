@@ -11,7 +11,7 @@ import Loader from '../../../components/Loader'
 import { Link } from 'react-router-dom'
 
 import { PRIMARY_COLOR, WHITE_COLOR } from '../../../constants/ColorConstants'
-import { ADMIN_RECOVERPASSWORD_PATH } from '../../../constants/RoutesConstants'
+import { ADMIN_RECOVERPASSWORD_PATH, ADMIN_START_QUEUE_PATH } from '../../../constants/RoutesConstants'
 import * as S from './style'
 
 const typographyStyles = {
@@ -63,7 +63,7 @@ function Login() {
 
     authentication
       .signIn(email, password)
-      .then(() => window.location.href = '/admin/dashboard')
+      .then(() => window.location.href = ADMIN_START_QUEUE_PATH)
       .catch(error => {
         setLoading(false)
         error && setError(mappedMessages[error.code])
@@ -75,7 +75,7 @@ function Login() {
       setNeedsVerification(true)
     } else if (auth.currentUser && auth.currentUser.emailVerified) {
       // User has session and access to private routes
-      window.location.href = '/admin/dashboard'
+      window.location.href = ADMIN_START_QUEUE_PATH
     }
   }, [])
 
