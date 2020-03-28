@@ -1,16 +1,12 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 
 import { Typography, TextField } from '@material-ui/core'
-import Input from '@material-ui/core/Input';
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
 import Button from '../../../components/Button'
-import LoginBg from '../../../assets/bg/user_main.svg'
-import Logo from '../../../assets/logo.svg'
+import LoginBg from '../../../assets/bg/main.svg'
 import Layout from '../Layout'
-import { PRIMARY_COLOR, WHITE_COLOR, BACK_BUTTON_BG_COLOR, BACK_BUTTON_TEXT_COLOR } from '../../../constants/ColorConstants'
+import { PRIMARY_COLOR, WHITE_COLOR } from '../../../constants/ColorConstants'
 import * as S from './style'
-import { useLocation } from "react-router";
 import RecoverPasswordChangeSuccess from "./RecoverPasswordChangeSuccess"
 
 const typographyStyles = {
@@ -25,11 +21,6 @@ const buttonStyles = {
   color: WHITE_COLOR,
   textDecoration: 'none',
   background: 'none'
-}
-const backButtonStyles = {
-  color: BACK_BUTTON_TEXT_COLOR,
-  textDecoration: 'none',
-  background: BACK_BUTTON_BG_COLOR
 }
 
 const inputProps = {
@@ -52,7 +43,6 @@ function getQueryVariable(queryString, variableName) {
 
 function RecoverPasswordChange(props) {
   const { t } = useTranslation()
-  const [fields, setFields] = useState()
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [passwordChangedState, setPasswordChangedState] = useState(false)
@@ -61,12 +51,7 @@ function RecoverPasswordChange(props) {
   const emailString = getQueryVariable(props.location.search.substring(1), "email")
 
 
-  const handleChange = ({ target: { name, value } }) => {
-    setFields({
-      ...fields,
-      [name]: value
-    })
-  }
+
 
   const onChangePasswordText = (e) => {
     setErrorMessage("");

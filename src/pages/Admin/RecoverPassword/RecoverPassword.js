@@ -1,15 +1,13 @@
 import React, { useState } from 'react'
 
 import { Typography, TextField } from '@material-ui/core'
-import Input from '@material-ui/core/Input';
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import Button from '../../../components/Button'
-import LoginBg from '../../../assets/bg/user_main.svg'
-import Logo from '../../../assets/logo.svg'
+import LoginBg from '../../../assets/bg/main.svg'
 import Layout from '../Layout'
 import { PRIMARY_COLOR, WHITE_COLOR, BACK_BUTTON_BG_COLOR, BACK_BUTTON_TEXT_COLOR } from '../../../constants/ColorConstants'
-import { ADMIN_RECOVERPASSWORDSUCCESS_PATH, ADMIN_LOGIN_PATH } from '../../../constants/RoutesConstants'
+import { ADMIN_LOGIN_PATH } from '../../../constants/RoutesConstants'
 import * as S from './style'
 import SuccessfulRecoverPassword from './SuccessfulRecoverPassword'
 import validator from "email-validator"
@@ -44,16 +42,10 @@ const inputProps = {
 
 function RecoverPassword() {
   const { t } = useTranslation()
-  const [fields, setFields] = useState()
   const [success, setSuccess] = useState(false)
   const [email, setEmail] = useState("")
   const [errorText, setErrorText] = useState("")
-  const handleChange = ({ target: { name, value } }) => {
-    setFields({
-      ...fields,
-      [name]: value
-    })
-  }
+
 
   const sendPasswordRecoveryEmail = () => {
     if (validator.validate(email)) {
@@ -67,6 +59,7 @@ function RecoverPassword() {
       setErrorText(t("admin#recoverPassword_wrongEmail"))
 
     }
+
   }
 
   const changeEmailText = (v) => {
