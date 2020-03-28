@@ -5,18 +5,18 @@ const Table = require("cli-table");
 
 require("dotenv").config();
 
-const package = require("../package");
+const packageFile = require("../package");
 
 admin.initializeApp({
   credential: admin.credential.applicationDefault(),
-  databaseURL: package.config.firebase.databaseUrl
+  databaseURL: packageFile.config.firebase.databaseUrl
 });
 
 const auth = admin.auth();
 
 program.name("users");
 
-listAllUsers = nextPageToken => {
+const listAllUsers = nextPageToken => {
   auth
     .listUsers(1000, nextPageToken)
     .then(value => {
@@ -83,7 +83,7 @@ listAllUsers = nextPageToken => {
     });
 };
 
-deleteAllUsers = nextPageToken => {
+const deleteAllUsers = nextPageToken => {
   auth
     .listUsers(1000, nextPageToken)
     .then(value => {

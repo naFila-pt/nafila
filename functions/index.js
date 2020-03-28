@@ -1,263 +1,320 @@
-const functionsMain = require('firebase-functions');
+/* eslint no-throw-literal: 0 */
+
+const functionsMain = require("firebase-functions");
 const config = functionsMain.config();
-const admin = require('firebase-admin');
+const admin = require("firebase-admin");
 admin.initializeApp();
 const firestore = admin.firestore();
 const urlSMSPro = 'https://smspro.nos.pt/smspro/smsprows.asmx?WSDL';
 
 const runtimeOpts = {
-    timeoutSeconds: 15,
-    memory: '128MB' //lowest cost possible
-}
+  timeoutSeconds: 15,
+  memory: "128MB" //lowest cost possible
+};
 
 //low cost / high perf settings
-const functions = functionsMain.region('europe-west1').runWith(runtimeOpts);
-
+const functions = functionsMain.region("europe-west1").runWith(runtimeOpts);
 
 //---- APP API ----
 
 //create queue
 exports.createQueue = functions.https.onCall(async (data, context) => {
-    //generates queueId
-    const queueId = fiveRandomChars()
-    //assigns userId as owner_id
-    if(!context.auth || !context.auth.uid) {
-        throw "You need to be logged in to create a queue"
-    }
+  //generates queueId
+  const queueId = fiveRandomChars();
+  //assigns userId as owner_id
+  if (!context.auth || !context.auth.uid) {
+    throw "You need to be logged in to create a queue";
+  }
 
-    //inserts queue
-    const queue = {owner_id:context.auth.uid, name:data.name, remainingTicketsInQueue:0, ticketTopNumber:0, currentTicketNumber:0, currentTicketName:null}
-    const queueRef = firestore.collection("queues").doc(queueId)
+  //inserts queue
+  const queue = {
+    owner_id: context.auth.uid,
+    name: data.name,
+    remainingTicketsInQueue: 0,
+    ticketTopNumber: 0,
+    currentTicketNumber: 0,
+    currentTicketName: null
+  };
+  const queueRef = firestore.collection("queues").doc(queueId);
 
-    //updates user
-    const userRef = firestore.collection("users").doc(queue.owner_id)
-    const userDoc = await userRef.get()
+  //updates user
+  const userRef = firestore.collection("users").doc(queue.owner_id);
+  const userDoc = await userRef.get();
 
-    const userData = userDoc.data()
-    if(!userData.queues) userData.queues = []
-    userData.queues.push(queueRef.id);
-    userData.defaultQueueName = queue.name;
-    
-    //batch commit
-    const batch = firestore.batch()
-    batch.set(queueRef, queue)
-    batch.update(userRef, userData)
-    batch.commit()
+  const userData = userDoc.data();
+  if (!userData.queues) userData.queues = [];
+  userData.queues.push(queueRef.id);
+  userData.defaultQueueName = queue.name;
 
-    //{{queuePosterUrl}} {{queueName}} {{queueId}}
-    await sendMail([ticketData.email], "d-6ac28f40006c4d178be4e00adae2bcb4", {
-        queueId:queueRef.id,
-        queueName: result.queueName,
-        queuePosterUrl: "https://nafila.pt/cartaz-fila/"+queueRef.id
-    })
+  //batch commit
+  const batch = firestore.batch();
+  batch.set(queueRef, queue);
+  batch.update(userRef, userData);
+  batch.commit();
 
-    //returns queue object
-    return {queueId, queue};
+  //{{queuePosterUrl}} {{queueName}} {{queueId}}
+  await sendMail([userData.email], "d-6ac28f40006c4d178be4e00adae2bcb4", {
+    queueId: queueRef.id,
+    queueName: queue.name,
+    queuePosterUrl: "https://nafila.pt/cartaz-fila/" + queueRef.id
+  });
 
+  //returns queue object
+  return { queueId, queue };
 });
 
 //Delete queue
 exports.deleteQueue = functions.https.onCall(async (data, context) => {
-    //receives queueId
-    let queueRef = firestore.collection("queues").doc(data.queueId)
-    
-    //transaction is cheaper
-    let tickets = await firestore.runTransaction(async function(transaction) {
-        let queueDoc = await transaction.get(queueRef)
+  //receives queueId
+  let queueRef = firestore.collection("queues").doc(data.queueId);
 
-        //get queue
-        let queueData = queueDoc.data()
+  //transaction is cheaper
+  let tickets = await firestore.runTransaction(async function(transaction) {
+    let queueDoc = await transaction.get(queueRef);
 
-        //needs to validate userId ownership of queue
-        if(queueData.owner_id !== context.auth.uid){
-            throw "Only queue owner can delete the queue"
-        }
-        
-        //get all remaining tickets
-        let queryRef = await transaction.get(queueRef.collection('tickets'))
+    //get queue
+    let queueData = queueDoc.data();
 
-        //delete queue entirely
-        transaction.delete(queueRef)
+    //needs to validate userId ownership of queue
+    if (queueData.owner_id !== context.auth.uid) {
+      throw "Only queue owner can delete the queue";
+    }
 
-        return queryRef.docs
-    })
+    //get all remaining tickets
+    let queryRef = await transaction.get(queueRef.collection("tickets"));
 
-    //notify every remaining person in queue of queue deletion
-    let emailsToNotify = []
-    let phonesToNotify = []
-    tickets.forEach((t)=>{
-        let ticketData = t.data()
-        if(!!ticketData.email){
-            emailToNotify.push(ticketData.email)
-        } else if(!!ticketData.phone) {
-            phonesToNotify.push(ticketData.email)
-        }
+    //delete queue entirely
+    transaction.delete(queueRef);
+
+    return queryRef.docs;
+  });
+
+  //notify every remaining person in queue of queue deletion
+  let emailsToNotify = [];
+  let phonesToNotify = [];
+  tickets.forEach(t => {
+    let ticketData = t.data();
+    if (!!ticketData.email) {
+      emailsToNotify.push(ticketData.email);
+    } else if (!!ticketData.phone) {
+      phonesToNotify.push(ticketData.email);
+    }
+  });
+
+  //notify remaining email users
+  if (emailsToNotify.length) {
+    //{{queueName}} {{queueId}}
+    await sendMail(emailsToNotify, "d-b28224dd3dac48388f8e469ed82448a8", {
+      queueId: queueRef.id,
+      queueName: tickets.queueName
     });
+  }
 
-    //notify remaining email users
-    if(emailsToNotify.length){
-        //{{queueName}} {{queueId}}
-        await sendMail(emailsToNotify, "d-b28224dd3dac48388f8e469ed82448a8", {
-            queueId:queueRef.id,
-            queueName: result.queueName
-        })
-    }
+  //notify remaining phone users
+  if (phonesToNotify.length) {
+    await sendSMS(
+      phonesToNotify,
+      "A fila '" +
+        tickets.queue.name +
+        "' (" +
+        queueRef.id +
+        ") foi fechada pelo administrador da fila. A sua senha foi removida."
+    );
+  }
 
-    //notify remaining phone users
-    if(phonesToNotify.length){
-        await sendSMS(phonesToNotify, "A fila '"+result.queue.name+"' ("+queueRef.id+") foi fechada pelo administrador da fila. A sua senha foi removida.")
-    }
-
-
-    return {deletedCount:tickets.length}
+  return { deletedCount: tickets.length };
 });
 
 //Call next person in queue
 exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
-    //receives queueId
-    let queueRef = firestore.collection("queues").doc(data.queueId)
+  //receives queueId
+  let queueRef = firestore.collection("queues").doc(data.queueId);
 
-    //transaction is cheaper
-    let result = await firestore.runTransaction(async function(transaction) {
-        let queueDoc = await transaction.get(queueRef)
+  //transaction is cheaper
+  let result = await firestore.runTransaction(async function(transaction) {
+    let queueDoc = await transaction.get(queueRef);
 
-        //get queue
-        let queueData = queueDoc.data()
+    //get queue
+    let queueData = queueDoc.data();
 
-        //needs to validate userId ownership of queue
-        if(queueData.owner_id !== context.auth.uid){
-            throw "Only queue owner can call the next person on the queue"
-        }
-        
-        //get next ticket
-        let querySnap = await transaction.get(queueRef.collection('tickets').orderBy("number").limit(1))
-
-        //in case there is no ticket left
-        if(querySnap.empty){
-            throw "There are no active tickets in the queue"
-        }
-
-        let ticketDoc = querySnap.docs[0]
-        return await removeTicket(transaction, ticketDoc.ref, queueRef, queueData, true)
-        
-    })
-
-    if(!!result.ticket.email){
-        //send notification email
-        
-        //{{queueName}} {{queueId}} {{ticketNumber}}
-        await sendMail([result.ticket.email], "d-d5c90252570f4486a89e155762824850", {
-            ticketNumber: result.ticket.number,
-            queueId: queueRef.id,
-            queueName: result.queue.name
-        })
-    } else if(!!result.ticket.phone) {
-        //send notification SMS
-        await sendSMS([result.ticket.phone], "A sua vez chegou para ser atendido na fila '"+result.queue.name+"' ("+queueRef.id+").")
+    //needs to validate userId ownership of queue
+    if (queueData.owner_id !== context.auth.uid) {
+      throw "Only queue owner can call the next person on the queue";
     }
-    
-    return result
+
+    //get next ticket
+    let querySnap = await transaction.get(
+      queueRef
+        .collection("tickets")
+        .orderBy("number")
+        .limit(1)
+    );
+
+    //in case there is no ticket left
+    if (querySnap.empty) {
+      throw "There are no active tickets in the queue";
+    }
+
+    let ticketDoc = querySnap.docs[0];
+    return await removeTicket(
+      transaction,
+      ticketDoc.ref,
+      queueRef,
+      queueData,
+      true
+    );
+  });
+
+  if (!!result.ticket.email) {
+    //send notification email
+
+    //{{queueName}} {{queueId}} {{ticketNumber}}
+    await sendMail(
+      [result.ticket.email],
+      "d-d5c90252570f4486a89e155762824850",
+      {
+        ticketNumber: result.ticket.number,
+        queueId: queueRef.id,
+        queueName: result.queue.name
+      }
+    );
+  } else if (!!result.ticket.phone) {
+    //send notification SMS
+    await sendSMS(
+      [result.ticket.phone],
+      "A sua vez chegou para ser atendido na fila '" +
+        result.queue.name +
+        "' (" +
+        queueRef.id +
+        ")."
+    );
+  }
+
+  return result;
 });
 
 //Manually add person to queue
 exports.manuallyAddToQueue = functions.https.onCall(async (data, context) => {
-    //receives queueId
-    let queueRef = firestore.collection("queues").doc(data.queueId)
-    var ticketRef = queueRef.collection('tickets').doc();
+  //receives queueId
+  let queueRef = firestore.collection("queues").doc(data.queueId);
+  var ticketRef = queueRef.collection("tickets").doc();
 
-    //create ticket object
-    let ticketData = {}
-    if(!!data.email){
-        ticketData.email = data.email
-    } else if (!!data.phone){
-        ticketData.phone = data.phone
-    } else if (!!data.name){
-        ticketData.name = data.name
-    } else {
-        throw "Unknown ticket type"
+  //create ticket object
+  let ticketData = {};
+  if (!!data.email) {
+    ticketData.email = data.email;
+  } else if (!!data.phone) {
+    ticketData.phone = data.phone;
+  } else if (!!data.name) {
+    ticketData.name = data.name;
+  } else {
+    throw "Unknown ticket type";
+  }
+
+  //transaction is cheaper
+  let result = await firestore.runTransaction(async function(transaction) {
+    let queueDoc = await transaction.get(queueRef);
+
+    //get queue
+    let queueData = queueDoc.data();
+
+    //needs to validate userId ownership of queue
+    if (queueData.owner_id !== context.auth.uid) {
+      throw "Only queue owner can manually add people to the queue";
     }
 
-    //transaction is cheaper
-    let result = await firestore.runTransaction(async function(transaction) {
-        let queueDoc = await transaction.get(queueRef)
+    return await addTicket(
+      transaction,
+      ticketRef,
+      ticketData,
+      queueRef,
+      queueData
+    );
+  });
 
-        //get queue
-        let queueData = queueDoc.data()
+  if (!!ticketData.email) {
+    //{{exitQueueUrl}} {{queueName}} {{queueId}} {{ticketNumber}}
+    await sendMail([ticketData.email], "d-e1953f198a92449f8fb3a833532cdc21", {
+      ticketNumber: result.ticket.number,
+      queueId: queueRef.id,
+      queueName: result.queue.name,
+      exitQueueUrl: "https://nafila.pt/sair/" + queueRef.id + "/" + ticketRef.id
+    });
+  } else if (!!ticketData.phone) {
+    //send notification SMS
+    await sendSMS(
+      [result.ticket.phone],
+      "Encontra-se em espera na fila '" +
+        result.queue.name +
+        "' (" +
+        queueRef.id +
+        "). O numero do seu ticket: " +
+        result.ticket.number
+    );
+  }
 
-        //needs to validate userId ownership of queue
-        if(queueData.owner_id !== context.auth.uid){
-            throw "Only queue owner can manually add people to the queue"
-        }
-        
-        return await addTicket(transaction, ticketRef, ticketData, queueRef, queueData)
-        
-    })
-    
-    if(!!ticketData.email){
-        //{{exitQueueUrl}} {{queueName}} {{queueId}} {{ticketNumber}}
-        await sendMail([ticketData.email], "d-e1953f198a92449f8fb3a833532cdc21", {
-            ticketNumber: result.ticket.number,
-            queueId:queueRef.id,
-            queueName: result.queue.name,
-            exitQueueUrl: "https://nafila.pt/sair/"+queueRef.id+'/'+ticketRef.id
-        })
-    }
-    else if(!!ticketData.phone) {
-        //send notification SMS
-        await sendSMS([result.ticket.phone], "Encontra-se em espera na fila '"+result.queue.name+"' ("+queueRef.id+"). O numero do seu ticket: "+result.ticket.number)
-    }
-
-    return result
-    
+  return result;
 });
 
 //Add me to queue
 exports.addMeToQueue = functions.https.onCall(async (data, context) => {
-    //get the queue
-    let queueRef = firestore.collection("queues").doc(data.queueId)
-    let ticketData = {}
-    if(!data.email){
-        throw "Missing email"
-    }
-    ticketData.email = data.email
+  //get the queue
+  let queueRef = firestore.collection("queues").doc(data.queueId);
+  let ticketData = {};
+  if (!data.email) {
+    throw "Missing email";
+  }
+  ticketData.email = data.email;
 
-    var ticketRef = queueRef.collection('tickets').doc();
+  var ticketRef = queueRef.collection("tickets").doc();
 
-    //transaction is cheaper
-    let result = await firestore.runTransaction(async function(transaction) {
-        let queueDoc = await transaction.get(queueRef)
-        let queueData = queueDoc.data()
-        return await addTicket(transaction, ticketRef, ticketData, queueRef, queueData)
-    })
-    
-    //send confirmation email
+  //transaction is cheaper
+  let result = await firestore.runTransaction(async function(transaction) {
+    let queueDoc = await transaction.get(queueRef);
+    let queueData = queueDoc.data();
+    return await addTicket(
+      transaction,
+      ticketRef,
+      ticketData,
+      queueRef,
+      queueData
+    );
+  });
 
-    //{{exitQueueUrl}} {{queueName}} {{queueId}} {{ticketNumber}}
-    await sendMail([ticketData.email], "d-e1953f198a92449f8fb3a833532cdc21", {
-        ticketNumber: result.ticket.number,
-        queueId:data.queueId,
-        queueName: result.queue.name,
-        exitQueueUrl: "https://nafila.pt/sair/"+data.queueId+'/'+ticketRef.id
-    })
+  //send confirmation email
 
-    return result
+  //{{exitQueueUrl}} {{queueName}} {{queueId}} {{ticketNumber}}
+  await sendMail([ticketData.email], "d-e1953f198a92449f8fb3a833532cdc21", {
+    ticketNumber: result.ticket.number,
+    queueId: data.queueId,
+    queueName: result.queue.name,
+    exitQueueUrl: "https://nafila.pt/sair/" + data.queueId + "/" + ticketRef.id
+  });
+
+  return result;
 });
 
 //Remove me from queue
-exports.removeMeFromQueue = functions.https.onCall(async (data, context)=>{
-    //get the queue
-    let queueRef = firestore.collection("queues").doc(data.queueId)
-    //get the ticket
-    let ticketRef = queueRef.collection("tickets").doc(data.ticketId)
+exports.removeMeFromQueue = functions.https.onCall(async (data, context) => {
+  //get the queue
+  let queueRef = firestore.collection("queues").doc(data.queueId);
+  //get the ticket
+  let ticketRef = queueRef.collection("tickets").doc(data.ticketId);
 
-    //transaction is cheaper
-    let result = await firestore.runTransaction(async function(transaction) {
-        let queueDoc = await transaction.get(queueRef)
-        let queueData = queueDoc.data()
-        return await removeTicket(transaction, ticketRef, queueRef, queueData, false)
-    })
+  //transaction is cheaper
+  let result = await firestore.runTransaction(async function(transaction) {
+    let queueDoc = await transaction.get(queueRef);
+    let queueData = queueDoc.data();
+    return await removeTicket(
+      transaction,
+      ticketRef,
+      queueRef,
+      queueData,
+      false
+    );
+  });
 
-    return result
+  return result;
 });
 
 
@@ -274,7 +331,7 @@ exports.scheduledFunction = functions.pubsub.schedule('every '+config.smspro.get
         strPassword: config.smspro.password,
         intCampaignId: config.smspro.campaignId
     }
-    
+
     let serviceReply = await soap.createClientAsync(url).then((client) => {
         return client.GetCampaignUnreadReplies(args);
     });
@@ -289,15 +346,12 @@ exports.scheduledFunction = functions.pubsub.schedule('every '+config.smspro.get
         .InList - Boolean - O originador da resposta pertence à lista. (devera sempre ser falso)
         .ListId - Integer - Identificador da lista à qual o originador pertence. (ignorar)
         */
-    
+
         console.log(JSON.stringify(m));
 
         // let queueRef = firestore.collection("queues").doc(data.queueId)
         // var ticketRef = queueRef.collection('tickets').doc();
     })
-    
-
-    console.log();
 
     return null;
 });
@@ -307,76 +361,94 @@ exports.scheduledFunction = functions.pubsub.schedule('every '+config.smspro.get
 
 //---- HELPERS ----
 
-async function addTicket(transaction, ticketRef, ticketData, queueRef, queueData){
+async function addTicket(
+  transaction,
+  ticketRef,
+  ticketData,
+  queueRef,
+  queueData
+) {
+  queueData.ticketTopNumber++;
+  queueData.remainingTicketsInQueue++;
+  ticketData.number = queueData.ticketTopNumber;
 
-    
-    queueData.ticketTopNumber++
-    queueData.remainingTicketsInQueue++
-    ticketData.number = queueData.ticketTopNumber
+  //set ticket
+  await transaction.set(ticketRef, ticketData);
 
-    //set ticket 
-    await transaction.set(ticketRef, ticketData);
+  //add ticket to count
+  await transaction.set(queueRef, queueData);
 
-    //add ticket to count
-    await transaction.set(queueRef, queueData);
-
-    return {queue:queueData, ticket:ticketData}
+  return { queue: queueData, ticket: ticketData };
 }
 
-async function removeTicket(transaction, ticketRef, queueRef, queueData, replaceCurrentTicket){
-    let ticketData = (await transaction.get(ticketRef)).data()
+async function removeTicket(
+  transaction,
+  ticketRef,
+  queueRef,
+  queueData,
+  replaceCurrentTicket
+) {
+  let ticketData = (await transaction.get(ticketRef)).data();
 
-    //remove ticket from DB
-    await transaction.delete(ticketRef)
-    //decrease counter
-    queueData.remainingTicketsInQueue = queueData.remainingTicketsInQueue>0 ? queueData.remainingTicketsInQueue-1 : 0;
+  //remove ticket from DB
+  await transaction.delete(ticketRef);
+  //decrease counter
+  queueData.remainingTicketsInQueue =
+    queueData.remainingTicketsInQueue > 0
+      ? queueData.remainingTicketsInQueue - 1
+      : 0;
 
-    //replace current ticket info
-    if(replaceCurrentTicket){
-        queueData.currentTicketNumber = ticketData.number
-        if(!!ticketData.name){
-            queueData.currentTicketName = ticketData.name
-        }
+  //replace current ticket info
+  if (replaceCurrentTicket) {
+    queueData.currentTicketNumber = ticketData.number;
+    if (!!ticketData.name) {
+      queueData.currentTicketName = ticketData.name;
     }
+  }
 
-    await transaction.set(queueRef, {remainingTicketsInQueue});
+  await transaction.set(queueRef, {
+    remainingTicketsInQueue: queueData.remainingTicketsInQueue
+  });
 
-    return {queue:queueData, ticket:ticketData}
+  return { queue: queueData, ticket: ticketData };
 }
 
-function fiveRandomChars(){
-    return Math.random().toString(36).replace(/[^0-9a-z]/, '').substring(0,5).toUpperCase()
+function fiveRandomChars() {
+  return Math.random()
+    .toString(36)
+    .replace(/[^0-9a-z]/, "")
+    .substring(0, 5)
+    .toUpperCase();
 }
 
-async function sendMail(to, templateId, dynamic_template_data){
-    let sendGridKey = config.sendgrid.key
-    const sgMail = require('@sendgrid/mail');
+async function sendMail(to, templateId, dynamic_template_data) {
+  let sendGridKey = config.sendgrid.key;
+  const sgMail = require("@sendgrid/mail");
 
-    sgMail.setApiKey(sendGridKey);
+  sgMail.setApiKey(sendGridKey);
 
-    const msg = {
-        to,
-        from: 'no-reply@nafila.pt',
-        templateId,
-        dynamic_template_data
-    };
+  const msg = {
+    to,
+    from: "no-reply@nafila.pt",
+    templateId,
+    dynamic_template_data
+  };
 
-
-    sgMail.sendMultiple(msg);
+  sgMail.sendMultiple(msg);
 }
 
-async function sendSMS(MsisdnList, strMessage){
-    var soap = require('soap');
-    var url = urlSMSPro;
+async function sendSMS(MsisdnList, strMessage) {
+  var soap = require("soap");
+  var url = urlSMSPro;
 
-    var args = {
-        TenantName: config.smspro.tenant,
-        strUsername: config.smspro.username,
-        strPassword: config.smspro.password,
-        MsisdnList,
-        strMessage
-    }
-    return soap.createClientAsync(url).then((client) => {
-        return client.SendSMS(args);
-    });
+  var args = {
+    TenantName: config.smspro.tenant,
+    strUsername: config.smspro.username,
+    strPassword: config.smspro.password,
+    MsisdnList,
+    strMessage
+  };
+  return soap.createClientAsync(url).then(client => {
+    return client.SendSMS(args);
+  });
 }
