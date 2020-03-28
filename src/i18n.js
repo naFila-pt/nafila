@@ -127,7 +127,6 @@ i18n
             "Agora já pode aceder à sua conta com a nova password. Carregue no botão para voltar ao Login",
           "admin#recoverPasswordChangeSuccess_button": "Entrar",
 
-
           // End Queue
           "main#endQueue_title": "Pretende terminar a Fila actual?",
           "main#endQueue_yes": "Sim",
@@ -136,8 +135,7 @@ i18n
           //End Queue Success
           "main#endQueueSuccess_title": "Fila terminada.",
           "main#endQueueSuccess_text": "A sua fila foi terminada.\nAté Amanhã!",
-          "main#endQueueSuccess_back": "Voltar ao Início",
-
+          "main#endQueueSuccess_back": "Voltar ao Início"
         }
       }
     },

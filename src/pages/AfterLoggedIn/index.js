@@ -1,7 +1,7 @@
-import EndQueue from "./EndQueue"
+import EndQueue from "./EndQueue";
 
 const Main = {
-    EndQueue: EndQueue
+  EndQueue: EndQueue
 };
 
 export default Main;

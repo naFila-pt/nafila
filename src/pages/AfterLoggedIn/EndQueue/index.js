@@ -1,1 +1,1 @@
-export { default } from "./EndQueue"
+export { default } from "./EndQueue";

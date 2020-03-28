@@ -1,13 +1,13 @@
 import {
-    PRIMARY_COLOR,
-    SECONDARY_COLOR
+  PRIMARY_COLOR,
+  SECONDARY_COLOR
 } from "../../../constants/ColorConstants";
 import styled from "styled-components";
 
 export const RecoverLink = styled.a`
-    flex: 1;
-    margin-top: 10px;
-  `;
+  flex: 1;
+  margin-top: 10px;
+`;
 
 export const Form = styled.form`
     text-align: center;
@@ -30,7 +30,7 @@ export const Form = styled.form`
   
         &:after {
           border-color: ${PRIMARY_COLOR} !important;
-        }
+        } 
       }
   `;
 export const LogoContainer = styled.div`

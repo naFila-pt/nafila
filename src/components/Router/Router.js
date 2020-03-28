@@ -32,8 +32,8 @@ class Router extends Component {
             {shouldSkipOnBoarding ? (
               <HomeContent user={user} />
             ) : (
-                <OnBoardingContent />
-              )}
+              <OnBoardingContent />
+            )}
           </Route>
           <Route path="/termos-condicoes" component={TermsConditions} exact />
 
@@ -54,11 +54,7 @@ class Router extends Component {
             component={Admin.ChangePassword}
             exact
           />
-          <Route
-            path={MAIN_ENDQUEUE_PATH}
-            component={Main.EndQueue}
-            exact
-          />
+          <Route path={MAIN_ENDQUEUE_PATH} component={Main.EndQueue} exact />
 
           <Route>
             <NotFoundContent />

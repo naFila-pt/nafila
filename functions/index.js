@@ -5,7 +5,7 @@ const config = functionsMain.config();
 const admin = require("firebase-admin");
 admin.initializeApp();
 const firestore = admin.firestore();
-const urlSMSPro = 'https://smspro.nos.pt/smspro/smsprows.asmx?WSDL';
+const urlSMSPro = "https://smspro.nos.pt/smspro/smsprows.asmx?WSDL";
 
 const runtimeOpts = {
   timeoutSeconds: 15,
@@ -86,7 +86,7 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
     //delete queue entirely
     transaction.delete(queueRef);
 
-    return {tickets:queryRef.docs, queue:queueData};
+    return { tickets: queryRef.docs, queue: queueData };
   });
 
   //notify every remaining person in queue of queue deletion
@@ -317,29 +317,28 @@ exports.removeMeFromQueue = functions.https.onCall(async (data, context) => {
   return result;
 });
 
-
-
 //---- REGULAR SCHEDULED JOB ----
-exports.scheduledFunction = functions.pubsub.schedule('every '+config.smspro.getmessagesinterval).onRun(async function(context) {
-
-    var soap = require('soap');
+exports.scheduledFunction = functions.pubsub
+  .schedule("every " + config.smspro.getmessagesinterval)
+  .onRun(async function(context) {
+    var soap = require("soap");
     var url = urlSMSPro;
 
     var args = {
-        TenantName: config.smspro.tenant,
-        strUsername: config.smspro.username,
-        strPassword: config.smspro.password,
-        intCampaignId: config.smspro.campaignId
-    }
+      TenantName: config.smspro.tenant,
+      strUsername: config.smspro.username,
+      strPassword: config.smspro.password,
+      intCampaignId: config.smspro.campaignId
+    };
 
-    let serviceReply = await soap.createClientAsync(url).then((client) => {
-        return client.GetCampaignUnreadReplies(args);
+    let serviceReply = await soap.createClientAsync(url).then(client => {
+      return client.GetCampaignUnreadReplies(args);
     });
 
-    let messages = serviceReply.Replies
+    let messages = serviceReply.Replies;
 
-    messages.forEach((m)=>{
-        /* each message:
+    messages.forEach(m => {
+      /* each message:
         .MSISDN - string (20) - MSISDN do originador da resposta.
         .Moment - DateTime - Data e Hora de recepção da resposta.
         .Message - string (160) - Texto da resposta.
@@ -347,17 +346,14 @@ exports.scheduledFunction = functions.pubsub.schedule('every '+config.smspro.get
         .ListId - Integer - Identificador da lista à qual o originador pertence. (ignorar)
         */
 
-        console.log(JSON.stringify(m));
+      console.log(JSON.stringify(m));
 
-        // let queueRef = firestore.collection("queues").doc(data.queueId)
-        // var ticketRef = queueRef.collection('tickets').doc();
-    })
+      // let queueRef = firestore.collection("queues").doc(data.queueId)
+      // var ticketRef = queueRef.collection('tickets').doc();
+    });
 
     return null;
-});
-
-
-
+  });
 
 //---- HELPERS ----
 
