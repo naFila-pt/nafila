@@ -89,7 +89,7 @@ i18n
 
           // Recover Password Change Success
           "admin#recoverPasswordChangeSuccess_title": "Mudança de password bem sucedida!",
-          "admin#recoverPasswordChangeSuccess_text1": "Será reencaminhado para a página principal dentro de instantes.",
+          "admin#recoverPasswordChangeSuccess_text1": "Agora já pode aceder à sua conta com a nova password. Carregue no botão para voltar ao Login",
           "admin#recoverPasswordChangeSuccess_button": "Entrar",
         }
       }
