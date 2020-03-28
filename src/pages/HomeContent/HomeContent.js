@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
+import { firestore, functions } from "../../firebase";
 import HomeLayout from "../../components/HomeLayout";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -48,6 +49,13 @@ const HomeContent = () => {
   const [storeCodeInput, setStoreCodeInput] = useState("");
   const [userEmail, setUserEmail] = useState("");
 
+  const ticketsStoreInfo = Object.seal({
+    name: null,
+    currentTicket: null,
+    remainingInQueue: null,
+    ownTicketNumber: null
+  });
+
   const handleNextButton = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
   };
@@ -60,8 +68,45 @@ const HomeContent = () => {
     setUserEmail(event.target.value);
   };
 
-  const handleTermsOnClick = () => {
+  const handleTermsOnClick = e => {
+    e.preventDefault();
     window.open("/termos-condicoes", "_blank");
+  };
+
+  const handleGetStoreInfo = () => {
+    try {
+      const queue = firestore
+        .collection("queues")
+        .doc(storeCodeInput)
+        .get()
+        .data();
+
+      ticketsStoreInfo.name = queue.name;
+      ticketsStoreInfo.currentTicket = 0;
+      ticketsStoreInfo.remainingInQueue = queue.remainingTicketsInQueue;
+
+      handleNextButton();
+    } catch (e) {
+      alert(`Error: ${e}`);
+    }
+  };
+
+  const handleAddToQueue = async () => {
+    try {
+      const addMeToQueue = functions.httpsCallable("addMeToQueue");
+
+      const queueInfo = await addMeToQueue({
+        queueId: storeCodeInput,
+        email: userEmail
+      });
+
+      ticketsStoreInfo.remainingInQueue = queueInfo.remainingTicketsInQueue;
+      ticketsStoreInfo.ownTicketNumber = queueInfo.ticketNumber;
+
+      handleNextButton();
+    } catch (e) {
+      alert(`Error: ${e}`);
+    }
   };
 
   return (
@@ -107,7 +152,7 @@ const HomeContent = () => {
           <div className={classes.bottomButton}>
             <Button
               forward
-              onClick={handleNextButton}
+              onClick={handleGetStoreInfo}
               dangerouslySetInnerHTML={{ __html: t("home#insertCode_button") }}
             />
           </div>
@@ -118,7 +163,7 @@ const HomeContent = () => {
           <Logo />
           <div style={{ fontSize: "1.25em" }}>
             <div>{t("home#queue_store")}</div>
-            <Typography variant="h3">PDCartaxo</Typography>
+            <Typography variant="h3">{ticketsStoreInfo.name}</Typography>
           </div>
           <div className={classes.bottomButton}>
             <Grid
@@ -141,7 +186,7 @@ const HomeContent = () => {
                     fontWeight: 900
                   }}
                 >
-                  7 {t("home#queue_people")}
+                  {ticketsStoreInfo.remainingInQueue} {t("home#queue_people")}
                 </div>
               </Grid>
             </Grid>
@@ -181,7 +226,7 @@ const HomeContent = () => {
                 }}
               />
             </a>
-            <Button forward onClick={handleNextButton}>
+            <Button forward onClick={handleAddToQueue}>
               {t("home#notification_button")}
             </Button>
           </div>
@@ -191,7 +236,7 @@ const HomeContent = () => {
         <Grid item className={classes.gridItem} style={{ paddingTop: ".8em" }}>
           <div style={{ fontSize: "1.25em" }}>
             <div>{t("home#ticket_store")}</div>
-            <Typography variant="h3">PDCartaxo</Typography>
+            <Typography variant="h3">{ticketsStoreInfo.name}</Typography>
           </div>
           <Grid
             container
@@ -220,13 +265,17 @@ const HomeContent = () => {
               <div style={{ fontSize: "1.25em" }}>
                 {t("home#ticket_currentQueue")}
               </div>
-              <div style={{ fontSize: "2.8125em", fontWeight: 900 }}>019</div>
+              <div style={{ fontSize: "2.8125em", fontWeight: 900 }}>
+                {ticketsStoreInfo.currentTicket}
+              </div>
             </Grid>
             <Grid item>
               <div style={{ fontSize: "1.25em" }}>
                 {t("home#ticket_length")}
               </div>
-              <div style={{ fontSize: "2.8125em", fontWeight: 900 }}>9</div>
+              <div style={{ fontSize: "2.8125em", fontWeight: 900 }}>
+                {ticketsStoreInfo.remainingInQueue}
+              </div>
             </Grid>
           </Grid>
           <p

@@ -184,7 +184,7 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
     await sendSMS(
       [result.ticket.phone],
       result.queue.name +
-      ": Está a chegar a sua vez naFila! Dirija-se à entrada de loja."
+        ": Está a chegar a sua vez naFila! Dirija-se à entrada de loja."
     );
   }
 
@@ -300,11 +300,7 @@ exports.scheduledFunction = functions.pubsub
             );
           });
 
-          await sendSMS(
-            [m["MSISDN"]],
-            "Saiu da fila " +
-              queueRef.id
-          );
+          await sendSMS([m["MSISDN"]], "Saiu da fila " + queueRef.id);
         } else {
           throw "unexpected msg format";
         }
@@ -320,7 +316,7 @@ async function createTicketInQueue(
   { queueId, email = null, phone = null, name = null },
   context
 ) {
-  var validator = require('validator');
+  var validator = require("validator");
 
   //receives queueId
   let queueRef = firestore.collection("queues").doc(queueId);
@@ -329,12 +325,12 @@ async function createTicketInQueue(
   //create ticket object
   let ticketData = {};
   if (!!email) {
-    if(!validator.isEmail(email)){
+    if (!validator.isEmail(email)) {
       throw "Invalid email format";
     }
     ticketData.email = email;
   } else if (!!phone) {
-    if(!validator.isMobilePhone(phone)){
+    if (!validator.isMobilePhone(phone)) {
       throw "Invalid phone number format";
     }
     ticketData.phone = phone;
@@ -481,15 +477,11 @@ async function sendSMS(MsisdnList, strMessage) {
   return await callSMSPro("SendSMS", args);
 }
 
-
-var cacheSMSProClient
+var cacheSMSProClient;
 async function callSMSPro(method, args) {
-  
   return await new Promise((resolve, reject) => {
-
     try {
-
-      var makeCall = function(){
+      var makeCall = function() {
         cacheSMSProClient[method](args, function(err, result) {
           if (!!err) {
             reject(err);
@@ -497,10 +489,10 @@ async function callSMSPro(method, args) {
             resolve(result);
           }
         });
-      }
+      };
 
-      var soap
-      if(!cacheSMSProClient){
+      var soap;
+      if (!cacheSMSProClient) {
         soap = require("soap");
 
         soap.createClient(urlSMSPro, function(err, client) {
@@ -508,14 +500,13 @@ async function callSMSPro(method, args) {
             reject(err);
           } else {
             client.setEndpoint(urlSMSProService);
-            cacheSMSProClient = client //keep in memory for later
-            makeCall()
+            cacheSMSProClient = client; //keep in memory for later
+            makeCall();
           }
         });
       } else {
-        makeCall()
+        makeCall();
       }
-      
     } catch (e) {
       reject(e);
     }
