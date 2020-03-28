@@ -2,7 +2,8 @@ const functionsMain = require('firebase-functions');
 const config = functionsMain.config();
 const admin = require('firebase-admin');
 admin.initializeApp();
-const firestore = admin.firestore()
+const firestore = admin.firestore();
+const urlSMSPro = 'https://smspro.nos.pt/smspro/smsprows.asmx?WSDL';
 
 const runtimeOpts = {
     timeoutSeconds: 15,
@@ -12,6 +13,8 @@ const runtimeOpts = {
 //low cost / high perf settings
 const functions = functionsMain.region('europe-west1').runWith(runtimeOpts);
 
+
+//---- APP API ----
 
 //create queue
 exports.createQueue = functions.https.onCall(async (data, context) => {
@@ -257,6 +260,53 @@ exports.removeMeFromQueue = functions.https.onCall(async (data, context)=>{
     return result
 });
 
+
+
+//---- REGULAR SCHEDULED JOB ----
+exports.scheduledFunction = functions.pubsub.schedule('every '+config.smspro.getmessagesinterval).onRun(async function(context) {
+
+    var soap = require('soap');
+    var url = urlSMSPro;
+
+    var args = {
+        TenantName: config.smspro.tenant,
+        strUsername: config.smspro.username,
+        strPassword: config.smspro.password,
+        intCampaignId: config.smspro.campaignId
+    }
+    
+    let serviceReply = await soap.createClientAsync(url).then((client) => {
+        return client.GetCampaignUnreadReplies(args);
+    });
+
+    let messages = serviceReply.Replies
+
+    messages.forEach((m)=>{
+        /* each message:
+        .MSISDN - string (20) - MSISDN do originador da resposta.
+        .Moment - DateTime - Data e Hora de recepção da resposta.
+        .Message - string (160) - Texto da resposta.
+        .InList - Boolean - O originador da resposta pertence à lista. (devera sempre ser falso)
+        .ListId - Integer - Identificador da lista à qual o originador pertence. (ignorar)
+        */
+    
+        console.log(JSON.stringify(m));
+
+        // let queueRef = firestore.collection("queues").doc(data.queueId)
+        // var ticketRef = queueRef.collection('tickets').doc();
+    })
+    
+
+    console.log();
+
+    return null;
+});
+
+
+
+
+//---- HELPERS ----
+
 async function addTicket(transaction, ticketRef, ticketData, queueRef, queueData){
 
     
@@ -317,7 +367,7 @@ async function sendMail(to, templateId, dynamic_template_data){
 
 async function sendSMS(MsisdnList, strMessage){
     var soap = require('soap');
-    var url = 'https://smspro.nos.pt/smspro/smsprows.asmx?WSDL';
+    var url = urlSMSPro;
 
     var args = {
         TenantName: config.smspro.tenant,
