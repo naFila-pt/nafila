@@ -43,11 +43,12 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "lint": "eslint --ignore-path .gitignore ."
+    "lint": "eslint ."
   },
   "eslintConfig": {
     "extends": ["react-app", "prettier", "prettier/react"],
     "plugins": ["prettier"],
+    "ignorePatterns": ["build/", "node_modules/"],
     "rules": {
         "prettier/prettier": ["error"]
     }
