@@ -13,7 +13,7 @@ import { ADMIN_RECOVERPASSWORDSUCCESS_PATH, ADMIN_LOGIN_PATH } from '../../../co
 import * as S from './style'
 import SuccessfulRecoverPassword from './SuccessfulRecoverPassword'
 import validator from "email-validator"
-
+import authentication from "../../../services/authentication"
 const typographyStyles = {
   TITLE: {
     color: PRIMARY_COLOR,
@@ -56,12 +56,9 @@ function RecoverPassword() {
   }
 
   const sendPasswordRecoveryEmail = ( ) => {
-    //insert send email logic here
-    console.log("email ");
-    console.log(validator.validate(email));
     if (validator.validate(email)){
-      console.log("here!");
-    setSuccess(true)}
+      authentication.resetPassword(email);
+      setSuccess(true)}
     else{
       setWrongEmailText(t("admin#recoverPassword_wrongEmail"))
 
