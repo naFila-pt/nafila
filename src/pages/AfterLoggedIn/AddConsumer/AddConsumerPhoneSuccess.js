@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-import { Typography, TextField } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
 import Button from '../../../components/Button'
 import LoginBg from '../../../assets/bg/main.svg'
 import Layout from '../Layout'

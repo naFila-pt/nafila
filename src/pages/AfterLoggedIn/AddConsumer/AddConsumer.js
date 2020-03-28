@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 
-import { Typography, TextField } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
 import Button from '../../../components/Button'
 import LoginBg from '../../../assets/bg/main.svg'
 import Layout from '../Layout'
@@ -29,13 +28,6 @@ const backButtonStyles = {
   background: BACK_BUTTON_BG_COLOR
 }
 
-const inputProps = {
-  fullWidth: true,
-  required: true,
-}
-
-
-
 
 
 function AddConsumer() {
@@ -54,9 +46,6 @@ function AddConsumer() {
         <Typography variant="h3" style={typographyStyles.TITLE}>
           {t("main#addConsumer_title")}
         </Typography>
-
-
-
 
         <Button forward style={buttonStyles} onClick={() => setViewType("phone")} >
           {t("main#addConsumer_button1")}
