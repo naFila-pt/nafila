@@ -9,7 +9,7 @@ var firestore = firebase.firestore();
 ### create new user
 
 A user is identified by `uid` (from auth) and contains a list of `.queues` 
-it is stored in firestore as `/userser/<userId>/{queues:[]}`
+it is stored in firestore as `/users/<userId>/{queues:[]}`
 
 ```javascript
 var userDoc = firestore.collection("users").doc(uid)
@@ -25,14 +25,22 @@ var functions = firebase.app().functions('europe-west1')
 ```
 
 ### create new queue
-A queue is identified by `queueId` (generated) and contains a `.name`, a `.currentTicketIndex` and a list of `.tickets`
-it is stored in firestore as `/userser/<queueId>/{name:"", currentTicketIndex:0, tickets:[]}`
+A queue is identified by `queueId` (generated in backend) and contains:
+- a `.owner_id` - the owner's `<userId>`
+- a `.name` - store name
+- a `.remainingTicketsInQueue` - remaining active people in queue
+- a `.ticketTopNumber` - number of the last ticket
+- a `.currentTicketNumber` - number of the current ticket being attended
+- a `.currentTicketName` - name of the current ticket being attended (if `.name` based ticket - `null` otherwise)
+A queue is stored in firestore as `/queues/<queueId>/{owner_id, name, remainingTicketsInQueue, ticketTopNumber, currentTicketNumber, currentTicketName}`
+
+Note: email is the store manager (user) email - in order for him to receive poster email
 
 ```javascript
 var createQueue = functions.httpsCallable('createQueue');
-createQueue({name}).then(function(result) {
-  //result: {queueId, queueObj}
-  //queueObj: {owner_id:context.auth.uid, name:data.name, remainingTicketsInQueue:0, ticketTopNumber:0}
+createQueue({name, email}).then(function(result) {
+  //result: {queueId, queue}
+  //.queue: {owner_id, name, remainingTicketsInQueue, ticketTopNumber, currentTicketNumber, currentTicketName}
   console.log(result)
 }).catch((e)=>{
   console.log(e)
@@ -44,7 +52,9 @@ createQueue({name}).then(function(result) {
 ```javascript
 var addMeToQueue = functions.httpsCallable('addMeToQueue');
 addMeToQueue({queueId, email: "carlos.mr.ouro@gmail.com"}).then(function(result) {
-  //result: {ticketId, ticketNumber, remainingTicketsInQueue}
+  //result: {ticket, queue}
+  //.ticket: {number, email}
+  //.queue: {owner_id, name, remainingTicketsInQueue, ticketTopNumber, currentTicketNumber, currentTicketName}
   console.log(result)
 }).catch((e)=>{
   console.log(e)
@@ -58,7 +68,9 @@ Note: fires email/SMS if necessary and updates queue `.currentTicketIndex`
 ```javascript
 var removeMeFromQueue = functions.httpsCallable('removeMeFromQueue');
 removeMeFromQueue({queueId,ticketId}).then(function(result) {
-  //result(ticket): {number, email}
+  //result: {ticket, queue}
+  //.ticket: {number, email}
+  //.queue: {owner_id, name, remainingTicketsInQueue, ticketTopNumber, currentTicketNumber, currentTicketName}
   console.log(result)
 }).catch((e)=>{
   console.log(e)
@@ -66,13 +78,15 @@ removeMeFromQueue({queueId,ticketId}).then(function(result) {
 ```
 
 ### manually add a user to queue (via authenticated admin)
-can be done via `{queueId, email: "carlos.mr.ouro@gmail.com"}`, or `{queueId, phone: "+351910196551"}`, or `{queueId, name:"Maria Silva"}`
-Note: function prefers email --> phone --> name
+can be called with `{queueId, email: "carlos.mr.ouro@gmail.com"}`, or `{queueId, phone: "+351910196551"}`, or `{queueId, name:"Maria Silva"}`
+Note: in case multiple are provided, function prefers email --> phone --> name
 
 ```javascript
 var manuallyAddToQueue = functions.httpsCallable('manuallyAddToQueue');
 manuallyAddToQueue({queueId, phone: "+351910196551"}).then(function(result) {
-  //result: {ticketId, ticketNumber, remainingTicketsInQueue}
+  //result: {ticket, queue}
+  //.ticket: {number, email/phone/name}
+  //.queue: {owner_id, name, remainingTicketsInQueue, ticketTopNumber, currentTicketNumber, currentTicketName}
   console.log(result)
 }).catch((e)=>{
   console.log(e)
@@ -81,12 +95,14 @@ manuallyAddToQueue({queueId, phone: "+351910196551"}).then(function(result) {
 
 ### call next queue
 call next person in queue
-Note: fires email/SMS if necessary and updates queue `.currentTicketIndex`
+Note: fires email/SMS if necessary, removes ticket from queue and updates queue's state: `.remainingTicketsInQueue`, `.currentTicketNumber` and `.currentTicketName`
 
 ```javascript
 var callNextOnQueue = functions.httpsCallable('callNextOnQueue');
 callNextOnQueue({queueId}).then(function(result) {
-  //result(ticket): {number, email/phone/name}
+  //result: {queue, ticket}
+  //.ticket: {number, email/phone/name}
+  //.queue: {owner_id, name, remainingTicketsInQueue, ticketTopNumber, currentTicketNumber, currentTicketName}
   console.log(result)
 }).catch((e)=>{
   console.log(e)
@@ -101,6 +117,7 @@ Note: fires emails/SMS if necessary warning remaining people on queue and remove
 var deleteQueue = functions.httpsCallable('deleteQueue');
 deleteQueue({queueId}).then(function(result) {
   //result: {deletedCount}
+  //.deletedCount -- number of deleted tickets that were still active in queue
   console.log(result)
 }).catch((e)=>{
   console.log(e)

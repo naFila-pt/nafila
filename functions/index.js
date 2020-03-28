@@ -53,7 +53,7 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
   batch.commit();
 
   //{{queuePosterUrl}} {{queueName}} {{queueId}}
-  await sendMail([userData.email], "d-6ac28f40006c4d178be4e00adae2bcb4", {
+  await sendMail([data.email], "d-6ac28f40006c4d178be4e00adae2bcb4", {
     queueId: queueRef.id,
     queueName: queue.name,
     queuePosterUrl: "https://nafila.pt/cartaz-fila/" + queueRef.id
@@ -69,7 +69,7 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
   let queueRef = firestore.collection("queues").doc(data.queueId);
 
   //transaction is cheaper
-  let tickets = await firestore.runTransaction(async function(transaction) {
+  let result = await firestore.runTransaction(async function(transaction) {
     let queueDoc = await transaction.get(queueRef);
 
     //get queue
@@ -86,13 +86,13 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
     //delete queue entirely
     transaction.delete(queueRef);
 
-    return queryRef.docs;
+    return {tickets:queryRef.docs, queue:queueData};
   });
 
   //notify every remaining person in queue of queue deletion
   let emailsToNotify = [];
   let phonesToNotify = [];
-  tickets.forEach(t => {
+  result.tickets.forEach(t => {
     let ticketData = t.data();
     if (!!ticketData.email) {
       emailsToNotify.push(ticketData.email);
@@ -106,7 +106,7 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
     //{{queueName}} {{queueId}}
     await sendMail(emailsToNotify, "d-b28224dd3dac48388f8e469ed82448a8", {
       queueId: queueRef.id,
-      queueName: tickets.queueName
+      queueName: result.queue.name
     });
   }
 
@@ -115,14 +115,14 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
     await sendSMS(
       phonesToNotify,
       "A fila '" +
-        tickets.queue.name +
+        result.queue.name +
         "' (" +
         queueRef.id +
         ") foi fechada pelo administrador da fila. A sua senha foi removida."
     );
   }
 
-  return { deletedCount: tickets.length };
+  return { deletedCount: result.tickets.length };
 });
 
 //Call next person in queue
