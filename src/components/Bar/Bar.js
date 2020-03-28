@@ -86,11 +86,102 @@ class Bar extends Component {
     return (
       <AppBar color="primary" position="static">
         <Toolbar>
-          <Box display="flex" flexGrow={1} justifyContent="center">
-            <Typography color="inherit" variant="h5">
-              na fila.
+          <Box display="flex" flexGrow={1}>
+            <Typography color="inherit" variant="h6">
+              {process.env.REACT_APP_TITLE}
             </Typography>
           </Box>
+
+          {user && (
+            <>
+              {roles.includes("admin") && (
+                <Box mr={1}>
+                  <Button
+                    color="inherit"
+                    component={Link}
+                    to="/admin"
+                    variant="outlined"
+                  >
+                    Admin
+                  </Button>
+                </Box>
+              )}
+
+              <IconButton
+                color="inherit"
+                disabled={performingAction}
+                onClick={this.openMenu}
+              >
+                <UserAvatar user={Object.assign(user, userData)} />
+              </IconButton>
+
+              <Menu
+                anchorEl={menu.anchorEl}
+                open={Boolean(menu.anchorEl)}
+                onClose={this.closeMenu}
+              >
+                {menuItems.map((menuItem, index) => {
+                  if (
+                    menuItem.hasOwnProperty("condition") &&
+                    !menuItem.condition
+                  ) {
+                    return null;
+                  }
+
+                  let component = null;
+
+                  if (menuItem.to) {
+                    component = (
+                      <MenuItem
+                        key={index}
+                        component={Link}
+                        to={menuItem.to}
+                        onClick={this.closeMenu}
+                      >
+                        {menuItem.name}
+                      </MenuItem>
+                    );
+                  } else {
+                    component = (
+                      <MenuItem
+                        key={index}
+                        onClick={() => {
+                          this.closeMenu();
+
+                          menuItem.onClick();
+                        }}
+                      >
+                        {menuItem.name}
+                      </MenuItem>
+                    );
+                  }
+
+                  if (menuItem.divide) {
+                    return (
+                      <span key={index}>
+                        <Divider />
+
+                        {component}
+                      </span>
+                    );
+                  }
+
+                  return component;
+                })}
+              </Menu>
+            </>
+          )}
+
+          {!user && (
+            <ButtonGroup
+              color="inherit"
+              disabled={performingAction}
+              variant="outlined"
+            >
+              <Button onClick={onSignUpClick}>Sign up</Button>
+              <Button onClick={onSignInClick}>Sign in</Button>
+            </ButtonGroup>
+          )}
         </Toolbar>
       </AppBar>
     );
