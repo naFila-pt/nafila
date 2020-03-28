@@ -1,29 +1,32 @@
-import React from 'react'
-import { Typography } from '@material-ui/core'
-import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Typography } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
-import Button from '../../../components/Button'
-import Background from '../../../assets/bg/user_intro.svg'
-import Logo from '../../../assets/logo.svg'
-import Layout from '../Layout'
-import { PRIMARY_COLOR, WHITE_COLOR } from '../../../constants/ColorConstants'
-import { ADMIN_LOGIN_PATH, ADMIN_SIGNUP_PATH } from '../../../constants/RoutesConstants'
+import Button from "../../../components/Button";
+import Background from "../../../assets/bg/user_intro.svg";
+import Logo from "../../../assets/logo.svg";
+import Layout from "../Layout";
+import { PRIMARY_COLOR, WHITE_COLOR } from "../../../constants/ColorConstants";
+import {
+  ADMIN_LOGIN_PATH,
+  ADMIN_SIGNUP_PATH
+} from "../../../constants/RoutesConstants";
 
-import * as S from './style'
+import * as S from "./style";
 
 const typographyStyles = {
   MAIN: {
     color: PRIMARY_COLOR,
-    fontWeight: 600,
+    fontWeight: 600
   },
   SECONDARY: {
-    color: PRIMARY_COLOR,
+    color: PRIMARY_COLOR
   }
-}
+};
 
 function WelcomePanel() {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   return (
     <Layout bg={Background} hideToolbar>
@@ -38,26 +41,32 @@ function WelcomePanel() {
       <Typography
         variant="h5"
         style={typographyStyles.SECONDARY}
-        dangerouslySetInnerHTML={{ __html: t('admin#intro_pitch') }}
+        dangerouslySetInnerHTML={{ __html: t("admin#intro_pitch") }}
       />
 
       <S.ButtonsContainer>
         <Button forward>
-          <Link to={ADMIN_LOGIN_PATH} style={{ color: WHITE_COLOR, textDecoration: 'none' }}>
-            {t('admin#intro_login')}
+          <Link
+            to={ADMIN_LOGIN_PATH}
+            style={{ color: WHITE_COLOR, textDecoration: "none" }}
+          >
+            {t("admin#intro_login")}
           </Link>
         </Button>
 
         <br />
 
         <Button variant="secondary" forward>
-          <Link to={ADMIN_SIGNUP_PATH} style={{ color: PRIMARY_COLOR, textDecoration: 'none' }}>
-            {t('admin#intro_signup')}
+          <Link
+            to={ADMIN_SIGNUP_PATH}
+            style={{ color: PRIMARY_COLOR, textDecoration: "none" }}
+          >
+            {t("admin#intro_signup")}
           </Link>
         </Button>
       </S.ButtonsContainer>
     </Layout>
-  )
+  );
 }
 
-export default WelcomePanel
+export default WelcomePanel;

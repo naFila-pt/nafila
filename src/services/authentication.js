@@ -116,7 +116,7 @@ authentication.signUpWithEmailAddressAndPassword = (emailAddress, password) => {
               method: "password"
             });
 
-            authentication.verifyEmailAddress()
+            authentication.verifyEmailAddress();
             resolve(value);
           })
           .catch(reason => {
@@ -280,7 +280,7 @@ authentication.signInWithAuthProvider = providerId => {
     }
 
     if (auth.currentUser) {
-      alert('user is already logged in')
+      alert("user is already logged in");
       reject();
 
       return;
