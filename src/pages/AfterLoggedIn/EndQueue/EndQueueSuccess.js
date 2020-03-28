@@ -11,6 +11,7 @@ import {
     BACK_BUTTON_BG_COLOR,
     BACK_BUTTON_TEXT_COLOR
 } from "../../../constants/ColorConstants";
+import Logo from "../../../assets/logo.svg";
 import * as S from "./style";
 const typographyStyles = {
     TITLE: {
@@ -38,7 +39,6 @@ function EndQueueSuccess() {
                     {t("main#endQueueSuccess_title")}
                 </Typography>
 
-
                 <p
                     style={typographyStyles.SECONDARY}
                     dangerouslySetInnerHTML={{
@@ -46,8 +46,9 @@ function EndQueueSuccess() {
                     }}
                 />
 
-
-
+                <S.LogoContainer>
+                    <img src={Logo} alt="nafila logo" />
+                </S.LogoContainer>
 
                 <Button backward style={backButtonStyles}>
                     <Link
