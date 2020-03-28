@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react'
-
 import { Typography, TextField } from '@material-ui/core'
+import { Alert } from '@material-ui/lab'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+
 import Button from '../../../components/Button'
 import LoginBg from '../../../assets/bg/main.svg'
 import Layout from '../Layout'
 import authentication from '../../../services/authentication'
 import { auth } from '../../../firebase'
 import Loader from '../../../components/Loader'
-import { Link } from 'react-router-dom'
 
-import { PRIMARY_COLOR, WHITE_COLOR } from '../../../constants/ColorConstants'
+import { PRIMARY_COLOR } from '../../../constants/ColorConstants'
 import { ADMIN_RECOVERPASSWORD_PATH } from '../../../constants/RoutesConstants'
 import * as S from './style'
 
@@ -20,12 +21,6 @@ const typographyStyles = {
     fontWeight: 900,
     fontSize: '2rem'
   }
-}
-
-const buttonStyles = {
-  color: WHITE_COLOR,
-  textDecoration: 'none',
-  background: 'none'
 }
 
 const inputProps = {
@@ -83,16 +78,15 @@ function Login() {
 
   return (
     <Layout bg={LoginBg}>
-      <S.Form>
-        <Typography variant="h3" style={typographyStyles.TITLE}>
-          {t("admin#login_title")}
-        </Typography>
+      <Typography variant="h3" style={typographyStyles.TITLE}>
+        {t("admin#login_title")}
+      </Typography>
 
+      <S.Form onSubmit={handleSubmit}>
         <TextField
           label={t('admin#login_email')}
           name="email"
           onChange={e => handleChange(e)}
-          style={{ marginTop: '25px' }}
           {...inputProps}
         />
 
@@ -102,17 +96,24 @@ function Login() {
           name="password"
           onChange={e => handleChange(e)}
           min="6"
-          style={{ marginTop: '25px' }}
           {...inputProps}
         />
 
-        <S.RecoverLink>
-          <Link to={ADMIN_RECOVERPASSWORD_PATH} >
-            {t('admin#login_recover_password')}
-          </Link>
-        </S.RecoverLink>
+        {error && (
+          <Alert severity="error">{error}</Alert>
+        )}
 
-        <Button forward style={buttonStyles}>
+        {needsVerification && (
+          <Alert severity="info">
+            {t('admin#signup_checkYourEmail')}
+          </Alert>
+        )}
+
+        <Link to={ADMIN_RECOVERPASSWORD_PATH} style={{ color: PRIMARY_COLOR }}>
+          {t('admin#login_recover_password')}
+        </Link>
+
+        <Button type="submit" forward>
           {t('admin#intro_login')}
         </Button>
       </S.Form>
