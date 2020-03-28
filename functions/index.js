@@ -1,3 +1,5 @@
+/* eslint no-throw-literal: 0 */
+
 const functionsMain = require("firebase-functions");
 const config = functionsMain.config();
 const admin = require("firebase-admin");
@@ -48,9 +50,9 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
   batch.commit();
 
   //{{queuePosterUrl}} {{queueName}} {{queueId}}
-  await sendMail([ticketData.email], "d-6ac28f40006c4d178be4e00adae2bcb4", {
+  await sendMail([userData.email], "d-6ac28f40006c4d178be4e00adae2bcb4", {
     queueId: queueRef.id,
-    queueName: result.queueName,
+    queueName: queue.name,
     queuePosterUrl: "https://nafila.pt/cartaz-fila/" + queueRef.id
   });
 
@@ -90,7 +92,7 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
   tickets.forEach(t => {
     let ticketData = t.data();
     if (!!ticketData.email) {
-      emailToNotify.push(ticketData.email);
+      emailsToNotify.push(ticketData.email);
     } else if (!!ticketData.phone) {
       phonesToNotify.push(ticketData.email);
     }
@@ -101,7 +103,7 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
     //{{queueName}} {{queueId}}
     await sendMail(emailsToNotify, "d-b28224dd3dac48388f8e469ed82448a8", {
       queueId: queueRef.id,
-      queueName: result.queueName
+      queueName: tickets.queueName
     });
   }
 
@@ -110,7 +112,7 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
     await sendSMS(
       phonesToNotify,
       "A fila '" +
-        result.queue.name +
+        tickets.queue.name +
         "' (" +
         queueRef.id +
         ") foi fechada pelo administrador da fila. A sua senha foi removida."
@@ -357,7 +359,9 @@ async function removeTicket(
     }
   }
 
-  await transaction.set(queueRef, { remainingTicketsInQueue });
+  await transaction.set(queueRef, {
+    remainingTicketsInQueue: queueData.remainingTicketsInQueue
+  });
 
   return { queue: queueData, ticket: ticketData };
 }
