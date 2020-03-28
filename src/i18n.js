@@ -77,7 +77,33 @@ i18n
           "admin#login_title": "Introduza os dados da Loja",
           "admin#login_email": "Email do Lojista",
           "admin#login_password": "Password",
-          "admin#login_recover_password": "recuperar password",
+          "admin#login_recover_password": "Recuperar Password",
+
+          // Recover Password
+          "admin#recoverPassword_title": "Recuperar a Password",
+          "admin#recoverPassword_email": "Email",
+          "admin#recoverPassword_recover": "Recuperar",
+          "admin#recoverPassword_back": "Retroceder",
+          "admin#recoverPassword_wrongEmail": "O email que inseriu é inválido. Corrija e tente de novo.",
+
+          // Recover Password Success
+          "admin#recoverPasswordSuccess_title": "Email enviado com sucesso!",
+          "admin#recoverPasswordSuccess_text1": "Foi enviado um email para ",
+          "admin#recoverPasswordSuccess_text2": ". Siga as instruções para recuperar a sua password.",
+          "admin#recoverPasswordSuccess_return": "Voltar",
+
+          // Recover Password Change
+          "admin#recoverPasswordChange_title": "Redefinição de password",
+          "admin#recoverPasswordChange_text1": "Digite uma nova senha associada ao email ",
+          "admin#recoverPasswordChange_textbox1": "Nova password",
+          "admin#recoverPasswordChange_textbox2": "Confirmar nova password",
+          "admin#recoverPasswordChange_button": "Mudar",
+          "admin#recoverPasswordChange_errorMessage": "As passwords que introduziu não coincidem. Por favor tente de novo.",
+
+          // Recover Password Change Success
+          "admin#recoverPasswordChangeSuccess_title": "Mudança de password bem sucedida!",
+          "admin#recoverPasswordChangeSuccess_text1": "Agora já pode aceder à sua conta com a nova password. Carregue no botão para voltar ao Login",
+          "admin#recoverPasswordChangeSuccess_button": "Entrar",
         }
       }
     },

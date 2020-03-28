@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react'
 
 import { Typography, TextField } from '@material-ui/core'
-import { Alert } from '@material-ui/lab'
 import { useTranslation } from 'react-i18next'
 import Button from '../../../components/Button'
 import LoginBg from '../../../assets/bg/main.svg'
 import Layout from '../Layout'
-import { PRIMARY_COLOR } from '../../../constants/ColorConstants'
 import authentication from '../../../services/authentication'
 import { auth } from '../../../firebase'
 import Loader from '../../../components/Loader'
+import { Link } from 'react-router-dom'
 
+import { PRIMARY_COLOR, WHITE_COLOR } from '../../../constants/ColorConstants'
+import { ADMIN_RECOVERPASSWORD_PATH } from '../../../constants/RoutesConstants'
 import * as S from './style'
 
 const typographyStyles = {
@@ -19,6 +20,12 @@ const typographyStyles = {
     fontWeight: 900,
     fontSize: '2rem'
   }
+}
+
+const buttonStyles = {
+  color: WHITE_COLOR,
+  textDecoration: 'none',
+  background: 'none'
 }
 
 const inputProps = {
@@ -76,15 +83,16 @@ function Login() {
 
   return (
     <Layout bg={LoginBg}>
-      <Typography variant="h3" style={typographyStyles.TITLE}>
-        {t("admin#login_title")}
-      </Typography>
+      <S.Form>
+        <Typography variant="h3" style={typographyStyles.TITLE}>
+          {t("admin#login_title")}
+        </Typography>
 
-      <S.Form onSubmit={handleSubmit}>
         <TextField
           label={t('admin#login_email')}
           name="email"
           onChange={e => handleChange(e)}
+          style={{ marginTop: '25px' }}
           {...inputProps}
         />
 
@@ -94,24 +102,17 @@ function Login() {
           name="password"
           onChange={e => handleChange(e)}
           min="6"
+          style={{ marginTop: '25px' }}
           {...inputProps}
         />
 
-        {error && (
-          <Alert severity="error">{error}</Alert>
-        )}
-
-        {needsVerification && (
-          <Alert severity="info">
-            {t('admin#signup_checkYourEmail')}
-          </Alert>
-        )}
-
         <S.RecoverLink>
-          {t('admin#login_recover_password')}
+          <Link to={ADMIN_RECOVERPASSWORD_PATH} >
+            {t('admin#login_recover_password')}
+          </Link>
         </S.RecoverLink>
 
-        <Button type="submit" forward>
+        <Button forward style={buttonStyles}>
           {t('admin#intro_login')}
         </Button>
       </S.Form>
