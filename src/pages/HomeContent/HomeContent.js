@@ -110,8 +110,8 @@ const HomeContent = () => {
         return {
           ...prevState,
           ownTicketNumber: queueData.ticket.number,
-          currentTicket: 0,
-          remainingInQueue: queueData.queue.remainingTicketsInQueue
+          currentTicket: queueData.queue.currentTicketNumber,
+          remainingInQueue: queueData.queue.remainingTicketsInQueue - 1 // remove current user
         };
       });
 
