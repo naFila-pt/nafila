@@ -8,6 +8,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Input from "@material-ui/core/Input";
 import Button from "../../components/Button";
+import ConsumerTicket from "../../components/ConsumerTicket";
 
 import bgIntro from "../../assets/bg/user_intro.svg";
 import bgStore from "../../assets/bg/user_store.svg";
@@ -253,25 +254,7 @@ const HomeContent = () => {
             container
             style={{ justifyContent: "center", marginTop: "1.25em" }}
           >
-            <Grid item style={{ position: "relative" }}>
-              <Ticket />
-              <div
-                style={{
-                  position: "absolute",
-                  top: "6em",
-                  left: 0,
-                  width: "100%",
-                  color: "#fff"
-                }}
-              >
-                <div style={{ fontSize: "2.5em", fontWeight: 900 }}>
-                  {ticketsStoreInfo.ownTicketNumber}
-                </div>
-                <div style={{ fontSize: "1.375em" }}>
-                  {t("home#ticket_turn")}
-                </div>
-              </div>
-            </Grid>
+            <ConsumerTicket number={ticketsStoreInfo.ownTicketNumber} />
           </Grid>
           <Grid container justify="space-between" style={{ padding: "0 3em" }}>
             <Grid item>
