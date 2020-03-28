@@ -23,7 +23,7 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
     }
 
     //inserts queue
-    const queue = {owner_id:context.auth.uid, name:data.name, remainingTicketsInQueue:0, ticketTopNumber:0}
+    const queue = {owner_id:context.auth.uid, name:data.name, remainingTicketsInQueue:0, ticketTopNumber:0, currentTicketNumber:0, currentTicketName:null}
     const queueRef = firestore.collection("queues").doc(queueId)
 
     //updates user
@@ -135,10 +135,7 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
         }
 
         let ticketDoc = querySnap.docs[0]
-        return {
-            ticket: await removeTicket(transaction, ticketDoc.ref, queueRef, queueData),
-            queue: queueData
-        }
+        return await removeTicket(transaction, ticketDoc.ref, queueRef, queueData, true)
         
     })
 
@@ -156,7 +153,7 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
         await sendSMS([result.ticket.phone], "A sua vez chegou para ser atendido na fila '"+result.queue.name+"' ("+queueRef.id+").")
     }
     
-    return result.ticket
+    return result
 });
 
 //Manually add person to queue
@@ -189,28 +186,25 @@ exports.manuallyAddToQueue = functions.https.onCall(async (data, context) => {
             throw "Only queue owner can manually add people to the queue"
         }
         
-        return {
-            ticket: await addTicket(transaction, ticketRef, ticketData, queueRef, queueData),
-            queueName: queueData.name
-        }
+        return await addTicket(transaction, ticketRef, ticketData, queueRef, queueData)
         
     })
     
     if(!!ticketData.email){
         //{{exitQueueUrl}} {{queueName}} {{queueId}} {{ticketNumber}}
         await sendMail([ticketData.email], "d-e1953f198a92449f8fb3a833532cdc21", {
-            ticketNumber: result.ticket.ticketNumber,
+            ticketNumber: result.ticket.number,
             queueId:queueRef.id,
-            queueName: result.queueName,
+            queueName: result.queue.name,
             exitQueueUrl: "https://nafila.pt/sair/"+queueRef.id+'/'+ticketRef.id
         })
     }
     else if(!!ticketData.phone) {
         //send notification SMS
-        await sendSMS([result.ticket.phone], "Encontra-se em espera na fila '"+result.queueName+"' ("+queueRef.id+"). O numero do seu ticket: "+result.ticket.ticketNumber)
+        await sendSMS([result.ticket.phone], "Encontra-se em espera na fila '"+result.queue.name+"' ("+queueRef.id+"). O numero do seu ticket: "+result.ticket.number)
     }
 
-    return result.ticket
+    return result
     
 });
 
@@ -230,23 +224,20 @@ exports.addMeToQueue = functions.https.onCall(async (data, context) => {
     let result = await firestore.runTransaction(async function(transaction) {
         let queueDoc = await transaction.get(queueRef)
         let queueData = queueDoc.data()
-        return {
-            ticket: await addTicket(transaction, ticketRef, ticketData, queueRef, queueData),
-            queueName: queueData.name
-        }
+        return await addTicket(transaction, ticketRef, ticketData, queueRef, queueData)
     })
     
     //send confirmation email
 
     //{{exitQueueUrl}} {{queueName}} {{queueId}} {{ticketNumber}}
     await sendMail([ticketData.email], "d-e1953f198a92449f8fb3a833532cdc21", {
-        ticketNumber: result.ticket.ticketNumber,
+        ticketNumber: result.ticket.number,
         queueId:data.queueId,
-        queueName: result.queueName,
+        queueName: result.queue.name,
         exitQueueUrl: "https://nafila.pt/sair/"+data.queueId+'/'+ticketRef.id
     })
 
-    return result.ticket
+    return result
 });
 
 //Remove me from queue
@@ -260,7 +251,7 @@ exports.removeMeFromQueue = functions.https.onCall(async (data, context)=>{
     let result = await firestore.runTransaction(async function(transaction) {
         let queueDoc = await transaction.get(queueRef)
         let queueData = queueDoc.data()
-        return await removeTicket(transaction, ticketRef, queueRef, queueData)
+        return await removeTicket(transaction, ticketRef, queueRef, queueData, false)
     })
 
     return result
@@ -269,29 +260,38 @@ exports.removeMeFromQueue = functions.https.onCall(async (data, context)=>{
 async function addTicket(transaction, ticketRef, ticketData, queueRef, queueData){
 
     
-    let ticketTopNumber = queueData.ticketTopNumber+1
-    let remainingTicketsInQueue = queueData.remainingTicketsInQueue+1
-    ticketData.number = ticketTopNumber
+    queueData.ticketTopNumber++
+    queueData.remainingTicketsInQueue++
+    ticketData.number = queueData.ticketTopNumber
 
     //set ticket 
     await transaction.set(ticketRef, ticketData);
 
     //add ticket to count
-    await transaction.update(queueRef, {ticketTopNumber, remainingTicketsInQueue});
+    await transaction.set(queueRef, queueData);
 
-    return {ticketId:ticketRef.id, ticketNumber:ticketTopNumber, remainingTicketsInQueue:remainingTicketsInQueue}
+    return {queue:queueData, ticket:ticketData}
 }
 
-async function removeTicket(transaction, ticketRef, queueRef, queueData){
+async function removeTicket(transaction, ticketRef, queueRef, queueData, replaceCurrentTicket){
     let ticketData = (await transaction.get(ticketRef)).data()
 
     //remove ticket from DB
     await transaction.delete(ticketRef)
     //decrease counter
-    let remainingTicketsInQueue = queueData.remainingTicketsInQueue>0 ? queueData.remainingTicketsInQueue-1 : 0;
-    await transaction.update(queueRef, {remainingTicketsInQueue});
+    queueData.remainingTicketsInQueue = queueData.remainingTicketsInQueue>0 ? queueData.remainingTicketsInQueue-1 : 0;
 
-    return ticketData
+    //replace current ticket info
+    if(replaceCurrentTicket){
+        queueData.currentTicketNumber = ticketData.number
+        if(!!ticketData.name){
+            queueData.currentTicketName = ticketData.name
+        }
+    }
+
+    await transaction.set(queueRef, {remainingTicketsInQueue});
+
+    return {queue:queueData, ticket:ticketData}
 }
 
 function fiveRandomChars(){
