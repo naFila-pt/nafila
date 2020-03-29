@@ -112,7 +112,8 @@ authentication.signUpStore = (emailAddress, password, defaultQueueName) => {
         userDocumentReference
           .set(
             {
-              defaultQueueName
+              defaultQueueName,
+              queues: []
             },
             { merge: true }
           )
