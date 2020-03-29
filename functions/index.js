@@ -6,6 +6,7 @@ const admin = require("firebase-admin");
 admin.initializeApp();
 const firestore = admin.firestore();
 const urlSMSPro = 'https://smspro.nos.pt/smspro/smsprows.asmx?WSDL';
+const urlSMSProService = 'https://smspro.nos.pt/SmsPro/smsprows.asmx'
 
 const runtimeOpts = {
   timeoutSeconds: 15,
@@ -195,18 +196,132 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
 
 //Manually add person to queue
 exports.manuallyAddToQueue = functions.https.onCall(async (data, context) => {
-  //receives queueId
+  return await createTicketInQueue({queueId:data.queueId,email:data.email,phone:data.phone,name:data.name}, context)
+});
+
+//Add me to queue
+exports.addMeToQueue = functions.https.onCall(async (data, context) => {
+  return await createTicketInQueue({queueId:data.queueId,email:data.email,phone:data.phone}, false)
+});
+
+//Remove me from queue
+exports.removeMeFromQueue = functions.https.onCall(async (data, context) => {
+  //get the queue
   let queueRef = firestore.collection("queues").doc(data.queueId);
+  //get the ticket
+  let ticketRef = queueRef.collection("tickets").doc(data.ticketId);
+
+  //transaction is cheaper
+  let result = await firestore.runTransaction(async function(transaction) {
+    let queueDoc = await transaction.get(queueRef);
+    let queueData = queueDoc.data();
+    return await removeTicket(
+      transaction,
+      ticketRef,
+      queueRef,
+      queueData,
+      false
+    );
+  });
+
+  return result;
+});
+
+
+
+//---- REGULAR SCHEDULED JOB ----
+exports.scheduledFunction = functions.pubsub.schedule('every '+config.smspro.getmessagesinterval).onRun(async function(context) {
+
+    var args = {
+        TenantName: config.smspro.tenant,
+        strUsername: config.smspro.username,
+        strPassword: config.smspro.password,
+        intCampaignId: parseInt(config.smspro.campaignid)
+    }
+    
+    let serviceReply = await callSMSPro('GetCampaignUnreadReplies', args);
+
+    let replies = serviceReply.Replies && serviceReply.Replies.Reply_Record || []
+    
+    
+    console.log('Found '+replies.length+' new messages')
+
+    replies.forEach(async (m)=>{
+
+        
+        try {
+
+            //validate queueId
+            let [queueId, leave] = m["Message"].trim().toUpperCase().split(' ')
+
+            //add to queue
+            if(typeof leave === 'undefined'){
+                await createTicketInQueue({queueId,phone:m["MSISDN"]}, false)
+            
+            //remove from queue
+            } else if(leave==='SAIR'){
+                //get the queue
+                let queueRef = firestore.collection("queues").doc(queueId);
+                //get the ticket
+
+                //transaction is cheaper
+                await firestore.runTransaction(async function(transaction) {
+                    let queueDoc = await transaction.get(queueRef);
+
+                    //get next ticket
+                    let querySnap = await transaction.get(
+                        queueRef
+                        .collection("tickets")
+                        .where("phone", "==", m["MSISDN"])
+                        .limit(1)
+                    );
+                
+                    //in case there is no ticket left
+                    if (querySnap.empty) {
+                        throw "No tickets found for this phone number for this queue";
+                    }
+                    let ticketRef = querySnap.docs[0].ref;
+
+                    let queueData = queueDoc.data();
+                    
+                    return await removeTicket(
+                    transaction,
+                    ticketRef,
+                    queueRef,
+                    queueData,
+                    false
+                    );
+                });
+            } else {
+                throw 'unexpected msg format'
+            }
+
+        } catch(e){
+            console.error(m,e)
+        }
+
+        
+    })
+});
+
+
+
+
+//---- HELPERS ----
+
+async function createTicketInQueue({queueId,email=null,phone=null,name=null}, context){
+    //receives queueId
+  let queueRef = firestore.collection("queues").doc(queueId);
   var ticketRef = queueRef.collection("tickets").doc();
 
   //create ticket object
   let ticketData = {};
-  if (!!data.email) {
-    ticketData.email = data.email;
-  } else if (!!data.phone) {
-    ticketData.phone = data.phone;
-  } else if (!!data.name) {
-    ticketData.name = data.name;
+  if (!!email) {
+    ticketData.email = email;
+  } else if (!!phone) {
+    ticketData.phone = phone;
+  } else if (!!name) {
+    ticketData.name = name;
   } else {
     throw "Unknown ticket type";
   }
@@ -215,11 +330,15 @@ exports.manuallyAddToQueue = functions.https.onCall(async (data, context) => {
   let result = await firestore.runTransaction(async function(transaction) {
     let queueDoc = await transaction.get(queueRef);
 
+    if(!queueDoc.exists){
+        throw "Queue ID "+queueId+" not found.";
+    }
+
     //get queue
     let queueData = queueDoc.data();
 
     //needs to validate userId ownership of queue
-    if (queueData.owner_id !== context.auth.uid) {
+    if (!!context && queueData.owner_id !== context.auth.uid) {
       throw "Only queue owner can manually add people to the queue";
     }
 
@@ -254,112 +373,7 @@ exports.manuallyAddToQueue = functions.https.onCall(async (data, context) => {
   }
 
   return result;
-});
-
-//Add me to queue
-exports.addMeToQueue = functions.https.onCall(async (data, context) => {
-  //get the queue
-  let queueRef = firestore.collection("queues").doc(data.queueId);
-  let ticketData = {};
-  if (!data.email) {
-    throw "Missing email";
-  }
-  ticketData.email = data.email;
-
-  var ticketRef = queueRef.collection("tickets").doc();
-
-  //transaction is cheaper
-  let result = await firestore.runTransaction(async function(transaction) {
-    let queueDoc = await transaction.get(queueRef);
-    let queueData = queueDoc.data();
-    return await addTicket(
-      transaction,
-      ticketRef,
-      ticketData,
-      queueRef,
-      queueData
-    );
-  });
-
-  //send confirmation email
-
-  //{{exitQueueUrl}} {{queueName}} {{queueId}} {{ticketNumber}}
-  await sendMail([ticketData.email], "d-e1953f198a92449f8fb3a833532cdc21", {
-    ticketNumber: result.ticket.number,
-    queueId: data.queueId,
-    queueName: result.queue.name,
-    exitQueueUrl: "https://nafila.pt/sair/" + data.queueId + "/" + ticketRef.id
-  });
-
-  return result;
-});
-
-//Remove me from queue
-exports.removeMeFromQueue = functions.https.onCall(async (data, context) => {
-  //get the queue
-  let queueRef = firestore.collection("queues").doc(data.queueId);
-  //get the ticket
-  let ticketRef = queueRef.collection("tickets").doc(data.ticketId);
-
-  //transaction is cheaper
-  let result = await firestore.runTransaction(async function(transaction) {
-    let queueDoc = await transaction.get(queueRef);
-    let queueData = queueDoc.data();
-    return await removeTicket(
-      transaction,
-      ticketRef,
-      queueRef,
-      queueData,
-      false
-    );
-  });
-
-  return result;
-});
-
-
-
-//---- REGULAR SCHEDULED JOB ----
-exports.scheduledFunction = functions.pubsub.schedule('every '+config.smspro.getmessagesinterval).onRun(async function(context) {
-
-    var soap = require('soap');
-    var url = urlSMSPro;
-
-    var args = {
-        TenantName: config.smspro.tenant,
-        strUsername: config.smspro.username,
-        strPassword: config.smspro.password,
-        intCampaignId: config.smspro.campaignId
-    }
-
-    let serviceReply = await soap.createClientAsync(url).then((client) => {
-        return client.GetCampaignUnreadReplies(args);
-    });
-
-    let messages = serviceReply.Replies
-
-    messages.forEach((m)=>{
-        /* each message:
-        .MSISDN - string (20) - MSISDN do originador da resposta.
-        .Moment - DateTime - Data e Hora de recepção da resposta.
-        .Message - string (160) - Texto da resposta.
-        .InList - Boolean - O originador da resposta pertence à lista. (devera sempre ser falso)
-        .ListId - Integer - Identificador da lista à qual o originador pertence. (ignorar)
-        */
-
-        console.log(JSON.stringify(m));
-
-        // let queueRef = firestore.collection("queues").doc(data.queueId)
-        // var ticketRef = queueRef.collection('tickets').doc();
-    })
-
-    return null;
-});
-
-
-
-
-//---- HELPERS ----
+}
 
 async function addTicket(
   transaction,
@@ -438,8 +452,6 @@ async function sendMail(to, templateId, dynamic_template_data) {
 }
 
 async function sendSMS(MsisdnList, strMessage) {
-  var soap = require("soap");
-  var url = urlSMSPro;
 
   var args = {
     TenantName: config.smspro.tenant,
@@ -448,7 +460,32 @@ async function sendSMS(MsisdnList, strMessage) {
     MsisdnList,
     strMessage
   };
-  return soap.createClientAsync(url).then(client => {
-    return client.SendSMS(args);
-  });
+
+  return await callSMSPro('SendSMS', args);
+}
+
+async function callSMSPro(method, args) {
+    var soap = require("soap");
+
+    return await new Promise((resolve, reject) => {
+        try{
+            soap.createClient(urlSMSPro, function(err, client) {
+                if(!!err){
+                    reject(err)
+                } else {
+                    client.setEndpoint(urlSMSProService)
+                    client[method](args, function(err, result) {
+                        if(!!err){
+                            reject(err)
+                        } else {
+                            resolve(result);
+                        }
+                    });
+                }
+                
+            });
+        } catch(e){
+            reject(e)
+        }
+    })
 }
