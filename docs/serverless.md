@@ -9,7 +9,7 @@ var firestore = firebase.firestore();
 ### create new user
 
 A user is identified by `uid` (from auth) and contains a list of `.queues` 
-it is stored in firestore as `/users/<userId>/{queues:[]}`
+it is stored in firestore as `/users/<userId>/{queues:[], defaultQueueName:null}`
 
 ```javascript
 var userDoc = firestore.collection("users").doc(uid)

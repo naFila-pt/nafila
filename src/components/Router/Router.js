@@ -7,6 +7,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import OnBoardingContent from "../../pages/OnBoardingContent";
 import { HomeContent, TermsConditions } from "../../pages/HomeContent";
 import Admin from "../../pages/Admin";
+import MainView from "../../pages/AfterLoggedIn";
 import PrivateRoute from "../PrivateRoute";
 import NotFoundContent from "../../pages/NotFoundContent";
 import * as Routes from "../../constants/RoutesConstants";
@@ -54,6 +55,12 @@ class Router extends Component {
           <PrivateRoute
             path={Routes.ADMIN_START_QUEUE_PATH}
             component={() => <div>...</div>}
+            exact
+          />
+
+          <Route
+            path={Routes.MAIN_ADDCONSUMER_PATH}
+            component={MainView.AddConsumer}
             exact
           />
 
