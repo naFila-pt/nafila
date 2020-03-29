@@ -81,6 +81,7 @@ i18n
           "admin#signup_operationNotAllowed": "Operação não permitida",
           "admin#signup_checkYourEmail":
             "Aceda ao seu email para verificar a sua conta.",
+          "admin#signup_nameLabel": "Nome/Local da Loja",
           "admin#signup_emailLabel": "Email do Lojista",
           "admin#signup_passwordLabel": "Password",
           "admin#signup_register": "Registar",
@@ -125,7 +126,43 @@ i18n
             "Mudança de password bem sucedida!",
           "admin#recoverPasswordChangeSuccess_text1":
             "Agora já pode aceder à sua conta com a nova password. Carregue no botão para voltar ao Login",
-          "admin#recoverPasswordChangeSuccess_button": "Entrar"
+          "admin#recoverPasswordChangeSuccess_button": "Entrar",
+
+          // AfterLogin Add Consumer 1st page
+          "main#addConsumer_title": "Escolha o método de notificação",
+          "main#addConsumer_button1": "Telémovel",
+          "main#addConsumer_button2": "Nome",
+          "main#addConsumer_back": "Retroceder",
+          "main#addConsumer_generateTicket": "Gerar Senha",
+
+          // AfterLogin Add Consumer Phone
+          "main#addConsumerPhone_title":
+            "Insira o número de Telemóvel do cliente",
+          "main#addConsumerPhone_placeholder": "Número de Telemóvel",
+
+          // AfterLogin Add Consumer Name
+          "main#addConsumerName_title": "Insira o Nome\ndo cliente",
+          "main#addConsumerName_placeholder": "Nome",
+
+          // AfterLogin Add Consumer Success
+          "main#addConsumerSuccess_button": "Voltar nafila",
+          "main#addConsumerSuccess_title": "Nova Senha gerada",
+
+          // AfterLogin Add Consumer Phone Success
+          "main#addConsumerPhoneSuccess_text":
+            "Foi enviada uma SMS para o telemóvel do Cliente.",
+
+          // AfterLogin Add Consumer Name Success
+          "main#addConsumerNameSuccess_text": "Forneça este número ao Cliente.",
+          // End Queue
+          "main#endQueue_title": "Pretende terminar a Fila actual?",
+          "main#endQueue_yes": "Sim",
+          "main#endQueue_no": "Não",
+
+          //End Queue Success
+          "main#endQueueSuccess_title": "Fila terminada.",
+          "main#endQueueSuccess_text": "A sua fila foi terminada.\nAté Amanhã!",
+          "main#endQueueSuccess_back": "Voltar ao Início"
         }
       }
     },

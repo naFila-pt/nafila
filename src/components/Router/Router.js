@@ -7,13 +7,16 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import OnBoardingContent from "../../pages/OnBoardingContent";
 import { HomeContent, TermsConditions } from "../../pages/HomeContent";
 import Admin from "../../pages/Admin";
+import Main from "../../pages/AfterLoggedIn";
 import NotFoundContent from "../../pages/NotFoundContent";
 import {
   ADMIN_WELCOME_PATH,
   ADMIN_SIGNUP_PATH,
   ADMIN_LOGIN_PATH,
   ADMIN_RECOVERPASSWORD_PATH,
-  ADMIN_RECOVERPASSWORDCHANGE_PATH
+  ADMIN_RECOVERPASSWORDCHANGE_PATH,
+  MAIN_ADDCONSUMER_PATH,
+  MAIN_ENDQUEUE_PATH
 } from "../../constants/RoutesConstants";
 
 class Router extends Component {
@@ -50,6 +53,13 @@ class Router extends Component {
           <Route
             path={ADMIN_RECOVERPASSWORDCHANGE_PATH}
             component={Admin.ChangePassword}
+            exact
+          />
+          <Route path={MAIN_ENDQUEUE_PATH} component={Main.EndQueue} exact />
+
+          <Route
+            path={MAIN_ADDCONSUMER_PATH}
+            component={Main.AddConsumer}
             exact
           />
 
