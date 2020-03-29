@@ -183,11 +183,8 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
     //send notification SMS
     await sendSMS(
       [result.ticket.phone],
-      "A sua vez chegou para ser atendido na fila '" +
-        result.queue.name +
-        "' (" +
-        queueRef.id +
-        ")."
+      result.queue.name +
+      ": Está a chegar a sua vez naFila! Dirija-se à entrada de loja."
     );
   }
 
