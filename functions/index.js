@@ -302,6 +302,12 @@ exports.scheduledFunction = functions.pubsub
               false
             );
           });
+
+          await sendSMS(
+            [m["MSISDN"]],
+            "Saiu da fila " +
+              queueRef.id
+          );
         } else {
           throw "unexpected msg format";
         }
@@ -478,25 +484,41 @@ async function sendSMS(MsisdnList, strMessage) {
   return await callSMSPro("SendSMS", args);
 }
 
-async function callSMSPro(method, args) {
-  var soap = require("soap");
 
+var cacheSMSProClient
+async function callSMSPro(method, args) {
+  
   return await new Promise((resolve, reject) => {
+
     try {
-      soap.createClient(urlSMSPro, function(err, client) {
-        if (!!err) {
-          reject(err);
-        } else {
-          client.setEndpoint(urlSMSProService);
-          client[method](args, function(err, result) {
-            if (!!err) {
-              reject(err);
-            } else {
-              resolve(result);
-            }
-          });
-        }
-      });
+
+      var makeCall = function(){
+        cacheSMSProClient[method](args, function(err, result) {
+          if (!!err) {
+            reject(err);
+          } else {
+            resolve(result);
+          }
+        });
+      }
+
+      var soap
+      if(!cacheSMSProClient){
+        soap = require("soap");
+
+        soap.createClient(urlSMSPro, function(err, client) {
+          if (!!err) {
+            reject(err);
+          } else {
+            client.setEndpoint(urlSMSProService);
+            cacheSMSProClient = client //keep in memory for later
+            makeCall()
+          }
+        });
+      } else {
+        makeCall()
+      }
+      
     } catch (e) {
       reject(e);
     }
