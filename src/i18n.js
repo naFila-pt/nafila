@@ -154,6 +154,15 @@ i18n
 
           // AfterLogin Add Consumer Name Success
           "main#addConsumerNameSuccess_text": "Forneça este número ao Cliente."
+          // End Queue
+          "main#endQueue_title": "Pretende terminar a Fila actual?",
+          "main#endQueue_yes": "Sim",
+          "main#endQueue_no": "Não",
+
+          //End Queue Success
+          "main#endQueueSuccess_title": "Fila terminada.",
+          "main#endQueueSuccess_text": "A sua fila foi terminada.\nAté Amanhã!",
+          "main#endQueueSuccess_back": "Voltar ao Início"
         }
       }
     },
