@@ -81,6 +81,7 @@ i18n
           "admin#signup_operationNotAllowed": "Operação não permitida",
           "admin#signup_checkYourEmail":
             "Aceda ao seu email para verificar a sua conta.",
+          "admin#signup_nameLabel": "Nome/Local da Loja",
           "admin#signup_emailLabel": "Email do Lojista",
           "admin#signup_passwordLabel": "Password",
           "admin#signup_register": "Registar",
