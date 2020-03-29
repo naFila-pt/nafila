@@ -153,7 +153,7 @@ i18n
             "Foi enviada uma SMS para o telemóvel do Cliente.",
 
           // AfterLogin Add Consumer Name Success
-          "main#addConsumerNameSuccess_text": "Forneça este número ao Cliente."
+          "main#addConsumerNameSuccess_text": "Forneça este número ao Cliente.",
           // End Queue
           "main#endQueue_title": "Pretende terminar a Fila actual?",
           "main#endQueue_yes": "Sim",
