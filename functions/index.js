@@ -310,15 +310,24 @@ exports.scheduledFunction = functions.pubsub.schedule('every '+config.smspro.get
 //---- HELPERS ----
 
 async function createTicketInQueue({queueId,email=null,phone=null,name=null}, context){
-    //receives queueId
+
+  var validator = require('validator');
+
+  //receives queueId
   let queueRef = firestore.collection("queues").doc(queueId);
   var ticketRef = queueRef.collection("tickets").doc();
 
   //create ticket object
   let ticketData = {};
   if (!!email) {
+    if(!validator.isEmail(email)){
+      throw "Invalid email format";
+    }
     ticketData.email = email;
   } else if (!!phone) {
+    if(!validator.isMobilePhone(phone)){
+      throw "Invalid phone number format";
+    }
     ticketData.phone = phone;
   } else if (!!name) {
     ticketData.name = name;
@@ -390,7 +399,7 @@ async function addTicket(
   await transaction.set(ticketRef, ticketData);
 
   //add ticket to count
-  await transaction.set(queueRef, queueData);
+  await transaction.update(queueRef, queueData);
 
   return { queue: queueData, ticket: ticketData };
 }
@@ -420,7 +429,7 @@ async function removeTicket(
     }
   }
 
-  await transaction.set(queueRef, {
+  await transaction.update(queueRef, {
     remainingTicketsInQueue: queueData.remainingTicketsInQueue
   });
 
