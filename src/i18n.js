@@ -153,7 +153,14 @@ i18n
             "Foi enviada uma SMS para o telemóvel do Cliente.",
 
           // AfterLogin Add Consumer Name Success
-          "main#addConsumerNameSuccess_text": "Forneça este número ao Cliente."
+          "main#addConsumerNameSuccess_text": "Forneça este número ao Cliente.",
+
+          // Admin Queue Management
+          "admin#queueManagement_letsStart": "Vamos iniciar a fila?",
+          "admin#queueManagement_queueName": "Nome da Fila",
+          "admin#queueManagement_emailWithCode":
+            "O email com o <strong>código</strong> da sua fila vai ser enviado para o seu email. <strong>Imprima o documento e afixe-o em local visível.</strong>",
+          "admin#queueManagement_startQueue": "Começar"
         }
       }
     },

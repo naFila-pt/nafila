@@ -61,7 +61,9 @@ function Login() {
 
     authentication
       .signIn(email, password)
-      .then(() => (window.location.href = ADMIN_START_QUEUE_PATH))
+      .then(res => {
+        return (window.location.href = ADMIN_START_QUEUE_PATH);
+      })
       .catch(error => {
         setLoading(false);
         error && setError(mappedMessages[error.code]);

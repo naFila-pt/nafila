@@ -54,7 +54,7 @@ class Router extends Component {
           />
           <PrivateRoute
             path={Routes.ADMIN_START_QUEUE_PATH}
-            component={() => <div>...</div>}
+            component={Admin.Queue}
             exact
           />
 
