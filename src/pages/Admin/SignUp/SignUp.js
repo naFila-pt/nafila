@@ -20,16 +20,17 @@ import SuccessfulSignUp from "./SuccessfulSignUp";
 const Form = styled.form`
   padding: 0 30px;
 
-  .MuiInput-root {
-    margin-bottom: 2em;
-  }
-
   button {
     margin-top: 2em;
   }
 
   .MuiTextField-root {
+    margin-bottom: 2em;
     border-color: ${PRIMARY_COLOR} !important;
+
+    .MuiFormHelperText-root {
+      text-align: right;
+    }
 
     label {
       color: ${PRIMARY_COLOR} !important;
@@ -85,10 +86,10 @@ function SignUp() {
     setLoading(true);
     setNeedsVerification(false);
 
-    const { email, password } = fields;
+    const { email, password, defaultQueueName } = fields;
 
     authentication
-      .signUpWithEmailAddressAndPassword(email, password)
+      .signUpStore(email, password, defaultQueueName)
       .then(() => {
         setSuccess(true);
         setLoading(false);
@@ -111,6 +112,14 @@ function SignUp() {
   return (
     <Layout bg={SignUpBg}>
       <Form onSubmit={handleSubmit}>
+        <TextField
+          label={t("admin#signup_nameLabel")}
+          name="defaultQueueName"
+          onChange={e => handleChange(e)}
+          helperText="ex: PDoceCartaxo"
+          {...inputProps}
+        />
+
         <TextField
           label={t("admin#signup_emailLabel")}
           name="email"
