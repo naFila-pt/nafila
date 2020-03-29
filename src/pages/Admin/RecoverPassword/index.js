@@ -1,1 +1,1 @@
-export { default } from './RecoverPassword'
+export { default } from "./RecoverPassword";

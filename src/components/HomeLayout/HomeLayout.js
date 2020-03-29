@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
-import Toolbar from '@material-ui/core/Toolbar';
+import Toolbar from "@material-ui/core/Toolbar";
 import Grid from "@material-ui/core/Grid";
 import MenuIcon from "@material-ui/icons/Menu";
 
@@ -29,21 +29,24 @@ const useStyles = makeStyles({
 
 const OnBoardingLayout = ({ children, bg, activeStep = 0 }) => {
   const classes = useStyles();
-  const bgUrl = bg[activeStep] ? bg[activeStep] : bg[bg.length - 1]
+  const bgUrl = bg[activeStep] ? bg[activeStep] : bg[bg.length - 1];
 
   return (
-    <Box className={classes.container} style={{ backgroundImage: `url(${ bgUrl })`}}>
+    <Box
+      className={classes.container}
+      style={{ backgroundImage: `url(${bgUrl})` }}
+    >
       <Grid container>
         <Grid container direction="column">
           <Toolbar className={classes.toolbar}>
             <MenuIcon className={classes.menuIcon} />
-            { activeStep !== 0 && <LogoMini style={{ flex: 0.9 }} />}
+            {activeStep !== 0 && <LogoMini style={{ flex: 0.9 }} />}
           </Toolbar>
         </Grid>
         {children[activeStep] || children}
       </Grid>
     </Box>
   );
-}
+};
 
 export default OnBoardingLayout;
