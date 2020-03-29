@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
@@ -32,15 +32,15 @@ export const QueueDate = styled.div`
 `;
 
 export const CodeContainer = styled.div`
- margin-top: 35px;
-  border: 2px solid #4C0788;
+  margin-top: 35px;
+  border: 2px solid #4c0788;
   border-radius: 40px;
   padding: 18px 60px;
   font-size: 25px;
 
   span {
-  font-weight: 700;
-  font-size: 40px;
+    font-weight: 700;
+    font-size: 40px;
   }
 `;
 
@@ -50,8 +50,8 @@ export const Options = styled.div`
   font-weight: 400;
 
   span {
-  font-weight: 700;
-  }   
+    font-weight: 700;
+  }
 `;
 
 export const ImagesContainer = styled.div`
@@ -66,8 +66,8 @@ export const Images = styled.div`
   align-items: center;
 
   span {
-  font-weight: 700;
-  font-size: 20px;
+    font-weight: 700;
+    font-size: 20px;
   }
 `;
 
@@ -80,5 +80,3 @@ export const Slogan = styled.div`
     font-weight: 700;
   }
 `;
-
-
