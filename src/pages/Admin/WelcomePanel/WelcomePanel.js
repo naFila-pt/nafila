@@ -49,14 +49,11 @@ function WelcomePanel() {
           to={ADMIN_LOGIN_PATH}
           style={{ color: WHITE_COLOR, textDecoration: "none" }}
         >
-          <Button forward>
-            {t("admin#intro_login")}
-          </Button>
+          <Button forward>{t("admin#intro_login")}</Button>
         </Link>
 
         <br />
 
-        
         <Link
           to={ADMIN_SIGNUP_PATH}
           style={{ color: PRIMARY_COLOR, textDecoration: "none" }}
@@ -65,7 +62,6 @@ function WelcomePanel() {
             {t("admin#intro_signup")}
           </Button>
         </Link>
-        
       </S.ButtonsContainer>
     </Layout>
   );

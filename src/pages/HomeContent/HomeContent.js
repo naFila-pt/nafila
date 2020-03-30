@@ -15,7 +15,6 @@ import bgStore from "../../assets/bg/user_store.svg";
 import bgMain from "../../assets/bg/main.svg";
 
 import { ReactComponent as Logo } from "../../assets/logo.svg";
-import { ReactComponent as Ticket } from "../../assets/icons/ticket.svg";
 import { ReactComponent as EmailNotification } from "../../assets/icons/email_notification.svg";
 
 const useStyles = makeStyles({
@@ -45,7 +44,7 @@ const useStyles = makeStyles({
     margin: "0 2em"
   },
   inputElement: {
-    textAlign: 'center'
+    textAlign: "center"
   }
 });
 

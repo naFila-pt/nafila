@@ -60,7 +60,11 @@ class Router extends Component {
             exact
           />
 
-          <Route path={Routes.MAIN_ENDQUEUE_PATH} component={Main.EndQueue} exact />
+          <Route
+            path={Routes.MAIN_ENDQUEUE_PATH}
+            component={Main.EndQueue}
+            exact
+          />
 
           <Route
             path={Routes.MAIN_ADDCONSUMER_PATH}
