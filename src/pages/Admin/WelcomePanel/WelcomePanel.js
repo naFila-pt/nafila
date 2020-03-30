@@ -45,25 +45,27 @@ function WelcomePanel() {
       />
 
       <S.ButtonsContainer>
-        <Button forward>
-          <Link
-            to={ADMIN_LOGIN_PATH}
-            style={{ color: WHITE_COLOR, textDecoration: "none" }}
-          >
+        <Link
+          to={ADMIN_LOGIN_PATH}
+          style={{ color: WHITE_COLOR, textDecoration: "none" }}
+        >
+          <Button forward>
             {t("admin#intro_login")}
-          </Link>
-        </Button>
+          </Button>
+        </Link>
 
         <br />
 
-        <Button variant="secondary" forward>
-          <Link
-            to={ADMIN_SIGNUP_PATH}
-            style={{ color: PRIMARY_COLOR, textDecoration: "none" }}
-          >
+        
+        <Link
+          to={ADMIN_SIGNUP_PATH}
+          style={{ color: PRIMARY_COLOR, textDecoration: "none" }}
+        >
+          <Button variant="secondary" forward>
             {t("admin#intro_signup")}
-          </Link>
-        </Button>
+          </Button>
+        </Link>
+        
       </S.ButtonsContainer>
     </Layout>
   );
