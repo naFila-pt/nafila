@@ -37,6 +37,15 @@ const useStyles = makeStyles({
     bottom: "14vh",
     width: "100%",
     textAlign: "center"
+  },
+  inputRoot: {
+    width: "calc(100% - 4em)",
+    textAlign: "center",
+    fontWeight: 900,
+    margin: "0 2em"
+  },
+  inputElement: {
+    textAlign: 'center'
   }
 });
 
@@ -157,7 +166,7 @@ const HomeContent = () => {
           </Typography>
           <Input
             placeholder={t("home#insertCode_inputPlaceholder")}
-            style={{ width: "100%", textAlign: "center", fontWeight: 900 }}
+            classes={{ root: classes.inputRoot, input: classes.inputElement }}
             value={queueId}
             onChange={handleStoreCodeChange}
           />
@@ -220,10 +229,8 @@ const HomeContent = () => {
           />
           <Input
             placeholder={t("home#notification_inputPlaceholder")}
+            classes={{ root: classes.inputRoot, input: classes.inputElement }}
             style={{
-              width: "100%",
-              textAlign: "center",
-              fontWeight: 900,
               marginTop: "2.5em"
             }}
             value={userEmail}
