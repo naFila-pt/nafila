@@ -1,1 +1,1 @@
-export { default } from './AddConsumer'
+export { default } from "./AddConsumer";

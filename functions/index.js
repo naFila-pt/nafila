@@ -5,8 +5,8 @@ const config = functionsMain.config();
 const admin = require("firebase-admin");
 admin.initializeApp();
 const firestore = admin.firestore();
-const urlSMSPro = 'https://smspro.nos.pt/smspro/smsprows.asmx?WSDL';
-const urlSMSProService = 'https://smspro.nos.pt/SmsPro/smsprows.asmx'
+const urlSMSPro = "https://smspro.nos.pt/smspro/smsprows.asmx?WSDL";
+const urlSMSProService = "https://smspro.nos.pt/SmsPro/smsprows.asmx";
 
 const runtimeOpts = {
   timeoutSeconds: 15,
@@ -87,7 +87,7 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
     //delete queue entirely
     transaction.delete(queueRef);
 
-    return {tickets:queryRef.docs, queue:queueData};
+    return { tickets: queryRef.docs, queue: queueData };
   });
 
   //notify every remaining person in queue of queue deletion
@@ -183,11 +183,8 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
     //send notification SMS
     await sendSMS(
       [result.ticket.phone],
-      "A sua vez chegou para ser atendido na fila '" +
-        result.queue.name +
-        "' (" +
-        queueRef.id +
-        ")."
+      result.queue.name +
+        ": Está a chegar a sua vez naFila! Dirija-se à entrada de loja."
     );
   }
 
@@ -196,12 +193,23 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
 
 //Manually add person to queue
 exports.manuallyAddToQueue = functions.https.onCall(async (data, context) => {
-  return await createTicketInQueue({queueId:data.queueId,email:data.email,phone:data.phone,name:data.name}, context)
+  return await createTicketInQueue(
+    {
+      queueId: data.queueId,
+      email: data.email,
+      phone: data.phone,
+      name: data.name
+    },
+    context
+  );
 });
 
 //Add me to queue
 exports.addMeToQueue = functions.https.onCall(async (data, context) => {
-  return await createTicketInQueue({queueId:data.queueId,email:data.email,phone:data.phone}, false)
+  return await createTicketInQueue(
+    { queueId: data.queueId, email: data.email, phone: data.phone },
+    false
+  );
 });
 
 //Remove me from queue
@@ -227,98 +235,104 @@ exports.removeMeFromQueue = functions.https.onCall(async (data, context) => {
   return result;
 });
 
-
-
 //---- REGULAR SCHEDULED JOB ----
-exports.scheduledFunction = functions.pubsub.schedule('every '+config.smspro.getmessagesinterval).onRun(async function(context) {
-
+exports.scheduledFunction = functions.pubsub
+  .schedule("every " + config.smspro.getmessagesinterval)
+  .onRun(async function(context) {
     var args = {
-        TenantName: config.smspro.tenant,
-        strUsername: config.smspro.username,
-        strPassword: config.smspro.password,
-        intCampaignId: parseInt(config.smspro.campaignid)
-    }
-    
-    let serviceReply = await callSMSPro('GetCampaignUnreadReplies', args);
+      TenantName: config.smspro.tenant,
+      strUsername: config.smspro.username,
+      strPassword: config.smspro.password,
+      intCampaignId: parseInt(config.smspro.campaignid)
+    };
 
-    let replies = serviceReply.Replies && serviceReply.Replies.Reply_Record || []
-    
-    
-    console.log('Found '+replies.length+' new messages')
+    let serviceReply = await callSMSPro("GetCampaignUnreadReplies", args);
 
-    replies.forEach(async (m)=>{
+    let replies =
+      (serviceReply.Replies && serviceReply.Replies.Reply_Record) || [];
 
-        
-        try {
+    console.log("Found " + replies.length + " new messages");
 
-            //validate queueId
-            let [queueId, leave] = m["Message"].trim().toUpperCase().split(' ')
+    replies.forEach(async m => {
+      try {
+        //validate queueId
+        let [queueId, leave] = m["Message"]
+          .trim()
+          .toUpperCase()
+          .split(" ");
 
-            //add to queue
-            if(typeof leave === 'undefined'){
-                await createTicketInQueue({queueId,phone:m["MSISDN"]}, false)
-            
-            //remove from queue
-            } else if(leave==='SAIR'){
-                //get the queue
-                let queueRef = firestore.collection("queues").doc(queueId);
-                //get the ticket
+        //add to queue
+        if (typeof leave === "undefined") {
+          await createTicketInQueue({ queueId, phone: m["MSISDN"] }, false);
 
-                //transaction is cheaper
-                await firestore.runTransaction(async function(transaction) {
-                    let queueDoc = await transaction.get(queueRef);
+          //remove from queue
+        } else if (leave === "SAIR") {
+          //get the queue
+          let queueRef = firestore.collection("queues").doc(queueId);
+          //get the ticket
 
-                    //get next ticket
-                    let querySnap = await transaction.get(
-                        queueRef
-                        .collection("tickets")
-                        .where("phone", "==", m["MSISDN"])
-                        .limit(1)
-                    );
-                
-                    //in case there is no ticket left
-                    if (querySnap.empty) {
-                        throw "No tickets found for this phone number for this queue";
-                    }
-                    let ticketRef = querySnap.docs[0].ref;
+          //transaction is cheaper
+          await firestore.runTransaction(async function(transaction) {
+            let queueDoc = await transaction.get(queueRef);
 
-                    let queueData = queueDoc.data();
-                    
-                    return await removeTicket(
-                    transaction,
-                    ticketRef,
-                    queueRef,
-                    queueData,
-                    false
-                    );
-                });
-            } else {
-                throw 'unexpected msg format'
+            //get next ticket
+            let querySnap = await transaction.get(
+              queueRef
+                .collection("tickets")
+                .where("phone", "==", m["MSISDN"])
+                .limit(1)
+            );
+
+            //in case there is no ticket left
+            if (querySnap.empty) {
+              throw "No tickets found for this phone number for this queue";
             }
+            let ticketRef = querySnap.docs[0].ref;
 
-        } catch(e){
-            console.error(m,e)
+            let queueData = queueDoc.data();
+
+            return await removeTicket(
+              transaction,
+              ticketRef,
+              queueRef,
+              queueData,
+              false
+            );
+          });
+
+          await sendSMS([m["MSISDN"]], "Saiu da fila " + queueRef.id);
+        } else {
+          throw "unexpected msg format";
         }
-
-        
-    })
-});
-
-
-
+      } catch (e) {
+        console.error(m, e);
+      }
+    });
+  });
 
 //---- HELPERS ----
 
-async function createTicketInQueue({queueId,email=null,phone=null,name=null}, context){
-    //receives queueId
+async function createTicketInQueue(
+  { queueId, email = null, phone = null, name = null },
+  context
+) {
+  var validator = require("validator");
+
+  //receives queueId
   let queueRef = firestore.collection("queues").doc(queueId);
   var ticketRef = queueRef.collection("tickets").doc();
 
   //create ticket object
   let ticketData = {};
   if (!!email) {
+    if (!validator.isEmail(email)) {
+      throw "Invalid email format";
+    }
     ticketData.email = email;
   } else if (!!phone) {
+    if (!validator.isMobilePhone(phone)) {
+      throw "Invalid phone number format";
+    }
     ticketData.phone = phone;
   } else if (!!name) {
     ticketData.name = name;
@@ -330,8 +344,8 @@ async function createTicketInQueue({queueId,email=null,phone=null,name=null}, co
   let result = await firestore.runTransaction(async function(transaction) {
     let queueDoc = await transaction.get(queueRef);
 
-    if(!queueDoc.exists){
-        throw "Queue ID "+queueId+" not found.";
+    if (!queueDoc.exists) {
+      throw "Queue ID " + queueId + " not found.";
     }
 
     //get queue
@@ -390,7 +404,7 @@ async function addTicket(
   await transaction.set(ticketRef, ticketData);
 
   //add ticket to count
-  await transaction.set(queueRef, queueData);
+  await transaction.update(queueRef, queueData);
 
   return { queue: queueData, ticket: ticketData };
 }
@@ -420,7 +434,7 @@ async function removeTicket(
     }
   }
 
-  await transaction.set(queueRef, {
+  await transaction.update(queueRef, {
     remainingTicketsInQueue: queueData.remainingTicketsInQueue
   });
 
@@ -452,7 +466,6 @@ async function sendMail(to, templateId, dynamic_template_data) {
 }
 
 async function sendSMS(MsisdnList, strMessage) {
-
   var args = {
     TenantName: config.smspro.tenant,
     strUsername: config.smspro.username,
@@ -461,31 +474,41 @@ async function sendSMS(MsisdnList, strMessage) {
     strMessage
   };
 
-  return await callSMSPro('SendSMS', args);
+  return await callSMSPro("SendSMS", args);
 }
 
+var cacheSMSProClient;
 async function callSMSPro(method, args) {
-    var soap = require("soap");
+  return await new Promise((resolve, reject) => {
+    try {
+      var makeCall = function() {
+        cacheSMSProClient[method](args, function(err, result) {
+          if (!!err) {
+            reject(err);
+          } else {
+            resolve(result);
+          }
+        });
+      };
 
-    return await new Promise((resolve, reject) => {
-        try{
-            soap.createClient(urlSMSPro, function(err, client) {
-                if(!!err){
-                    reject(err)
-                } else {
-                    client.setEndpoint(urlSMSProService)
-                    client[method](args, function(err, result) {
-                        if(!!err){
-                            reject(err)
-                        } else {
-                            resolve(result);
-                        }
-                    });
-                }
-                
-            });
-        } catch(e){
-            reject(e)
-        }
-    })
+      var soap;
+      if (!cacheSMSProClient) {
+        soap = require("soap");
+
+        soap.createClient(urlSMSPro, function(err, client) {
+          if (!!err) {
+            reject(err);
+          } else {
+            client.setEndpoint(urlSMSProService);
+            cacheSMSProClient = client; //keep in memory for later
+            makeCall();
+          }
+        });
+      } else {
+        makeCall();
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
 }

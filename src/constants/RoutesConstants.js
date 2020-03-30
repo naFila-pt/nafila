@@ -10,3 +10,4 @@ export const ADMIN_START_QUEUE_PATH = "/admin/start-queue";
 // MAIN
 
 export const MAIN_ADDCONSUMER_PATH = "/main/addConsumer";
+export const MAIN_ENDQUEUE_PATH = "/main/endQueue";

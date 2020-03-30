@@ -1,9 +1,9 @@
+import AddConsumer from "./AddConsumer";
+import EndQueue from "./EndQueue";
 
-import AddConsumer from './AddConsumer'
+const Main = {
+  AddConsumer: AddConsumer,
+  EndQueue: EndQueue
+};
 
-const MainView = {
-    AddConsumer: AddConsumer,
-
-}
-
-export default MainView
+export default Main;

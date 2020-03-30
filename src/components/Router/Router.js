@@ -7,8 +7,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import OnBoardingContent from "../../pages/OnBoardingContent";
 import { HomeContent, TermsConditions } from "../../pages/HomeContent";
 import Admin from "../../pages/Admin";
-import MainView from "../../pages/AfterLoggedIn";
-import PrivateRoute from "../PrivateRoute";
+import Main from "../../pages/AfterLoggedIn";
 import NotFoundContent from "../../pages/NotFoundContent";
 import * as Routes from "../../constants/RoutesConstants";
 
@@ -52,15 +51,18 @@ class Router extends Component {
             component={Admin.ChangePassword}
             exact
           />
+
           <PrivateRoute
             path={Routes.ADMIN_START_QUEUE_PATH}
             component={Admin.Queue}
             exact
           />
 
+          <Route path={Routes.MAIN_ENDQUEUE_PATH} component={Main.EndQueue} exact />
+
           <Route
             path={Routes.MAIN_ADDCONSUMER_PATH}
-            component={MainView.AddConsumer}
+            component={Main.AddConsumer}
             exact
           />
 
