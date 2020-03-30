@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
+import PrivateRoute from "../PrivateRoute";
+
 import OnBoardingContent from "../../pages/OnBoardingContent";
 import { HomeContent, TermsConditions } from "../../pages/HomeContent";
 import Admin from "../../pages/Admin";
