@@ -5,12 +5,9 @@ import { useTranslation } from "react-i18next";
 import Button from "../../../components/Button";
 import LoginBg from "../../../assets/bg/main.svg";
 import Layout from "../Layout";
-import {
-  PRIMARY_COLOR,
-  WHITE_COLOR,
-  BACK_BUTTON_BG_COLOR,
-  BACK_BUTTON_TEXT_COLOR
-} from "../../../constants/ColorConstants";
+import { PRIMARY_COLOR } from "../../../constants/ColorConstants";
+import { ADMIN_QUEUE_MANAGEMENT_PATH } from "../../../constants/RoutesConstants";
+
 import * as S from "./style";
 import AddConsumerName from "./AddConsumerName";
 import AddConsumerPhone from "./AddConsumerPhone";
@@ -26,14 +23,11 @@ const typographyStyles = {
 };
 
 const buttonStyles = {
-  color: WHITE_COLOR,
-  textDecoration: "none",
-  background: "none"
+  marginBottom: 20
 };
 const backButtonStyles = {
-  color: BACK_BUTTON_TEXT_COLOR,
-  textDecoration: "none",
-  background: BACK_BUTTON_BG_COLOR
+  position: "absolute",
+  bottom: 20
 };
 
 function AddConsumer() {
@@ -76,7 +70,12 @@ function AddConsumer() {
           {t("main#addConsumer_button2")}
         </Button>
 
-        <Button backward style={backButtonStyles}>
+        <Button
+          variant="gray"
+          style={backButtonStyles}
+          href={ADMIN_QUEUE_MANAGEMENT_PATH}
+          backward
+        >
           {t("main#addConsumer_back")}
         </Button>
       </S.Form>

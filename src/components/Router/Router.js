@@ -55,18 +55,18 @@ class Router extends Component {
           />
 
           <PrivateRoute
-            path={Routes.ADMIN_START_QUEUE_PATH}
+            path={Routes.ADMIN_QUEUE_MANAGEMENT_PATH}
             component={Admin.Queue}
             exact
           />
 
-          <Route
+          <PrivateRoute
             path={Routes.MAIN_ENDQUEUE_PATH}
             component={Main.EndQueue}
             exact
           />
 
-          <Route
+          <PrivateRoute
             path={Routes.MAIN_ADDCONSUMER_PATH}
             component={Main.AddConsumer}
             exact

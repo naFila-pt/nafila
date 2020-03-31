@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-
 import { Typography, TextField } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
+import styled from "styled-components";
+
 import Button from "../../../components/Button";
 import LoginBg from "../../../assets/bg/main.svg";
 import Layout from "../Layout";
@@ -21,22 +22,20 @@ const typographyStyles = {
     fontSize: "2rem"
   }
 };
-
-const buttonStyles = {
-  color: WHITE_COLOR,
-  textDecoration: "none",
-  background: "none"
-};
-const backButtonStyles = {
-  color: BACK_BUTTON_TEXT_COLOR,
-  textDecoration: "none",
-  background: BACK_BUTTON_BG_COLOR
-};
-
 const inputProps = {
   fullWidth: true,
   required: true
 };
+const ButtonsContainer = styled.div`
+  position: absolute;
+  bottom: 30px;
+  width: 100%;
+  left: 0;
+
+  .MuiButtonBase-root {
+    margin-bottom: 20px;
+  }
+`;
 
 function AddConsumerName(props) {
   const { t } = useTranslation();
@@ -66,21 +65,19 @@ function AddConsumerName(props) {
           label={t("main#addConsumerName_placeholder")}
           name="name"
           onChange={e => nameTextChanging(e)}
-          style={{ marginTop: "25px" }}
+          style={{ marginTop: "15vh" }}
           {...inputProps}
         />
 
-        <Button forward style={buttonStyles} onClick={generateTicket}>
-          {t("main#addConsumer_generateTicket")}
-        </Button>
+        <ButtonsContainer>
+          <Button onClick={generateTicket}>
+            {t("main#addConsumer_generateTicket")}
+          </Button>
 
-        <Button
-          backward
-          style={backButtonStyles}
-          onClick={props.returnFunction}
-        >
-          {t("main#addConsumer_back")}
-        </Button>
+          <Button backward variant="gray" onClick={props.returnFunction}>
+            {t("main#addConsumer_back")}
+          </Button>
+        </ButtonsContainer>
       </S.Form>
     </Layout>
   );
