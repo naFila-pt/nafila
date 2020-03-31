@@ -1,16 +1,12 @@
 import React, { useState } from "react";
-
 import { Typography, TextField } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
+import styled from "styled-components";
+
 import Button from "../../../components/Button";
 import LoginBg from "../../../assets/bg/main.svg";
 import Layout from "../Layout";
-import {
-  PRIMARY_COLOR,
-  WHITE_COLOR,
-  BACK_BUTTON_BG_COLOR,
-  BACK_BUTTON_TEXT_COLOR
-} from "../../../constants/ColorConstants";
+import { PRIMARY_COLOR } from "../../../constants/ColorConstants";
 import * as S from "./style";
 import AddConsumerPhoneSuccess from "./AddConsumerPhoneSuccess";
 const typographyStyles = {
@@ -21,21 +17,20 @@ const typographyStyles = {
   }
 };
 
-const buttonStyles = {
-  color: WHITE_COLOR,
-  textDecoration: "none",
-  background: "none"
-};
-const backButtonStyles = {
-  color: BACK_BUTTON_TEXT_COLOR,
-  textDecoration: "none",
-  background: BACK_BUTTON_BG_COLOR
-};
-
 const inputProps = {
   fullWidth: true,
   required: true
 };
+const ButtonsContainer = styled.div`
+  position: absolute;
+  bottom: 30px;
+  width: 100%;
+  left: 0;
+
+  .MuiButtonBase-root {
+    margin-bottom: 20px;
+  }
+`;
 
 function AddConsumerPhone(props) {
   const { t } = useTranslation();
@@ -66,21 +61,19 @@ function AddConsumerPhone(props) {
           label={t("main#addConsumerPhone_placeholder")}
           name="phone"
           onChange={e => phoneTextChanging(e)}
-          style={{ marginTop: "25px" }}
+          style={{ marginTop: "15vh" }}
           {...inputProps}
         />
 
-        <Button forward style={buttonStyles} onClick={generateTicket}>
-          {t("main#addConsumer_generateTicket")}
-        </Button>
+        <ButtonsContainer>
+          <Button onClick={generateTicket}>
+            {t("main#addConsumer_generateTicket")}
+          </Button>
 
-        <Button
-          backward
-          style={backButtonStyles}
-          onClick={props.returnFunction}
-        >
-          {t("main#addConsumer_back")}
-        </Button>
+          <Button variant="gray" onClick={props.returnFunction} backward>
+            {t("main#addConsumer_back")}
+          </Button>
+        </ButtonsContainer>
       </S.Form>
     </Layout>
   );

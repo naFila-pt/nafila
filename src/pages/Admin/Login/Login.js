@@ -14,7 +14,7 @@ import Loader from "../../../components/Loader";
 import { PRIMARY_COLOR } from "../../../constants/ColorConstants";
 import {
   ADMIN_RECOVERPASSWORD_PATH,
-  ADMIN_START_QUEUE_PATH
+  ADMIN_QUEUE_MANAGEMENT_PATH
 } from "../../../constants/RoutesConstants";
 import * as S from "./style";
 
@@ -62,7 +62,7 @@ function Login() {
     authentication
       .signIn(email, password)
       .then(res => {
-        return (window.location.href = ADMIN_START_QUEUE_PATH);
+        return (window.location.href = ADMIN_QUEUE_MANAGEMENT_PATH);
       })
       .catch(error => {
         setLoading(false);
@@ -75,7 +75,7 @@ function Login() {
       setNeedsVerification(true);
     } else if (auth.currentUser && auth.currentUser.emailVerified) {
       // User has session and access to private routes
-      window.location.href = ADMIN_START_QUEUE_PATH;
+      window.location.href = ADMIN_QUEUE_MANAGEMENT_PATH;
     }
   }, []);
 

@@ -32,15 +32,20 @@ export const QueueDate = styled.div`
 `;
 
 export const CodeContainer = styled.div`
-  margin-top: 35px;
-  border: 2px solid #4c0788;
-  border-radius: 40px;
-  padding: 18px 60px;
-  font-size: 25px;
+  display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	margin-top: 35px;
+	width: 30rem;
+	border: 3px solid #4c0788;
+	border-radius: 60px;
+	padding: 20px 0px;
 
   span {
     font-weight: 700;
-    font-size: 40px;
+	  font-size: 80px;
   }
 `;
 
