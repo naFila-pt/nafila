@@ -7,6 +7,7 @@ import HomeLayout from "../../components/HomeLayout";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Input from "@material-ui/core/Input";
+import Link from "@material-ui/core/Link";
 import Button from "../../components/Button";
 import ConsumerTicket from "../../components/ConsumerTicket";
 
@@ -236,14 +237,17 @@ const HomeContent = () => {
             onChange={handleUserEmailChange}
           />
           <div className={classes.bottomButton}>
-            <a href="#!" onClick={handleTermsOnClick}>
-              <div
-                style={{ marginBottom: "1.75em", padding: "0 2em" }}
+            <div style={{ marginBottom: "1.75em", padding: "0 2em" }}>
+              <span
                 dangerouslySetInnerHTML={{
                   __html: t("home#notification_terms")
                 }}
               />
-            </a>
+              {` `}
+              <Link style={{ color: "#4C0788" }} onClick={handleTermsOnClick}>
+                {t("home#notification_termsLink")}
+              </Link>
+            </div>
             <Button forward onClick={handleAddToQueue}>
               {t("home#notification_button")}
             </Button>
