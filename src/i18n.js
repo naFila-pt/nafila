@@ -145,7 +145,7 @@ i18n
           "main#addConsumerName_placeholder": "Nome",
 
           // AfterLogin Add Consumer Success
-          "main#addConsumerSuccess_button": "Voltar nafila",
+          "main#addConsumerSuccess_button": `Voltar <span class="logo">na<b>fila</b></span>`,
           "main#addConsumerSuccess_title": "Nova Senha gerada",
 
           // AfterLogin Add Consumer Phone Success

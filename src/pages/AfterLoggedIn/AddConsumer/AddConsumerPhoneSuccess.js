@@ -1,11 +1,13 @@
 import React from "react";
-
 import { Typography } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
+import styled from "styled-components";
+
 import Button from "../../../components/Button";
 import LoginBg from "../../../assets/bg/main.svg";
 import Layout from "../Layout";
-import { PRIMARY_COLOR, WHITE_COLOR } from "../../../constants/ColorConstants";
+import { PRIMARY_COLOR } from "../../../constants/ColorConstants";
+import { ADMIN_QUEUE_MANAGEMENT_PATH } from "../../../constants/RoutesConstants";
 import * as S from "./style";
 import { ReactComponent as Logo } from "../../../assets/logo.svg";
 
@@ -16,12 +18,11 @@ const typographyStyles = {
     fontSize: "2rem"
   }
 };
-
-const buttonStyles = {
-  color: WHITE_COLOR,
-  textDecoration: "none",
-  background: "none"
-};
+const Back = styled.div`
+  .logo {
+    text-transform: lowercase !important;
+  }
+`;
 
 function AddConsumerPhoneSuccess() {
   const { t } = useTranslation();
@@ -32,7 +33,7 @@ function AddConsumerPhoneSuccess() {
         <Typography variant="h3" style={typographyStyles.TITLE}>
           {t("main#addConsumerSuccess_title")}
         </Typography>
-        <div style={{ textAlign: "center" }}>
+        <div style={{ textAlign: "center", marginTop: 30 }}>
           <Logo />
         </div>
         <p
@@ -42,8 +43,12 @@ function AddConsumerPhoneSuccess() {
           }}
         />
 
-        <Button forward style={buttonStyles}>
-          {t("main#addConsumerSuccess_button")}
+        <Button href={ADMIN_QUEUE_MANAGEMENT_PATH} forward>
+          <Back
+            dangerouslySetInnerHTML={{
+              __html: t("main#addConsumerSuccess_button")
+            }}
+          />
         </Button>
       </S.Form>
     </Layout>
