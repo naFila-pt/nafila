@@ -2,18 +2,19 @@ import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
+import { firestore, functions } from "../../firebase";
 import HomeLayout from "../../components/HomeLayout";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Input from "@material-ui/core/Input";
 import Button from "../../components/Button";
+import ConsumerTicket from "../../components/ConsumerTicket";
 
 import bgIntro from "../../assets/bg/user_intro.svg";
 import bgStore from "../../assets/bg/user_store.svg";
 import bgMain from "../../assets/bg/main.svg";
 
 import { ReactComponent as Logo } from "../../assets/logo.svg";
-import { ReactComponent as Ticket } from "../../assets/icons/ticket.svg";
 import { ReactComponent as EmailNotification } from "../../assets/icons/email_notification.svg";
 
 const useStyles = makeStyles({
@@ -35,6 +36,15 @@ const useStyles = makeStyles({
     bottom: "14vh",
     width: "100%",
     textAlign: "center"
+  },
+  inputRoot: {
+    width: "calc(100% - 4em)",
+    textAlign: "center",
+    fontWeight: 900,
+    margin: "0 2em"
+  },
+  inputElement: {
+    textAlign: "center"
   }
 });
 
@@ -45,23 +55,78 @@ const HomeContent = () => {
   const { t } = useTranslation();
 
   const [activeStep, setActiveStep] = useState(initialActiveStep);
-  const [storeCodeInput, setStoreCodeInput] = useState("");
+  const [queueId, setQueueId] = useState("");
   const [userEmail, setUserEmail] = useState("");
+  const [ticketsStoreInfo, setTicketsStoreInfo] = useState({
+    name: null,
+    currentTicket: null,
+    remainingInQueue: null,
+    ownTicketNumber: null
+  });
 
   const handleNextButton = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
   };
 
   const handleStoreCodeChange = event => {
-    setStoreCodeInput(event.target.value);
+    setQueueId(event.target.value);
   };
 
   const handleUserEmailChange = event => {
     setUserEmail(event.target.value);
   };
 
-  const handleTermsOnClick = () => {
+  const handleTermsOnClick = e => {
+    e.preventDefault();
     window.open("/termos-condicoes", "_blank");
+  };
+
+  const handleGetStoreInfo = async () => {
+    try {
+      const queue = await firestore
+        .collection("queues")
+        .doc(queueId.toUpperCase())
+        .get();
+
+      const queueData = queue.data();
+
+      setTicketsStoreInfo(prevState => {
+        return {
+          ...prevState,
+          name: queueData.name,
+          remainingInQueue: queueData.remainingTicketsInQueue
+        };
+      });
+
+      handleNextButton();
+    } catch (e) {
+      alert(`Error: ${e}`);
+    }
+  };
+
+  const handleAddToQueue = async () => {
+    try {
+      const addMeToQueue = functions.httpsCallable("addMeToQueue");
+
+      const queueInfo = await addMeToQueue({
+        queueId: queueId.toUpperCase(),
+        email: userEmail
+      });
+      const queueData = queueInfo.data;
+
+      setTicketsStoreInfo(prevState => {
+        return {
+          ...prevState,
+          ownTicketNumber: queueData.ticket.number,
+          currentTicket: queueData.queue.currentTicketNumber,
+          remainingInQueue: queueData.queue.remainingTicketsInQueue - 1 // remove current user
+        };
+      });
+
+      handleNextButton();
+    } catch (e) {
+      alert(`Error: ${e}`);
+    }
   };
 
   return (
@@ -100,14 +165,14 @@ const HomeContent = () => {
           </Typography>
           <Input
             placeholder={t("home#insertCode_inputPlaceholder")}
-            style={{ width: "100%", textAlign: "center", fontWeight: 900 }}
-            value={storeCodeInput}
+            classes={{ root: classes.inputRoot, input: classes.inputElement }}
+            value={queueId}
             onChange={handleStoreCodeChange}
           />
           <div className={classes.bottomButton}>
             <Button
               forward
-              onClick={handleNextButton}
+              onClick={handleGetStoreInfo}
               dangerouslySetInnerHTML={{ __html: t("home#insertCode_button") }}
             />
           </div>
@@ -118,7 +183,7 @@ const HomeContent = () => {
           <Logo />
           <div style={{ fontSize: "1.25em" }}>
             <div>{t("home#queue_store")}</div>
-            <Typography variant="h3">PDCartaxo</Typography>
+            <Typography variant="h3">{ticketsStoreInfo.name}</Typography>
           </div>
           <div className={classes.bottomButton}>
             <Grid
@@ -141,7 +206,7 @@ const HomeContent = () => {
                     fontWeight: 900
                   }}
                 >
-                  7 {t("home#queue_people")}
+                  {ticketsStoreInfo.remainingInQueue} {t("home#queue_people")}
                 </div>
               </Grid>
             </Grid>
@@ -163,10 +228,8 @@ const HomeContent = () => {
           />
           <Input
             placeholder={t("home#notification_inputPlaceholder")}
+            classes={{ root: classes.inputRoot, input: classes.inputElement }}
             style={{
-              width: "100%",
-              textAlign: "center",
-              fontWeight: 900,
               marginTop: "2.5em"
             }}
             value={userEmail}
@@ -181,7 +244,7 @@ const HomeContent = () => {
                 }}
               />
             </a>
-            <Button forward onClick={handleNextButton}>
+            <Button forward onClick={handleAddToQueue}>
               {t("home#notification_button")}
             </Button>
           </div>
@@ -191,42 +254,30 @@ const HomeContent = () => {
         <Grid item className={classes.gridItem} style={{ paddingTop: ".8em" }}>
           <div style={{ fontSize: "1.25em" }}>
             <div>{t("home#ticket_store")}</div>
-            <Typography variant="h3">PDCartaxo</Typography>
+            <Typography variant="h3">{ticketsStoreInfo.name}</Typography>
           </div>
           <Grid
             container
             style={{ justifyContent: "center", marginTop: "1.25em" }}
           >
-            <Grid item style={{ position: "relative" }}>
-              <Ticket />
-              <div
-                style={{
-                  position: "absolute",
-                  top: "6em",
-                  left: 0,
-                  width: "100%",
-                  color: "#fff"
-                }}
-              >
-                <div style={{ fontSize: "2.5em", fontWeight: 900 }}>026</div>
-                <div style={{ fontSize: "1.375em" }}>
-                  {t("home#ticket_turn")}
-                </div>
-              </div>
-            </Grid>
+            <ConsumerTicket number={ticketsStoreInfo.ownTicketNumber} />
           </Grid>
           <Grid container justify="space-between" style={{ padding: "0 3em" }}>
             <Grid item>
               <div style={{ fontSize: "1.25em" }}>
                 {t("home#ticket_currentQueue")}
               </div>
-              <div style={{ fontSize: "2.8125em", fontWeight: 900 }}>019</div>
+              <div style={{ fontSize: "2.8125em", fontWeight: 900 }}>
+                {ticketsStoreInfo.currentTicket}
+              </div>
             </Grid>
             <Grid item>
               <div style={{ fontSize: "1.25em" }}>
                 {t("home#ticket_length")}
               </div>
-              <div style={{ fontSize: "2.8125em", fontWeight: 900 }}>9</div>
+              <div style={{ fontSize: "2.8125em", fontWeight: 900 }}>
+                {ticketsStoreInfo.remainingInQueue}
+              </div>
             </Grid>
           </Grid>
           <p
