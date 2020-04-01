@@ -61,7 +61,7 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
   await sendMail([data.email], "d-6ac28f40006c4d178be4e00adae2bcb4", {
     queueId: queueRef.id,
     queueName: queue.name,
-    queuePosterUrl: `https://nafila.pt/cartaz-fila/${queueRef.id}`
+    queuePosterUrl: `https://nafila.pt/loja/cartaz-fila/${queueRef.id}`
   });
 
   //returns queue object
