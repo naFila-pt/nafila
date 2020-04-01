@@ -482,8 +482,11 @@ async function createTicketInQueue(
     //send notification SMS
     await sendSMS(
       [result.ticket.phone],
-      `Já está naFila ${queueRef.id}! A sua senha é ${result.ticket.number} e tem ${queueData.remainingTicketsInQueue-1} pessoas à sua frente.` +
-      ` Caso queira sair da fila envie CODIGO sair para 4902 e passe a vez ao próximo.`
+      `Já está naFila ${queueRef.id}! A sua senha é ${
+        result.ticket.number
+      } e tem ${result.queue.remainingTicketsInQueue -
+        1} pessoas à sua frente.` +
+        ` Caso queira sair da fila envie CODIGO sair para 4902 e passe a vez ao próximo.`
     );
   }
 
