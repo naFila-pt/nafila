@@ -441,6 +441,8 @@ async function removeTicket(
     queueData.currentTicketNumber = ticketData.number;
     if (!!ticketData.name) {
       queueData.currentTicketName = ticketData.name;
+    } else {
+      queueData.currentTicketName = null;
     }
   }
 
