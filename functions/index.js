@@ -7,6 +7,7 @@ admin.initializeApp();
 const firestore = admin.firestore();
 const urlSMSPro = "https://smspro.nos.pt/smspro/smsprows.asmx?WSDL";
 const urlSMSProService = "https://smspro.nos.pt/SmsPro/smsprows.asmx";
+const functionsRegion = "europe-west1";
 
 const runtimeOpts = {
   timeoutSeconds: 15,
@@ -14,7 +15,7 @@ const runtimeOpts = {
 };
 
 //low cost / high perf settings
-const functions = functionsMain.region("europe-west1").runWith(runtimeOpts);
+const functions = functionsMain.region(functionsRegion).runWith(runtimeOpts);
 
 //---- APP API ----
 
@@ -121,11 +122,7 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
   if (phonesToNotify.length) {
     await sendSMS(
       phonesToNotify,
-      "A fila '" +
-        result.queue.name +
-        "' (" +
-        queueRef.id +
-        ") foi fechada pelo administrador da fila. A sua senha foi removida."
+      `A fila ${queueRef.id} foi fechada pelo administrador da fila. A sua senha foi removida.`
     );
   }
 
@@ -195,8 +192,7 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
     //send notification SMS
     await sendSMS(
       [result.ticket.phone],
-      result.queue.name +
-        ": Está a chegar a sua vez naFila! Dirija-se à entrada de loja."
+      `Está a chegar a sua vez naFila ${queueRef.id}! Dirija-se à entrada de loja. Obrigado por aguardar naFila!`
     );
   }
 
@@ -252,94 +248,158 @@ exports.scheduledFunction = functions.pubsub
   .schedule("every " + config.smspro.getmessagesinterval)
   .onRun(async () => {
     //schedule running next in 10s
+    let turns = parseInt(config.smspro.getmessagessubintervalturns);
+    if (!isNaN(turns) && turns > 0) {
+      await scheduleNextSMSRoutine(config.smspro.getmessagessubintervalsecs, 1);
+    }
 
     //run now
     return await getNewSMSRoutine();
   });
 
 exports.smsRoutine = functions.https.onRequest(async (req, res) => {
+  let runTurn = req.body.runTurn;
+
+  if (typeof runTurn !== "number") {
+    throw new functionsMain.https.HttpsError(
+      "invalid-argument",
+      "Invalid argument"
+    );
+  }
+
+  let nextRunTurn = req.body.runTurn + 1;
+
   //if needed, schedule running next in 10s
+  let turns = parseInt(config.smspro.getmessagessubintervalturns);
+
+  console.log("Execution " + req.body.runTurn + " of " + turns);
+  if (!isNaN(turns) && turns >= nextRunTurn) {
+    await scheduleNextSMSRoutine(
+      config.smspro.getmessagessubintervalsecs,
+      nextRunTurn
+    );
+  }
 
   //run now
-  return await getNewSMSRoutine();
+  await getNewSMSRoutine();
+  res.send("ok");
 });
 
 //---- HELPERS ----
+async function scheduleNextSMSRoutine(secs, runTurn) {
+  const intSecs = parseInt(secs);
+  if (isNaN(intSecs)) {
+    throw new functionsMain.https.HttpsError(
+      "invalid-argument",
+      "Invalid configuration"
+    );
+  }
+  const { CloudTasksClient } = require("@google-cloud/tasks");
+
+  const project = JSON.parse(process.env.FIREBASE_CONFIG).projectId;
+  const queue = "subscheduler";
+
+  const tasksClient = new CloudTasksClient();
+  const queuePath = tasksClient.queuePath(project, functionsRegion, queue);
+
+  const url = `https://${functionsRegion}-${project}.cloudfunctions.net/smsRoutine`;
+
+  const task = {
+    httpRequest: {
+      httpMethod: "POST",
+      url,
+      body: Buffer.from(JSON.stringify({ runTurn })).toString("base64"),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    },
+    scheduleTime: {
+      seconds: Date.now() / 1000 + intSecs
+    }
+  };
+
+  try {
+    return await tasksClient.createTask({ parent: queuePath, task });
+  } catch (e) {
+    console.error("sub-scheduler error ", e);
+  }
+}
 
 async function getNewSMSRoutine() {
-  return async function() {
-    var args = {
-      TenantName: config.smspro.tenant,
-      strUsername: config.smspro.username,
-      strPassword: config.smspro.password,
-      intCampaignId: parseInt(config.smspro.campaignid)
-    };
-    let serviceReply = await callSMSPro("GetCampaignUnreadReplies", args);
-    let replies =
-      (serviceReply.Replies && serviceReply.Replies.Reply_Record) || [];
-    console.log("Found " + replies.length + " new messages");
-    //sort our SMS according to when they were received
-    try {
-      replies = replies.sort((e1, e2) => {
-        return Date.parse(e1["Moment"]) - Date.parse(e2["Moment"]);
-      });
-    } catch (e) {
-      console.log("sorting error", e);
-    }
-    replies.forEach(async m => {
-      try {
-        //validate queueId
-        let [queueId, leave] = m["Message"]
-          .trim()
-          .toUpperCase()
-          .split(" ");
-        //add to queue
-        if (typeof leave === "undefined") {
-          await createTicketInQueue({ queueId, phone: m["MSISDN"] }, false);
-          //remove from queue
-        } else if (leave === "SAIR") {
-          //get the queue
-          let queueRef = firestore.collection("queues").doc(queueId);
-          //get the ticket
-          //transaction is cheaper
-          await firestore.runTransaction(async function(transaction) {
-            let queueDoc = await transaction.get(queueRef);
-            //get next ticket
-            let querySnap = await transaction.get(
-              queueRef
-                .collection("tickets")
-                .where("phone", "==", m["MSISDN"])
-                .limit(1)
-            );
-            //in case there is no ticket left
-            if (querySnap.empty) {
-              throw new functionsMain.https.HttpsError(
-                "not-found",
-                "No tickets found for this phone number for this queue"
-              );
-            }
-            let ticketRef = querySnap.docs[0].ref;
-            let queueData = queueDoc.data();
-            return await removeTicket(
-              transaction,
-              ticketRef,
-              queueRef,
-              queueData,
-              false
-            );
-          });
-          await sendSMS([m["MSISDN"]], "Saiu da fila " + queueRef.id);
-        } else {
-          throw new functionsMain.https.HttpsError(
-            "invalid-argument",
-            "Unexpected msg format"
-          );
-        }
-      } catch (e) {
-        console.error(m, e);
-      }
-    });
+  var args = {
+    TenantName: config.smspro.tenant,
+    strUsername: config.smspro.username,
+    strPassword: config.smspro.password,
+    intCampaignId: parseInt(config.smspro.campaignid)
   };
+  let serviceReply = await callSMSPro("GetCampaignUnreadReplies", args);
+  let replies =
+    (serviceReply.Replies && serviceReply.Replies.Reply_Record) || [];
+  console.log("Found " + replies.length + " new messages");
+  //sort our SMS according to when they were received
+  try {
+    replies = replies.sort((e1, e2) => {
+      return Date.parse(e1["Moment"]) - Date.parse(e2["Moment"]);
+    });
+  } catch (e) {
+    console.log("sorting error", e);
+  }
+  replies.forEach(async m => {
+    try {
+      //validate queueId
+      let [queueId, leave] = m["Message"]
+        .trim()
+        .toUpperCase()
+        .split(" ");
+      //add to queue
+      if (typeof leave === "undefined") {
+        await createTicketInQueue({ queueId, phone: m["MSISDN"] }, false);
+        //remove from queue
+      } else if (leave === "SAIR") {
+        //get the queue
+        let queueRef = firestore.collection("queues").doc(queueId);
+        //get the ticket
+        //transaction is cheaper
+        await firestore.runTransaction(async function(transaction) {
+          let queueDoc = await transaction.get(queueRef);
+          //get next ticket
+          let querySnap = await transaction.get(
+            queueRef
+              .collection("tickets")
+              .where("phone", "==", m["MSISDN"])
+              .limit(1)
+          );
+          //in case there is no ticket left
+          if (querySnap.empty) {
+            throw new functionsMain.https.HttpsError(
+              "not-found",
+              "No tickets found for this phone number for this queue"
+            );
+          }
+          let ticketRef = querySnap.docs[0].ref;
+          let queueData = queueDoc.data();
+          return await removeTicket(
+            transaction,
+            ticketRef,
+            queueRef,
+            queueData,
+            false
+          );
+        });
+        await sendSMS(
+          [m["MSISDN"]],
+          "Foi removido da fila com sucesso. Obrigado por aguardar naFila."
+        );
+      } else {
+        throw new functionsMain.https.HttpsError(
+          "invalid-argument",
+          "Unexpected msg format"
+        );
+      }
+    } catch (e) {
+      console.error(m, e);
+    }
+  });
 }
 
 async function createTicketInQueue(
@@ -422,12 +482,8 @@ async function createTicketInQueue(
     //send notification SMS
     await sendSMS(
       [result.ticket.phone],
-      "Encontra-se em espera na fila '" +
-        result.queue.name +
-        "' (" +
-        queueRef.id +
-        "). O numero do seu ticket: " +
-        result.ticket.number
+      `Já está naFila ${queueRef.id}! A sua senha é ${result.ticket.number} e tem ${queueData.remainingTicketsInQueue-1} pessoas à sua frente.` +
+      ` Caso queira sair da fila envie CODIGO sair para 4902 e passe a vez ao próximo.`
     );
   }
 
