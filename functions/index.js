@@ -61,7 +61,7 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
   await sendMail([data.email], "d-6ac28f40006c4d178be4e00adae2bcb4", {
     queueId: queueRef.id,
     queueName: queue.name,
-    queuePosterUrl: "https://nafila.pt/cartaz-fila/" + queueRef.id
+    queuePosterUrl: `https://nafila.pt/cartaz-fila/${queueRef.id}`
   });
 
   //returns queue object
@@ -90,6 +90,17 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
 
     //get all remaining tickets
     let queryRef = await transaction.get(queueRef.collection("tickets"));
+
+    //remove queue from user collection
+    let userRef = firestore.collection("users").doc(queueData.owner_id);
+    let userDoc = await transaction.get(userRef);
+
+    //get user
+    let userData = userDoc.data();
+
+    //remove queueId from queues
+    userData.splice(userData.queues.indexOf(queueRef.id), 1);
+    transaction.update(userRef, userData);
 
     //delete queue entirely
     transaction.delete(queueRef);
@@ -476,7 +487,7 @@ async function createTicketInQueue(
       ticketNumber: result.ticket.number,
       queueId: queueRef.id,
       queueName: result.queue.name,
-      exitQueueUrl: "https://nafila.pt/sair/" + queueRef.id + "/" + ticketRef.id
+      exitQueueUrl: `https://nafila.pt/sair/${queueRef.id}/${ticketRef.id}`
     });
   } else if (!!ticketData.phone) {
     //send notification SMS
