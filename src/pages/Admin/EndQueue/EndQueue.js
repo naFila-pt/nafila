@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import Button from "../../../components/Button";
 import Loader from "../../../components/Loader";
 import Bg from "../../../assets/bg/store_queue_end.svg";
-import Layout from "../Layout";
+import Layout from "../../../components/AdminLayout";
 import { PRIMARY_COLOR } from "../../../constants/ColorConstants";
 import { ADMIN_QUEUE_MANAGEMENT_PATH } from "../../../constants/RoutesConstants";
 import Logo from "../../../assets/logo.svg";

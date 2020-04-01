@@ -3,7 +3,7 @@ import { Typography } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
-import Layout from "../../Layout";
+import Layout from "../../../../components/AdminLayout";
 import Button from "../../../../components/Button";
 import Bg from "../../../../assets/bg/store_queue_start.svg";
 import { SECONDARY_COLOR } from "../../../../constants/ColorConstants";

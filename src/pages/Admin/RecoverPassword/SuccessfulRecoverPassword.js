@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import Button from "../../../components/Button";
 import LoginBg from "../../../assets/bg/main.svg";
-import Layout from "../Layout";
+import Layout from "../../../components/AdminLayout";
 import {
   PRIMARY_COLOR,
   BACK_BUTTON_BG_COLOR,

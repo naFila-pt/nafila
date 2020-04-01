@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 import Button from "../../../components/Button";
 import LoginBg from "../../../assets/bg/main.svg";
-import Layout from "../Layout";
+import Layout from "../../../components/AdminLayout";
 import authentication from "../../../services/authentication";
 import { auth } from "../../../firebase";
 import Loader from "../../../components/Loader";

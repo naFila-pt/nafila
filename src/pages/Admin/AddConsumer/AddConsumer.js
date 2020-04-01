@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import Button from "../../../components/Button";
 import Loader from "../../../components/Loader";
 import LoginBg from "../../../assets/bg/main.svg";
-import Layout from "../Layout";
+import Layout from "../../../components/AdminLayout";
 import { PRIMARY_COLOR } from "../../../constants/ColorConstants";
 import { ADMIN_QUEUE_MANAGEMENT_PATH } from "../../../constants/RoutesConstants";
 import { auth, firestore } from "../../../firebase";

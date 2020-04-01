@@ -9,7 +9,6 @@ import PrivateRoute from "../PrivateRoute";
 import OnBoardingContent from "../../pages/OnBoardingContent";
 import { HomeContent, TermsConditions } from "../../pages/HomeContent";
 import Admin from "../../pages/Admin";
-import Main from "../../pages/AfterLoggedIn";
 import NotFoundContent from "../../pages/NotFoundContent";
 import * as Routes from "../../constants/RoutesConstants";
 
@@ -62,13 +61,13 @@ class Router extends Component {
 
           <PrivateRoute
             path={Routes.ADMIN_END_QUEUE_PATH}
-            component={Main.EndQueue}
+            component={Admin.EndQueue}
             exact
           />
 
           <PrivateRoute
             path={Routes.ADMIN_ADD_CUSTOMER_PATH}
-            component={Main.AddConsumer}
+            component={Admin.AddConsumer}
             exact
           />
 

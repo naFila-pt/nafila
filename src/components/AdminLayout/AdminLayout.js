@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "@material-ui/core";
 import styled from "styled-components";
 
-import LogoImage from "../../../assets/logo-mini.svg";
+import LogoImage from "../../assets/logo-mini.svg";
 
 const Logo = styled.img`
   padding: 50px 0;
