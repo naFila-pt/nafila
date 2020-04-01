@@ -6,28 +6,14 @@ import Button from "../../../components/Button";
 import Loader from "../../../components/Loader";
 import LoginBg from "../../../assets/bg/main.svg";
 import Layout from "../../../components/AdminLayout";
-import { PRIMARY_COLOR } from "../../../constants/ColorConstants";
 import { ADMIN_QUEUE_MANAGEMENT_PATH } from "../../../constants/RoutesConstants";
 import { auth, firestore } from "../../../firebase";
 import { ReactComponent as Logo } from "../../../assets/logo.svg";
 
+import { HeadlineContainer, ButtonsContainer } from "../common";
+
 import AddConsumerName from "./AddConsumerName";
 import AddConsumerPhone from "./AddConsumerPhone";
-
-const typographyStyles = {
-  TITLE: {
-    color: PRIMARY_COLOR,
-    fontWeight: 900,
-    fontSize: "2rem"
-  }
-};
-
-const buttonStyles = {
-  marginBottom: 20
-};
-const backButtonStyles = {
-  marginTop: 80
-};
 
 function AddConsumer() {
   const { t } = useTranslation();
@@ -60,30 +46,32 @@ function AddConsumer() {
 
   return (
     <Layout bg={LoginBg}>
-      <Typography variant="h3" style={typographyStyles.TITLE}>
-        {t("main#addConsumer_title")}
-      </Typography>
+      <HeadlineContainer style={{ marginBottom: 0 }}>
+        <Typography variant="h3">{t("main#addConsumer_title")}</Typography>
+      </HeadlineContainer>
 
-      <div style={{ textAlign: "center", margin: "20px 0" }}>
-        <Logo />
+      <div style={{ textAlign: "center", marginTop: "10px" }}>
+        <Logo style={{ height: "200px" }} />
       </div>
 
-      <Button forward style={buttonStyles} onClick={() => setViewType("PHONE")}>
-        {t("main#addConsumer_byPhone")}
-      </Button>
+      <ButtonsContainer>
+        <Button forward onClick={() => setViewType("PHONE")}>
+          {t("main#addConsumer_byPhone")}
+        </Button>
 
-      <Button forward style={buttonStyles} onClick={() => setViewType("NAME")}>
-        {t("main#addConsumer_byName")}
-      </Button>
+        <Button forward onClick={() => setViewType("NAME")}>
+          {t("main#addConsumer_byName")}
+        </Button>
 
-      <Button
-        variant="gray"
-        style={backButtonStyles}
-        href={ADMIN_QUEUE_MANAGEMENT_PATH}
-        backward
-      >
-        {t("main#addConsumer_back")}
-      </Button>
+        <Button
+          variant="gray"
+          style={{ marginTop: 50 }}
+          href={ADMIN_QUEUE_MANAGEMENT_PATH}
+          backward
+        >
+          {t("main#addConsumer_back")}
+        </Button>
+      </ButtonsContainer>
     </Layout>
   );
 }

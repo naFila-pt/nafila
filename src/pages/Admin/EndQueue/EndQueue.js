@@ -6,25 +6,13 @@ import Button from "../../../components/Button";
 import Loader from "../../../components/Loader";
 import Bg from "../../../assets/bg/store_queue_end.svg";
 import Layout from "../../../components/AdminLayout";
-import { PRIMARY_COLOR } from "../../../constants/ColorConstants";
 import { ADMIN_QUEUE_MANAGEMENT_PATH } from "../../../constants/RoutesConstants";
 import Logo from "../../../assets/logo.svg";
 import { firestore, auth, functions } from "../../../firebase";
 
-import * as S from "./style";
+import { HeadlineContainer, ButtonsContainer } from "../common";
+
 import EndQueueSuccess from "./EndQueueSuccess";
-
-const typographyStyles = {
-  TITLE: {
-    color: PRIMARY_COLOR,
-    fontWeight: 900,
-    fontSize: "2rem"
-  }
-};
-
-const buttonStyles = {
-  marginTop: 20
-};
 
 function EndQueue() {
   const { t } = useTranslation();
@@ -68,30 +56,28 @@ function EndQueue() {
 
   return (
     <Layout bg={Bg}>
-      <Typography variant="h3" style={typographyStyles.TITLE}>
-        {t("main#endQueue_title")}
-      </Typography>
-      <S.LogoContainer>
-        <img src={Logo} alt="nafila logo" />
-      </S.LogoContainer>
+      <HeadlineContainer>
+        <Typography variant="h3">{t("main#endQueue_title")}</Typography>
+      </HeadlineContainer>
 
-      <Button
-        style={buttonStyles}
-        onClick={confirmEndQueueButton}
-        disabled={requesting}
-        variant={requesting ? "inactive" : ""}
-      >
-        {t("main#endQueue_yes")}
-      </Button>
+      <img src={Logo} alt="nafila logo" />
 
-      <Button
-        variant={requesting ? "inactive" : "gray"}
-        href={ADMIN_QUEUE_MANAGEMENT_PATH}
-        style={buttonStyles}
-        forward
-      >
-        {t("main#endQueue_no")}
-      </Button>
+      <ButtonsContainer>
+        <Button
+          onClick={confirmEndQueueButton}
+          disabled={requesting}
+          variant={requesting ? "inactive" : ""}
+        >
+          {t("main#endQueue_yes")}
+        </Button>
+
+        <Button
+          variant={requesting ? "inactive" : "gray"}
+          href={ADMIN_QUEUE_MANAGEMENT_PATH}
+        >
+          {t("main#endQueue_no")}
+        </Button>
+      </ButtonsContainer>
     </Layout>
   );
 }

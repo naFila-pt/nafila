@@ -47,11 +47,6 @@ class Router extends Component {
             component={Admin.RecoverPassword}
             exact
           />
-          <Route
-            path={Routes.ADMIN_RECOVER_PASSWORDCHANGE_PATH}
-            component={Admin.ChangePassword}
-            exact
-          />
 
           <PrivateRoute
             path={Routes.ADMIN_QUEUE_MANAGEMENT_PATH}

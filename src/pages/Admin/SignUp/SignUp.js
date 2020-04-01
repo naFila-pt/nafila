@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { TextField } from "@material-ui/core";
+import { Typography, TextField } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
@@ -14,6 +14,7 @@ import {
 } from "../../../constants/ColorConstants";
 import authentication from "../../../services/authentication";
 import { auth } from "../../../firebase";
+import { HeadlineContainer, ButtonsContainer } from "../common";
 
 import SuccessfulSignUp from "./SuccessfulSignUp";
 
@@ -33,7 +34,12 @@ const Form = styled.form`
     }
 
     label {
+      width: 100%;
       color: ${PRIMARY_COLOR} !important;
+    }
+
+    .MuiInputLabel-shrink {
+      transform-origin: top center;
     }
 
     .MuiInput-root {
@@ -45,6 +51,10 @@ const Form = styled.form`
         border-color: ${PRIMARY_COLOR} !important;
       }
     }
+  }
+
+  .MuiInput-input {
+    text-align: center;
   }
 
   .MuiAlert-root {
@@ -111,6 +121,10 @@ function SignUp() {
 
   return (
     <Layout bg={SignUpBg}>
+      <HeadlineContainer>
+        <Typography variant="h3">{t("admin#signup_title")}</Typography>
+      </HeadlineContainer>
+
       <Form onSubmit={handleSubmit}>
         <TextField
           label={t("admin#signup_nameLabel")}
@@ -142,9 +156,11 @@ function SignUp() {
           <Alert severity="info">{t("admin#signup_checkYourEmail")}</Alert>
         )}
 
-        <Button type="submit" forward>
-          {t("admin#signup_register")}
-        </Button>
+        <ButtonsContainer>
+          <Button type="submit" forward>
+            {t("admin#signup_register")}
+          </Button>
+        </ButtonsContainer>
       </Form>
     </Layout>
   );

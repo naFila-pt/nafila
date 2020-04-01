@@ -8,15 +8,10 @@ import Button from "../../../components/Button";
 import SignUpBg from "../../../assets/bg/main.svg";
 import { ADMIN_LOGIN_PATH } from "../../../constants/RoutesConstants";
 
+import { ButtonsContainer } from "../common";
+
 const Container = styled.div`
   padding: 20vh 20px 0;
-
-  .MuiButton-root {
-    position: absolute !important;
-    bottom: 30px !important;
-    width: 90%;
-    left: 5%;
-  }
 `;
 
 const typographyStyles = {
@@ -46,9 +41,11 @@ function SuccessfulSignUp() {
           }}
         />
 
-        <Button href={ADMIN_LOGIN_PATH} variant="secondary" backward>
-          {t("global#return_button")}
-        </Button>
+        <ButtonsContainer>
+          <Button href={ADMIN_LOGIN_PATH} variant="secondary" backward>
+            {t("global#return_button")}
+          </Button>
+        </ButtonsContainer>
       </Container>
     </Layout>
   );

@@ -14,13 +14,12 @@ import {
   ADMIN_END_QUEUE_PATH
 } from "../../../../constants/RoutesConstants";
 
+import { ButtonsContainer } from "../../common";
+
 const ManageQueueContainer = styled.div`
   h3 {
+    font-size: 2em;
     font-weight: 900;
-  }
-
-  .button-container {
-    margin-bottom: 20px;
   }
 
   .logo {
@@ -32,8 +31,8 @@ const TicketContainer = styled.div`
   background: url(${Ticket}) no-repeat center;
   color: #fff;
   height: 250px;
-  margin: 50px auto;
-  box-sizing: box-border;
+  margin: 10px auto;
+  box-sizing: border-box;
   padding-top: 80px;
 
   h2 {
@@ -43,11 +42,11 @@ const TicketContainer = styled.div`
 `;
 const TicketsRemaining = styled.div`
   position: absolute;
-  right: 20px;
+  right: 10px;
   top: 38vh;
 
   > div {
-    font-size: 14px;
+    font-size: 20px;
   }
 
   h4 {
@@ -126,7 +125,7 @@ function Manage({ queueId }) {
           </>
         )}
 
-        <div className="button-container">
+        <ButtonsContainer>
           <Button
             onClick={() => callNext()}
             variant={requestingNext ? "inactive" : ""}
@@ -142,15 +141,11 @@ function Manage({ queueId }) {
               }}
             />
           </Button>
-        </div>
 
-        <div className="button-container">
           <Button variant="secondary" href={ADMIN_ADD_CUSTOMER_PATH} forward>
             {t("admin#queueManagement_createTicket")}
           </Button>
-        </div>
 
-        <div className="button-container">
           <Button variant="gray" href={ADMIN_END_QUEUE_PATH}>
             <div
               dangerouslySetInnerHTML={{
@@ -158,7 +153,7 @@ function Manage({ queueId }) {
               }}
             />
           </Button>
-        </div>
+        </ButtonsContainer>
       </ManageQueueContainer>
     </Layout>
   );
