@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
 import { Typography } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
+
 import Button from "../../../components/Button";
+import Loader from "../../../components/Loader";
 import LoginBg from "../../../assets/bg/main.svg";
 import Layout from "../Layout";
 import { PRIMARY_COLOR } from "../../../constants/ColorConstants";
 import { ADMIN_QUEUE_MANAGEMENT_PATH } from "../../../constants/RoutesConstants";
+import { auth, firestore } from "../../../firebase";
+import { ReactComponent as Logo } from "../../../assets/logo.svg";
 
-import * as S from "./style";
 import AddConsumerName from "./AddConsumerName";
 import AddConsumerPhone from "./AddConsumerPhone";
-
-import { ReactComponent as Logo } from "../../../assets/logo.svg";
 
 const typographyStyles = {
   TITLE: {
@@ -26,59 +26,64 @@ const buttonStyles = {
   marginBottom: 20
 };
 const backButtonStyles = {
-  position: "absolute",
-  bottom: 20
+  marginTop: 80
 };
 
 function AddConsumer() {
   const { t } = useTranslation();
 
-  const [viewType, setViewType] = useState("");
-
-  const returnToThisViewFunction = () => {
-    setViewType("");
+  const [viewType, setViewType] = useState();
+  const [user, setUser] = useState();
+  const [loading, setLoading] = useState(true);
+  const availableViews = {
+    PHONE: (
+      <AddConsumerPhone user={user} returnFunction={() => setViewType()} />
+    ),
+    NAME: <AddConsumerName user={user} returnFunction={() => setViewType()} />
   };
 
-  if (viewType === "phone") {
-    return <AddConsumerPhone returnFunction={returnToThisViewFunction} />;
-  } else if (viewType === "name") {
-    return <AddConsumerName returnFunction={returnToThisViewFunction} />;
-  }
+  useEffect(() => {
+    firestore
+      .collection("users")
+      .doc(auth.currentUser.uid)
+      .get()
+      .then(response => {
+        const user = response.data();
+        setUser(user);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <Loader />;
+
+  if (viewType) return availableViews[viewType];
 
   return (
     <Layout bg={LoginBg}>
-      <S.Form>
-        <Typography variant="h3" style={typographyStyles.TITLE}>
-          {t("main#addConsumer_title")}
-        </Typography>
-        <div style={{ textAlign: "center" }}>
-          <Logo />
-        </div>
-        <Button
-          forward
-          style={buttonStyles}
-          onClick={() => setViewType("phone")}
-        >
-          {t("main#addConsumer_button1")}
-        </Button>
+      <Typography variant="h3" style={typographyStyles.TITLE}>
+        {t("main#addConsumer_title")}
+      </Typography>
 
-        <Button
-          forward
-          style={buttonStyles}
-          onClick={() => setViewType("name")}
-        >
-          {t("main#addConsumer_button2")}
-        </Button>
+      <div style={{ textAlign: "center", margin: "20px 0" }}>
+        <Logo />
+      </div>
 
-        <Button
-          variant="gray"
-          style={backButtonStyles}
-          href={ADMIN_QUEUE_MANAGEMENT_PATH}
-          backward
-        >
-          {t("main#addConsumer_back")}
-        </Button>
-      </S.Form>
+      <Button forward style={buttonStyles} onClick={() => setViewType("PHONE")}>
+        {t("main#addConsumer_byPhone")}
+      </Button>
+
+      <Button forward style={buttonStyles} onClick={() => setViewType("NAME")}>
+        {t("main#addConsumer_byName")}
+      </Button>
+
+      <Button
+        variant="gray"
+        style={backButtonStyles}
+        href={ADMIN_QUEUE_MANAGEMENT_PATH}
+        backward
+      >
+        {t("main#addConsumer_back")}
+      </Button>
     </Layout>
   );
 }

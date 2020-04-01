@@ -13,7 +13,7 @@ import Loader from "../../../components/Loader";
 
 import { PRIMARY_COLOR } from "../../../constants/ColorConstants";
 import {
-  ADMIN_RECOVERPASSWORD_PATH,
+  ADMIN_RECOVER_PASSWORD_PATH,
   ADMIN_QUEUE_MANAGEMENT_PATH
 } from "../../../constants/RoutesConstants";
 import * as S from "./style";
@@ -110,7 +110,7 @@ function Login() {
           <Alert severity="info">{t("admin#signup_checkYourEmail")}</Alert>
         )}
 
-        <Link to={ADMIN_RECOVERPASSWORD_PATH} style={{ color: PRIMARY_COLOR }}>
+        <Link to={ADMIN_RECOVER_PASSWORD_PATH} style={{ color: PRIMARY_COLOR }}>
           {t("admin#login_recover_password")}
         </Link>
 

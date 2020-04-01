@@ -6,14 +6,10 @@ import styled from "styled-components";
 import Button from "../../../components/Button";
 import LoginBg from "../../../assets/bg/main.svg";
 import Layout from "../Layout";
-import {
-  PRIMARY_COLOR,
-  WHITE_COLOR,
-  BACK_BUTTON_BG_COLOR,
-  BACK_BUTTON_TEXT_COLOR
-} from "../../../constants/ColorConstants";
+import { PRIMARY_COLOR } from "../../../constants/ColorConstants";
 import * as S from "./style";
-import AddConsumerNameSuccess from "./AddConsumerNameSuccess";
+import AddConsumerSuccess from "./AddConsumerSuccess";
+import { functions } from "../../../firebase";
 
 const typographyStyles = {
   TITLE: {
@@ -22,6 +18,7 @@ const typographyStyles = {
     fontSize: "2rem"
   }
 };
+
 const inputProps = {
   fullWidth: true,
   required: true
@@ -37,26 +34,34 @@ const ButtonsContainer = styled.div`
   }
 `;
 
-function AddConsumerName(props) {
+function AddConsumerName({ user, returnFunction }) {
   const { t } = useTranslation();
-  // eslint-disable-next-line
-    const [name, setName] = useState("")
+  const [name, setName] = useState();
+  const [requesting, setRequesting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [ticket, setTicket] = useState();
 
-  const nameTextChanging = e => {
-    setName(e.target.value);
+  const generateTicket = e => {
+    e.preventDefault();
+    setRequesting(true);
+
+    const manuallyAddToQueue = functions.httpsCallable("manuallyAddToQueue");
+
+    manuallyAddToQueue({ queueId: user.queues[0], name })
+      .then(async function({ data: { ticket } }) {
+        setTicket(ticket);
+        setSuccess(true);
+      })
+      .catch(error => {
+        setRequesting(false);
+      });
   };
 
-  const generateTicket = () => {
-    console.log("WRITE GENERATE TICKET LOGIC FOR SUBMITING NAME");
-    setSuccess(true);
-  };
-
-  if (success) return <AddConsumerNameSuccess />;
+  if (success) return <AddConsumerSuccess ticket={ticket} type="name" />;
 
   return (
     <Layout bg={LoginBg}>
-      <S.Form>
+      <S.Form onSubmit={generateTicket}>
         <Typography variant="h3" style={typographyStyles.TITLE}>
           {t("main#addConsumerName_title")}
         </Typography>
@@ -64,17 +69,25 @@ function AddConsumerName(props) {
         <TextField
           label={t("main#addConsumerName_placeholder")}
           name="name"
-          onChange={e => nameTextChanging(e)}
+          onChange={e => setName(e.target.value)}
           style={{ marginTop: "15vh" }}
           {...inputProps}
         />
 
         <ButtonsContainer>
-          <Button onClick={generateTicket}>
+          <Button
+            type="submit"
+            disabled={requesting}
+            variant={requesting ? "inactive" : ""}
+          >
             {t("main#addConsumer_generateTicket")}
           </Button>
 
-          <Button backward variant="gray" onClick={props.returnFunction}>
+          <Button
+            variant={requesting ? "inactive" : "gray"}
+            onClick={returnFunction}
+            backward
+          >
             {t("main#addConsumer_back")}
           </Button>
         </ButtonsContainer>

@@ -6,11 +6,12 @@ import Loader from "../../../components/Loader";
 import { auth, firestore } from "../../../firebase";
 
 import Start from "./Start";
+import Manage from "./Manage";
 
 function Queue() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState();
-  const [hasQueue] = useState(false);
+  const [queue, setQueue] = useState();
 
   useEffect(() => {
     firestore
@@ -18,15 +19,21 @@ function Queue() {
       .doc(auth.currentUser.uid)
       .get()
       .then(response => {
-        setUser(response.data());
+        const user = response.data();
+
+        setUser(user);
         setLoading(false);
       });
   }, []);
 
-  if (loading) return <Loader />;
-  if (hasQueue) return <div>"Manage Queue"</div>;
+  useEffect(() => {
+    if (user) setQueue(user.queues[0]);
+  }, [user]);
 
-  return <Start user={user} />;
+  if (loading) return <Loader />;
+  if (queue) return <Manage queueId={queue} />;
+
+  return <Start user={user} setQueue={setQueue} />;
 }
 
 export default Queue;

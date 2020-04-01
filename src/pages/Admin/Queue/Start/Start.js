@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Typography } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
@@ -33,10 +33,19 @@ const buttonStyle = {
   width: "100%"
 };
 
-function Start({ user }) {
-  console.log(functions);
+function Start({ user, setQueue }) {
+  const [requesting, setRequesting] = useState(false);
   const { t } = useTranslation();
-  const startQueue = () => {};
+  const startQueue = () => {
+    setRequesting(true);
+    const createQueue = functions.httpsCallable("createQueue");
+
+    createQueue({ name: user.defaultQueueName }).then(async function({
+      data: { queueId }
+    }) {
+      setQueue(queueId);
+    });
+  };
 
   return (
     <Layout bg={Bg}>
@@ -57,8 +66,15 @@ function Start({ user }) {
         }}
       />
 
-      <Button style={buttonStyle} onClick={() => startQueue()}>
-        {t("admin#queueManagement_startQueue")}
+      <Button
+        style={buttonStyle}
+        onClick={() => startQueue()}
+        disabled={requesting}
+        variant={requesting ? "inactive" : ""}
+      >
+        {requesting
+          ? t("admin#queueManagement_creatingQueue")
+          : t("admin#queueManagement_startQueue")}
       </Button>
     </Layout>
   );
