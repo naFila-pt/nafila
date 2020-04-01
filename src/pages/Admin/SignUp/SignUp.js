@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 import SignUpBg from "../../../assets/bg/main.svg";
-import Layout from "../Layout";
+import Layout from "../../../components/AdminLayout";
 import Button from "../../../components/Button";
 import Loader from "../../../components/Loader";
 import {

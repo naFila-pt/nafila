@@ -132,8 +132,8 @@ i18n
 
           // AfterLogin Add Consumer 1st page
           "main#addConsumer_title": "Escolha o método de notificação",
-          "main#addConsumer_button1": "Telémovel",
-          "main#addConsumer_button2": "Nome",
+          "main#addConsumer_byPhone": "Telémovel",
+          "main#addConsumer_byName": "Nome",
           "main#addConsumer_back": "Retroceder",
           "main#addConsumer_generateTicket": "Gerar Senha",
 
@@ -163,6 +163,14 @@ i18n
           "admin#queueManagement_emailWithCode":
             "O email com o <strong>código</strong> da sua fila vai ser enviado para o seu email. <strong>Imprima o documento e afixe-o em local visível.</strong>",
           "admin#queueManagement_startQueue": "Começar",
+          "admin#queueManagement_creatingQueue": "A criar fila ...",
+          "admin#queueManagement_queueCode": "Código da Fila",
+          "admin#queueManagement_call": "Chamar",
+          "admin#queueManagement_nextInQueue": `Próximo <span class="logo">na<b>fila</b></span>`,
+          "admin#queueManagement_createTicket": "Gerar senha",
+          "admin#queueManagement_endQueue": `Terminar <span class="logo">na<b>fila</b></span>`,
+          "admin#queueManagement_remaining": "Restantes",
+          "admin#queueManagement_wait": "Aguarde ...",
 
           // End Queue
           "main#endQueue_title": "Pretende terminar a Fila actual?",

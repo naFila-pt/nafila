@@ -4,7 +4,7 @@ import { Typography, TextField } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import Button from "../../../components/Button";
 import LoginBg from "../../../assets/bg/main.svg";
-import Layout from "../Layout";
+import Layout from "../../../components/AdminLayout";
 import { PRIMARY_COLOR, WHITE_COLOR } from "../../../constants/ColorConstants";
 import * as S from "./style";
 import RecoverPasswordChangeSuccess from "./RecoverPasswordChangeSuccess";

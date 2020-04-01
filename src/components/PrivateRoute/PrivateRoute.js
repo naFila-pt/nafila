@@ -11,7 +11,6 @@ function PrivateRoute({ ...rest }) {
   const [hasSession, setHasSession] = useState(false);
 
   useEffect(() => {
-    console.log(auth.currentUser && auth.currentUser.emailVerified);
     setHasSession(auth.currentUser && auth.currentUser.emailVerified);
     setLoading(false);
   }, []);

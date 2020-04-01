@@ -27,6 +27,16 @@ const useStyles = makeStyles({
   gridItem: {
     textAlign: "center",
     paddingTop: "1.8em"
+  },
+  inputRoot: {
+    width: "calc(100% - 4em)",
+    textAlign: "center",
+    fontWeight: 900,
+    margin: "0 2em"
+  },
+  inputElement: {
+    textAlign: "center",
+    color: "#4C0788"
   }
 });
 
@@ -96,13 +106,11 @@ const OnBoardingContent = () => {
             }}
           />
           <Input
-            placeholder={t("onboarding#useCode_inputPlaceholder")}
+            value={t("onboarding#useCode_inputPlaceholder")}
+            classes={{ root: classes.inputRoot, input: classes.inputElement }}
             style={{
-              width: "100%",
               fontSize: "1.625em",
-              margin: "0.9em 0 0.385em",
-              fontWeight: 900,
-              color: "#4C0788"
+              margin: "0.9em 0 0.385em"
             }}
             disabled
           />

@@ -5,10 +5,12 @@ import styled from "styled-components";
 
 import Button from "../../../components/Button";
 import LoginBg from "../../../assets/bg/main.svg";
-import Layout from "../Layout";
+import Layout from "../../../components/AdminLayout";
 import { PRIMARY_COLOR } from "../../../constants/ColorConstants";
 import * as S from "./style";
-import AddConsumerPhoneSuccess from "./AddConsumerPhoneSuccess";
+import AddConsumerSuccess from "./AddConsumerSuccess";
+import { functions } from "../../../firebase";
+
 const typographyStyles = {
   TITLE: {
     color: PRIMARY_COLOR,
@@ -32,27 +34,34 @@ const ButtonsContainer = styled.div`
   }
 `;
 
-function AddConsumerPhone(props) {
+function AddConsumerPhone({ user, returnFunction }) {
   const { t } = useTranslation();
-  // eslint-disable-next-line
-  const [phone, setPhone] = useState("")
+  const [phone, setPhone] = useState();
+  const [requesting, setRequesting] = useState(false);
   const [success, setSuccess] = useState(false);
-  console.log(props);
+  const [ticket, setTicket] = useState();
 
-  const phoneTextChanging = e => {
-    setPhone(e.target.value);
+  const generateTicket = e => {
+    e.preventDefault();
+    setRequesting(true);
+
+    const manuallyAddToQueue = functions.httpsCallable("manuallyAddToQueue");
+
+    manuallyAddToQueue({ queueId: user.queues[0], phone })
+      .then(async function({ data: { ticket } }) {
+        setTicket(ticket);
+        setSuccess(true);
+      })
+      .catch(error => {
+        setRequesting(false);
+      });
   };
 
-  const generateTicket = () => {
-    console.log("WRITE GENERATE TICKET LOGIC FOR SUBMITING PHONE NUMBER");
-    setSuccess(true);
-  };
-
-  if (success) return <AddConsumerPhoneSuccess />;
+  if (success) return <AddConsumerSuccess ticket={ticket} type="phone" />;
 
   return (
     <Layout bg={LoginBg}>
-      <S.Form>
+      <S.Form onSubmit={generateTicket}>
         <Typography variant="h3" style={typographyStyles.TITLE}>
           {t("main#addConsumerPhone_title")}
         </Typography>
@@ -60,17 +69,25 @@ function AddConsumerPhone(props) {
         <TextField
           label={t("main#addConsumerPhone_placeholder")}
           name="phone"
-          onChange={e => phoneTextChanging(e)}
+          onChange={e => setPhone(e.target.value)}
           style={{ marginTop: "15vh" }}
           {...inputProps}
         />
 
         <ButtonsContainer>
-          <Button onClick={generateTicket}>
+          <Button
+            type="submit"
+            disabled={requesting}
+            variant={requesting ? "inactive" : ""}
+          >
             {t("main#addConsumer_generateTicket")}
           </Button>
 
-          <Button variant="gray" onClick={props.returnFunction} backward>
+          <Button
+            variant={requesting ? "inactive" : "gray"}
+            onClick={returnFunction}
+            backward
+          >
             {t("main#addConsumer_back")}
           </Button>
         </ButtonsContainer>

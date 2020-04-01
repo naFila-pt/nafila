@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import Button from "../../../components/Button";
 import Background from "../../../assets/bg/user_intro.svg";
 import Logo from "../../../assets/logo.svg";
-import Layout from "../Layout";
+import Layout from "../../../components/AdminLayout";
 import { PRIMARY_COLOR, WHITE_COLOR } from "../../../constants/ColorConstants";
 import {
   ADMIN_LOGIN_PATH,
