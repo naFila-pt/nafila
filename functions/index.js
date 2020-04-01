@@ -24,7 +24,10 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
   const queueId = fiveRandomChars();
   //assigns userId as owner_id
   if (!context.auth || !context.auth.uid) {
-    throw new functionsMain.https.HttpsError('unauthenticated', 'You need to be logged in to create a queue')
+    throw new functionsMain.https.HttpsError(
+      "unauthenticated",
+      "You need to be logged in to create a queue"
+    );
   }
 
   //inserts queue
@@ -78,7 +81,10 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
 
     //needs to validate userId ownership of queue
     if (queueData.owner_id !== context.auth.uid) {
-      throw new functionsMain.https.HttpsError('unauthenticated', 'Only queue owner can delete the queue')
+      throw new functionsMain.https.HttpsError(
+        "unauthenticated",
+        "Only queue owner can delete the queue"
+      );
     }
 
     //get all remaining tickets
@@ -140,7 +146,10 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
 
     //needs to validate userId ownership of queue
     if (queueData.owner_id !== context.auth.uid) {
-      throw new functionsMain.https.HttpsError('unauthenticated', 'Only queue owner can call the next person on the queue')
+      throw new functionsMain.https.HttpsError(
+        "unauthenticated",
+        "Only queue owner can call the next person on the queue"
+      );
     }
 
     //get next ticket
@@ -153,7 +162,10 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
 
     //in case there is no ticket left
     if (querySnap.empty) {
-      throw new functionsMain.https.HttpsError('out-of-range', 'There are no active tickets in the queue')
+      throw new functionsMain.https.HttpsError(
+        "out-of-range",
+        "There are no active tickets in the queue"
+      );
     }
 
     let ticketDoc = querySnap.docs[0];
@@ -238,31 +250,42 @@ exports.removeMeFromQueue = functions.https.onCall(async (data, context) => {
 //---- REGULAR SCHEDULED JOB ----
 exports.scheduledFunction = functions.pubsub
   .schedule("every " + config.smspro.getmessagesinterval)
-  .onRun(async function(context) {
+  .onRun(async () => {
+    //schedule running next in 10s
+
+    //run now
+    return await getNewSMSRoutine();
+  });
+
+exports.smsRoutine = functions.https.onRequest(async (req, res) => {
+  //if needed, schedule running next in 10s
+
+  //run now
+  return await getNewSMSRoutine();
+});
+
+//---- HELPERS ----
+
+async function getNewSMSRoutine() {
+  return async function() {
     var args = {
       TenantName: config.smspro.tenant,
       strUsername: config.smspro.username,
       strPassword: config.smspro.password,
       intCampaignId: parseInt(config.smspro.campaignid)
     };
-
     let serviceReply = await callSMSPro("GetCampaignUnreadReplies", args);
-
     let replies =
       (serviceReply.Replies && serviceReply.Replies.Reply_Record) || [];
-
     console.log("Found " + replies.length + " new messages");
-
     //sort our SMS according to when they were received
-    try{
-      replies = replies.sort((e1, e2)=> {
-        return Date.parse(e1["Moment"]) - Date.parse(e2["Moment"])
-      })
-    } catch(e){
-      console.log('sorting error', e)
+    try {
+      replies = replies.sort((e1, e2) => {
+        return Date.parse(e1["Moment"]) - Date.parse(e2["Moment"]);
+      });
+    } catch (e) {
+      console.log("sorting error", e);
     }
-    
-
     replies.forEach(async m => {
       try {
         //validate queueId
@@ -270,21 +293,17 @@ exports.scheduledFunction = functions.pubsub
           .trim()
           .toUpperCase()
           .split(" ");
-
         //add to queue
         if (typeof leave === "undefined") {
           await createTicketInQueue({ queueId, phone: m["MSISDN"] }, false);
-
           //remove from queue
         } else if (leave === "SAIR") {
           //get the queue
           let queueRef = firestore.collection("queues").doc(queueId);
           //get the ticket
-
           //transaction is cheaper
           await firestore.runTransaction(async function(transaction) {
             let queueDoc = await transaction.get(queueRef);
-
             //get next ticket
             let querySnap = await transaction.get(
               queueRef
@@ -292,15 +311,15 @@ exports.scheduledFunction = functions.pubsub
                 .where("phone", "==", m["MSISDN"])
                 .limit(1)
             );
-
             //in case there is no ticket left
             if (querySnap.empty) {
-              throw new functionsMain.https.HttpsError('not-found', 'No tickets found for this phone number for this queue')
+              throw new functionsMain.https.HttpsError(
+                "not-found",
+                "No tickets found for this phone number for this queue"
+              );
             }
             let ticketRef = querySnap.docs[0].ref;
-
             let queueData = queueDoc.data();
-
             return await removeTicket(
               transaction,
               ticketRef,
@@ -309,18 +328,19 @@ exports.scheduledFunction = functions.pubsub
               false
             );
           });
-
           await sendSMS([m["MSISDN"]], "Saiu da fila " + queueRef.id);
         } else {
-            throw new functionsMain.https.HttpsError('invalid-argument', 'Unexpected msg format')
+          throw new functionsMain.https.HttpsError(
+            "invalid-argument",
+            "Unexpected msg format"
+          );
         }
       } catch (e) {
         console.error(m, e);
       }
     });
-  });
-
-//---- HELPERS ----
+  };
+}
 
 async function createTicketInQueue(
   { queueId, email = null, phone = null, name = null },
@@ -335,19 +355,28 @@ async function createTicketInQueue(
   //create ticket object
   let ticketData = {};
   if (!!email) {
-    if(!validator.isEmail(email)){
-      throw new functionsMain.https.HttpsError('invalid-argument', 'Invalid email format')
+    if (!validator.isEmail(email)) {
+      throw new functionsMain.https.HttpsError(
+        "invalid-argument",
+        "Invalid email format"
+      );
     }
     ticketData.email = email;
   } else if (!!phone) {
-    if(!validator.isMobilePhone(phone)){
-      throw new functionsMain.https.HttpsError('invalid-argument', 'Invalid phone number format')
+    if (!validator.isMobilePhone(phone)) {
+      throw new functionsMain.https.HttpsError(
+        "invalid-argument",
+        "Invalid phone number format"
+      );
     }
     ticketData.phone = phone;
   } else if (!!name) {
     ticketData.name = name;
   } else {
-    throw new functionsMain.https.HttpsError('invalid-argument', 'Unknown ticket type')
+    throw new functionsMain.https.HttpsError(
+      "invalid-argument",
+      "Unknown ticket type"
+    );
   }
 
   //transaction is cheaper
@@ -355,7 +384,10 @@ async function createTicketInQueue(
     let queueDoc = await transaction.get(queueRef);
 
     if (!queueDoc.exists) {
-      throw new functionsMain.https.HttpsError('not-found', "Queue ID " + queueId + " not found.")
+      throw new functionsMain.https.HttpsError(
+        "not-found",
+        "Queue ID " + queueId + " not found."
+      );
     }
 
     //get queue
@@ -363,7 +395,10 @@ async function createTicketInQueue(
 
     //needs to validate userId ownership of queue
     if (!!context && queueData.owner_id !== context.auth.uid) {
-      throw new functionsMain.https.HttpsError('unauthenticated', 'Only queue owner can manually add people to the queue')
+      throw new functionsMain.https.HttpsError(
+        "unauthenticated",
+        "Only queue owner can manually add people to the queue"
+      );
     }
 
     return await addTicket(
