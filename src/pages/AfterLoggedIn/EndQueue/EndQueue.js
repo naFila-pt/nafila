@@ -1,18 +1,16 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
 import { Typography } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+
 import Button from "../../../components/Button";
-import LoginBg from "../../../assets/bg/main.svg";
+import Loader from "../../../components/Loader";
+import Bg from "../../../assets/bg/store_queue_end.svg";
 import Layout from "../Layout";
-import {
-  PRIMARY_COLOR,
-  WHITE_COLOR,
-  BACK_BUTTON_BG_COLOR,
-  BACK_BUTTON_TEXT_COLOR
-} from "../../../constants/ColorConstants";
+import { PRIMARY_COLOR } from "../../../constants/ColorConstants";
+import { ADMIN_QUEUE_MANAGEMENT_PATH } from "../../../constants/RoutesConstants";
 import Logo from "../../../assets/logo.svg";
+import { firestore, auth, functions } from "../../../firebase";
+
 import * as S from "./style";
 import EndQueueSuccess from "./EndQueueSuccess";
 
@@ -25,55 +23,75 @@ const typographyStyles = {
 };
 
 const buttonStyles = {
-  color: WHITE_COLOR,
-  textDecoration: "none",
-  background: "none"
-};
-const backButtonStyles = {
-  color: BACK_BUTTON_TEXT_COLOR,
-  textDecoration: "none",
-  background: BACK_BUTTON_BG_COLOR
+  marginTop: 20
 };
 
 function EndQueue() {
   const { t } = useTranslation();
   const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(false);
+  const [requesting, setRequesting] = useState(false);
 
   const confirmEndQueueButton = () => {
-    console.log("NEEDS API CALL TO END QUEUE");
-    //functions.deleteQueue({queueId:queueId})
-    setSuccess(true);
+    setRequesting(true);
+
+    const deleteQueue = functions.httpsCallable("deleteQueue");
+
+    deleteQueue({ queueId: user.queues[0] })
+      .then(async function({ data: { ticket } }) {
+        setSuccess(true);
+      })
+      .catch(error => {
+        setRequesting(false);
+      });
   };
 
+  useEffect(() => {
+    firestore
+      .collection("users")
+      .doc(auth.currentUser.uid)
+      .get()
+      .then(response => {
+        const user = response.data();
+
+        if (!user.queues[0])
+          return (window.location.href = ADMIN_QUEUE_MANAGEMENT_PATH);
+
+        setUser(user);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <Loader />;
   if (success) return <EndQueueSuccess />;
 
   return (
-    <Layout bg={LoginBg}>
-      <S.Form>
-        <Typography variant="h3" style={typographyStyles.TITLE}>
-          {t("main#endQueue_title")}
-        </Typography>
-        <S.LogoContainer>
-          <img src={Logo} alt="nafila logo" />
-        </S.LogoContainer>
+    <Layout bg={Bg}>
+      <Typography variant="h3" style={typographyStyles.TITLE}>
+        {t("main#endQueue_title")}
+      </Typography>
+      <S.LogoContainer>
+        <img src={Logo} alt="nafila logo" />
+      </S.LogoContainer>
 
-        <Button style={buttonStyles} onClick={confirmEndQueueButton}>
-          {t("main#endQueue_yes")}
-        </Button>
+      <Button
+        style={buttonStyles}
+        onClick={confirmEndQueueButton}
+        disabled={requesting}
+        variant={requesting ? "inactive" : ""}
+      >
+        {t("main#endQueue_yes")}
+      </Button>
 
-        <Button forward style={backButtonStyles}>
-          <Link
-            to={"/notImplemented"}
-            style={{
-              color: BACK_BUTTON_TEXT_COLOR,
-              textDecoration: "none",
-              background: BACK_BUTTON_BG_COLOR
-            }}
-          >
-            {t("main#endQueue_no")}
-          </Link>
-        </Button>
-      </S.Form>
+      <Button
+        variant={requesting ? "inactive" : "gray"}
+        href={ADMIN_QUEUE_MANAGEMENT_PATH}
+        style={buttonStyles}
+        forward
+      >
+        {t("main#endQueue_no")}
+      </Button>
     </Layout>
   );
 }

@@ -24,7 +24,10 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
   const queueId = fiveRandomChars();
   //assigns userId as owner_id
   if (!context.auth || !context.auth.uid) {
-    throw new functions.https.HttpsError('unauthenticated', 'You need to be logged in to create a queue')
+    throw new functions.https.HttpsError(
+      "unauthenticated",
+      "You need to be logged in to create a queue"
+    );
   }
 
   //inserts queue
@@ -78,7 +81,10 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
 
     //needs to validate userId ownership of queue
     if (queueData.owner_id !== context.auth.uid) {
-      throw new functions.https.HttpsError('unauthenticated', 'Only queue owner can delete the queue')
+      throw new functions.https.HttpsError(
+        "unauthenticated",
+        "Only queue owner can delete the queue"
+      );
     }
 
     //get all remaining tickets
@@ -140,7 +146,10 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
 
     //needs to validate userId ownership of queue
     if (queueData.owner_id !== context.auth.uid) {
-      throw new functions.https.HttpsError('unauthenticated', 'Only queue owner can call the next person on the queue')
+      throw new functions.https.HttpsError(
+        "unauthenticated",
+        "Only queue owner can call the next person on the queue"
+      );
     }
 
     //get next ticket
@@ -153,7 +162,10 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
 
     //in case there is no ticket left
     if (querySnap.empty) {
-      throw new functions.https.HttpsError('out-of-range', 'There are no active tickets in the queue')
+      throw new functions.https.HttpsError(
+        "out-of-range",
+        "There are no active tickets in the queue"
+      );
     }
 
     let ticketDoc = querySnap.docs[0];
@@ -285,7 +297,10 @@ exports.scheduledFunction = functions.pubsub
 
             //in case there is no ticket left
             if (querySnap.empty) {
-              throw new functions.https.HttpsError('not-found', 'No tickets found for this phone number for this queue')
+              throw new functions.https.HttpsError(
+                "not-found",
+                "No tickets found for this phone number for this queue"
+              );
             }
             let ticketRef = querySnap.docs[0].ref;
 
@@ -302,7 +317,10 @@ exports.scheduledFunction = functions.pubsub
 
           await sendSMS([m["MSISDN"]], "Saiu da fila " + queueRef.id);
         } else {
-            throw new functions.https.HttpsError('invalid-argument', 'Unexpected msg format')
+          throw new functions.https.HttpsError(
+            "invalid-argument",
+            "Unexpected msg format"
+          );
         }
       } catch (e) {
         console.error(m, e);
@@ -325,19 +343,28 @@ async function createTicketInQueue(
   //create ticket object
   let ticketData = {};
   if (!!email) {
-    if(!validator.isEmail(email)){
-      throw new functions.https.HttpsError('invalid-argument', 'Invalid email format')
+    if (!validator.isEmail(email)) {
+      throw new functions.https.HttpsError(
+        "invalid-argument",
+        "Invalid email format"
+      );
     }
     ticketData.email = email;
   } else if (!!phone) {
-    if(!validator.isMobilePhone(phone)){
-      throw new functions.https.HttpsError('invalid-argument', 'Invalid phone number format')
+    if (!validator.isMobilePhone(phone)) {
+      throw new functions.https.HttpsError(
+        "invalid-argument",
+        "Invalid phone number format"
+      );
     }
     ticketData.phone = phone;
   } else if (!!name) {
     ticketData.name = name;
   } else {
-    throw new functions.https.HttpsError('invalid-argument', 'Unknown ticket type')
+    throw new functions.https.HttpsError(
+      "invalid-argument",
+      "Unknown ticket type"
+    );
   }
 
   //transaction is cheaper
@@ -345,7 +372,10 @@ async function createTicketInQueue(
     let queueDoc = await transaction.get(queueRef);
 
     if (!queueDoc.exists) {
-      throw new functions.https.HttpsError('not-found', "Queue ID " + queueId + " not found.")
+      throw new functions.https.HttpsError(
+        "not-found",
+        "Queue ID " + queueId + " not found."
+      );
     }
 
     //get queue
@@ -353,7 +383,10 @@ async function createTicketInQueue(
 
     //needs to validate userId ownership of queue
     if (!!context && queueData.owner_id !== context.auth.uid) {
-      throw new functions.https.HttpsError('unauthenticated', 'Only queue owner can manually add people to the queue')
+      throw new functions.https.HttpsError(
+        "unauthenticated",
+        "Only queue owner can manually add people to the queue"
+      );
     }
 
     return await addTicket(

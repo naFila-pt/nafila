@@ -132,8 +132,8 @@ i18n
 
           // AfterLogin Add Consumer 1st page
           "main#addConsumer_title": "Escolha o método de notificação",
-          "main#addConsumer_button1": "Telémovel",
-          "main#addConsumer_button2": "Nome",
+          "main#addConsumer_byPhone": "Telémovel",
+          "main#addConsumer_byName": "Nome",
           "main#addConsumer_back": "Retroceder",
           "main#addConsumer_generateTicket": "Gerar Senha",
 

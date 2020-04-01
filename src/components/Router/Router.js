@@ -44,12 +44,12 @@ class Router extends Component {
           />
           <Route path={Routes.ADMIN_LOGIN_PATH} component={Admin.Login} exact />
           <Route
-            path={Routes.ADMIN_RECOVERPASSWORD_PATH}
+            path={Routes.ADMIN_RECOVER_PASSWORD_PATH}
             component={Admin.RecoverPassword}
             exact
           />
           <Route
-            path={Routes.ADMIN_RECOVERPASSWORDCHANGE_PATH}
+            path={Routes.ADMIN_RECOVER_PASSWORDCHANGE_PATH}
             component={Admin.ChangePassword}
             exact
           />
@@ -61,13 +61,13 @@ class Router extends Component {
           />
 
           <PrivateRoute
-            path={Routes.MAIN_ENDQUEUE_PATH}
+            path={Routes.ADMIN_END_QUEUE_PATH}
             component={Main.EndQueue}
             exact
           />
 
           <PrivateRoute
-            path={Routes.MAIN_ADDCONSUMER_PATH}
+            path={Routes.ADMIN_ADD_CUSTOMER_PATH}
             component={Main.AddConsumer}
             exact
           />

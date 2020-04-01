@@ -9,7 +9,10 @@ import Button from "../../../../components/Button";
 import Bg from "../../../../assets/bg/main.svg";
 import Ticket from "../../../../assets/icons/ticket.svg";
 import { firestore, functions } from "../../../../firebase";
-import { MAIN_ADDCONSUMER_PATH } from "../../../../constants/RoutesConstants";
+import {
+  ADMIN_ADD_CUSTOMER_PATH,
+  ADMIN_END_QUEUE_PATH
+} from "../../../../constants/RoutesConstants";
 
 const ManageQueueContainer = styled.div`
   h3 {
@@ -40,7 +43,7 @@ const TicketContainer = styled.div`
 `;
 const TicketsRemaining = styled.div`
   position: absolute;
-  right: 10px;
+  right: 20px;
   top: 38vh;
 
   > div {
@@ -61,15 +64,12 @@ function Manage({ queueId }) {
     setRequestingNext(true);
     const callNextOnQueue = functions.httpsCallable("callNextOnQueue");
 
-    console.log(queueId);
-
     callNextOnQueue({ queueId })
-      .then(function(result) {
-        console.log(result);
+      .then(function({ data: { queue, ticket } }) {
+        setQueue(queue);
         setRequestingNext(false);
       })
       .catch(e => {
-        console.log(e);
         setRequestingNext(false);
       });
   };
@@ -81,7 +81,7 @@ function Manage({ queueId }) {
       .get()
       .then(response => {
         const queue = response.data();
-        console.log(queue);
+
         setQueue(queue);
         setLoading(false);
       });
@@ -98,7 +98,7 @@ function Manage({ queueId }) {
         <TicketContainer>
           <div>
             <Typography variant="h2">
-              {String(queue.currentTicketNumber).padStart(3, "0")}
+              {String(queue?.currentTicketNumber).padStart(3, "0")}
             </Typography>
           </div>
 
@@ -113,6 +113,16 @@ function Manage({ queueId }) {
           <div>{t("admin#queueManagement_remaining")}</div>
           <Typography variant="h4">{queue.remainingTicketsInQueue}</Typography>
         </TicketsRemaining>
+
+        {queue.currentTicketName && queue.currentTicketName.name && (
+          <>
+            <Typography variant="h4" style={{ fontWeight: 600 }}>
+              {queue.currentTicketName}
+            </Typography>
+
+            <br />
+          </>
+        )}
 
         <div className="button-container">
           <Button
@@ -133,13 +143,13 @@ function Manage({ queueId }) {
         </div>
 
         <div className="button-container">
-          <Button variant="secondary" href={MAIN_ADDCONSUMER_PATH} forward>
+          <Button variant="secondary" href={ADMIN_ADD_CUSTOMER_PATH} forward>
             {t("admin#queueManagement_createTicket")}
           </Button>
         </div>
 
         <div className="button-container">
-          <Button variant="gray">
+          <Button variant="gray" href={ADMIN_END_QUEUE_PATH}>
             <div
               dangerouslySetInnerHTML={{
                 __html: t("admin#queueManagement_endQueue")

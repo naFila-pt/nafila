@@ -20,6 +20,7 @@ function Queue() {
       .get()
       .then(response => {
         const user = response.data();
+
         setUser(user);
         setLoading(false);
       });
