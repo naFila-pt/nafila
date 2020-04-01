@@ -62,10 +62,12 @@ function Manage({ queueId }) {
   const [queue, setQueue] = useState();
   const callNext = () => {
     setRequestingNext(true);
+
     const callNextOnQueue = functions.httpsCallable("callNextOnQueue");
 
     callNextOnQueue({ queueId })
-      .then(function({ data: { queue, ticket } }) {
+      .then(function({ data: { queue } }) {
+        console.log(queue);
         setQueue(queue);
         setRequestingNext(false);
       })
@@ -114,7 +116,7 @@ function Manage({ queueId }) {
           <Typography variant="h4">{queue.remainingTicketsInQueue}</Typography>
         </TicketsRemaining>
 
-        {queue.currentTicketName && queue.currentTicketName.name && (
+        {queue && queue.currentTicketName && (
           <>
             <Typography variant="h4" style={{ fontWeight: 600 }}>
               {queue.currentTicketName}
