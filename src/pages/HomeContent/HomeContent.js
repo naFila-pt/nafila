@@ -49,7 +49,7 @@ const useStyles = makeStyles({
   }
 });
 
-const HomeContent = () => {
+const HomeContent = ({ openSnackbar }) => {
   const urlParam = window.location.search.substr(1);
   const initialActiveStep = urlParam === "skipIntro" ? 1 : 0;
   const classes = useStyles();
@@ -83,11 +83,23 @@ const HomeContent = () => {
   };
 
   const handleGetStoreInfo = async () => {
+    if (!queueId) {
+      openSnackbar(`Por favor insira o código da fila`);
+      return;
+    }
+
     try {
       const queue = await firestore
         .collection("queues")
         .doc(queueId.toUpperCase())
         .get();
+
+      if (!queue.exists) {
+        openSnackbar(
+          `Não foi encontrada nenhuma fila com o código "${queueId}"`
+        );
+        return;
+      }
 
       const queueData = queue.data();
 
@@ -101,7 +113,7 @@ const HomeContent = () => {
 
       handleNextButton();
     } catch (e) {
-      alert(`Error: ${e}`);
+      openSnackbar(e.message || `Error: ${e}`);
     }
   };
 
@@ -126,7 +138,7 @@ const HomeContent = () => {
 
       handleNextButton();
     } catch (e) {
-      alert(`Error: ${e}`);
+      openSnackbar(e.message || `Error: ${e}`);
     }
   };
 

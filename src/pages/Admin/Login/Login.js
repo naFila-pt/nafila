@@ -24,7 +24,7 @@ const inputProps = {
   required: true
 };
 
-function Login() {
+function Login({ openSnackbar }) {
   const { t } = useTranslation();
   const [fields, setFields] = useState();
   const [loading, setLoading] = useState(false);
@@ -55,11 +55,13 @@ function Login() {
     authentication
       .signIn(email, password)
       .then(res => {
+        alert(1);
         return (window.location.href = ADMIN_QUEUE_MANAGEMENT_PATH);
       })
       .catch(error => {
         setLoading(false);
         error && setError(mappedMessages[error.code]);
+        openSnackbar("Login falhou")
       });
   };
 

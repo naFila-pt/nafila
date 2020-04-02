@@ -47,11 +47,22 @@
     "lint": "eslint ."
   },
   "eslintConfig": {
-    "extends": ["react-app", "prettier", "prettier/react"],
-    "plugins": ["prettier"],
-    "ignorePatterns": ["build/", "node_modules/"],
+    "extends": [
+      "react-app",
+      "prettier",
+      "prettier/react"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "ignorePatterns": [
+      "build/",
+      "node_modules/"
+    ],
     "rules": {
-        "prettier/prettier": ["error"]
+      "prettier/prettier": [
+        "error"
+      ]
     }
   },
   "browserslist": {

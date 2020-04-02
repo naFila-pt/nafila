@@ -54,7 +54,7 @@ const TicketsRemaining = styled.div`
   }
 `;
 
-function Manage({ queueId }) {
+function Manage({ queueId, openSnackbar }) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [requestingNext, setRequestingNext] = useState(false);
@@ -72,6 +72,7 @@ function Manage({ queueId }) {
       })
       .catch(e => {
         setRequestingNext(false);
+        openSnackbar(e.message);
       });
   };
 

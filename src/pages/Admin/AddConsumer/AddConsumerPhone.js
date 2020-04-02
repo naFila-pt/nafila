@@ -11,7 +11,7 @@ import { functions } from "../../../firebase";
 
 import { HeadlineContainer, ButtonsContainer } from "../common";
 
-function AddConsumerPhone({ user, returnFunction }) {
+function AddConsumerPhone({ user, returnFunction, openSnackbar }) {
   const { t } = useTranslation();
   const [phone, setPhone] = useState("");
   const [requesting, setRequesting] = useState(false);
@@ -35,6 +35,7 @@ function AddConsumerPhone({ user, returnFunction }) {
       })
       .catch(error => {
         setRequesting(false);
+        openSnackbar(error.message);
       });
   };
 

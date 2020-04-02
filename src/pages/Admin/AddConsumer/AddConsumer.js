@@ -15,7 +15,7 @@ import { HeadlineContainer, ButtonsContainer } from "../common";
 import AddConsumerName from "./AddConsumerName";
 import AddConsumerPhone from "./AddConsumerPhone";
 
-function AddConsumer() {
+function AddConsumer({ openSnackbar }) {
   const { t } = useTranslation();
 
   const [viewType, setViewType] = useState();
@@ -23,9 +23,19 @@ function AddConsumer() {
   const [loading, setLoading] = useState(true);
   const availableViews = {
     PHONE: (
-      <AddConsumerPhone user={user} returnFunction={() => setViewType()} />
+      <AddConsumerPhone
+        openSnackbar={openSnackbar}
+        user={user}
+        returnFunction={() => setViewType()}
+      />
     ),
-    NAME: <AddConsumerName user={user} returnFunction={() => setViewType()} />
+    NAME: (
+      <AddConsumerName
+        openSnackbar={openSnackbar}
+        user={user}
+        returnFunction={() => setViewType()}
+      />
+    )
   };
 
   useEffect(() => {

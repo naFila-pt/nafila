@@ -14,7 +14,7 @@ import { HeadlineContainer, ButtonsContainer } from "../common";
 
 import EndQueueSuccess from "./EndQueueSuccess";
 
-function EndQueue() {
+function EndQueue({ openSnackbar }) {
   const { t } = useTranslation();
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -32,6 +32,7 @@ function EndQueue() {
       })
       .catch(error => {
         setRequesting(false);
+        openSnackbar(error.message);
       });
   };
 
