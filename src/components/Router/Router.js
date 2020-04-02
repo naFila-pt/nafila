@@ -49,6 +49,12 @@ class Router extends Component {
           />
 
           <PrivateRoute
+            path={Routes.ADMIN_PRE_QUEUE_PATH}
+            component={Admin.PreQueue}
+            exact
+          />
+
+          <PrivateRoute
             path={Routes.ADMIN_QUEUE_MANAGEMENT_PATH}
             component={Admin.Queue}
             exact

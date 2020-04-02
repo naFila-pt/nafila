@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import {  }
 
-// import Layout from "../../components/AdminLayout";
 import Loader from "../../../components/Loader";
 import { auth, firestore } from "../../../firebase";
 

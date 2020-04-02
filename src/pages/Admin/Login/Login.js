@@ -8,13 +8,14 @@ import Button from "../../../components/Button";
 import LoginBg from "../../../assets/bg/main.svg";
 import Layout from "../../../components/AdminLayout";
 import authentication from "../../../services/authentication";
-import { auth } from "../../../firebase";
+import { auth, firestore } from "../../../firebase";
 import Loader from "../../../components/Loader";
 
 import { PRIMARY_COLOR } from "../../../constants/ColorConstants";
 import {
   ADMIN_RECOVER_PASSWORD_PATH,
-  ADMIN_QUEUE_MANAGEMENT_PATH
+  ADMIN_QUEUE_MANAGEMENT_PATH,
+  ADMIN_PRE_QUEUE_PATH
 } from "../../../constants/RoutesConstants";
 import * as S from "./style";
 import { HeadlineContainer, ButtonsContainer } from "../common";
@@ -44,6 +45,30 @@ function Login() {
     });
   };
 
+  const searchForQueue = () => {
+    firestore
+      .collection("users")
+      .doc(auth.currentUser.uid)
+      .get()
+      .then(response => {
+        const user = response.data();
+
+        firestore
+          .collection("queues")
+          .doc(user.queues[0])
+          .get()
+          .then(response => {
+            const queue = response.data();
+
+            if (queue) {
+              window.location.href = ADMIN_PRE_QUEUE_PATH;
+            } else {
+              window.location.href = ADMIN_QUEUE_MANAGEMENT_PATH;
+            }
+          });
+      });
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
     setError();
@@ -54,9 +79,7 @@ function Login() {
 
     authentication
       .signIn(email, password)
-      .then(res => {
-        return (window.location.href = ADMIN_QUEUE_MANAGEMENT_PATH);
-      })
+      .then(() => searchForQueue())
       .catch(error => {
         setLoading(false);
         error && setError(mappedMessages[error.code]);
@@ -68,7 +91,7 @@ function Login() {
       setNeedsVerification(true);
     } else if (auth.currentUser && auth.currentUser.emailVerified) {
       // User has session and access to private routes
-      window.location.href = ADMIN_QUEUE_MANAGEMENT_PATH;
+      searchForQueue();
     }
   }, []);
 
