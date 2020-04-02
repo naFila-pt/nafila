@@ -280,7 +280,7 @@ class App extends Component {
                     maxHeight: 900
                   }}
                 >
-                  <Router user={user} />
+                  <Router user={user} openSnackbar={this.openSnackbar} />
                 </Grid>
               </Grid>
 

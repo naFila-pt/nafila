@@ -8,7 +8,7 @@ import { auth, firestore } from "../../../firebase";
 import Start from "./Start";
 import Manage from "./Manage";
 
-function Queue() {
+function Queue({ openSnackbar }) {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState();
   const [queue, setQueue] = useState();
@@ -31,9 +31,9 @@ function Queue() {
   }, [user]);
 
   if (loading) return <Loader />;
-  if (queue) return <Manage queueId={queue} />;
+  if (queue) return <Manage queueId={queue} openSnackbar={openSnackbar} />;
 
-  return <Start user={user} setQueue={setQueue} />;
+  return <Start user={user} setQueue={setQueue} openSnackbar={openSnackbar} />;
 }
 
 export default Queue;

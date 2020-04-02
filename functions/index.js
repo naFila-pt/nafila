@@ -11,7 +11,7 @@ const functionsRegion = "europe-west1";
 
 const runtimeOpts = {
   timeoutSeconds: 15,
-  memory: "128MB" //lowest cost possible
+  memory: "256MB" //lowest cost possible
 };
 
 //low cost / high perf settings
@@ -99,7 +99,7 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
     let userData = userDoc.data();
 
     //remove queueId from queues
-    userData.splice(userData.queues.indexOf(queueRef.id), 1);
+    userData.queues.splice(userData.queues.indexOf(queueRef.id), 1);
     transaction.update(userRef, userData);
 
     //delete queue entirely

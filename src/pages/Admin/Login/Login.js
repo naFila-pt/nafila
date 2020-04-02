@@ -24,7 +24,7 @@ const inputProps = {
   required: true
 };
 
-function Login() {
+function Login({ openSnackbar }) {
   const { t } = useTranslation();
   const [fields, setFields] = useState();
   const [loading, setLoading] = useState(false);
@@ -60,6 +60,7 @@ function Login() {
       .catch(error => {
         setLoading(false);
         error && setError(mappedMessages[error.code]);
+        openSnackbar("Login falhou");
       });
   };
 

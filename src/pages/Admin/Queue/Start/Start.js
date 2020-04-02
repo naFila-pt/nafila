@@ -7,7 +7,7 @@ import styled from "styled-components";
 import Layout from "../../../../components/AdminLayout";
 import Button from "../../../../components/Button";
 import Bg from "../../../../assets/bg/store_queue_start.svg";
-import { functions } from "../../../../firebase";
+import { auth, functions } from "../../../../firebase";
 
 import { HeadlineContainer, ButtonsContainer } from "../../common";
 
@@ -37,7 +37,7 @@ const EmailWithCode = styled.p`
   padding: 0 20%;
 `;
 
-function Start({ user, setQueue }) {
+function Start({ user, setQueue, openSnackbar }) {
   const [requesting, setRequesting] = useState(false);
   const [defaultQueueName, setDefaultQueueName] = useState(
     user.defaultQueueName
@@ -52,11 +52,14 @@ function Start({ user, setQueue }) {
     setRequesting(true);
     const createQueue = functions.httpsCallable("createQueue");
 
-    createQueue({ name: defaultQueueName }).then(async function({
-      data: { queueId }
-    }) {
-      setQueue(queueId);
-    });
+    createQueue({ name: defaultQueueName, email: auth.currentUser.email })
+      .then(({ data: { queueId } }) => {
+        setQueue(queueId);
+      })
+      .catch(e => {
+        setRequesting(false);
+        openSnackbar(e.message);
+      });
   };
 
   return (

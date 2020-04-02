@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { oneOfType, func, object } from "prop-types";
+// import { oneOfType, func, object } from "prop-types";
 import { Route } from "react-router-dom";
 
 import Loader from "../Loader";
@@ -24,8 +24,8 @@ function PrivateRoute({ ...rest }) {
   return loading ? <Loader /> : renderOrRedirect();
 }
 
-PrivateRoute.propTypes = {
-  component: oneOfType([func, object]).isRequired
-};
+// PrivateRoute.propTypes = {
+//   component: oneOfType([func, object]).isRequired
+// };
 
 export default PrivateRoute;

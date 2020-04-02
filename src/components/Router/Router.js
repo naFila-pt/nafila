@@ -24,7 +24,7 @@ class Router extends Component {
         <Switch>
           <Route path="/" exact>
             {shouldSkipOnBoarding ? (
-              <HomeContent user={user} />
+              <HomeContent openSnackbar={this.props.openSnackbar} user={user} />
             ) : (
               <OnBoardingContent />
             )}
@@ -33,36 +33,66 @@ class Router extends Component {
 
           <Route
             path={Routes.ADMIN_WELCOME_PATH}
-            component={Admin.WelcomePanel}
+            render={props => (
+              <Admin.WelcomePanel
+                {...props}
+                openSnackbar={this.props.openSnackbar}
+              />
+            )}
             exact
           />
           <Route
             path={Routes.ADMIN_SIGNUP_PATH}
-            component={Admin.SignUp}
+            render={props => (
+              <Admin.SignUp {...props} openSnackbar={this.props.openSnackbar} />
+            )}
             exact
           />
-          <Route path={Routes.ADMIN_LOGIN_PATH} component={Admin.Login} exact />
+          <Route
+            path={Routes.ADMIN_LOGIN_PATH}
+            render={props => (
+              <Admin.Login {...props} openSnackbar={this.props.openSnackbar} />
+            )}
+            exact
+          />
           <Route
             path={Routes.ADMIN_RECOVER_PASSWORD_PATH}
-            component={Admin.RecoverPassword}
+            render={props => (
+              <Admin.RecoverPassword
+                {...props}
+                openSnackbar={this.props.openSnackbar}
+              />
+            )}
             exact
           />
 
           <PrivateRoute
             path={Routes.ADMIN_QUEUE_MANAGEMENT_PATH}
-            component={Admin.Queue}
+            render={props => (
+              <Admin.Queue {...props} openSnackbar={this.props.openSnackbar} />
+            )}
             exact
           />
 
           <PrivateRoute
             path={Routes.ADMIN_END_QUEUE_PATH}
-            component={Admin.EndQueue}
+            render={props => (
+              <Admin.EndQueue
+                {...props}
+                openSnackbar={this.props.openSnackbar}
+              />
+            )}
             exact
           />
 
           <PrivateRoute
             path={Routes.ADMIN_ADD_CUSTOMER_PATH}
-            component={Admin.AddConsumer}
+            render={props => (
+              <Admin.AddConsumer
+                {...props}
+                openSnackbar={this.props.openSnackbar}
+              />
+            )}
             exact
           />
 
