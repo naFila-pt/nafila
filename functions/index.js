@@ -99,7 +99,7 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
     let userData = userDoc.data();
 
     //remove queueId from queues
-    userData.splice(userData.queues.indexOf(queueRef.id), 1);
+    userData.queues.splice(userData.queues.indexOf(queueRef.id), 1);
     transaction.update(userRef, userData);
 
     //delete queue entirely
