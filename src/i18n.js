@@ -162,6 +162,11 @@ i18n
           // AfterLogin Add Consumer Name Success
           "main#addConsumerNameSuccess_text": "Forneça este número ao Cliente.",
 
+          // Admin Pre Queue
+          "admin#preQueue_whatToDo": "O que quer fazer?",
+          "admin#preQueue_goToExistingQueue": "Ver fila iniciada",
+          "admin#preQueue_endExistingQueue": "Terminar fila",
+
           // Admin Queue Management
           "admin#queueManagement_letsStart": "Vamos iniciar a fila?",
           "admin#queueManagement_queueName": "Nome da Fila",
