@@ -55,13 +55,12 @@ function Login({ openSnackbar }) {
     authentication
       .signIn(email, password)
       .then(res => {
-        alert(1);
         return (window.location.href = ADMIN_QUEUE_MANAGEMENT_PATH);
       })
       .catch(error => {
         setLoading(false);
         error && setError(mappedMessages[error.code]);
-        openSnackbar("Login falhou")
+        openSnackbar("Login falhou");
       });
   };
 
