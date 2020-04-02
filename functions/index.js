@@ -11,7 +11,7 @@ const functionsRegion = "europe-west1";
 
 const runtimeOpts = {
   timeoutSeconds: 15,
-  memory: "128MB" //lowest cost possible
+  memory: "256MB" //lowest cost possible
 };
 
 //low cost / high perf settings
