@@ -53,19 +53,11 @@ function Login({ openSnackbar }) {
       .then(response => {
         const user = response.data();
 
-        firestore
-          .collection("queues")
-          .doc(user.queues[0])
-          .get()
-          .then(response => {
-            const queue = response.data();
-
-            if (queue) {
-              window.location.href = ADMIN_PRE_QUEUE_PATH;
-            } else {
-              window.location.href = ADMIN_QUEUE_MANAGEMENT_PATH;
-            }
-          });
+        if (!user.queues || !user.queues[0]) {
+          window.location.href = ADMIN_QUEUE_MANAGEMENT_PATH;
+        } else {
+          window.location.href = ADMIN_PRE_QUEUE_PATH;
+        }
       });
   };
 
