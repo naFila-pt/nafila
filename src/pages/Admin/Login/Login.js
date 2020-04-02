@@ -17,14 +17,7 @@ import {
   ADMIN_QUEUE_MANAGEMENT_PATH
 } from "../../../constants/RoutesConstants";
 import * as S from "./style";
-
-const typographyStyles = {
-  TITLE: {
-    color: PRIMARY_COLOR,
-    fontWeight: 900,
-    fontSize: "2rem"
-  }
-};
+import { HeadlineContainer, ButtonsContainer } from "../common";
 
 const inputProps = {
   fullWidth: true,
@@ -83,9 +76,9 @@ function Login() {
 
   return (
     <Layout bg={LoginBg}>
-      <Typography variant="h3" style={typographyStyles.TITLE}>
-        {t("admin#login_title")}
-      </Typography>
+      <HeadlineContainer>
+        <Typography variant="h3">{t("admin#login_title")}</Typography>
+      </HeadlineContainer>
 
       <S.Form onSubmit={handleSubmit}>
         <TextField
@@ -114,9 +107,11 @@ function Login() {
           {t("admin#login_recover_password")}
         </Link>
 
-        <Button type="submit" forward>
-          {t("admin#intro_login")}
-        </Button>
+        <ButtonsContainer>
+          <Button type="submit" forward>
+            {t("admin#intro_login")}
+          </Button>
+        </ButtonsContainer>
       </S.Form>
     </Layout>
   );

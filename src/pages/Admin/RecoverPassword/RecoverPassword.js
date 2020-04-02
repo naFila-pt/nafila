@@ -1,69 +1,42 @@
 import React, { useState } from "react";
 
-import { Typography, TextField } from "@material-ui/core";
+import { Typography, Input } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import Button from "../../../components/Button";
 import LoginBg from "../../../assets/bg/main.svg";
 import Layout from "../../../components/AdminLayout";
-import {
-  PRIMARY_COLOR,
-  WHITE_COLOR,
-  BACK_BUTTON_BG_COLOR,
-  BACK_BUTTON_TEXT_COLOR
-} from "../../../constants/ColorConstants";
 import { ADMIN_LOGIN_PATH } from "../../../constants/RoutesConstants";
 import * as S from "./style";
-import SuccessfulRecoverPassword from "./SuccessfulRecoverPassword";
-import validator from "email-validator";
+import SuccessfulRecoverPassword from "./RecoverPasswordSuccessful";
 import authentication from "../../../services/authentication";
-const typographyStyles = {
-  TITLE: {
-    color: PRIMARY_COLOR,
-    fontWeight: 900,
-    fontSize: "2rem"
-  }
-};
 
-const buttonStyles = {
-  color: WHITE_COLOR,
-  textDecoration: "none",
-  background: "none"
-};
-const backButtonStyles = {
-  color: BACK_BUTTON_TEXT_COLOR,
-  textDecoration: "none",
-  background: BACK_BUTTON_BG_COLOR
-};
-
-const inputProps = {
-  fullWidth: true,
-  required: true
-};
+import { HeadlineContainer, ButtonsContainer } from "../common";
 
 function RecoverPassword() {
   const { t } = useTranslation();
+  const [requesting, setRequesting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [email, setEmail] = useState("");
   const [errorText, setErrorText] = useState("");
 
-  const sendPasswordRecoveryEmail = () => {
-    if (validator.validate(email)) {
-      authentication
-        .resetPassword(email)
-        .then(() => {
-          setSuccess(true);
-        })
-        .catch(error => {
-          error && setErrorText(t("admin#recoverPassword_serverFail"));
-        });
-    } else {
-      setErrorText(t("admin#recoverPassword_wrongEmail"));
-    }
+  const sendPasswordRecoveryEmail = event => {
+    event.preventDefault();
+    setRequesting(true);
+
+    authentication
+      .resetPassword(email)
+      .then(() => {
+        setSuccess(true);
+      })
+      .catch(error => {
+        error && setErrorText(t("admin#recoverPassword_serverFail"));
+        setRequesting(false);
+      });
   };
 
-  const changeEmailText = v => {
-    setEmail(v);
+  const handleChange = event => {
+    setEmail(event.target.value);
     setErrorText("");
   };
 
@@ -71,38 +44,41 @@ function RecoverPassword() {
 
   return (
     <Layout bg={LoginBg}>
-      <S.Form>
-        <Typography variant="h3" style={typographyStyles.TITLE}>
-          {t("admin#recoverPassword_title")}
-        </Typography>
+      <HeadlineContainer>
+        <Typography variant="h3">{t("admin#recoverPassword_title")}</Typography>
+      </HeadlineContainer>
 
-        <TextField
-          label={t("admin#recoverPassword_email")}
-          name="email"
-          onChange={e => changeEmailText(e.target.value)}
+      <S.Form onSubmit={sendPasswordRecoveryEmail}>
+        <p style={{ fontSize: "1.25em" }}>{t("admin#recoverPassword_text1")}</p>
+
+        <Input
+          type="email"
+          placeholder={t("admin#recoverPassword_email")}
+          value={email}
+          onChange={handleChange}
           style={{ marginTop: "25px" }}
-          {...inputProps}
+          fullWidth
+          required
         />
         <Typography variant="h5" style={{ color: "red" }}>
           {errorText}
         </Typography>
 
-        <Button style={buttonStyles} onClick={sendPasswordRecoveryEmail}>
-          {t("admin#recoverPassword_recover")}
-        </Button>
-
-        <Button backward style={backButtonStyles}>
-          <Link
-            to={ADMIN_LOGIN_PATH}
-            style={{
-              color: BACK_BUTTON_TEXT_COLOR,
-              textDecoration: "none",
-              background: BACK_BUTTON_BG_COLOR
-            }}
+        <ButtonsContainer>
+          <Button
+            type="submit"
+            disabled={requesting}
+            variant={requesting ? "inactive" : ""}
           >
-            {t("admin#recoverPassword_back")}
+            {t("admin#recoverPassword_recover")}
+          </Button>
+
+          <Link to={ADMIN_LOGIN_PATH}>
+            <Button variant={requesting ? "inactive" : "gray"} backward>
+              {t("admin#recoverPassword_back")}
+            </Button>
           </Link>
-        </Button>
+        </ButtonsContainer>
       </S.Form>
     </Layout>
   );

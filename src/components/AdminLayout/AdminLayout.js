@@ -27,7 +27,7 @@ const useStyles = makeStyles({
   }
 });
 
-function Layout({ children, bg, hideToolbar }) {
+function Layout({ children, bg, hideLogo }) {
   const classes = useStyles();
   const boxProps = {
     width: 1,
@@ -49,7 +49,7 @@ function Layout({ children, bg, hideToolbar }) {
         <Grid container direction="column">
           <Toolbar className={classes.toolbar}>
             <MenuIcon className={classes.menuIcon} />
-            <LogoMini style={{ flex: 0.9 }} />
+            {!hideLogo && <LogoMini style={{ flex: 0.9 }} />}
           </Toolbar>
         </Grid>
       </Grid>

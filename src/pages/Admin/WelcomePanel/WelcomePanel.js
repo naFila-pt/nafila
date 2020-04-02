@@ -14,6 +14,7 @@ import {
 } from "../../../constants/RoutesConstants";
 
 import * as S from "./style";
+import { ButtonsContainer } from "../common";
 
 const typographyStyles = {
   MAIN: {
@@ -29,7 +30,7 @@ function WelcomePanel() {
   const { t } = useTranslation();
 
   return (
-    <Layout bg={Background} hideToolbar>
+    <Layout bg={Background} hideLogo>
       <S.LogoContainer>
         <img src={Logo} alt="nafila logo" />
       </S.LogoContainer>
@@ -44,15 +45,13 @@ function WelcomePanel() {
         dangerouslySetInnerHTML={{ __html: t("admin#intro_pitch") }}
       />
 
-      <S.ButtonsContainer>
+      <ButtonsContainer>
         <Link
           to={ADMIN_LOGIN_PATH}
           style={{ color: WHITE_COLOR, textDecoration: "none" }}
         >
           <Button forward>{t("admin#intro_login")}</Button>
         </Link>
-
-        <br />
 
         <Link
           to={ADMIN_SIGNUP_PATH}
@@ -62,7 +61,7 @@ function WelcomePanel() {
             {t("admin#intro_signup")}
           </Button>
         </Link>
-      </S.ButtonsContainer>
+      </ButtonsContainer>
     </Layout>
   );
 }

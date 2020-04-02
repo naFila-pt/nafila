@@ -67,6 +67,7 @@ const Button = ({
         borderRadius: "2.13em",
         ...style
       }}
+      className="MuiButtonWrapper"
     >
       <MuiButton
         onClick={onClick}

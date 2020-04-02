@@ -76,6 +76,7 @@ i18n
           "admin#intro_signup": "Registo de Loja",
 
           // Admin SignUp
+          "admin#signup_title": "Introduza os dados de Registo",
           "admin#signup_weakPassword":
             "A password tem que ter mais de 6 caracteres",
           "admin#signup_emailInUse": "Email já se encontra registrado",
@@ -100,9 +101,13 @@ i18n
 
           // Recover Password
           "admin#recoverPassword_title": "Recuperar a Password",
+          "admin#recoverPassword_text1":
+            "Introduza o seu email para recuperar a password",
           "admin#recoverPassword_email": "Email",
           "admin#recoverPassword_recover": "Recuperar",
           "admin#recoverPassword_back": "Retroceder",
+          "admin#recoverPassword_serverFail":
+            "Houve um erro, por favor tente novamente",
           "admin#recoverPassword_wrongEmail":
             "O email que inseriu é inválido. Corrija e tente de novo.",
 
@@ -132,7 +137,7 @@ i18n
 
           // AfterLogin Add Consumer 1st page
           "main#addConsumer_title": "Escolha o método de notificação",
-          "main#addConsumer_byPhone": "Telémovel",
+          "main#addConsumer_byPhone": "Telemóvel",
           "main#addConsumer_byName": "Nome",
           "main#addConsumer_back": "Retroceder",
           "main#addConsumer_generateTicket": "Gerar Senha",
@@ -147,7 +152,7 @@ i18n
           "main#addConsumerName_placeholder": "Nome",
 
           // AfterLogin Add Consumer Success
-          "main#addConsumerSuccess_button": `Voltar <span class="logo">na<b>fila</b></span>`,
+          "main#addConsumerSuccess_button": `Voltar na<b>fila</b>`,
           "main#addConsumerSuccess_title": "Nova Senha gerada",
 
           // AfterLogin Add Consumer Phone Success
@@ -179,7 +184,8 @@ i18n
 
           //End Queue Success
           "main#endQueueSuccess_title": "Fila terminada.",
-          "main#endQueueSuccess_text": "A sua fila foi terminada.\nAté Amanhã!",
+          "main#endQueueSuccess_text":
+            "A sua fila foi terminada.<br/>Até Amanhã!",
           "main#endQueueSuccess_back": "Voltar ao Início"
         }
       }

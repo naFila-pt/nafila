@@ -1,45 +1,26 @@
 import React, { useState } from "react";
-import { Typography, TextField } from "@material-ui/core";
+import { Typography, Input } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
 
 import Button from "../../../components/Button";
 import LoginBg from "../../../assets/bg/main.svg";
 import Layout from "../../../components/AdminLayout";
-import { PRIMARY_COLOR } from "../../../constants/ColorConstants";
 import * as S from "./style";
 import AddConsumerSuccess from "./AddConsumerSuccess";
 import { functions } from "../../../firebase";
 
-const typographyStyles = {
-  TITLE: {
-    color: PRIMARY_COLOR,
-    fontWeight: 900,
-    fontSize: "2rem"
-  }
-};
-
-const inputProps = {
-  fullWidth: true,
-  required: true
-};
-const ButtonsContainer = styled.div`
-  position: absolute;
-  bottom: 30px;
-  width: 100%;
-  left: 0;
-
-  .MuiButtonBase-root {
-    margin-bottom: 20px;
-  }
-`;
+import { HeadlineContainer, ButtonsContainer } from "../common";
 
 function AddConsumerPhone({ user, returnFunction }) {
   const { t } = useTranslation();
-  const [phone, setPhone] = useState();
+  const [phone, setPhone] = useState("");
   const [requesting, setRequesting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [ticket, setTicket] = useState();
+
+  const handleChange = event => {
+    setPhone(event.target.value);
+  };
 
   const generateTicket = e => {
     e.preventDefault();
@@ -61,17 +42,18 @@ function AddConsumerPhone({ user, returnFunction }) {
 
   return (
     <Layout bg={LoginBg}>
-      <S.Form onSubmit={generateTicket}>
-        <Typography variant="h3" style={typographyStyles.TITLE}>
-          {t("main#addConsumerPhone_title")}
-        </Typography>
+      <HeadlineContainer>
+        <Typography variant="h3">{t("main#addConsumerPhone_title")}</Typography>
+      </HeadlineContainer>
 
-        <TextField
-          label={t("main#addConsumerPhone_placeholder")}
-          name="phone"
-          onChange={e => setPhone(e.target.value)}
+      <S.Form onSubmit={generateTicket}>
+        <Input
+          placeholder={t("main#addConsumerPhone_placeholder")}
+          value={phone}
+          onChange={handleChange}
           style={{ marginTop: "15vh" }}
-          {...inputProps}
+          fullWidth
+          required
         />
 
         <ButtonsContainer>

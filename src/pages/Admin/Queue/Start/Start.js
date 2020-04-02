@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { Typography } from "@material-ui/core";
+import Input from "@material-ui/core/Input";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 import Layout from "../../../../components/AdminLayout";
 import Button from "../../../../components/Button";
 import Bg from "../../../../assets/bg/store_queue_start.svg";
-import { SECONDARY_COLOR } from "../../../../constants/ColorConstants";
 import { functions } from "../../../../firebase";
+
+import { HeadlineContainer, ButtonsContainer } from "../../common";
 
 const StoreName = styled.div`
   margin: 30% 10% 0;
@@ -17,30 +19,40 @@ const StoreName = styled.div`
     padding: 10px 0;
   }
 
+  .MuiInput-root {
+    width: 100%;
+  }
+
+  .MuiInput-input {
+    text-align: center;
+  }
+
   .queue-label {
-    border-top: 1px ${SECONDARY_COLOR} solid;
     padding: 10px 0;
   }
 `;
 const EmailWithCode = styled.p`
-  margin-top: 40px;
+  margin-top: 30px;
   font-size: 20px;
   padding: 0 20%;
 `;
-const buttonStyle = {
-  position: "absolute",
-  bottom: 30,
-  width: "100%"
-};
 
 function Start({ user, setQueue }) {
   const [requesting, setRequesting] = useState(false);
+  const [defaultQueueName, setDefaultQueueName] = useState(
+    user.defaultQueueName
+  );
   const { t } = useTranslation();
+
+  const handleChange = event => {
+    setDefaultQueueName(event.target.value);
+  };
+
   const startQueue = () => {
     setRequesting(true);
     const createQueue = functions.httpsCallable("createQueue");
 
-    createQueue({ name: user.defaultQueueName }).then(async function({
+    createQueue({ name: defaultQueueName }).then(async function({
       data: { queueId }
     }) {
       setQueue(queueId);
@@ -49,12 +61,14 @@ function Start({ user, setQueue }) {
 
   return (
     <Layout bg={Bg}>
-      <Typography variant="h3">
-        {t("admin#queueManagement_letsStart")}
-      </Typography>
+      <HeadlineContainer>
+        <Typography variant="h3">
+          {t("admin#queueManagement_letsStart")}
+        </Typography>
+      </HeadlineContainer>
 
       <StoreName>
-        <Typography variant="h4">{user.defaultQueueName}</Typography>
+        <Input value={defaultQueueName} onChange={handleChange} />
         <div className="queue-label">
           {t("admin#queueManagement_queueName")}
         </div>
@@ -66,16 +80,17 @@ function Start({ user, setQueue }) {
         }}
       />
 
-      <Button
-        style={buttonStyle}
-        onClick={() => startQueue()}
-        disabled={requesting}
-        variant={requesting ? "inactive" : ""}
-      >
-        {requesting
-          ? t("admin#queueManagement_creatingQueue")
-          : t("admin#queueManagement_startQueue")}
-      </Button>
+      <ButtonsContainer>
+        <Button
+          onClick={() => startQueue()}
+          disabled={requesting}
+          variant={requesting ? "inactive" : ""}
+        >
+          {requesting
+            ? t("admin#queueManagement_creatingQueue")
+            : t("admin#queueManagement_startQueue")}
+        </Button>
+      </ButtonsContainer>
     </Layout>
   );
 }

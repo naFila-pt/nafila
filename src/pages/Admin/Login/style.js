@@ -24,7 +24,12 @@ export const Form = styled.form`
     border-color: ${PRIMARY_COLOR} !important;
 
     label {
+      width: 100%;
       color: ${PRIMARY_COLOR} !important;
+    }
+
+    .MuiInputLabel-shrink {
+      transform-origin: top center;
     }
 
     .MuiInput-root {
@@ -36,6 +41,10 @@ export const Form = styled.form`
         border-color: ${PRIMARY_COLOR} !important;
       }
     }
+  }
+
+  .MuiInput-input {
+    text-align: center;
   }
 
   .MuiAlert-root {
