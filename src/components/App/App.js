@@ -4,7 +4,7 @@ import readingTime from "reading-time";
 
 import { MuiThemeProvider } from "@material-ui/core/styles";
 
-import { CssBaseline, Button, Snackbar } from "@material-ui/core";
+import { CssBaseline, Grid, Button, Snackbar } from "@material-ui/core";
 
 import { auth, firestore } from "../../firebase";
 import authentication from "../../services/authentication";
@@ -12,7 +12,6 @@ import appearance from "../../services/appearance";
 
 import ErrorBoundary from "../ErrorBoundary";
 import LaunchScreen from "../LaunchScreen";
-import Bar from "../Bar";
 import Router from "../Router";
 import DialogHost from "../DialogHost";
 
@@ -243,14 +242,7 @@ class App extends Component {
   };
 
   render() {
-    const {
-      ready,
-      performingAction,
-      theme,
-      user,
-      userData,
-      roles
-    } = this.state;
+    const { ready, performingAction, theme, user, userData } = this.state;
 
     const {
       aboutDialog,
@@ -272,25 +264,25 @@ class App extends Component {
 
           {ready && (
             <>
-              <Router
-                user={user}
-                roles={roles}
-                bar={
-                  <Bar
-                    performingAction={performingAction}
-                    theme={theme}
-                    user={user}
-                    userData={userData}
-                    roles={roles}
-                    onSignUpClick={() => this.openDialog("signUpDialog")}
-                    onSignInClick={() => this.openDialog("signInDialog")}
-                    onAboutClick={() => this.openDialog("aboutDialog")}
-                    onSettingsClick={() => this.openDialog("settingsDialog")}
-                    onSignOutClick={() => this.openDialog("signOutDialog")}
-                  />
-                }
-                openSnackbar={this.openSnackbar}
-              />
+              <Grid
+                container
+                alignItems="center"
+                justify="center"
+                style={{ height: "100vh" }}
+              >
+                <Grid
+                  item
+                  style={{
+                    position: "relative",
+                    width: "100%",
+                    height: "100%",
+                    maxWidth: theme.breakpoints.values.sm,
+                    maxHeight: 900
+                  }}
+                >
+                  <Router user={user} openSnackbar={this.openSnackbar} />
+                </Grid>
+              </Grid>
 
               <DialogHost
                 performingAction={performingAction}

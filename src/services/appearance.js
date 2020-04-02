@@ -162,12 +162,38 @@ const defaultTheme = createMuiTheme({
   palette: {
     primary: defaultPrimaryColor.import,
     secondary: defaultSecondaryColor.import,
-    type: defaultDark ? "dark" : "light"
+    type: defaultDark ? "dark" : "light",
+    text: {
+      primary: "#4C0788"
+    }
   },
 
   primaryColor: defaultPrimaryColor,
   secondaryColor: defaultSecondaryColor,
-  dark: defaultDark
+  dark: defaultDark,
+
+  typography: {
+    fontFamily: ["Lato", "sans-serif"],
+    fontSize: 16,
+    fontWeightBold: 900,
+    h1: {
+      fontWeight: 900,
+      fontSize: "2em"
+    },
+    h3: {
+      fontWeight: 900,
+      fontSize: "1.6em"
+    },
+    h4: {
+      fontWeight: 400,
+      fontSize: "1.375em",
+      lineHeight: "1.35em"
+    },
+    h5: {
+      fontWeight: 400,
+      fontSize: "1.2em"
+    }
+  }
 });
 
 const appearance = {};

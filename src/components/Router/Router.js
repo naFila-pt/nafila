@@ -2,41 +2,105 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import { BrowserRouter, Switch, Redirect, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-import HomeContent from "../HomeContent";
-import AdminContent from "../AdminContent";
-import UserContent from "../UserContent";
-import NotFoundContent from "../NotFoundContent";
+import PrivateRoute from "../PrivateRoute";
+
+import OnBoardingContent from "../../pages/OnBoardingContent";
+import { HomeContent, TermsConditions } from "../../pages/HomeContent";
+import Admin from "../../pages/Admin";
+import NotFoundContent from "../../pages/NotFoundContent";
+import * as Routes from "../../constants/RoutesConstants";
 
 class Router extends Component {
   render() {
     // Properties
-    const { user, roles, bar } = this.props;
+    const { user } = this.props;
 
-    // Functions
-    const { openSnackbar } = this.props;
+    const shouldSkipOnBoarding = localStorage.getItem("skipOnBoarding");
 
     return (
       <BrowserRouter basename={process.env.REACT_APP_BASENAME}>
-        {bar}
-
         <Switch>
           <Route path="/" exact>
-            <HomeContent user={user} openSnackbar={openSnackbar} />
-          </Route>
-
-          <Route path="/admin">
-            {user && roles.includes("admin") ? (
-              <AdminContent />
+            {shouldSkipOnBoarding ? (
+              <HomeContent openSnackbar={this.props.openSnackbar} user={user} />
             ) : (
-              <Redirect to="/" />
+              <OnBoardingContent />
             )}
           </Route>
+          <Route path="/termos-condicoes" component={TermsConditions} exact />
 
-          <Route path="/user/:userId">
-            {user ? <UserContent /> : <Redirect to="/" />}
-          </Route>
+          <Route
+            path={Routes.ADMIN_WELCOME_PATH}
+            render={props => (
+              <Admin.WelcomePanel
+                {...props}
+                openSnackbar={this.props.openSnackbar}
+              />
+            )}
+            exact
+          />
+          <Route
+            path={Routes.ADMIN_SIGNUP_PATH}
+            render={props => (
+              <Admin.SignUp {...props} openSnackbar={this.props.openSnackbar} />
+            )}
+            exact
+          />
+          <Route
+            path={Routes.ADMIN_LOGIN_PATH}
+            render={props => (
+              <Admin.Login {...props} openSnackbar={this.props.openSnackbar} />
+            )}
+            exact
+          />
+          <Route
+            path={Routes.ADMIN_RECOVER_PASSWORD_PATH}
+            render={props => (
+              <Admin.RecoverPassword
+                {...props}
+                openSnackbar={this.props.openSnackbar}
+              />
+            )}
+            exact
+          />
+
+          <PrivateRoute
+            path={Routes.ADMIN_PRE_QUEUE_PATH}
+            component={Admin.PreQueue}
+            exact
+          />
+
+          <PrivateRoute
+            path={Routes.ADMIN_QUEUE_MANAGEMENT_PATH}
+            render={props => (
+              <Admin.Queue {...props} openSnackbar={this.props.openSnackbar} />
+            )}
+            exact
+          />
+
+          <PrivateRoute
+            path={Routes.ADMIN_END_QUEUE_PATH}
+            render={props => (
+              <Admin.EndQueue
+                {...props}
+                openSnackbar={this.props.openSnackbar}
+              />
+            )}
+            exact
+          />
+
+          <PrivateRoute
+            path={Routes.ADMIN_ADD_CUSTOMER_PATH}
+            render={props => (
+              <Admin.AddConsumer
+                {...props}
+                openSnackbar={this.props.openSnackbar}
+              />
+            )}
+            exact
+          />
 
           <Route>
             <NotFoundContent />
@@ -49,12 +113,7 @@ class Router extends Component {
 
 Router.propTypes = {
   // Properties
-  user: PropTypes.object,
-  roles: PropTypes.array.isRequired,
-  bar: PropTypes.element,
-
-  // Functions
-  openSnackbar: PropTypes.func.isRequired
+  user: PropTypes.object
 };
 
 export default Router;

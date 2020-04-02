@@ -74,7 +74,7 @@ authentication.signUp = fields => {
   });
 };
 
-authentication.signUpWithEmailAddressAndPassword = (emailAddress, password) => {
+authentication.signUpStore = (emailAddress, password, defaultQueueName) => {
   return new Promise((resolve, reject) => {
     if (!emailAddress || !password) {
       reject();
@@ -110,12 +110,19 @@ authentication.signUpWithEmailAddressAndPassword = (emailAddress, password) => {
         const userDocumentReference = firestore.collection("users").doc(uid);
 
         userDocumentReference
-          .set({}, { merge: true })
+          .set(
+            {
+              defaultQueueName,
+              queues: []
+            },
+            { merge: true }
+          )
           .then(value => {
             analytics.logEvent("sign_up", {
               method: "password"
             });
 
+            authentication.verifyEmailAddress();
             resolve(value);
           })
           .catch(reason => {
@@ -279,7 +286,7 @@ authentication.signInWithAuthProvider = providerId => {
     }
 
     if (auth.currentUser) {
-      alert('user is already logged in')
+      alert("user is already logged in");
       reject();
 
       return;

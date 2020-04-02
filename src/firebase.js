@@ -22,15 +22,12 @@ export default firebase;
 export const analytics = firebase.analytics();
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
-export const storage = firebase.storage();
+export const storage = firebase.storage(); //not needed - to be removed
+export const functions = firebase.app().functions("europe-west1");
 export const performance = firebase.performance();
 
-
-// var functions = firebase.app().functions('europe-west1')
-
-// var addMeToQueue = functions.httpsCallable('addMeToQueue');
-// addMeToQueue({text: "teste 123"}).then(function(result) {
-//   console.log(result)
-// }).catch((e)=>{
-//   console.log(e)
-// });
+//functions.useFunctionsEmulator('http://localhost:5001')
+// (async function(){
+//   var testSendMail = functions.httpsCallable('testSendMail');
+//   console.log('testSendMail', await testSendMail())
+// })()
