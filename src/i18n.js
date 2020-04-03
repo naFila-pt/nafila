@@ -11,6 +11,7 @@ i18n
         translation: {
           appTitle: "na<b>fila</b>",
           "global#return_button": "Retroceder",
+          "global#wait_please": "Aguarde ...",
 
           "onboarding#intro_welcome": "Bem Vindo!",
           "onboarding#intro_pitch": "na<b>fila</b>. Sem filas.",

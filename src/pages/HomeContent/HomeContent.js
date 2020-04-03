@@ -58,6 +58,7 @@ const HomeContent = ({ openSnackbar }) => {
   const [activeStep, setActiveStep] = useState(initialActiveStep);
   const [queueId, setQueueId] = useState("");
   const [userEmail, setUserEmail] = useState("");
+  const [loading, setLoading] = useState(false);
   const [ticketsStoreInfo, setTicketsStoreInfo] = useState({
     name: null,
     currentTicket: null,
@@ -118,6 +119,8 @@ const HomeContent = ({ openSnackbar }) => {
   };
 
   const handleAddToQueue = async () => {
+    setLoading(true);
+
     try {
       const addMeToQueue = functions.httpsCallable("addMeToQueue");
 
@@ -138,6 +141,7 @@ const HomeContent = ({ openSnackbar }) => {
 
       handleNextButton();
     } catch (e) {
+      setLoading(false);
       openSnackbar(e.message || `Error: ${e}`);
     }
   };
@@ -260,8 +264,13 @@ const HomeContent = ({ openSnackbar }) => {
                 {t("home#notification_termsLink")}
               </Link>
             </div>
-            <Button forward onClick={handleAddToQueue}>
-              {t("home#notification_button")}
+            <Button
+              onClick={handleAddToQueue}
+              disabled={loading}
+              variant={loading ? "inactive" : ""}
+              forward
+            >
+              {t(loading ? "global#wait_please" : "home#notification_button")}
             </Button>
           </div>
         </Grid>
