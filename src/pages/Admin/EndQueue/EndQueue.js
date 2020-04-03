@@ -73,7 +73,7 @@ function EndQueue({ openSnackbar }) {
         </Button>
 
         <Button
-          variant={requesting ? "inactive" : "gray"}
+          variant={requesting ? "inactiveGray" : "gray"}
           href={ADMIN_QUEUE_MANAGEMENT_PATH}
         >
           {t("main#endQueue_no")}

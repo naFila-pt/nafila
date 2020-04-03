@@ -67,7 +67,7 @@ function AddConsumerPhone({ user, returnFunction, openSnackbar }) {
           </Button>
 
           <Button
-            variant={requesting ? "inactive" : "gray"}
+            variant={requesting ? "inactiveGray" : "gray"}
             onClick={returnFunction}
             backward
           >
