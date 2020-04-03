@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Typography, TextField } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
@@ -70,13 +69,11 @@ const inputProps = {
   required: true
 };
 
-function SignUp() {
+function SignUp({ openSnackbar }) {
   const { t } = useTranslation();
   const [fields, setFields] = useState();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState();
   const [success, setSuccess] = useState(false);
-  const [needsVerification, setNeedsVerification] = useState(false);
   const mappedMessages = {
     "auth/weak-password": t("admin#signup_weakPassword"),
     "auth/email-already-in-use": t("admin#signup_emailInUse"),
@@ -92,9 +89,7 @@ function SignUp() {
   };
   const handleSubmit = e => {
     e.preventDefault();
-    setError();
     setLoading(true);
-    setNeedsVerification(false);
 
     const { email, password, defaultQueueName } = fields;
 
@@ -106,15 +101,15 @@ function SignUp() {
       })
       .catch(error => {
         setLoading(false);
-        error && setError(mappedMessages[error.code]);
+        openSnackbar(mappedMessages[error.code] || t("admin#signup_failed"));
       });
   };
 
   useEffect(() => {
     if (auth.currentUser && !auth.currentUser.emailVerified) {
-      setNeedsVerification(true);
+      openSnackbar(t("admin#signup_checkYourEmail"));
     }
-  }, []);
+  }, [t, openSnackbar]);
 
   if (loading) return <Loader />;
   if (success) return <SuccessfulSignUp />;
@@ -149,12 +144,6 @@ function SignUp() {
           min="6"
           {...inputProps}
         />
-
-        {error && <Alert severity="error">{error}</Alert>}
-
-        {needsVerification && (
-          <Alert severity="info">{t("admin#signup_checkYourEmail")}</Alert>
-        )}
 
         <ButtonsContainer>
           <Button type="submit" forward>

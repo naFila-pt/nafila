@@ -85,6 +85,7 @@ i18n
           "admin#signup_operationNotAllowed": "Operação não permitida",
           "admin#signup_checkYourEmail":
             "Aceda ao seu email para verificar a sua conta.",
+          "admin#signup_failed": "Registo de conta falhou",
           "admin#signup_nameLabel": "Nome/Local da Loja",
           "admin#signup_emailLabel": "Email do Lojista",
           "admin#signup_passwordLabel": "Password",
@@ -99,6 +100,8 @@ i18n
           "admin#login_email": "Email do Lojista",
           "admin#login_password": "Password",
           "admin#login_recover_password": "Recuperar Password",
+          "admin#login_failed": "Login falhou",
+          "admin#login_wrongPassword": "Password incorrecta",
 
           // Recover Password
           "admin#recoverPassword_title": "Recuperar a Password",
