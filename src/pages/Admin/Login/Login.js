@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Typography, TextField } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
@@ -29,13 +28,8 @@ function Login({ openSnackbar }) {
   const { t } = useTranslation();
   const [fields, setFields] = useState();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState();
-  const [needsVerification, setNeedsVerification] = useState(false);
   const mappedMessages = {
-    "auth/weak-password": t("admin#signup_weakPassword"),
-    "auth/email-already-in-use": t("admin#signup_emailInUse"),
-    "auth/invalid-email": t("admin#signup_invalidEmail"),
-    "auth/operation-not-allowed": t("admin#signup_operationNotAllowed")
+    "auth/wrong-password": t("admin#login_wrongPassword")
   };
 
   const handleChange = ({ target: { name, value } }) => {
@@ -63,9 +57,7 @@ function Login({ openSnackbar }) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    setError();
     setLoading(true);
-    setNeedsVerification(false);
 
     const { email, password } = fields;
 
@@ -74,19 +66,18 @@ function Login({ openSnackbar }) {
       .then(() => searchForQueue())
       .catch(error => {
         setLoading(false);
-        error && setError(mappedMessages[error.code]);
-        openSnackbar("Login falhou");
+        openSnackbar(mappedMessages[error.code] || t("admin#login_failed"));
       });
   };
 
   useEffect(() => {
     if (auth.currentUser && !auth.currentUser.emailVerified) {
-      setNeedsVerification(true);
+      openSnackbar(t("admin#signup_checkYourEmail"));
     } else if (auth.currentUser && auth.currentUser.emailVerified) {
       // User has session and access to private routes
       searchForQueue();
     }
-  }, []);
+  }, [t, openSnackbar]);
 
   if (loading) return <Loader />;
 
@@ -112,12 +103,6 @@ function Login({ openSnackbar }) {
           min="6"
           {...inputProps}
         />
-
-        {error && <Alert severity="error">{error}</Alert>}
-
-        {needsVerification && (
-          <Alert severity="info">{t("admin#signup_checkYourEmail")}</Alert>
-        )}
 
         <Link to={ADMIN_RECOVER_PASSWORD_PATH} style={{ color: PRIMARY_COLOR }}>
           {t("admin#login_recover_password")}
