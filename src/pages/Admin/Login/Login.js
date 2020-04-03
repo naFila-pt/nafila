@@ -41,7 +41,6 @@ function Login({ openSnackbar }) {
 
   const checkUserState = () => {
     if (auth.currentUser && !auth.currentUser.emailVerified) {
-      setNeedsVerification(true);
       authentication.signOut();
     } else if (auth.currentUser && auth.currentUser.emailVerified) {
       // User has session and access to private routes
