@@ -256,7 +256,10 @@ const HomeContent = ({ openSnackbar }) => {
                 }}
               />
               {` `}
-              <Link style={{ color: "#4C0788" }} onClick={handleTermsOnClick}>
+              <Link
+                style={{ color: "#4C0788", textDecoration: "underline" }}
+                onClick={handleTermsOnClick}
+              >
                 {t("home#notification_termsLink")}
               </Link>
             </div>
