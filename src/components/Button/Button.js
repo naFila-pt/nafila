@@ -41,6 +41,11 @@ const Button = ({
     gray: {
       background: "#EDEDED",
       color: "#4C0788"
+    },
+    inactiveGray: {
+      background: "#EDEDED",
+      color: "#4C0788",
+      opacity: ".5"
     }
   };
 
