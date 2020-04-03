@@ -44,7 +44,7 @@ i18n
             "Indique-nos o seu email para receber a <b>notificação</b>.",
           "home#notification_inputPlaceholder": "Email",
           "home#notification_terms":
-            '<b>Ao carregar em "Continuar"</b>, confirma que leu e compreendeu os',
+            '<b>Ao carregar em "Tirar Senha"</b>, confirma que leu e compreendeu os',
           "home#notification_termsLink":
             "termos e condições da proteção de dados",
           "home#notification_button": "Tirar Senha",
