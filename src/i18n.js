@@ -191,7 +191,12 @@ i18n
           "main#endQueueSuccess_title": "Fila terminada.",
           "main#endQueueSuccess_text":
             "A sua fila foi terminada.<br/>Até Amanhã!",
-          "main#endQueueSuccess_back": "Voltar ao Início"
+          "main#endQueueSuccess_back": "Voltar ao Início",
+
+          // Queue Poster
+          "admin#queuePoster_queueCode": "Código da Fila",
+          "admin#queuePoster_enterQueueWith": "Entre <b>nafila</b> com...",
+          "admin#queuePoster_brandSlogan": "<b>naFila</b>, sem filas."
         }
       }
     },
