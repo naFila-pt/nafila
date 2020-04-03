@@ -15,4 +15,8 @@ export const Form = styled.form`
   .MuiInput-input {
     text-align: center;
   }
+
+  .MuiInput-root:after {
+    border-color: #4c0788 !important;
+  }
 `;
