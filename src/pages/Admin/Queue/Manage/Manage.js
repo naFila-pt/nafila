@@ -113,7 +113,9 @@ function Manage({ queueId, openSnackbar }) {
 
         <TicketsRemaining>
           <div>{t("admin#queueManagement_remaining")}</div>
-          <Typography variant="h4">{queue.remainingTicketsInQueue}</Typography>
+          <Typography variant="h4">
+            {queue ? queue.remainingTicketsInQueue : 0}
+          </Typography>
         </TicketsRemaining>
 
         {queue && queue.currentTicketName && (
