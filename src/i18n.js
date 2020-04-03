@@ -11,6 +11,7 @@ i18n
         translation: {
           appTitle: "na<b>fila</b>",
           "global#return_button": "Retroceder",
+          "global#wait_please": "Aguarde ...",
 
           "onboarding#intro_welcome": "Bem Vindo!",
           "onboarding#intro_pitch": "na<b>fila</b>. Sem filas.",
@@ -44,7 +45,7 @@ i18n
             "Indique-nos o seu email para receber a <b>notificação</b>.",
           "home#notification_inputPlaceholder": "Email",
           "home#notification_terms":
-            '<b>Ao carregar em "Continuar"</b>, confirma que leu e compreendeu os',
+            '<b>Ao carregar em "Tirar Senha"</b>, confirma que leu e compreendeu os',
           "home#notification_termsLink":
             "termos e condições da proteção de dados",
           "home#notification_button": "Tirar Senha",

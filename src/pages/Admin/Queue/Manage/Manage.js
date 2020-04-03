@@ -66,7 +66,6 @@ function Manage({ queueId, openSnackbar }) {
 
     callNextOnQueue({ queueId })
       .then(function({ data: { queue } }) {
-        console.log(queue);
         setQueue(queue);
         setRequestingNext(false);
       })

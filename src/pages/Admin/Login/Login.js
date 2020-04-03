@@ -39,20 +39,26 @@ function Login({ openSnackbar }) {
     });
   };
 
-  const searchForQueue = () => {
-    firestore
-      .collection("users")
-      .doc(auth.currentUser.uid)
-      .get()
-      .then(response => {
-        const user = response.data();
+  const checkUserState = () => {
+    if (auth.currentUser && !auth.currentUser.emailVerified) {
+      setNeedsVerification(true);
+      authentication.signOut();
+    } else if (auth.currentUser && auth.currentUser.emailVerified) {
+      // User has session and access to private routes
+      firestore
+        .collection("users")
+        .doc(auth.currentUser.uid)
+        .get()
+        .then(response => {
+          const user = response.data();
 
-        if (!user.queues || !user.queues[0]) {
-          window.location.href = ADMIN_QUEUE_MANAGEMENT_PATH;
-        } else {
-          window.location.href = ADMIN_PRE_QUEUE_PATH;
-        }
-      });
+          if (!user.queues || !user.queues[0]) {
+            window.location.href = ADMIN_QUEUE_MANAGEMENT_PATH;
+          } else {
+            window.location.href = ADMIN_PRE_QUEUE_PATH;
+          }
+        });
+    }
   };
 
   const handleSubmit = e => {
@@ -63,7 +69,7 @@ function Login({ openSnackbar }) {
 
     authentication
       .signIn(email, password)
-      .then(() => searchForQueue())
+      .then(checkUserState)
       .catch(error => {
         setLoading(false);
         openSnackbar(mappedMessages[error.code] || t("admin#login_failed"));
@@ -73,9 +79,10 @@ function Login({ openSnackbar }) {
   useEffect(() => {
     if (auth.currentUser && !auth.currentUser.emailVerified) {
       openSnackbar(t("admin#signup_checkYourEmail"));
+      authentication.signOut();
     } else if (auth.currentUser && auth.currentUser.emailVerified) {
       // User has session and access to private routes
-      searchForQueue();
+      checkUserState();
     }
   }, [t, openSnackbar]);
 

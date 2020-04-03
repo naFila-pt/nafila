@@ -27,7 +27,7 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
   if (!context.auth || !context.auth.uid) {
     throw new functionsMain.https.HttpsError(
       "unauthenticated",
-      "You need to be logged in to create a queue"
+      "Precisa de efetuar login antes de criar uma fila"
     );
   }
 
@@ -84,7 +84,7 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
     if (queueData.owner_id !== context.auth.uid) {
       throw new functionsMain.https.HttpsError(
         "unauthenticated",
-        "Only queue owner can delete the queue"
+        "Apenas o dono da fila pode eliminar a mesma"
       );
     }
 
@@ -156,7 +156,7 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
     if (queueData.owner_id !== context.auth.uid) {
       throw new functionsMain.https.HttpsError(
         "unauthenticated",
-        "Only queue owner can call the next person on the queue"
+        "Apenas o dono da fila pode chamar a próxima senha"
       );
     }
 
@@ -172,7 +172,7 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
     if (querySnap.empty) {
       throw new functionsMain.https.HttpsError(
         "out-of-range",
-        "There are no active tickets in the queue"
+        "Não existem senhas ativas na fila"
       );
     }
 
@@ -384,7 +384,7 @@ async function getNewSMSRoutine() {
           if (querySnap.empty) {
             throw new functionsMain.https.HttpsError(
               "not-found",
-              "No tickets found for this phone number for this queue"
+              "Não existe senha nesta fila associada a este número de telefone"
             );
           }
           let ticketRef = querySnap.docs[0].ref;
@@ -429,7 +429,7 @@ async function createTicketInQueue(
     if (!validator.isEmail(email)) {
       throw new functionsMain.https.HttpsError(
         "invalid-argument",
-        "Invalid email format"
+        "Formato de endereço de email inválido"
       );
     }
     ticketData.email = email;
@@ -437,7 +437,7 @@ async function createTicketInQueue(
     if (!validator.isMobilePhone(phone)) {
       throw new functionsMain.https.HttpsError(
         "invalid-argument",
-        "Invalid phone number format"
+        "Formato de número de telefone inválido"
       );
     }
     ticketData.phone = phone;
@@ -457,7 +457,7 @@ async function createTicketInQueue(
     if (!queueDoc.exists) {
       throw new functionsMain.https.HttpsError(
         "not-found",
-        "Queue ID " + queueId + " not found."
+        "Fila " + queueId + " não encontrada."
       );
     }
 
@@ -468,7 +468,7 @@ async function createTicketInQueue(
     if (!!context && queueData.owner_id !== context.auth.uid) {
       throw new functionsMain.https.HttpsError(
         "unauthenticated",
-        "Only queue owner can manually add people to the queue"
+        "Apenas o dono da fila pode criar senhas manualmente"
       );
     }
 

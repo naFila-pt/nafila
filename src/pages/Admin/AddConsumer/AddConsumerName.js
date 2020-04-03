@@ -53,6 +53,7 @@ function AddConsumerName({ user, returnFunction, openSnackbar }) {
           value={name}
           onChange={handleChange}
           style={{ marginTop: "15vh" }}
+          inputProps={{ maxLength: 20 }}
           fullWidth
           required
         />
@@ -68,7 +69,7 @@ function AddConsumerName({ user, returnFunction, openSnackbar }) {
             </Button>
 
             <Button
-              variant={requesting ? "inactive" : "gray"}
+              variant={requesting ? "inactiveGray" : "gray"}
               onClick={returnFunction}
               backward
             >
