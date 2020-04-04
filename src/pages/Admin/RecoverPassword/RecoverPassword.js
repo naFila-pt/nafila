@@ -74,7 +74,7 @@ function RecoverPassword() {
           </Button>
 
           <Link to={ADMIN_LOGIN_PATH}>
-            <Button variant={requesting ? "inactive" : "gray"} backward>
+            <Button variant={requesting ? "inactiveGray" : "gray"} backward>
               {t("admin#recoverPassword_back")}
             </Button>
           </Link>

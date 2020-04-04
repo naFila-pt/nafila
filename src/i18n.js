@@ -11,6 +11,7 @@ i18n
         translation: {
           appTitle: "na<b>fila</b>",
           "global#return_button": "Retroceder",
+          "global#wait_please": "Aguarde ...",
 
           "onboarding#intro_welcome": "Bem Vindo!",
           "onboarding#intro_pitch": "na<b>fila</b>. Sem filas.",
@@ -44,7 +45,7 @@ i18n
             "Indique-nos o seu email para receber a <b>notificação</b>.",
           "home#notification_inputPlaceholder": "Email",
           "home#notification_terms":
-            '<b>Ao carregar em "Continuar"</b>, confirma que leu e compreendeu os',
+            '<b>Ao carregar em "Tirar Senha"</b>, confirma que leu e compreendeu os',
           "home#notification_termsLink":
             "termos e condições da proteção de dados",
           "home#notification_button": "Tirar Senha",
@@ -84,6 +85,7 @@ i18n
           "admin#signup_operationNotAllowed": "Operação não permitida",
           "admin#signup_checkYourEmail":
             "Aceda ao seu email para verificar a sua conta.",
+          "admin#signup_failed": "Registo de conta falhou",
           "admin#signup_nameLabel": "Nome/Local da Loja",
           "admin#signup_emailLabel": "Email do Lojista",
           "admin#signup_passwordLabel": "Password",
@@ -98,6 +100,8 @@ i18n
           "admin#login_email": "Email do Lojista",
           "admin#login_password": "Password",
           "admin#login_recover_password": "Recuperar Password",
+          "admin#login_failed": "Login falhou",
+          "admin#login_wrongPassword": "Password incorrecta",
 
           // Recover Password
           "admin#recoverPassword_title": "Recuperar a Password",
@@ -191,7 +195,12 @@ i18n
           "main#endQueueSuccess_title": "Fila terminada.",
           "main#endQueueSuccess_text":
             "A sua fila foi terminada.<br/>Até Amanhã!",
-          "main#endQueueSuccess_back": "Voltar ao Início"
+          "main#endQueueSuccess_back": "Voltar ao Início",
+
+          // Queue Poster
+          "admin#queuePoster_queueCode": "Código da Fila",
+          "admin#queuePoster_enterQueueWith": "Entre <b>nafila</b> com...",
+          "admin#queuePoster_brandSlogan": "<b>naFila</b>, sem filas."
         }
       }
     },

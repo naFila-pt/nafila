@@ -102,6 +102,16 @@ class Router extends Component {
             exact
           />
 
+          <PrivateRoute
+            path={Routes.ADMIN_QUEUE_POSTER_PATH}
+            render={props => (
+              <Admin.QueuePoster
+                {...props}
+                openSnackbar={this.props.openSnackbar}
+              />
+            )}
+          />
+
           <Route>
             <NotFoundContent />
           </Route>
