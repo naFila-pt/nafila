@@ -71,7 +71,11 @@ function Start({ user, setQueue, openSnackbar }) {
       </HeadlineContainer>
 
       <StoreName>
-        <Input value={defaultQueueName} onChange={handleChange} />
+        <Input
+          value={defaultQueueName}
+          onChange={handleChange}
+          inputProps={{ maxLength: 20 }}
+        />
         <div className="queue-label">
           {t("admin#queueManagement_queueName")}
         </div>
