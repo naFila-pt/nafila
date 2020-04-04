@@ -86,6 +86,19 @@ function Manage({ queueId, openSnackbar }) {
         setQueue(queue);
         setLoading(false);
       });
+
+    const queuesDocumentSnapshotListener = firestore
+      .collection("queues")
+      .doc(queueId)
+      .onSnapshot(snapshot => {
+        const data = snapshot.data();
+
+        setQueue(data);
+      });
+
+    return () => {
+      queuesDocumentSnapshotListener();
+    };
   }, [queueId]);
 
   if (loading) return <Loader />;
@@ -99,7 +112,7 @@ function Manage({ queueId, openSnackbar }) {
         <TicketContainer>
           <div>
             <Typography variant="h2">
-              {String(queue?.currentTicketNumber).padStart(3, "0")}
+              {String(queue.currentTicketNumber).padStart(3, "0")}
             </Typography>
           </div>
 
