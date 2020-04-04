@@ -58,21 +58,25 @@ function AddConsumerPhone({ user, returnFunction, openSnackbar }) {
         />
 
         <ButtonsContainer>
-          <Button
-            type="submit"
-            disabled={requesting}
-            variant={requesting ? "inactive" : ""}
-          >
-            {t("main#addConsumer_generateTicket")}
-          </Button>
+          <div>
+            <Button
+              type="submit"
+              disabled={requesting}
+              variant={requesting ? "inactive" : ""}
+            >
+              {t("main#addConsumer_generateTicket")}
+            </Button>
+          </div>
 
-          <Button
-            variant={requesting ? "inactiveGray" : "gray"}
-            onClick={returnFunction}
-            backward
-          >
-            {t("main#addConsumer_back")}
-          </Button>
+          <div>
+            <Button
+              variant={requesting ? "inactiveGray" : "gray"}
+              onClick={returnFunction}
+              backward
+            >
+              {t("main#addConsumer_back")}
+            </Button>
+          </div>
         </ButtonsContainer>
       </S.Form>
     </Layout>

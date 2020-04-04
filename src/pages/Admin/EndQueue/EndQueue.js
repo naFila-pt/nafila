@@ -64,20 +64,24 @@ function EndQueue({ openSnackbar }) {
       <img src={Logo} className="logo-icon" alt="nafila logo" />
 
       <ButtonsContainer>
-        <Button
-          onClick={confirmEndQueueButton}
-          disabled={requesting}
-          variant={requesting ? "inactive" : ""}
-        >
-          {t("main#endQueue_yes")}
-        </Button>
+        <div>
+          <Button
+            onClick={confirmEndQueueButton}
+            disabled={requesting}
+            variant={requesting ? "inactive" : ""}
+          >
+            {t("main#endQueue_yes")}
+          </Button>
+        </div>
 
-        <Button
-          variant={requesting ? "inactiveGray" : "gray"}
-          href={ADMIN_QUEUE_MANAGEMENT_PATH}
-        >
-          {t("main#endQueue_no")}
-        </Button>
+        <div>
+          <Button
+            variant={requesting ? "inactiveGray" : "gray"}
+            href={ADMIN_QUEUE_MANAGEMENT_PATH}
+          >
+            {t("main#endQueue_no")}
+          </Button>
+        </div>
       </ButtonsContainer>
     </Layout>
   );

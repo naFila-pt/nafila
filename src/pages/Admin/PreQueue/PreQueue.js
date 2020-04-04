@@ -22,13 +22,21 @@ function PreQueue() {
       </HeadlineContainer>
 
       <ButtonsContainer>
-        <Button variant="secondary" href={ADMIN_QUEUE_MANAGEMENT_PATH} forward>
-          {t("admin#preQueue_goToExistingQueue")}
-        </Button>
+        <div>
+          <Button
+            variant="secondary"
+            href={ADMIN_QUEUE_MANAGEMENT_PATH}
+            forward
+          >
+            {t("admin#preQueue_goToExistingQueue")}
+          </Button>
+        </div>
 
-        <Button href={ADMIN_END_QUEUE_PATH}>
-          {t("admin#preQueue_endExistingQueue")}
-        </Button>
+        <div>
+          <Button href={ADMIN_END_QUEUE_PATH}>
+            {t("admin#preQueue_endExistingQueue")}
+          </Button>
+        </div>
       </ButtonsContainer>
     </Layout>
   );

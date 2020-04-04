@@ -17,6 +17,8 @@ export const ButtonsContainer = styled.div`
   left: 0;
   bottom: 5vh;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 
   .MuiButtonWrapper {
     margin-bottom: 20px;
