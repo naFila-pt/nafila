@@ -7,7 +7,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import PrivateRoute from "../PrivateRoute";
 
 import OnBoardingContent from "../../pages/OnBoardingContent";
-import { HomeContent, TermsConditions } from "../../pages/HomeContent";
+import { HomeContent, Leave, TermsConditions } from "../../pages/HomeContent";
 import Admin from "../../pages/Admin";
 import NotFoundContent from "../../pages/NotFoundContent";
 import * as Routes from "../../constants/RoutesConstants";
@@ -29,6 +29,9 @@ class Router extends Component {
               <OnBoardingContent />
             )}
           </Route>
+
+          <Route path="/sair" component={Leave} />
+
           <Route path="/termos-condicoes" component={TermsConditions} exact />
 
           <Route
