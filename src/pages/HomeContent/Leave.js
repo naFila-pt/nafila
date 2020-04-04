@@ -45,16 +45,17 @@ const Leave = () => {
             }}
           />
 
-          <Logo style={{ margin: "2em auto 0"}} />
+          <Logo style={{ margin: "2em auto 0" }} />
 
-          <Typography variant="h4" dangerouslySetInnerHTML={{ __html: t('leave#description') }} />
+          <Typography
+            variant="h4"
+            dangerouslySetInnerHTML={{ __html: t("leave#description") }}
+          />
           <br />
-          <Typography variant="h4">{t('leave#bye')}</Typography>
+          <Typography variant="h4">{t("leave#bye")}</Typography>
 
           <div className={classes.bottomButton}>
-            <Link
-              to="/"
-            >
+            <Link to="/">
               <Button backward variant="gray">
                 {t("leave#goBack")}
               </Button>

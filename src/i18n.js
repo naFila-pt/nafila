@@ -71,10 +71,11 @@ i18n
           "terms#close_button": "Fechar",
 
           "leave#title": "Saiu da Fila",
-          "leave#description": "Jã não está inscrito na Fila.<br/>O próximo Cliente agradece.",
+          "leave#description":
+            "Jã não está inscrito na Fila.<br/>O próximo Cliente agradece.",
           "leave#bye": "Até breve!",
           "leave#goBack": "Voltar",
-          
+
           // Admin translations
           "admin#intro_welcome": "Bem vindo!",
           "admin#intro_pitch": "na<b>fila</b>. Sem filas.",
