@@ -9,7 +9,7 @@ const ConsumerTicket = ({ number }) => {
 
   return (
     <Grid item style={{ position: "relative" }}>
-      <Ticket />
+      <Ticket className="logo-icon" />
       <div
         style={{
           position: "absolute",

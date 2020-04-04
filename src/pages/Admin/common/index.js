@@ -4,7 +4,7 @@ import { PRIMARY_COLOR } from "../../../constants/ColorConstants";
 export const HeadlineContainer = styled.div`
   color: ${PRIMARY_COLOR};
   font-weight: 900;
-  font-size: 2rem;
+  font-size: 2em;
   margin: 1em 0 1.5em;
 
   .MuiTypography-root {

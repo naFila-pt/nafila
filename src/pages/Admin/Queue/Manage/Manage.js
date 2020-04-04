@@ -27,16 +27,16 @@ const ManageQueueContainer = styled.div`
   }
 `;
 const TicketContainer = styled.div`
-  width: 150px;
-  background: url(${Ticket}) no-repeat center;
+  width: 9.4em;
+  background: url(${Ticket}) no-repeat center / cover;
   color: #fff;
-  height: 250px;
+  height: 15.6em;
   margin: 10px auto;
   box-sizing: border-box;
-  padding-top: 80px;
+  padding-top: 5em;
 
   h2 {
-    font-size: 48px;
+    font-size: 3em;
     font-weight: 900;
   }
 `;

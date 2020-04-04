@@ -61,7 +61,7 @@ function AddConsumer({ openSnackbar }) {
       </HeadlineContainer>
 
       <div style={{ textAlign: "center", marginTop: "10px" }}>
-        <Logo style={{ height: "200px" }} />
+        <Logo className="logo-icon hide-on-small" style={{ height: "200px" }} />
       </div>
 
       <ButtonsContainer>
@@ -75,7 +75,7 @@ function AddConsumer({ openSnackbar }) {
 
         <Button
           variant="gray"
-          style={{ marginTop: 50 }}
+          style={{ marginTop: "3.13em" }}
           href={ADMIN_QUEUE_MANAGEMENT_PATH}
           backward
         >

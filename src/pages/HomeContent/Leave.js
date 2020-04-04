@@ -45,7 +45,7 @@ const Leave = () => {
             }}
           />
 
-          <Logo style={{ margin: "2em auto 0" }} />
+          <Logo className="logo-icon" style={{ margin: "2em auto 0" }} />
 
           <Typography
             variant="h4"
