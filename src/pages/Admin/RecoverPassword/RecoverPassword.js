@@ -65,13 +65,15 @@ function RecoverPassword() {
         </Typography>
 
         <ButtonsContainer>
-          <Button
-            type="submit"
-            disabled={requesting}
-            variant={requesting ? "inactive" : ""}
-          >
-            {t("admin#recoverPassword_recover")}
-          </Button>
+          <div>
+            <Button
+              type="submit"
+              disabled={requesting}
+              variant={requesting ? "inactive" : ""}
+            >
+              {t("admin#recoverPassword_recover")}
+            </Button>
+          </div>
 
           <Link to={ADMIN_LOGIN_PATH}>
             <Button variant={requesting ? "inactiveGray" : "gray"} backward>

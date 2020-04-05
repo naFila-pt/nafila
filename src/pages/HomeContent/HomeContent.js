@@ -150,7 +150,7 @@ const HomeContent = ({ openSnackbar }) => {
     <HomeLayout bg={[bgIntro, bgStore, bgMain]} activeStep={activeStep}>
       <Grid container direction="column" className={classes.gridContainer}>
         <div style={{ textAlign: "center" }}>
-          <Logo />
+          <Logo className="logo-icon" />
         </div>
         <Grid item className={classes.gridItemIntro}>
           <Typography
@@ -197,7 +197,7 @@ const HomeContent = ({ openSnackbar }) => {
       </Grid>
       <Grid container direction="column">
         <Grid item className={classes.gridItem}>
-          <Logo />
+          <Logo className="logo-icon" />
           <div style={{ fontSize: "1.25em" }}>
             <div>{t("home#queue_store")}</div>
             <Typography variant="h3">{ticketsStoreInfo.name}</Typography>
@@ -235,7 +235,7 @@ const HomeContent = ({ openSnackbar }) => {
       </Grid>
       <Grid container direction="column">
         <Grid item className={classes.gridItem} style={{ paddingTop: ".8em" }}>
-          <EmailNotification />
+          <EmailNotification className="email-icon" />
           <Typography
             variant="h4"
             style={{ padding: "0 2em" }}

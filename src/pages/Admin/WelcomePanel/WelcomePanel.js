@@ -32,7 +32,7 @@ function WelcomePanel() {
   return (
     <Layout bg={Background} hideLogo>
       <S.LogoContainer>
-        <img src={Logo} alt="nafila logo" />
+        <img className="logo-icon" src={Logo} alt="nafila logo" />
       </S.LogoContainer>
 
       <Typography variant="h3" style={typographyStyles.MAIN}>

@@ -10,40 +10,34 @@ import {
   ADMIN_END_QUEUE_PATH
 } from "../../../constants/RoutesConstants";
 
-const titleStyle = {
-  fontWeight: 900,
-  marginTop: "10vh"
-};
-const buttonsContainerStyle = {
-  marginTop: "55vh"
-};
-const buttonStyle = {
-  marginTop: 20
-};
+import { HeadlineContainer, ButtonsContainer } from "../common";
 
 function PreQueue() {
   const { t } = useTranslation();
 
   return (
     <Layout bg={Bg}>
-      <Typography variant="h3" style={titleStyle}>
-        {t("admin#preQueue_whatToDo")}
-      </Typography>
+      <HeadlineContainer>
+        <Typography variant="h3">{t("admin#preQueue_whatToDo")}</Typography>
+      </HeadlineContainer>
 
-      <div style={buttonsContainerStyle}>
-        <Button
-          variant="secondary"
-          href={ADMIN_QUEUE_MANAGEMENT_PATH}
-          style={buttonStyle}
-          forward
-        >
-          {t("admin#preQueue_goToExistingQueue")}
-        </Button>
+      <ButtonsContainer>
+        <div>
+          <Button
+            variant="secondary"
+            href={ADMIN_QUEUE_MANAGEMENT_PATH}
+            forward
+          >
+            {t("admin#preQueue_goToExistingQueue")}
+          </Button>
+        </div>
 
-        <Button href={ADMIN_END_QUEUE_PATH} style={buttonStyle}>
-          {t("admin#preQueue_endExistingQueue")}
-        </Button>
-      </div>
+        <div>
+          <Button href={ADMIN_END_QUEUE_PATH}>
+            {t("admin#preQueue_endExistingQueue")}
+          </Button>
+        </div>
+      </ButtonsContainer>
     </Layout>
   );
 }
