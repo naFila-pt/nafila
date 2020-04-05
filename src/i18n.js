@@ -70,6 +70,12 @@ i18n
             "<b>5. Uso dos dados</b><br/>Os dados introduzidos a cada dia serão eliminados diariamente, com o término da fila.",
           "terms#close_button": "Fechar",
 
+          "leave#title": "Saiu da Fila",
+          "leave#description":
+            "Jã não está inscrito na Fila.<br/>O próximo Cliente agradece.",
+          "leave#bye": "Até breve!",
+          "leave#goBack": "Voltar",
+
           // Admin translations
           "admin#intro_welcome": "Bem vindo!",
           "admin#intro_pitch": "na<b>fila</b>. Sem filas.",

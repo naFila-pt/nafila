@@ -27,16 +27,16 @@ const ManageQueueContainer = styled.div`
   }
 `;
 const TicketContainer = styled.div`
-  width: 150px;
-  background: url(${Ticket}) no-repeat center;
+  width: 9.4em;
+  background: url(${Ticket}) no-repeat center / cover;
   color: #fff;
-  height: 250px;
+  height: 15.6em;
   margin: 10px auto;
   box-sizing: border-box;
-  padding-top: 80px;
+  padding-top: 5em;
 
   h2 {
-    font-size: 48px;
+    font-size: 3em;
     font-weight: 900;
   }
 `;
@@ -141,33 +141,39 @@ function Manage({ queueId, openSnackbar }) {
         )}
 
         <ButtonsContainer>
-          <Button
-            onClick={() => callNext()}
-            variant={requestingNext ? "inactive" : ""}
-            disabled={requestingNext}
-          >
-            <div
-              dangerouslySetInnerHTML={{
-                __html: t(
-                  requestingNext
-                    ? "admin#queueManagement_wait"
-                    : "admin#queueManagement_nextInQueue"
-                )
-              }}
-            />
-          </Button>
+          <div>
+            <Button
+              onClick={() => callNext()}
+              variant={requestingNext ? "inactive" : ""}
+              disabled={requestingNext}
+            >
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: t(
+                    requestingNext
+                      ? "admin#queueManagement_wait"
+                      : "admin#queueManagement_nextInQueue"
+                  )
+                }}
+              />
+            </Button>
+          </div>
 
-          <Button variant="secondary" href={ADMIN_ADD_CUSTOMER_PATH} forward>
-            {t("admin#queueManagement_createTicket")}
-          </Button>
+          <div>
+            <Button variant="secondary" href={ADMIN_ADD_CUSTOMER_PATH} forward>
+              {t("admin#queueManagement_createTicket")}
+            </Button>
+          </div>
 
-          <Button variant="gray" href={ADMIN_END_QUEUE_PATH}>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: t("admin#queueManagement_endQueue")
-              }}
-            />
-          </Button>
+          <div>
+            <Button variant="gray" href={ADMIN_END_QUEUE_PATH}>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: t("admin#queueManagement_endQueue")
+                }}
+              />
+            </Button>
+          </div>
         </ButtonsContainer>
       </ManageQueueContainer>
     </Layout>

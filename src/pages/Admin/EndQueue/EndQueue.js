@@ -61,23 +61,27 @@ function EndQueue({ openSnackbar }) {
         <Typography variant="h3">{t("main#endQueue_title")}</Typography>
       </HeadlineContainer>
 
-      <img src={Logo} alt="nafila logo" />
+      <img src={Logo} className="logo-icon" alt="nafila logo" />
 
       <ButtonsContainer>
-        <Button
-          onClick={confirmEndQueueButton}
-          disabled={requesting}
-          variant={requesting ? "inactive" : ""}
-        >
-          {t("main#endQueue_yes")}
-        </Button>
+        <div>
+          <Button
+            onClick={confirmEndQueueButton}
+            disabled={requesting}
+            variant={requesting ? "inactive" : ""}
+          >
+            {t("main#endQueue_yes")}
+          </Button>
+        </div>
 
-        <Button
-          variant={requesting ? "inactiveGray" : "gray"}
-          href={ADMIN_QUEUE_MANAGEMENT_PATH}
-        >
-          {t("main#endQueue_no")}
-        </Button>
+        <div>
+          <Button
+            variant={requesting ? "inactiveGray" : "gray"}
+            href={ADMIN_QUEUE_MANAGEMENT_PATH}
+          >
+            {t("main#endQueue_no")}
+          </Button>
+        </div>
       </ButtonsContainer>
     </Layout>
   );

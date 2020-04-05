@@ -33,3 +33,29 @@ code {
 .MuiInput-input:-ms-input-placeholder {  
   text-align: center; 
 }
+
+@media screen and (max-width: 320px) {
+  body {
+    font-size: 12px !important;
+  }
+
+  .MuiBox-root {
+    min-width: auto !important;
+  }
+
+  .MuiButtonBase-root {
+    min-width: 16em !important;
+  }
+
+  .hide-on-small {
+    display: none;
+  }
+
+  .logo-icon {
+    height: 190px; 
+  }
+
+  .email-icon {
+    height: 120px;
+  }
+}

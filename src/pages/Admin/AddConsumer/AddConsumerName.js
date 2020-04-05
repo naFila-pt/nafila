@@ -59,7 +59,7 @@ function AddConsumerName({ user, returnFunction, openSnackbar }) {
         />
 
         <ButtonsContainer>
-          <ButtonsContainer>
+          <div>
             <Button
               type="submit"
               disabled={requesting}
@@ -67,7 +67,9 @@ function AddConsumerName({ user, returnFunction, openSnackbar }) {
             >
               {t("main#addConsumer_generateTicket")}
             </Button>
+          </div>
 
+          <div>
             <Button
               variant={requesting ? "inactiveGray" : "gray"}
               onClick={returnFunction}
@@ -75,7 +77,7 @@ function AddConsumerName({ user, returnFunction, openSnackbar }) {
             >
               {t("main#addConsumer_back")}
             </Button>
-          </ButtonsContainer>
+          </div>
         </ButtonsContainer>
       </S.Form>
     </Layout>
