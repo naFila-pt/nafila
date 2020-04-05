@@ -56,7 +56,7 @@ const OnBoardingContent = () => {
     >
       <Grid container direction="column" className={classes.gridContainer}>
         <div style={{ textAlign: "center" }}>
-          <Logo />
+          <Logo className="logo-icon" />
         </div>
         <Grid item className={classes.gridItemIntro}>
           <Typography
@@ -141,7 +141,7 @@ const OnBoardingContent = () => {
               __html: t("onboarding#insertEmail_description")
             }}
           />
-          <EmailNotification />
+          <EmailNotification className="email-icon" />
           <Typography
             variant="h4"
             gutterBottom

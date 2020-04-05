@@ -61,26 +61,32 @@ function AddConsumer({ openSnackbar }) {
       </HeadlineContainer>
 
       <div style={{ textAlign: "center", marginTop: "10px" }}>
-        <Logo style={{ height: "200px" }} />
+        <Logo className="logo-icon hide-on-small" style={{ height: "200px" }} />
       </div>
 
       <ButtonsContainer>
-        <Button forward onClick={() => setViewType("PHONE")}>
-          {t("main#addConsumer_byPhone")}
-        </Button>
+        <div>
+          <Button forward onClick={() => setViewType("PHONE")}>
+            {t("main#addConsumer_byPhone")}
+          </Button>
+        </div>
 
-        <Button forward onClick={() => setViewType("NAME")}>
-          {t("main#addConsumer_byName")}
-        </Button>
+        <div>
+          <Button forward onClick={() => setViewType("NAME")}>
+            {t("main#addConsumer_byName")}
+          </Button>
+        </div>
 
-        <Button
-          variant="gray"
-          style={{ marginTop: 50 }}
-          href={ADMIN_QUEUE_MANAGEMENT_PATH}
-          backward
-        >
-          {t("main#addConsumer_back")}
-        </Button>
+        <div>
+          <Button
+            variant="gray"
+            style={{ marginTop: "3.13em" }}
+            href={ADMIN_QUEUE_MANAGEMENT_PATH}
+            backward
+          >
+            {t("main#addConsumer_back")}
+          </Button>
+        </div>
       </ButtonsContainer>
     </Layout>
   );
