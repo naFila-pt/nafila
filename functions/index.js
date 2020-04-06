@@ -31,7 +31,7 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
     );
   }
 
-  //assigns userId as owner_id
+  //validate queue name
   if (!data.name) {
     throw new functionsMain.https.HttpsError(
       "invalid-argument",
@@ -442,7 +442,11 @@ async function createTicketInQueue(
     }
     ticketData.email = email;
   } else if (!!phone) {
-    if (!validator.isMobilePhone(phone)) {
+    if (
+      !validator.isMobilePhone(phone) || //generic phone number validation
+      phone[0] === "+" || //international phones
+      phone.length === 9 //portuguese plain numbers
+    ) {
       throw new functionsMain.https.HttpsError(
         "invalid-argument",
         "Formato de número de telefone inválido"
@@ -454,7 +458,7 @@ async function createTicketInQueue(
   } else {
     throw new functionsMain.https.HttpsError(
       "invalid-argument",
-      "Unknown ticket type"
+      "Informação insuficiente para registar uma senha"
     );
   }
 
