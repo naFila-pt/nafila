@@ -444,8 +444,8 @@ async function createTicketInQueue(
   } else if (!!phone) {
     if (
       !validator.isMobilePhone(phone) || //generic phone number validation
-      phone[0] === "+" || //international phones
-      phone.length === 9 //portuguese plain numbers
+      (phone[0] !== "+" && //international phones
+        phone.length !== 9) //portuguese plain numbers
     ) {
       throw new functionsMain.https.HttpsError(
         "invalid-argument",
