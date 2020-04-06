@@ -71,6 +71,7 @@ i18n
           "terms#close_button": "Fechar",
 
           "leave#title": "Saiu da Fila",
+          "leave#title-failed": "Senha não encontrada",
           "leave#description":
             "Jã não está inscrito na Fila.<br/>O próximo Cliente agradece.",
           "leave#bye": "Até breve!",
