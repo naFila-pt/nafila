@@ -31,6 +31,14 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
     );
   }
 
+  //assigns userId as owner_id
+  if (!data.name) {
+    throw new functionsMain.https.HttpsError(
+      "invalid-argument",
+      "Tem de inserir um nome público para a fila"
+    );
+  }
+
   //inserts queue
   const queue = {
     owner_id: context.auth.uid,
