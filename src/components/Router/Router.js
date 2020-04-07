@@ -30,7 +30,13 @@ class Router extends Component {
             )}
           </Route>
 
-          <Route path="/sair" component={Leave} />
+          <Route
+            path="/sair/:queueId/:ticketId"
+            render={props => (
+              <Leave {...props} openSnackbar={this.props.openSnackbar} />
+            )}
+            exact
+          />
 
           <Route path="/termos-condicoes" component={TermsConditions} exact />
 
