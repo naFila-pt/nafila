@@ -35,26 +35,30 @@ const TermsConditions = () => {
             {t("terms#subtitle")}
           </p>
         </div>
-        <p
-          style={{ lineHeight: "1.188em" }}
-          dangerouslySetInnerHTML={{ __html: t("terms#paragraph1") }}
-        />
-        <p
-          style={{ lineHeight: "1.188em" }}
-          dangerouslySetInnerHTML={{ __html: t("terms#paragraph2") }}
-        />
-        <p
-          style={{ lineHeight: "1.188em" }}
-          dangerouslySetInnerHTML={{ __html: t("terms#paragraph3") }}
-        />
-        <p
-          style={{ lineHeight: "1.188em" }}
-          dangerouslySetInnerHTML={{ __html: t("terms#paragraph4") }}
-        />
-        <p
-          style={{ lineHeight: "1.188em" }}
-          dangerouslySetInnerHTML={{ __html: t("terms#paragraph5") }}
-        />
+
+        <div style={{ height: "56vh", overflowY: "scroll" }}>
+          <p
+            style={{ lineHeight: "1.188em" }}
+            dangerouslySetInnerHTML={{ __html: t("terms#paragraph1") }}
+          />
+          <p
+            style={{ lineHeight: "1.188em" }}
+            dangerouslySetInnerHTML={{ __html: t("terms#paragraph2") }}
+          />
+          <p
+            style={{ lineHeight: "1.188em" }}
+            dangerouslySetInnerHTML={{ __html: t("terms#paragraph3") }}
+          />
+          <p
+            style={{ lineHeight: "1.188em" }}
+            dangerouslySetInnerHTML={{ __html: t("terms#paragraph4") }}
+          />
+          <p
+            style={{ lineHeight: "1.188em" }}
+            dangerouslySetInnerHTML={{ __html: t("terms#paragraph5") }}
+          />
+        </div>
+
         <div className={classes.bottomButton}>
           <Button variant="gray" onClick={handleCloseButton}>
             {t("terms#close_button")}
