@@ -23,7 +23,8 @@ const useStyles = makeStyles({
   },
   menuIcon: {
     fontSize: "2.24em",
-    color: "rgba(0, 0, 0, .54)"
+    color: "rgba(0, 0, 0, .54)",
+    display: "none" //temporarily disabled
   }
 });
 
