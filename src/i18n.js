@@ -73,7 +73,7 @@ i18n
           "leave#title": "Saiu da Fila",
           "leave#title-failed": "Senha não encontrada",
           "leave#description":
-            "Jã não está inscrito na Fila.<br/>O próximo Cliente agradece.",
+            "Já não está inscrito na Fila.<br/>O próximo Cliente agradece.",
           "leave#bye": "Até breve!",
           "leave#goBack": "Voltar",
 
