@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import bgMain from "../../assets/bg/main.svg";
 import { ReactComponent as Logo } from "../../assets/logo.svg";
 
-import { functions } from "../../../firebase";
+import { functions } from "../../firebase";
 
 const useStyles = makeStyles({
   gridContainer: {
