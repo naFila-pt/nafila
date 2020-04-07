@@ -109,6 +109,7 @@ i18n
           "admin#login_recover_password": "Recuperar Password",
           "admin#login_failed": "Login falhou",
           "admin#login_wrongPassword": "Password incorrecta",
+          "admin#signout_button": "Terminar sessão",
 
           // Recover Password
           "admin#recoverPassword_title": "Recuperar a Password",
