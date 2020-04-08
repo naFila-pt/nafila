@@ -5,7 +5,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Grid from "@material-ui/core/Grid";
 import MobileStepper from "@material-ui/core/MobileStepper";
 import Button from "@material-ui/core/Button";
-import MenuIcon from "@material-ui/icons/Menu";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 
@@ -68,7 +67,6 @@ const OnBoardingLayout = ({ children, bg, endOnBoarding }) => {
       <Grid container>
         <Grid container direction="column">
           <Toolbar className={classes.toolbar}>
-            <MenuIcon className={classes.menuIcon} />
             {activeStep !== 0 && <LogoMini style={{ flex: 0.9 }} />}
           </Toolbar>
         </Grid>

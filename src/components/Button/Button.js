@@ -64,6 +64,8 @@ const Button = ({
     );
   }
 
+  console.log('....')
+
   return (
     <div
       style={{
