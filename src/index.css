@@ -81,4 +81,8 @@ code {
   .HomeLayout .logo-icon-consumer {
     height: 180px;
   }
+
+  .HomeLayout .termosCondicoesText {
+    height: 50vh;
+  }
 }
