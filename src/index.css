@@ -85,4 +85,8 @@ code {
   .HomeLayout .termosCondicoesText {
     height: 50vh;
   }
+
+  .AdminLayout .logo-icon-end-queue {
+    display: none;
+  }
 }

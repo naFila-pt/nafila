@@ -54,7 +54,7 @@ function Layout({ children, bg, hideLogo }) {
   };
 
   return (
-    <Box {...boxProps}>
+    <Box className="AdminLayout" {...boxProps}>
       <Grid container>
         <Grid container direction="column">
           <Toolbar
