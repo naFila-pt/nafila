@@ -47,7 +47,7 @@ code {
     min-width: auto !important;
   }
 
-  .MuiButtonBase-root {
+  .MuiButtonBase-custom {
     min-width: 16em !important;
   }
 
