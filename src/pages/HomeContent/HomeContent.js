@@ -197,7 +197,7 @@ const HomeContent = ({ openSnackbar }) => {
       </Grid>
       <Grid container direction="column">
         <Grid item className={classes.gridItem}>
-          <Logo className="logo-icon" />
+          <Logo className="logo-icon logo-icon-queue" />
           <div style={{ fontSize: "1.25em" }}>
             <div>{t("home#queue_store")}</div>
             <Typography variant="h3">{ticketsStoreInfo.name}</Typography>
@@ -235,7 +235,7 @@ const HomeContent = ({ openSnackbar }) => {
       </Grid>
       <Grid container direction="column">
         <Grid item className={classes.gridItem} style={{ paddingTop: ".8em" }}>
-          <EmailNotification className="email-icon" />
+          <EmailNotification className="email-icon email-icon-notification" />
           <Typography
             variant="h4"
             style={{ padding: "0 2em" }}

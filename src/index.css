@@ -69,4 +69,16 @@ code {
     visibility: hidden;
     height: 20px;
   }
+
+  .HomeLayout .logo-icon-queue {
+    height: 90px;
+  }
+
+  .HomeLayout .email-icon-notification {
+    height: 50px;
+  }
+
+  .HomeLayout .logo-icon-consumer {
+    height: 180px;
+  }
 }

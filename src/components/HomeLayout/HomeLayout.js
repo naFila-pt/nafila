@@ -38,7 +38,7 @@ const OnBoardingLayout = ({
 
   return (
     <Box
-      className={classes.container}
+      className={`${classes.container} HomeLayout`}
       style={{ backgroundImage: `url(${bgUrl})` }}
     >
       <Grid container>
