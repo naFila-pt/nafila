@@ -41,7 +41,7 @@ function Layout({ children, bg, hideLogo }) {
     style: {
       background: `url(${bg})`,
       backgroundSize: "cover",
-      backgroundPosition: "0 100%",
+      backgroundPosition: "0px",
       backgroundRepeat: "no-repeat",
       textAlign: "center"
     }
