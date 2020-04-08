@@ -268,7 +268,7 @@ class App extends Component {
                 container
                 alignItems="center"
                 justify="center"
-                style={{ height: "100vh" }}
+                style={{ height: "100%" }}
               >
                 <Grid
                   item

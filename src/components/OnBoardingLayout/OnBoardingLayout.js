@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     padding: 0,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-    backgroundPosition: "0 100%"
+    backgroundPosition: "0px"
   },
   toolbar: {
     position: "static",
@@ -76,6 +76,7 @@ const OnBoardingLayout = ({ children, bg, endOnBoarding }) => {
             container
             direction="column"
             alignContent="flex-end"
+            alignItems="flex-end"
             style={{
               marginRight: "1.5em",
               marginBottom: ".5em",
