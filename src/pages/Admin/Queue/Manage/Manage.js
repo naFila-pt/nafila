@@ -16,7 +16,11 @@ import {
 
 import { ButtonsContainer } from "../../common";
 
+const pageMinHeight = 550;
+
 const ManageQueueContainer = styled.div`
+  min-height: ${pageMinHeight}px;
+
   h3 {
     font-size: 2em;
     font-weight: 900;
@@ -97,7 +101,10 @@ function Manage({ queueId, openSnackbar }) {
   if (loading) return <Loader />;
 
   return (
-    <Layout bg={Bg}>
+    <Layout
+      style={{ position: "relative", minHeight: pageMinHeight + 56 }}
+      bg={Bg}
+    >
       <ManageQueueContainer>
         <div>{t("admin#queueManagement_queueCode")}</div>
         <Typography variant="h3">{queueId}</Typography>

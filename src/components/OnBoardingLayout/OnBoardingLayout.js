@@ -5,7 +5,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Grid from "@material-ui/core/Grid";
 import MobileStepper from "@material-ui/core/MobileStepper";
 import Button from "@material-ui/core/Button";
-import MenuIcon from "@material-ui/icons/Menu";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 
@@ -19,7 +18,7 @@ const useStyles = makeStyles({
     padding: 0,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-    backgroundPosition: "0 100%"
+    backgroundPosition: "0px"
   },
   toolbar: {
     position: "static",
@@ -62,13 +61,12 @@ const OnBoardingLayout = ({ children, bg, endOnBoarding }) => {
 
   return (
     <Box
-      className={classes.container}
+      className={`${classes.container} OnboardingWrapper`}
       style={{ backgroundImage: `url(${bgUrl})` }}
     >
       <Grid container>
         <Grid container direction="column">
           <Toolbar className={classes.toolbar}>
-            <MenuIcon className={classes.menuIcon} />
             {activeStep !== 0 && <LogoMini style={{ flex: 0.9 }} />}
           </Toolbar>
         </Grid>
@@ -78,6 +76,7 @@ const OnBoardingLayout = ({ children, bg, endOnBoarding }) => {
             container
             direction="column"
             alignContent="flex-end"
+            alignItems="flex-end"
             style={{
               marginRight: "1.5em",
               marginBottom: ".5em",

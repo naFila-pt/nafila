@@ -30,7 +30,7 @@ const useStyles = makeStyles({
   }
 });
 
-function Layout({ children, bg, hideLogo }) {
+function Layout({ children, bg, hideLogo, style }) {
   const classes = useStyles();
   const { t } = useTranslation();
   const boxProps = {
@@ -39,9 +39,10 @@ function Layout({ children, bg, hideLogo }) {
     display: "flex",
     flexDirection: "column",
     style: {
+      ...style,
       background: `url(${bg})`,
       backgroundSize: "cover",
-      backgroundPosition: "0 100%",
+      backgroundPosition: "0px",
       backgroundRepeat: "no-repeat",
       textAlign: "center"
     }
@@ -54,7 +55,7 @@ function Layout({ children, bg, hideLogo }) {
   };
 
   return (
-    <Box {...boxProps}>
+    <Box className="AdminLayout" {...boxProps}>
       <Grid container>
         <Grid container direction="column">
           <Toolbar
