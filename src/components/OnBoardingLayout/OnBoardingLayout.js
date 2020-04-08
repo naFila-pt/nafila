@@ -61,7 +61,7 @@ const OnBoardingLayout = ({ children, bg, endOnBoarding }) => {
 
   return (
     <Box
-      className={classes.container}
+      className={`${classes.container} OnboardingWrapper`}
       style={{ backgroundImage: `url(${bgUrl})` }}
     >
       <Grid container>

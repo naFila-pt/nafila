@@ -14,7 +14,7 @@ const useStyles = makeStyles({
     padding: 0,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-    backgroundPosition: "0 100%"
+    backgroundPosition: "0px"
   },
   toolbar: {
     position: "static",

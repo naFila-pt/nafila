@@ -63,3 +63,10 @@ code {
     height: 120px;
   }
 }
+
+@media screen and (max-width: 330px) {
+  .OnboardingWrapper .email-icon {
+    visibility: hidden;
+    height: 20px;
+  }
+}
