@@ -31,31 +31,12 @@ const TermsConditions = () => {
       <div style={{ padding: "0 1.3em" }}>
         <div style={{ textAlign: "center", marginTop: "1em" }}>
           <Typography variant="h1">{t("terms#title")}</Typography>
-          <p style={{ margin: "0 .4em", fontSize: "1.25em" }}>
-            {t("terms#subtitle")}
-          </p>
         </div>
 
-        <div style={{ height: "56vh", overflowY: "scroll" }}>
-          <p
-            style={{ lineHeight: "1.188em" }}
-            dangerouslySetInnerHTML={{ __html: t("terms#paragraph1") }}
-          />
-          <p
-            style={{ lineHeight: "1.188em" }}
-            dangerouslySetInnerHTML={{ __html: t("terms#paragraph2") }}
-          />
-          <p
-            style={{ lineHeight: "1.188em" }}
-            dangerouslySetInnerHTML={{ __html: t("terms#paragraph3") }}
-          />
-          <p
-            style={{ lineHeight: "1.188em" }}
-            dangerouslySetInnerHTML={{ __html: t("terms#paragraph4") }}
-          />
-          <p
-            style={{ lineHeight: "1.188em" }}
-            dangerouslySetInnerHTML={{ __html: t("terms#paragraph5") }}
+        <div style={{ height: "56vh", overflowY: "scroll", padding: "0 15px" }}>
+          <pre
+            style={{ lineHeight: "1.188em", whiteSpace: "pre-line", textAlign: "justify" }}
+            dangerouslySetInnerHTML={{ __html: t("terms#text") }}
           />
         </div>
 
