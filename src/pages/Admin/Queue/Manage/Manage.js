@@ -101,7 +101,10 @@ function Manage({ queueId, openSnackbar }) {
   if (loading) return <Loader />;
 
   return (
-    <Layout style={{ position: "relative", minHeight: pageMinHeight + 56 }} bg={Bg}>
+    <Layout
+      style={{ position: "relative", minHeight: pageMinHeight + 56 }}
+      bg={Bg}
+    >
       <ManageQueueContainer>
         <div>{t("admin#queueManagement_queueCode")}</div>
         <Typography variant="h3">{queueId}</Typography>

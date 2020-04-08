@@ -61,7 +61,11 @@ function EndQueue({ openSnackbar }) {
         <Typography variant="h3">{t("main#endQueue_title")}</Typography>
       </HeadlineContainer>
 
-      <img src={Logo} className="logo-icon logo-icon-end-queue" alt="nafila logo" />
+      <img
+        src={Logo}
+        className="logo-icon logo-icon-end-queue"
+        alt="nafila logo"
+      />
 
       <ButtonsContainer>
         <div>

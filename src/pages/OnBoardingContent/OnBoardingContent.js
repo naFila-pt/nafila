@@ -116,7 +116,7 @@ const OnBoardingContent = () => {
           />
           <div>{t("onboarding#useCode_instruction")}</div>
           <Button
-            size={window.innerWidth < 350 ? 'small'  : ''}
+            size={window.innerWidth < 350 ? "small" : ""}
             variant="onboarding"
             forward
             style={{ marginTop: "2em", color: "#4C0788" }}

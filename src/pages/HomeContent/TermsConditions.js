@@ -33,9 +33,16 @@ const TermsConditions = () => {
           <Typography variant="h1">{t("terms#title")}</Typography>
         </div>
 
-        <div className="termosCondicoesText" style={{ height: "56vh", overflowY: "scroll", padding: "0 15px" }}>
+        <div
+          className="termosCondicoesText"
+          style={{ height: "56vh", overflowY: "scroll", padding: "0 15px" }}
+        >
           <pre
-            style={{ lineHeight: "1.188em", whiteSpace: "pre-line", textAlign: "justify" }}
+            style={{
+              lineHeight: "1.188em",
+              whiteSpace: "pre-line",
+              textAlign: "justify"
+            }}
             dangerouslySetInnerHTML={{ __html: t("terms#text") }}
           />
         </div>
