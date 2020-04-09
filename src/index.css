@@ -89,4 +89,8 @@ code {
   .AdminLayout .logo-icon-end-queue {
     display: none;
   }
+
+  .AdminLayout .start-queue-store {
+    margin-top: 0px;
+  }
 }
