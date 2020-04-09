@@ -569,9 +569,8 @@ async function removeTicket(
 }
 
 function fiveRandomChars() {
-  return Math.random()
-    .toString(36)
-    .replace(/[^0-9a-z]/, "")
+  return (Math.random().toString(36) + Math.random().toString(36))
+    .replace(/[^1-9a-hj-np-z]/g, "") //no 0 , o or i -- to avoid confusion of codes
     .substring(0, 5)
     .toUpperCase();
 }
