@@ -70,6 +70,10 @@ code {
     height: 20px;
   }
 
+  .OnboardingWrapper .MuiPaper-root {
+    height: 50px;
+  }
+
   .HomeLayout .logo-icon-queue {
     height: 90px;
   }
