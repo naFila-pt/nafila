@@ -1,5 +1,6 @@
 html, body, #root {
   height: 100%;
+  min-height: 680px;
 }
 
 body {
@@ -39,15 +40,15 @@ code {
 }
 
 @media screen and (max-width: 420px) {
-  body {
+  /* body {
     font-size: 12px !important;
-  }
+  } */
 
   .MuiBox-root {
     min-width: auto !important;
   }
 
-  .MuiButtonBase-custom {
+  /* .MuiButtonBase-custom {
     min-width: 16em !important;
   }
 
@@ -61,10 +62,10 @@ code {
 
   .email-icon {
     height: 120px;
-  }
+  } */
 }
 
-@media screen and (max-width: 330px) {
+/*@media screen and (max-width: 330px) {
   .OnboardingWrapper .email-icon {
     visibility: hidden;
     height: 20px;
@@ -87,7 +88,7 @@ code {
   }
 
   .HomeLayout .termosCondicoesText {
-    height: 50vh;
+    height: 45vh;
   }
 
   .AdminLayout .logo-icon-end-queue {
@@ -97,4 +98,4 @@ code {
   .AdminLayout .start-queue-store {
     margin-top: 0px;
   }
-}
+} */
