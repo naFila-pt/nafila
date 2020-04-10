@@ -50,7 +50,7 @@ const TicketsRemaining = styled.div`
   top: 38vh;
 
   > div {
-    font-size: ${window.innerWidth <= 320 ? 18 : 20 }px;
+    font-size: ${window.innerWidth <= 320 ? 18 : 20}px;
   }
 
   h4 {
