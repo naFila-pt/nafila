@@ -1,4 +1,58 @@
-# Serverless
+# Serverless BE
+
+## Firestore collections
+
+There are 3 collections in the app:
+
+### Main users collection: `/users/<userId>`
+A user is identified by `userId` (same as `firebase.auth.currentUser.uid`) and contains:
+- a `.queues` - a list of `<queueId>` entries
+- a `.defaultQueueName` - default store/queue name
+
+A user entry is create directly from the client-side per logged-in user, and the user object looks like
+```javascript
+{
+  queues:[], //list of users queueIds (Note: only 1 queue pert user for current app flows)
+  defaultQueueName:null //store name - used as default for queue.name input
+}
+```
+
+### Main queues collection: `/queues/<queueId>`
+
+A queue is identified by `queueId` (generated in backend) and contains:
+- a `.owner_id` - the owner's `<userId>`
+- a `.name` - store name
+- a `.remainingTicketsInQueue` - remaining active people in queue
+- a `.ticketTopNumber` - number of the last ticket
+- a `.currentTicketNumber` - number of the current ticket being attended
+- a `.currentTicketName` - name of the current ticket being attended (if `.name` based ticket - `null` otherwise)
+
+A queue is created by a user from the admin view and 
+```javascript
+{
+  owner_id, 
+  name, 
+  remainingTicketsInQueue:0, 
+  ticketTopNumber:0, 
+  currentTicketNumber:0, 
+  currentTicketName:null
+}
+```
+
+### Ticket collections per queue: `/queues/<queueId>/tickets/`
+A queue is identified by `ticketId` (auto-generated) and contains:
+- a `.number` - number in the queue (1,2,3,4...)
+- one of:
+  - an `.email` - user email in queue
+  - a `.phone` - user phone number in queue
+  - a `.name` - persons name in queue
+
+A ticket can be created by:
+- a logged in user from the admin view
+- an anonymous user in the app (via email)
+- an anonymous user via phone SMS (backend loop)
+
+---
 
 ## Firestore operations from client:
 
@@ -7,9 +61,6 @@ var firestore = firebase.firestore();
 ```
 
 ### create new user
-
-A user is identified by `uid` (from auth) and contains a list of `.queues` 
-it is stored in firestore as `/users/<userId>/{queues:[], defaultQueueName:null}`
 
 ```javascript
 var userDoc = firestore.collection("users").doc(uid)
@@ -25,16 +76,7 @@ var functions = firebase.app().functions('europe-west1')
 ```
 
 ### create new queue
-A queue is identified by `queueId` (generated in backend) and contains:
-- a `.owner_id` - the owner's `<userId>`
-- a `.name` - store name
-- a `.remainingTicketsInQueue` - remaining active people in queue
-- a `.ticketTopNumber` - number of the last ticket
-- a `.currentTicketNumber` - number of the current ticket being attended
-- a `.currentTicketName` - name of the current ticket being attended (if `.name` based ticket - `null` otherwise)
-A queue is stored in firestore as `/queues/<queueId>/{owner_id, name, remainingTicketsInQueue, ticketTopNumber, currentTicketNumber, currentTicketName}`
-
-Note: email is the store manager (user) email - in order for him to receive poster email
+Note: `email` parameter is the store manager (user) email - in order for him to receive poster email
 
 ```javascript
 var createQueue = functions.httpsCallable('createQueue');
