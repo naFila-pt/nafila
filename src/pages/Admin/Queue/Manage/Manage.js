@@ -46,11 +46,11 @@ const TicketContainer = styled.div`
 `;
 const TicketsRemaining = styled.div`
   position: absolute;
-  right: 10px;
+  right: ${window.innerWidth <= 320 ? 4 : 10}px;
   top: 38vh;
 
   > div {
-    font-size: 20px;
+    font-size: ${window.innerWidth <= 320 ? 18 : 20}px;
   }
 
   h4 {

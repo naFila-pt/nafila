@@ -45,7 +45,7 @@ const OnBoardingLayout = ({
         <Grid container direction="column">
           <Toolbar className={classes.toolbar}>
             {(activeStep !== 0 || forceLogoDisplay) && (
-              <LogoMini style={{ flex: 0.9 }} />
+              <LogoMini style={{ flex: 1 }} />
             )}
           </Toolbar>
         </Grid>
