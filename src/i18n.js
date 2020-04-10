@@ -105,10 +105,10 @@ Se alguma parte ou disposição dos presentes Termos e Condições não for exec
 
 Caso tenha alguma questão sobre os presentes Termos e Condições, por favor envie-nos o seu pedido de esclarecimento através do e-mail <a href="mailto:geral.nafila.pt@gmail.com">geral.nafila.pt@gmail.com</a>.
 
-Estes Termos e Condições são regidos pela lei portuguesa e, em caso de litígio na interpretação ou aplicação dos presentes Termos e Condições, será competente em exclusivo o foro da Comarca do Porto(ou Lisboa? - a definir), com expressa renúncia a qualquer outro
+Estes Termos e Condições são regidos pela lei portuguesa e, em caso de litígio na interpretação ou aplicação dos presentes Termos e Condições, será competente em exclusivo o foro da Comarca do Porto, com expressa renúncia a qualquer outro
   
   
-Lisboa (?), XXX Março 2020
+Porto, 10 Abril 2020
             `,
           "terms#close_button": "Fechar",
 
