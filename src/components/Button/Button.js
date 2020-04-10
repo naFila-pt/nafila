@@ -77,6 +77,7 @@ const Button = ({
       <MuiButton
         onClick={onClick}
         style={variantStyle}
+        className="MuiButtonBase-custom"
         disableRipple={variant === "inactive" ? true : false}
         {...rest}
       >

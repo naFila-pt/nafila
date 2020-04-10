@@ -1,11 +1,13 @@
 import React from "react";
-import { Box } from "@material-ui/core";
+import { Typography, Box } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 import Toolbar from "@material-ui/core/Toolbar";
 import Grid from "@material-ui/core/Grid";
 import MenuIcon from "@material-ui/icons/Menu";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { ReactComponent as LogoMini } from "../../assets/logo-mini.svg";
+import { auth } from "../../firebase";
 
 const useStyles = makeStyles({
   container: {
@@ -23,33 +25,64 @@ const useStyles = makeStyles({
   },
   menuIcon: {
     fontSize: "2.24em",
-    color: "rgba(0, 0, 0, .54)"
+    color: "rgba(0, 0, 0, .54)",
+    display: "none" //temporarily disabled
   }
 });
 
-function Layout({ children, bg, hideLogo }) {
+function Layout({ children, bg, hideLogo, style }) {
   const classes = useStyles();
+  const { t } = useTranslation();
   const boxProps = {
     width: 1,
     height: 1,
     display: "flex",
     flexDirection: "column",
     style: {
+      ...style,
       background: `url(${bg})`,
       backgroundSize: "cover",
-      backgroundPosition: "0 100%",
+      backgroundPosition: "0px",
       backgroundRepeat: "no-repeat",
       textAlign: "center"
     }
   };
 
+  let logout = () => {
+    auth.signOut().then(() => {
+      window.location.href = "/admin";
+    });
+  };
+
   return (
-    <Box {...boxProps}>
+    <Box className="AdminLayout" {...boxProps}>
       <Grid container>
         <Grid container direction="column">
-          <Toolbar className={classes.toolbar}>
+          <Toolbar
+            className={classes.toolbar}
+            style={
+              auth.currentUser && auth.currentUser.emailVerified
+                ? { justifyContent: "space-between" }
+                : {}
+            }
+          >
             <MenuIcon className={classes.menuIcon} />
-            {!hideLogo && <LogoMini style={{ flex: 0.9 }} />}
+            {!hideLogo && (
+              <LogoMini
+                style={
+                  auth.currentUser && auth.currentUser.emailVerified
+                    ? { flex: 0.4 }
+                    : { flex: 1 }
+                }
+              />
+            )}
+            {auth.currentUser && auth.currentUser.emailVerified && (
+              <div onClick={logout}>
+                <Typography variant="button">
+                  {t("admin#signout_button")}
+                </Typography>
+              </div>
+            )}
           </Toolbar>
         </Grid>
       </Grid>

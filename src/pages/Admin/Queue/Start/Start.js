@@ -12,7 +12,7 @@ import { auth, functions } from "../../../../firebase";
 import { HeadlineContainer, ButtonsContainer } from "../../common";
 
 const StoreName = styled.div`
-  margin: 30% 10% 0;
+  margin: 4em 10% 0;
 
   h4 {
     font-weight: 700;
@@ -33,7 +33,7 @@ const StoreName = styled.div`
 `;
 const EmailWithCode = styled.p`
   margin-top: 30px;
-  font-size: 20px;
+  font-size: 1.25em;
   padding: 0 20%;
 `;
 
@@ -70,7 +70,7 @@ function Start({ user, setQueue, openSnackbar }) {
         </Typography>
       </HeadlineContainer>
 
-      <StoreName>
+      <StoreName className="start-queue-store">
         <Input
           value={defaultQueueName}
           onChange={handleChange}

@@ -31,6 +31,14 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
     );
   }
 
+  //validate queue name
+  if (!data.name) {
+    throw new functionsMain.https.HttpsError(
+      "invalid-argument",
+      "Tem de inserir um nome público para a fila"
+    );
+  }
+
   //inserts queue
   const queue = {
     owner_id: context.auth.uid,
@@ -434,7 +442,11 @@ async function createTicketInQueue(
     }
     ticketData.email = email;
   } else if (!!phone) {
-    if (!validator.isMobilePhone(phone)) {
+    if (
+      !validator.isMobilePhone(phone) || //generic phone number validation
+      (phone[0] !== "+" && //international phones
+        phone.length !== 9) //portuguese plain numbers
+    ) {
       throw new functionsMain.https.HttpsError(
         "invalid-argument",
         "Formato de número de telefone inválido"
@@ -446,7 +458,7 @@ async function createTicketInQueue(
   } else {
     throw new functionsMain.https.HttpsError(
       "invalid-argument",
-      "Unknown ticket type"
+      "Informação insuficiente para registar uma senha"
     );
   }
 
@@ -557,9 +569,8 @@ async function removeTicket(
 }
 
 function fiveRandomChars() {
-  return Math.random()
-    .toString(36)
-    .replace(/[^0-9a-z]/, "")
+  return (Math.random().toString(36) + Math.random().toString(36))
+    .replace(/[^1-9a-hj-np-z]/g, "") //no 0 , o or i -- to avoid confusion of codes
     .substring(0, 5)
     .toUpperCase();
 }

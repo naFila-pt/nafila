@@ -16,7 +16,11 @@ import {
 
 import { ButtonsContainer } from "../../common";
 
+const pageMinHeight = 550;
+
 const ManageQueueContainer = styled.div`
+  min-height: ${pageMinHeight}px;
+
   h3 {
     font-size: 2em;
     font-weight: 900;
@@ -42,11 +46,11 @@ const TicketContainer = styled.div`
 `;
 const TicketsRemaining = styled.div`
   position: absolute;
-  right: 10px;
+  right: ${window.innerWidth <= 320 ? 4 : 10}px;
   top: 38vh;
 
   > div {
-    font-size: 20px;
+    font-size: ${window.innerWidth <= 320 ? 18 : 20}px;
   }
 
   h4 {
@@ -76,17 +80,6 @@ function Manage({ queueId, openSnackbar }) {
   };
 
   useEffect(() => {
-    firestore
-      .collection("queues")
-      .doc(queueId)
-      .get()
-      .then(response => {
-        const queue = response.data();
-
-        setQueue(queue);
-        setLoading(false);
-      });
-
     const queuesDocumentSnapshotListener = firestore
       .collection("queues")
       .doc(queueId)
@@ -101,10 +94,17 @@ function Manage({ queueId, openSnackbar }) {
     };
   }, [queueId]);
 
+  useEffect(() => {
+    if (queue) setLoading(false);
+  }, [queue]);
+
   if (loading) return <Loader />;
 
   return (
-    <Layout bg={Bg}>
+    <Layout
+      style={{ position: "relative", minHeight: pageMinHeight + 56 }}
+      bg={Bg}
+    >
       <ManageQueueContainer>
         <div>{t("admin#queueManagement_queueCode")}</div>
         <Typography variant="h3">{queueId}</Typography>
@@ -112,7 +112,7 @@ function Manage({ queueId, openSnackbar }) {
         <TicketContainer>
           <div>
             <Typography variant="h2">
-              {String(queue.currentTicketNumber).padStart(3, "0")}
+              {queue && String(queue.currentTicketNumber).padStart(3, "0")}
             </Typography>
           </div>
 
