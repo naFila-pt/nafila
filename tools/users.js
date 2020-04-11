@@ -9,7 +9,7 @@ const packageFile = require("../package");
 
 admin.initializeApp({
   credential: admin.credential.applicationDefault(),
-  databaseURL: packageFile.config.firebase.databaseUrl
+  databaseURL: packageFile.config.firebase.databaseUrl,
 });
 
 const auth = admin.auth();
@@ -39,8 +39,8 @@ const listAllUsers = nextPageToken => {
           "emailVerified",
           "displayName",
           "photoURL",
-          "disabled"
-        ]
+          "disabled",
+        ],
       });
 
       users.forEach(user => {
@@ -63,7 +63,7 @@ const listAllUsers = nextPageToken => {
           emailVerified,
           displayName,
           photoURL,
-          disabled
+          disabled,
         ]);
       });
 
@@ -155,8 +155,8 @@ program
           type: "confirm",
           name: "delete",
           message: "Delete all users?",
-          default: false
-        }
+          default: false,
+        },
       ])
       .then(value => {
         if (!value) {

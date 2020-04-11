@@ -16,26 +16,26 @@ import { functions } from "../../firebase";
 const useStyles = makeStyles({
   gridContainer: {
     alignContent: "center",
-    marginTop: "-1em"
+    marginTop: "-1em",
   },
   gridItem: {
     textAlign: "center",
-    paddingTop: "1.8em"
+    paddingTop: "1.8em",
   },
   bottomButton: {
     position: "absolute",
     left: 0,
     bottom: "2em",
     width: "100%",
-    textAlign: "center"
-  }
+    textAlign: "center",
+  },
 });
 
 const Leave = ({
   openSnackbar,
   match: {
-    params: { queueId, ticketId }
-  }
+    params: { queueId, ticketId },
+  },
 }) => {
   const [success, setSuccess] = useState(false);
   const [requesting, setRequesting] = useState(true);
@@ -70,7 +70,7 @@ const Leave = ({
             dangerouslySetInnerHTML={{
               __html: requesting
                 ? "..."
-                : t(success ? "leave#title" : "leave#title-failed")
+                : t(success ? "leave#title" : "leave#title-failed"),
             }}
           />
 

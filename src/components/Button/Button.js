@@ -21,37 +21,37 @@ const Button = ({
       background: "#4C0788",
       borderRadius: "2.13em",
       boxShadow: "0px 11px 19px rgba(0, 0, 0, 0.2)",
-      color: "#fff"
+      color: "#fff",
     },
     inactive: {
-      background: "rgba(69, 21, 131, 0.7)"
+      background: "rgba(69, 21, 131, 0.7)",
     },
     active: {
-      border: "1px solid #4C0788"
+      border: "1px solid #4C0788",
     },
     secondary: {
       background: "#fff",
       border: "1px #4C0788 solid",
-      color: "#4C0788"
+      color: "#4C0788",
     },
     onboarding: {
       background: "#FFC836",
-      color: "inherit"
+      color: "inherit",
     },
     gray: {
       background: "#EDEDED",
-      color: "#4C0788"
+      color: "#4C0788",
     },
     inactiveGray: {
       background: "#EDEDED",
       color: "#4C0788",
-      opacity: ".5"
-    }
+      opacity: ".5",
+    },
   };
 
   const variantStyle = {
     ...styles.base,
-    ...styles[variant]
+    ...styles[variant],
   };
 
   // avoids overcomplicating translations with css garbage
@@ -70,7 +70,7 @@ const Button = ({
         display: "inline-block",
         background: "#fff",
         borderRadius: "2.13em",
-        ...style
+        ...style,
       }}
       className="MuiButtonWrapper"
     >

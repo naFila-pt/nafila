@@ -55,11 +55,11 @@ authentication.signUp = fields => {
           .set({
             firstName: firstName,
             lastName: lastName,
-            username: username
+            username: username,
           })
           .then(value => {
             analytics.logEvent("sign_up", {
-              method: "password"
+              method: "password",
             });
 
             resolve(value);
@@ -113,13 +113,13 @@ authentication.signUpStore = (emailAddress, password, defaultQueueName) => {
           .set(
             {
               defaultQueueName,
-              queues: []
+              queues: [],
             },
             { merge: true }
           )
           .then(value => {
             analytics.logEvent("sign_up", {
-              method: "password"
+              method: "password",
             });
 
             authentication.verifyEmailAddress();
@@ -175,7 +175,7 @@ authentication.signIn = (emailAddress, password) => {
           .then(value => {
             if (value.exists) {
               analytics.logEvent("login", {
-                method: "password"
+                method: "password",
               });
 
               resolve(user);
@@ -184,7 +184,7 @@ authentication.signIn = (emailAddress, password) => {
                 .set({}, { merge: true })
                 .then(value => {
                   analytics.logEvent("login", {
-                    method: "password"
+                    method: "password",
                   });
 
                   resolve(user);
@@ -220,7 +220,7 @@ authentication.sendSignInLinkToEmail = emailAddress => {
 
     const actionCodeSettings = {
       url: process.env.REACT_APP_HOMEPAGE,
-      handleCodeInApp: true
+      handleCodeInApp: true,
     };
 
     auth
@@ -256,7 +256,7 @@ authentication.signInWithEmailLink = (emailAddress, emailLink) => {
       .signInWithEmailLink(emailAddress, emailLink)
       .then(value => {
         analytics.logEvent("login", {
-          method: "email-link"
+          method: "email-link",
         });
 
         localStorage.removeItem("emailAddress");
@@ -318,7 +318,7 @@ authentication.signInWithAuthProvider = providerId => {
           .then(value => {
             if (value.exists) {
               analytics.logEvent("login", {
-                method: providerId
+                method: providerId,
               });
 
               resolve(user);
@@ -327,7 +327,7 @@ authentication.signInWithAuthProvider = providerId => {
                 .set({}, { merge: true })
                 .then(value => {
                   analytics.logEvent("login", {
-                    method: providerId
+                    method: providerId,
                   });
 
                   resolve(user);
@@ -375,7 +375,7 @@ authentication.linkAuthProvider = providerId => {
       .linkWithPopup(provider)
       .then(value => {
         analytics.logEvent("link_auth_provider", {
-          providerId: providerId
+          providerId: providerId,
         });
 
         resolve(value);
@@ -406,7 +406,7 @@ authentication.unlinkAuthProvider = providerId => {
       .unlink(providerId)
       .then(value => {
         analytics.logEvent("unlink_auth_provider", {
-          providerId: providerId
+          providerId: providerId,
         });
 
         resolve(value);
@@ -502,7 +502,7 @@ authentication.changeAvatar = avatar => {
       "image/jpeg",
       "image/png",
       "image/webp",
-      "image/svg+xml"
+      "image/svg+xml",
     ];
 
     if (!avatarFileTypes.includes(avatar.type)) {
@@ -547,7 +547,7 @@ authentication.changeAvatar = avatar => {
           .then(value => {
             currentUser
               .updateProfile({
-                photoURL: value
+                photoURL: value,
               })
               .then(value => {
                 analytics.logEvent("change_avatar");
@@ -588,7 +588,7 @@ authentication.removeAvatar = () => {
 
     currentUser
       .updateProfile({
-        photoURL: null
+        photoURL: null,
       })
       .then(value => {
         const avatarReference = storage
@@ -642,7 +642,7 @@ authentication.changeFirstName = firstName => {
 
     userDocumentReference
       .update({
-        firstName: firstName
+        firstName: firstName,
       })
       .then(value => {
         analytics.logEvent("change_first_name");
@@ -683,7 +683,7 @@ authentication.changeLastName = lastName => {
 
     userDocumentReference
       .update({
-        lastName: lastName
+        lastName: lastName,
       })
       .then(value => {
         analytics.logEvent("change_last_name");
@@ -724,7 +724,7 @@ authentication.changeUsername = username => {
 
     userDocumentReference
       .update({
-        username: username
+        username: username,
       })
       .then(value => {
         analytics.logEvent("change_username");
@@ -805,7 +805,7 @@ authentication.changePassword = password => {
 
         userDocumentReference
           .update({
-            lastPasswordChange: firebase.firestore.FieldValue.serverTimestamp()
+            lastPasswordChange: firebase.firestore.FieldValue.serverTimestamp(),
           })
           .then(value => {
             analytics.logEvent("change_password");
@@ -1008,7 +1008,7 @@ authentication.getProfileCompletion = fields => {
     fields.lastName,
     fields.username,
     fields.email,
-    fields.email && fields.emailVerified
+    fields.email && fields.emailVerified,
   ];
 
   if (!fields) {

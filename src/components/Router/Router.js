@@ -132,7 +132,7 @@ class Router extends Component {
 
 Router.propTypes = {
   // Properties
-  user: PropTypes.object
+  user: PropTypes.object,
 };
 
 export default Router;

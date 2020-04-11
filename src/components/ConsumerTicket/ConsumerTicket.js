@@ -16,7 +16,7 @@ const ConsumerTicket = ({ number }) => {
           top: "6em",
           left: 0,
           width: "100%",
-          color: "#fff"
+          color: "#fff",
         }}
       >
         <div style={{ fontSize: "2.5em", fontWeight: 900 }}>{number}</div>

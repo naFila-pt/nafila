@@ -14,24 +14,24 @@ const useStyles = makeStyles({
     padding: 0,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-    backgroundPosition: "0px"
+    backgroundPosition: "0px",
   },
   toolbar: {
     position: "static",
-    top: 0
+    top: 0,
   },
   menuIcon: {
     fontSize: "2.24em",
     color: "rgba(0, 0, 0, .54)",
-    display: "none" //temporarily disabled
-  }
+    display: "none", //temporarily disabled
+  },
 });
 
 const OnBoardingLayout = ({
   children,
   bg,
   activeStep = 0,
-  forceLogoDisplay
+  forceLogoDisplay,
 }) => {
   const classes = useStyles();
   const bgUrl = bg[activeStep] ? bg[activeStep] : bg[bg.length - 1];

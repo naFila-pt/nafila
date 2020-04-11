@@ -9,7 +9,7 @@ import Button from "../../../components/Button";
 import Loader from "../../../components/Loader";
 import {
   PRIMARY_COLOR,
-  SECONDARY_COLOR
+  SECONDARY_COLOR,
 } from "../../../constants/ColorConstants";
 import authentication from "../../../services/authentication";
 import { auth } from "../../../firebase";
@@ -66,7 +66,7 @@ const Form = styled.form`
 `;
 const inputProps = {
   fullWidth: true,
-  required: true
+  required: true,
 };
 
 function SignUp({ openSnackbar }) {
@@ -78,13 +78,13 @@ function SignUp({ openSnackbar }) {
     "auth/weak-password": t("admin#signup_weakPassword"),
     "auth/email-already-in-use": t("admin#signup_emailInUse"),
     "auth/invalid-email": t("admin#signup_invalidEmail"),
-    "auth/operation-not-allowed": t("admin#signup_operationNotAllowed")
+    "auth/operation-not-allowed": t("admin#signup_operationNotAllowed"),
   };
 
   const handleChange = ({ target: { name, value } }) => {
     setFields({
       ...fields,
-      [name]: value
+      [name]: value,
     });
   };
   const handleSubmit = e => {

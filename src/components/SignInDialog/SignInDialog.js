@@ -18,7 +18,7 @@ import {
   Grid,
   Button,
   Divider,
-  TextField
+  TextField,
 } from "@material-ui/core";
 
 import { Close as CloseIcon } from "@material-ui/icons";
@@ -32,27 +32,27 @@ const styles = theme => ({
   closeButton: {
     position: "absolute",
     right: theme.spacing(1),
-    top: theme.spacing(1)
+    top: theme.spacing(1),
   },
 
   icon: {
-    marginRight: theme.spacing(0.5)
+    marginRight: theme.spacing(0.5),
   },
 
   divider: {
-    margin: "auto"
+    margin: "auto",
   },
 
   grid: {
-    marginBottom: theme.spacing(2)
-  }
+    marginBottom: theme.spacing(2),
+  },
 });
 
 const initialState = {
   performingAction: false,
   emailAddress: "",
   password: "",
-  errors: null
+  errors: null,
 };
 
 class SignInDialog extends Component {
@@ -95,26 +95,26 @@ class SignInDialog extends Component {
 
     const errors = validate(
       {
-        emailAddress: emailAddress
+        emailAddress: emailAddress,
       },
       {
-        emailAddress: constraints.emailAddress
+        emailAddress: constraints.emailAddress,
       }
     );
 
     if (errors) {
       this.setState({
-        errors: errors
+        errors: errors,
       });
     } else {
       this.setState(
         {
-          errors: null
+          errors: null,
         },
         () => {
           this.setState(
             {
-              performingAction: true
+              performingAction: true,
             },
             () => {
               authentication
@@ -146,7 +146,7 @@ class SignInDialog extends Component {
                 })
                 .finally(() => {
                   this.setState({
-                    performingAction: false
+                    performingAction: false,
                   });
                 });
             }
@@ -162,23 +162,23 @@ class SignInDialog extends Component {
     const errors = validate(
       {
         emailAddress: emailAddress,
-        password: password
+        password: password,
       },
       {
         emailAddress: constraints.emailAddress,
-        password: constraints.password
+        password: constraints.password,
       }
     );
 
     if (errors) {
       this.setState({
-        errors: errors
+        errors: errors,
       });
     } else {
       this.setState(
         {
           performingAction: true,
-          errors: null
+          errors: null,
         },
         () => {
           authentication
@@ -212,7 +212,7 @@ class SignInDialog extends Component {
             })
             .finally(() => {
               this.setState({
-                performingAction: false
+                performingAction: false,
               });
             });
         }
@@ -225,16 +225,16 @@ class SignInDialog extends Component {
 
     const errors = validate(
       {
-        emailAddress: emailAddress
+        emailAddress: emailAddress,
       },
       {
-        emailAddress: constraints.emailAddress
+        emailAddress: constraints.emailAddress,
       }
     );
 
     if (errors) {
       this.setState({
-        errors: errors
+        errors: errors,
       });
 
       return;
@@ -243,7 +243,7 @@ class SignInDialog extends Component {
     this.setState(
       {
         performingAction: true,
-        errors: null
+        errors: null,
       },
       () => {
         authentication
@@ -275,7 +275,7 @@ class SignInDialog extends Component {
           })
           .finally(() => {
             this.setState({
-              performingAction: false
+              performingAction: false,
             });
           });
       }
@@ -285,7 +285,7 @@ class SignInDialog extends Component {
   signInWithAuthProvider = providerId => {
     this.setState(
       {
-        performingAction: true
+        performingAction: true,
       },
       () => {
         authentication
@@ -323,7 +323,7 @@ class SignInDialog extends Component {
           })
           .finally(() => {
             this.setState({
-              performingAction: false
+              performingAction: false,
             });
           });
       }
@@ -360,7 +360,7 @@ class SignInDialog extends Component {
     const emailAddress = event.target.value;
 
     this.setState({
-      emailAddress: emailAddress
+      emailAddress: emailAddress,
     });
   };
 
@@ -368,7 +368,7 @@ class SignInDialog extends Component {
     const password = event.target.value;
 
     this.setState({
-      password: password
+      password: password,
     });
   };
 
@@ -539,7 +539,7 @@ SignInDialog.propTypes = {
   dialogProps: PropTypes.object.isRequired,
 
   // Custom Functions
-  openSnackbar: PropTypes.func.isRequired
+  openSnackbar: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(SignInDialog);

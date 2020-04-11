@@ -27,7 +27,7 @@ import {
   TextField,
   Tooltip,
   IconButton,
-  Divider
+  Divider,
 } from "@material-ui/core";
 
 import { Close as CloseIcon } from "@material-ui/icons";
@@ -47,17 +47,17 @@ import authentication from "../../services/authentication";
 
 const styles = theme => ({
   dialogContent: {
-    paddingTop: theme.spacing(2)
+    paddingTop: theme.spacing(2),
   },
 
   badge: {
     top: theme.spacing(2),
-    right: -theme.spacing(2)
+    right: -theme.spacing(2),
   },
 
   loadingBadge: {
     top: "50%",
-    right: "50%"
+    right: "50%",
   },
 
   avatar: {
@@ -65,23 +65,23 @@ const styles = theme => ({
     marginLeft: "auto",
 
     width: theme.spacing(14),
-    height: theme.spacing(14)
+    height: theme.spacing(14),
   },
 
   nameInitials: {
-    cursor: "default"
+    cursor: "default",
   },
 
   personIcon: {
-    fontSize: theme.spacing(7)
+    fontSize: theme.spacing(7),
   },
 
   small: {
     width: theme.spacing(4),
     height: theme.spacing(4),
 
-    minHeight: "initial"
-  }
+    minHeight: "initial",
+  },
 });
 
 const initialState = {
@@ -97,7 +97,7 @@ const initialState = {
   performingAction: false,
   loadingAvatar: false,
   sentVerificationEmail: false,
-  errors: null
+  errors: null,
 };
 
 class AccountTab extends Component {
@@ -122,7 +122,7 @@ class AccountTab extends Component {
 
     const nameInitials = authentication.getNameInitials({
       ...user,
-      ...userData
+      ...userData,
     });
 
     if (nameInitials) {
@@ -146,7 +146,7 @@ class AccountTab extends Component {
     this.setState(
       {
         performingAction: true,
-        loadingAvatar: true
+        loadingAvatar: true,
       },
       () => {
         authentication
@@ -157,8 +157,8 @@ class AccountTab extends Component {
             this.setState({
               profileCompletion: authentication.getProfileCompletion({
                 ...user,
-                ...userData
-              })
+                ...userData,
+              }),
             });
           })
           .catch(reason => {
@@ -176,7 +176,7 @@ class AccountTab extends Component {
               performingAction: false,
               loadingAvatar: false,
               avatar: null,
-              avatarUrl: ""
+              avatarUrl: "",
             });
           });
       }
@@ -200,13 +200,13 @@ class AccountTab extends Component {
 
       this.setState({
         avatar: null,
-        avatarUrl: ""
+        avatarUrl: "",
       });
     } else if (user.photoURL && !avatar && !avatarUrl) {
       this.setState(
         {
           performingAction: true,
-          loadingAvatar: true
+          loadingAvatar: true,
         },
         () => {
           authentication
@@ -217,8 +217,8 @@ class AccountTab extends Component {
               this.setState({
                 profileCompletion: authentication.getProfileCompletion({
                   ...user,
-                  ...userData
-                })
+                  ...userData,
+                }),
               });
             })
             .catch(reason => {
@@ -234,7 +234,7 @@ class AccountTab extends Component {
             .finally(() => {
               this.setState({
                 performingAction: false,
-                loadingAvatar: false
+                loadingAvatar: false,
               });
             });
         }
@@ -248,7 +248,7 @@ class AccountTab extends Component {
     }
 
     this.setState({
-      showingField: fieldId
+      showingField: fieldId,
     });
   };
 
@@ -260,7 +260,7 @@ class AccountTab extends Component {
         lastName: "",
         username: "",
         emailAddress: "",
-        errors: null
+        errors: null,
       },
       () => {
         if (callback && typeof callback === "function") {
@@ -275,16 +275,16 @@ class AccountTab extends Component {
 
     const errors = validate(
       {
-        firstName: firstName
+        firstName: firstName,
       },
       {
-        firstName: constraints.firstName
+        firstName: constraints.firstName,
       }
     );
 
     if (errors) {
       this.setState({
-        errors: errors
+        errors: errors,
       });
 
       return;
@@ -292,7 +292,7 @@ class AccountTab extends Component {
 
     this.setState(
       {
-        errors: null
+        errors: null,
       },
       () => {
         const { userData } = this.props;
@@ -303,7 +303,7 @@ class AccountTab extends Component {
 
         this.setState(
           {
-            performingAction: true
+            performingAction: true,
           },
           () => {
             authentication
@@ -315,8 +315,8 @@ class AccountTab extends Component {
                   {
                     profileCompletion: authentication.getProfileCompletion({
                       ...user,
-                      ...userData
-                    })
+                      ...userData,
+                    }),
                   },
                   () => {
                     this.hideFields();
@@ -335,7 +335,7 @@ class AccountTab extends Component {
               })
               .finally(() => {
                 this.setState({
-                  performingAction: false
+                  performingAction: false,
                 });
               });
           }
@@ -349,16 +349,16 @@ class AccountTab extends Component {
 
     const errors = validate(
       {
-        lastName: lastName
+        lastName: lastName,
       },
       {
-        lastName: constraints.lastName
+        lastName: constraints.lastName,
       }
     );
 
     if (errors) {
       this.setState({
-        errors: errors
+        errors: errors,
       });
 
       return;
@@ -366,7 +366,7 @@ class AccountTab extends Component {
 
     this.setState(
       {
-        errors: null
+        errors: null,
       },
       () => {
         const { userData } = this.props;
@@ -377,7 +377,7 @@ class AccountTab extends Component {
 
         this.setState(
           {
-            performingAction: true
+            performingAction: true,
           },
           () => {
             authentication
@@ -389,8 +389,8 @@ class AccountTab extends Component {
                   {
                     profileCompletion: authentication.getProfileCompletion({
                       ...user,
-                      ...userData
-                    })
+                      ...userData,
+                    }),
                   },
                   () => {
                     this.hideFields();
@@ -409,7 +409,7 @@ class AccountTab extends Component {
               })
               .finally(() => {
                 this.setState({
-                  performingAction: false
+                  performingAction: false,
                 });
               });
           }
@@ -423,16 +423,16 @@ class AccountTab extends Component {
 
     const errors = validate(
       {
-        username: username
+        username: username,
       },
       {
-        username: constraints.username
+        username: constraints.username,
       }
     );
 
     if (errors) {
       this.setState({
-        errors: errors
+        errors: errors,
       });
 
       return;
@@ -440,7 +440,7 @@ class AccountTab extends Component {
 
     this.setState(
       {
-        errors: null
+        errors: null,
       },
       () => {
         const { userData } = this.props;
@@ -451,7 +451,7 @@ class AccountTab extends Component {
 
         this.setState(
           {
-            performingAction: true
+            performingAction: true,
           },
           () => {
             authentication
@@ -463,8 +463,8 @@ class AccountTab extends Component {
                   {
                     profileCompletion: authentication.getProfileCompletion({
                       ...user,
-                      ...userData
-                    })
+                      ...userData,
+                    }),
                   },
                   () => {
                     this.hideFields();
@@ -483,7 +483,7 @@ class AccountTab extends Component {
               })
               .finally(() => {
                 this.setState({
-                  performingAction: false
+                  performingAction: false,
                 });
               });
           }
@@ -497,16 +497,16 @@ class AccountTab extends Component {
 
     const errors = validate(
       {
-        emailAddress: emailAddress
+        emailAddress: emailAddress,
       },
       {
-        emailAddress: constraints.emailAddress
+        emailAddress: constraints.emailAddress,
       }
     );
 
     if (errors) {
       this.setState({
-        errors: errors
+        errors: errors,
       });
 
       return;
@@ -514,7 +514,7 @@ class AccountTab extends Component {
 
     this.setState(
       {
-        errors: null
+        errors: null,
       },
       () => {
         const { user } = this.props;
@@ -525,7 +525,7 @@ class AccountTab extends Component {
 
         this.setState(
           {
-            performingAction: true
+            performingAction: true,
           },
           () => {
             authentication
@@ -537,8 +537,8 @@ class AccountTab extends Component {
                   {
                     profileCompletion: authentication.getProfileCompletion({
                       ...user,
-                      ...userData
-                    })
+                      ...userData,
+                    }),
                   },
                   () => {
                     this.hideFields();
@@ -557,7 +557,7 @@ class AccountTab extends Component {
               })
               .finally(() => {
                 this.setState({
-                  performingAction: false
+                  performingAction: false,
                 });
               });
           }
@@ -569,7 +569,7 @@ class AccountTab extends Component {
   verifyEmailAddress = () => {
     this.setState(
       {
-        performingAction: true
+        performingAction: true,
       },
       () => {
         authentication
@@ -577,7 +577,7 @@ class AccountTab extends Component {
           .then(() => {
             this.setState(
               {
-                sentVerificationEmail: true
+                sentVerificationEmail: true,
               },
               () => {
                 this.props.openSnackbar("Sent verification e-mail");
@@ -596,7 +596,7 @@ class AccountTab extends Component {
           })
           .finally(() => {
             this.setState({
-              performingAction: false
+              performingAction: false,
             });
           });
       }
@@ -670,7 +670,7 @@ class AccountTab extends Component {
       "image/jpeg",
       "image/png",
       "image/webp",
-      "image/svg+xml"
+      "image/svg+xml",
     ];
 
     if (!fileTypes.includes(avatar.type)) {
@@ -683,7 +683,7 @@ class AccountTab extends Component {
 
     this.setState({
       avatar: avatar,
-      avatarUrl: URL.createObjectURL(avatar)
+      avatarUrl: URL.createObjectURL(avatar),
     });
   };
 
@@ -695,7 +695,7 @@ class AccountTab extends Component {
     const firstName = event.target.value;
 
     this.setState({
-      firstName: firstName
+      firstName: firstName,
     });
   };
 
@@ -707,7 +707,7 @@ class AccountTab extends Component {
     const lastName = event.target.value;
 
     this.setState({
-      lastName: lastName
+      lastName: lastName,
     });
   };
 
@@ -719,7 +719,7 @@ class AccountTab extends Component {
     const username = event.target.value;
 
     this.setState({
-      username: username
+      username: username,
     });
   };
 
@@ -731,7 +731,7 @@ class AccountTab extends Component {
     const emailAddress = event.target.value;
 
     this.setState({
-      emailAddress: emailAddress
+      emailAddress: emailAddress,
     });
   };
 
@@ -758,7 +758,7 @@ class AccountTab extends Component {
       username,
       emailAddress,
       sentVerificationEmail,
-      errors
+      errors,
     } = this.state;
 
     const hasFirstName = userData && userData.firstName;
@@ -1624,9 +1624,9 @@ class AccountTab extends Component {
     this.setState({
       profileCompletion: authentication.getProfileCompletion({
         ...user,
-        ...userData
+        ...userData,
       }),
-      securityRating: authentication.getSecurityRating(user, userData)
+      securityRating: authentication.getSecurityRating(user, userData),
     });
   }
 
@@ -1637,7 +1637,7 @@ class AccountTab extends Component {
       URL.revokeObjectURL(avatarUrl);
 
       this.setState({
-        avatarUrl: ""
+        avatarUrl: "",
       });
     }
   }
@@ -1655,7 +1655,7 @@ AccountTab.propTypes = {
   openSnackbar: PropTypes.func.isRequired,
 
   // Events
-  onDeleteAccountClick: PropTypes.func.isRequired
+  onDeleteAccountClick: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(AccountTab);

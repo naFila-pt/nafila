@@ -7,7 +7,7 @@ import Button from "../../../components/Button";
 import Bg from "../../../assets/bg/store_queue_started.svg";
 import {
   ADMIN_QUEUE_MANAGEMENT_PATH,
-  ADMIN_END_QUEUE_PATH
+  ADMIN_END_QUEUE_PATH,
 } from "../../../constants/RoutesConstants";
 
 import { HeadlineContainer, ButtonsContainer } from "../common";

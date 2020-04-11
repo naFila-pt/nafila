@@ -49,7 +49,7 @@ function AddConsumerSuccess({ ticket, type }) {
           __html:
             type === "name"
               ? t("main#addConsumerNameSuccess_text")
-              : t("main#addConsumerPhoneSuccess_text")
+              : t("main#addConsumerPhoneSuccess_text"),
         }}
       />
 
@@ -57,7 +57,7 @@ function AddConsumerSuccess({ ticket, type }) {
         <Button
           href={ADMIN_QUEUE_MANAGEMENT_PATH}
           dangerouslySetInnerHTML={{
-            __html: t("main#addConsumerSuccess_button")
+            __html: t("main#addConsumerSuccess_button"),
           }}
           backward
         />

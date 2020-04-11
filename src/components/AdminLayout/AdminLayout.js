@@ -17,17 +17,17 @@ const useStyles = makeStyles({
     padding: 0,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-    backgroundPosition: "0 100%"
+    backgroundPosition: "0 100%",
   },
   toolbar: {
     position: "static",
-    top: 0
+    top: 0,
   },
   menuIcon: {
     fontSize: "2.24em",
     color: "rgba(0, 0, 0, .54)",
-    display: "none" //temporarily disabled
-  }
+    display: "none", //temporarily disabled
+  },
 });
 
 function Layout({ children, bg, hideLogo, style }) {
@@ -44,8 +44,8 @@ function Layout({ children, bg, hideLogo, style }) {
       backgroundSize: "cover",
       backgroundPosition: "0px",
       backgroundRepeat: "no-repeat",
-      textAlign: "center"
-    }
+      textAlign: "center",
+    },
   };
 
   let logout = () => {

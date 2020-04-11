@@ -10,7 +10,7 @@ import Layout from "../../../components/AdminLayout";
 import { PRIMARY_COLOR, WHITE_COLOR } from "../../../constants/ColorConstants";
 import {
   ADMIN_LOGIN_PATH,
-  ADMIN_SIGNUP_PATH
+  ADMIN_SIGNUP_PATH,
 } from "../../../constants/RoutesConstants";
 
 import * as S from "./style";
@@ -19,11 +19,11 @@ import { ButtonsContainer } from "../common";
 const typographyStyles = {
   MAIN: {
     color: PRIMARY_COLOR,
-    fontWeight: 600
+    fontWeight: 600,
   },
   SECONDARY: {
-    color: PRIMARY_COLOR
-  }
+    color: PRIMARY_COLOR,
+  },
 };
 
 function WelcomePanel() {

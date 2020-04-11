@@ -11,7 +11,7 @@ import {
   Tooltip,
   IconButton,
   Tabs,
-  Tab
+  Tab,
 } from "@material-ui/core";
 
 import { Close as CloseIcon } from "@material-ui/icons";
@@ -31,42 +31,42 @@ const styles = theme => ({
   closeButton: {
     position: "absolute",
     right: theme.spacing(1),
-    top: theme.spacing(1)
+    top: theme.spacing(1),
   },
 
   tabs: {
-    display: "initial"
-  }
+    display: "initial",
+  },
 });
 
 const tabs = [
   {
     key: "account",
     icon: <AccountCircleIcon />,
-    label: "Account"
+    label: "Account",
   },
 
   {
     key: "appearance",
     icon: <PaletteIcon />,
-    label: "Appearance"
+    label: "Appearance",
   },
 
   {
     key: "links",
     icon: <LinkIcon />,
-    label: "Links"
+    label: "Links",
   },
 
   {
     key: "security",
     icon: <SecurityIcon />,
-    label: "Security"
-  }
+    label: "Security",
+  },
 ];
 
 const initialState = {
-  selectedTab: 0
+  selectedTab: 0,
 };
 
 class SettingsDialog extends Component {
@@ -82,13 +82,13 @@ class SettingsDialog extends Component {
 
   handleTabChange = (event, value) => {
     this.setState({
-      selectedTab: value
+      selectedTab: value,
     });
   };
 
   handleIndexChange = index => {
     this.setState({
-      selectedTab: index
+      selectedTab: index,
     });
   };
 
@@ -181,7 +181,7 @@ SettingsDialog.propTypes = {
   openSnackbar: PropTypes.func.isRequired,
 
   // Custom Events
-  onDeleteAccountClick: PropTypes.func.isRequired
+  onDeleteAccountClick: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(SettingsDialog);

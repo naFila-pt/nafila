@@ -18,32 +18,32 @@ const useStyles = makeStyles({
     padding: 0,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-    backgroundPosition: "0px"
+    backgroundPosition: "0px",
   },
   toolbar: {
     position: "static",
-    top: 0
+    top: 0,
   },
   menuIcon: {
     fontSize: "2.24em",
-    color: "rgba(0, 0, 0, .54)"
+    color: "rgba(0, 0, 0, .54)",
   },
   stepper: {
     flexGrow: 1,
     position: "static",
     backgroundColor: "#FFC836",
-    height: "80px"
+    height: "80px",
   },
   stepperDot: {
     backgroundColor: "#4C0788",
-    opacity: "0.33"
+    opacity: "0.33",
   },
   stepperDotActive: {
-    opacity: "1"
+    opacity: "1",
   },
   stepperArrows: {
-    color: "#4C0788"
-  }
+    color: "#4C0788",
+  },
 });
 
 const OnBoardingLayout = ({ children, bg, endOnBoarding }) => {
@@ -80,7 +80,7 @@ const OnBoardingLayout = ({ children, bg, endOnBoarding }) => {
             style={{
               marginRight: "1.5em",
               marginBottom: ".5em",
-              visibility: activeStep === 3 ? "hidden" : "visible"
+              visibility: activeStep === 3 ? "hidden" : "visible",
             }}
           >
             <Button
@@ -98,7 +98,7 @@ const OnBoardingLayout = ({ children, bg, endOnBoarding }) => {
               classes={{
                 root: classes.stepper,
                 dot: classes.stepperDot,
-                dotActive: classes.stepperDotActive
+                dotActive: classes.stepperDotActive,
               }}
               backButton={
                 <Button
@@ -107,7 +107,7 @@ const OnBoardingLayout = ({ children, bg, endOnBoarding }) => {
                   onClick={handleBack}
                   disabled={activeStep === 0}
                   style={{
-                    visibility: activeStep === 0 ? "hidden" : "visible"
+                    visibility: activeStep === 0 ? "hidden" : "visible",
                   }}
                 >
                   <ArrowBackIcon />
@@ -120,7 +120,7 @@ const OnBoardingLayout = ({ children, bg, endOnBoarding }) => {
                   onClick={handleNext}
                   disabled={activeStep === 5}
                   style={{
-                    visibility: activeStep === 3 ? "hidden" : "visible"
+                    visibility: activeStep === 3 ? "hidden" : "visible",
                   }}
                 >
                   <ArrowForwardIcon />

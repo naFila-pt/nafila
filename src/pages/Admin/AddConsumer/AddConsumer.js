@@ -35,7 +35,7 @@ function AddConsumer({ openSnackbar }) {
         user={user}
         returnFunction={() => setViewType()}
       />
-    )
+    ),
   };
 
   useEffect(() => {

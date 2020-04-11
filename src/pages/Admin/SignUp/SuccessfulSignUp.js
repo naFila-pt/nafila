@@ -17,11 +17,11 @@ const Container = styled.div`
 const typographyStyles = {
   MAIN: {
     fontSize: "1.8em",
-    fontWeight: 900
+    fontWeight: 900,
   },
   SECONDARY: {
-    fontSize: "1.3em"
-  }
+    fontSize: "1.3em",
+  },
 };
 
 function SuccessfulSignUp() {
@@ -37,7 +37,7 @@ function SuccessfulSignUp() {
         <p
           style={typographyStyles.SECONDARY}
           dangerouslySetInnerHTML={{
-            __html: t("admin#signup_successHeroText")
+            __html: t("admin#signup_successHeroText"),
           }}
         />
 

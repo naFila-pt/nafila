@@ -22,7 +22,7 @@ function EndQueueSuccess() {
       <p
         style={{ fontSize: "20px" }}
         dangerouslySetInnerHTML={{
-          __html: t("main#endQueueSuccess_text")
+          __html: t("main#endQueueSuccess_text"),
         }}
       />
 
