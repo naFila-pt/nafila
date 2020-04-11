@@ -13,7 +13,7 @@ const getDate = () => {
   const options = {
     year: "numeric",
     month: "long",
-    day: "numeric",
+    day: "numeric"
   };
 
   return new Intl.DateTimeFormat("pt-PT", options).format(new Date());
@@ -21,8 +21,8 @@ const getDate = () => {
 
 function QueuePoster({
   match: {
-    params: { queueId },
-  },
+    params: { queueId }
+  }
 }) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
@@ -46,7 +46,7 @@ function QueuePoster({
       <div
         className="brand-slogan"
         dangerouslySetInnerHTML={{
-          __html: t("admin#queuePoster_brandSlogan"),
+          __html: t("admin#queuePoster_brandSlogan")
         }}
       />
 
@@ -63,7 +63,7 @@ function QueuePoster({
       <div
         className="queue-enter-with"
         dangerouslySetInnerHTML={{
-          __html: t("admin#queuePoster_enterQueueWith"),
+          __html: t("admin#queuePoster_enterQueueWith")
         }}
       />
 

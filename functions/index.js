@@ -11,7 +11,7 @@ const functionsRegion = "europe-west1";
 
 const runtimeOpts = {
   timeoutSeconds: 15,
-  memory: "256MB", //lowest cost possible
+  memory: "256MB" //lowest cost possible
 };
 
 //low cost / high perf settings
@@ -46,7 +46,7 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
     remainingTicketsInQueue: 0,
     ticketTopNumber: 0,
     currentTicketNumber: 0,
-    currentTicketName: null,
+    currentTicketName: null
   };
   const queueRef = firestore.collection("queues").doc(queueId);
 
@@ -69,7 +69,7 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
   await sendMail([data.email], "d-6ac28f40006c4d178be4e00adae2bcb4", {
     queueId: queueRef.id,
     queueName: queue.name,
-    queuePosterUrl: `https://nafila.pt/loja/cartaz-fila/${queueRef.id}`,
+    queuePosterUrl: `https://nafila.pt/loja/cartaz-fila/${queueRef.id}`
   });
 
   //returns queue object
@@ -133,7 +133,7 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
     //{{queueName}} {{queueId}}
     await sendMail(emailsToNotify, "d-b28224dd3dac48388f8e469ed82448a8", {
       queueId: queueRef.id,
-      queueName: result.queue.name,
+      queueName: result.queue.name
     });
   }
 
@@ -204,7 +204,7 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
       {
         ticketNumber: result.ticket.number,
         queueId: queueRef.id,
-        queueName: result.queue.name,
+        queueName: result.queue.name
       }
     );
   } else if (!!result.ticket.phone) {
@@ -225,7 +225,7 @@ exports.manuallyAddToQueue = functions.https.onCall(async (data, context) => {
       queueId: data.queueId,
       email: data.email,
       phone: data.phone,
-      name: data.name,
+      name: data.name
     },
     context
   );
@@ -329,12 +329,12 @@ async function scheduleNextSMSRoutine(secs, runTurn) {
       url,
       body: Buffer.from(JSON.stringify({ runTurn })).toString("base64"),
       headers: {
-        "Content-Type": "application/json",
-      },
+        "Content-Type": "application/json"
+      }
     },
     scheduleTime: {
-      seconds: Date.now() / 1000 + intSecs,
-    },
+      seconds: Date.now() / 1000 + intSecs
+    }
   };
 
   try {
@@ -349,7 +349,7 @@ async function getNewSMSRoutine() {
     TenantName: config.smspro.tenant,
     strUsername: config.smspro.username,
     strPassword: config.smspro.password,
-    intCampaignId: parseInt(config.smspro.campaignid),
+    intCampaignId: parseInt(config.smspro.campaignid)
   };
   let serviceReply = await callSMSPro("GetCampaignUnreadReplies", args);
   let replies =
@@ -499,7 +499,7 @@ async function createTicketInQueue(
       ticketNumber: result.ticket.number,
       queueId: queueRef.id,
       queueName: result.queue.name,
-      exitQueueUrl: `https://nafila.pt/sair/${queueRef.id}/${ticketRef.id}`,
+      exitQueueUrl: `https://nafila.pt/sair/${queueRef.id}/${ticketRef.id}`
     });
   } else if (!!ticketData.phone) {
     //send notification SMS
@@ -585,7 +585,7 @@ async function sendMail(to, templateId, dynamic_template_data) {
     to,
     from: "no-reply@nafila.pt",
     templateId,
-    dynamic_template_data,
+    dynamic_template_data
   };
 
   sgMail.sendMultiple(msg);
@@ -597,7 +597,7 @@ async function sendSMS(MsisdnList, strMessage) {
     strUsername: config.smspro.username,
     strPassword: config.smspro.password,
     MsisdnList,
-    strMessage,
+    strMessage
   };
 
   return await callSMSPro("SendSMS", args);

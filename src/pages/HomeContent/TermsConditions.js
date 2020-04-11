@@ -14,8 +14,8 @@ const useStyles = makeStyles({
     left: 0,
     bottom: "2em",
     width: "100%",
-    textAlign: "center",
-  },
+    textAlign: "center"
+  }
 });
 
 const TermsConditions = () => {
@@ -41,7 +41,7 @@ const TermsConditions = () => {
             style={{
               lineHeight: "1.188em",
               whiteSpace: "pre-line",
-              textAlign: "justify",
+              textAlign: "justify"
             }}
             dangerouslySetInnerHTML={{ __html: t("terms#text") }}
           />

@@ -17,7 +17,7 @@ const Admin = {
   Queue,
   AddConsumer,
   EndQueue,
-  QueuePoster,
+  QueuePoster
 };
 
 export default Admin;

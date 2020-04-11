@@ -11,11 +11,11 @@ import {
   Hidden,
   Box,
   TextField,
-  Button,
+  Button
 } from "@material-ui/core";
 
 const initialState = {
-  username: "",
+  username: ""
 };
 
 class DeleteAccountDialog extends Component {
@@ -59,7 +59,7 @@ class DeleteAccountDialog extends Component {
     const username = event.target.value;
 
     this.setState({
-      username: username,
+      username: username
     });
   };
 
@@ -153,7 +153,7 @@ DeleteAccountDialog.propTypes = {
   userData: PropTypes.object,
 
   // Custom Functions
-  deleteAccount: PropTypes.func.isRequired,
+  deleteAccount: PropTypes.func.isRequired
 };
 
 export default DeleteAccountDialog;

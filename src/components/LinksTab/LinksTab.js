@@ -11,7 +11,7 @@ import {
   ListItemSecondaryAction,
   Box,
   Tooltip,
-  IconButton,
+  IconButton
 } from "@material-ui/core";
 
 import { Link as LinkIcon } from "@material-ui/icons";
@@ -26,14 +26,14 @@ class LinksTab extends Component {
     super(props);
 
     this.state = {
-      performingAction: false,
+      performingAction: false
     };
   }
 
   linkAuthProvider = authProvider => {
     this.setState(
       {
-        performingAction: true,
+        performingAction: true
       },
       () => {
         authentication
@@ -53,7 +53,7 @@ class LinksTab extends Component {
           })
           .finally(() => {
             this.setState({
-              performingAction: false,
+              performingAction: false
             });
           });
       }
@@ -63,7 +63,7 @@ class LinksTab extends Component {
   unlinkAuthProvider = authProvider => {
     this.setState(
       {
-        performingAction: true,
+        performingAction: true
       },
       () => {
         authentication
@@ -83,7 +83,7 @@ class LinksTab extends Component {
           })
           .finally(() => {
             this.setState({
-              performingAction: false,
+              performingAction: false
             });
           });
       }
@@ -173,7 +173,7 @@ LinksTab.propTypes = {
   theme: PropTypes.object.isRequired,
 
   // Functions
-  openSnackbar: PropTypes.func.isRequired,
+  openSnackbar: PropTypes.func.isRequired
 };
 
 export default LinksTab;

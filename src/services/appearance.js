@@ -23,123 +23,123 @@ import {
   deepOrange,
   brown,
   grey as gray,
-  blueGrey as blueGray,
+  blueGrey as blueGray
 } from "@material-ui/core/colors";
 
 const colors = {
   red: {
     id: "red",
     name: "Red",
-    import: red,
+    import: red
   },
 
   pink: {
     id: "pink",
     name: "Pink",
-    import: pink,
+    import: pink
   },
 
   purple: {
     id: "purple",
     name: "Purple",
-    import: purple,
+    import: purple
   },
 
   deepPurple: {
     id: "deep-purple",
     name: "Deep Purple",
-    import: deepPurple,
+    import: deepPurple
   },
 
   indigo: {
     id: "indigo",
     name: "Indigo",
-    import: indigo,
+    import: indigo
   },
 
   blue: {
     id: "blue",
     name: "Blue",
-    import: blue,
+    import: blue
   },
 
   lightBlue: {
     id: "light-blue",
     name: "Light Blue",
-    import: lightBlue,
+    import: lightBlue
   },
 
   cyan: {
     id: "cyan",
     name: "Cyan",
-    import: cyan,
+    import: cyan
   },
 
   teal: {
     id: "teal",
     name: "Teal",
-    import: teal,
+    import: teal
   },
 
   green: {
     id: "green",
     name: "Green",
-    import: green,
+    import: green
   },
 
   lightGreen: {
     id: "light-green",
     name: "Light Green",
-    import: lightGreen,
+    import: lightGreen
   },
 
   lime: {
     id: "lime",
     name: "Lime",
-    import: lime,
+    import: lime
   },
 
   yellow: {
     id: "yellow",
     name: "Yellow",
-    import: yellow,
+    import: yellow
   },
 
   amber: {
     id: "amber",
     name: "Amber",
-    import: amber,
+    import: amber
   },
 
   orange: {
     id: "orange",
     name: "Orange",
-    import: orange,
+    import: orange
   },
 
   deepOrange: {
     id: "deep-orange",
     name: "Deep Orange",
-    import: deepOrange,
+    import: deepOrange
   },
 
   brown: {
     id: "brown",
     name: "Brown",
-    import: brown,
+    import: brown
   },
 
   gray: {
     id: "gray",
     name: "Gray",
-    import: gray,
+    import: gray
   },
 
   blueGray: {
     id: "blue-gray",
     name: "Blue Gray",
-    import: blueGray,
-  },
+    import: blueGray
+  }
 };
 
 const getColor = colorId => {
@@ -164,8 +164,8 @@ const defaultTheme = createMuiTheme({
     secondary: defaultSecondaryColor.import,
     type: defaultDark ? "dark" : "light",
     text: {
-      primary: "#4C0788",
-    },
+      primary: "#4C0788"
+    }
   },
 
   primaryColor: defaultPrimaryColor,
@@ -178,22 +178,22 @@ const defaultTheme = createMuiTheme({
     fontWeightBold: 900,
     h1: {
       fontWeight: 900,
-      fontSize: "2em",
+      fontSize: "2em"
     },
     h3: {
       fontWeight: 900,
-      fontSize: "1.6em",
+      fontSize: "1.6em"
     },
     h4: {
       fontWeight: 400,
       fontSize: "1.375em",
-      lineHeight: "1.35em",
+      lineHeight: "1.35em"
     },
     h5: {
       fontWeight: 400,
-      fontSize: "1.2em",
-    },
-  },
+      fontSize: "1.2em"
+    }
+  }
 });
 
 const appearance = {};
@@ -246,12 +246,12 @@ appearance.createTheme = theme => {
     palette: {
       primary: primaryColor.import,
       secondary: secondaryColor.import,
-      type: dark ? "dark" : "light",
+      type: dark ? "dark" : "light"
     },
 
     primaryColor: primaryColor,
     secondaryColor: secondaryColor,
-    dark: dark,
+    dark: dark
   });
 
   return theme;
@@ -307,12 +307,12 @@ appearance.changeTheme = theme => {
         theme: {
           primaryColor: primaryColor.id,
           secondaryColor: secondaryColor.id,
-          dark: dark,
-        },
+          dark: dark
+        }
       })
       .then(value => {
         analytics.logEvent("change_theme", {
-          theme: theme,
+          theme: theme
         });
 
         resolve(value);
@@ -359,11 +359,11 @@ appearance.changePrimaryColor = primaryColor => {
 
     userDocumentReference
       .update({
-        "theme.primaryColor": primaryColor.id,
+        "theme.primaryColor": primaryColor.id
       })
       .then(value => {
         analytics.logEvent("change_primary_color", {
-          primaryColor: primaryColor.id,
+          primaryColor: primaryColor.id
         });
 
         resolve(value);
@@ -410,11 +410,11 @@ appearance.changeSecondaryColor = secondaryColor => {
 
     userDocumentReference
       .update({
-        "theme.secondaryColor": secondaryColor.id,
+        "theme.secondaryColor": secondaryColor.id
       })
       .then(value => {
         analytics.logEvent("change_secondary_color", {
-          secondaryColor: secondaryColor.id,
+          secondaryColor: secondaryColor.id
         });
 
         resolve(value);
@@ -447,11 +447,11 @@ appearance.changeDark = dark => {
 
     userDocumentReference
       .update({
-        "theme.dark": dark,
+        "theme.dark": dark
       })
       .then(value => {
         analytics.logEvent("change_dark", {
-          dark: dark,
+          dark: dark
         });
 
         resolve(value);
@@ -484,11 +484,11 @@ appearance.changeSyncAppearance = syncAppearance => {
 
     userDocumentReference
       .update({
-        "theme.syncAppearance": syncAppearance,
+        "theme.syncAppearance": syncAppearance
       })
       .then(value => {
         analytics.logEvent("change_sync_appearance", {
-          syncAppearance: syncAppearance,
+          syncAppearance: syncAppearance
         });
 
         resolve(value);
@@ -521,7 +521,7 @@ appearance.resetTheme = () => {
 
     userDocumentReference
       .update({
-        theme: firebase.firestore.FieldValue.delete(),
+        theme: firebase.firestore.FieldValue.delete()
       })
       .then(value => {
         analytics.logEvent("reset_theme");

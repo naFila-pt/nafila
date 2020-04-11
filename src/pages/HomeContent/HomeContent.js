@@ -21,32 +21,32 @@ import { ReactComponent as EmailNotification } from "../../assets/icons/email_no
 const useStyles = makeStyles({
   gridContainer: {
     alignContent: "center",
-    marginTop: "-1em",
+    marginTop: "-1em"
   },
   gridItemIntro: {
     textAlign: "center",
-    marginTop: "-2.5em",
+    marginTop: "-2.5em"
   },
   gridItem: {
     textAlign: "center",
-    paddingTop: "1.8em",
+    paddingTop: "1.8em"
   },
   bottomButton: {
     position: "absolute",
     left: 0,
     bottom: "14vh",
     width: "100%",
-    textAlign: "center",
+    textAlign: "center"
   },
   inputRoot: {
     width: "calc(100% - 4em)",
     textAlign: "center",
     fontWeight: 900,
-    margin: "0 2em",
+    margin: "0 2em"
   },
   inputElement: {
-    textAlign: "center",
-  },
+    textAlign: "center"
+  }
 });
 
 const HomeContent = ({ openSnackbar }) => {
@@ -63,7 +63,7 @@ const HomeContent = ({ openSnackbar }) => {
     name: null,
     currentTicket: null,
     remainingInQueue: null,
-    ownTicketNumber: null,
+    ownTicketNumber: null
   });
 
   const handleNextButton = () => {
@@ -108,7 +108,7 @@ const HomeContent = ({ openSnackbar }) => {
         return {
           ...prevState,
           name: queueData.name,
-          remainingInQueue: queueData.remainingTicketsInQueue,
+          remainingInQueue: queueData.remainingTicketsInQueue
         };
       });
 
@@ -126,7 +126,7 @@ const HomeContent = ({ openSnackbar }) => {
 
       const queueInfo = await addMeToQueue({
         queueId: queueId.toUpperCase(),
-        email: userEmail,
+        email: userEmail
       });
       const queueData = queueInfo.data;
 
@@ -135,7 +135,7 @@ const HomeContent = ({ openSnackbar }) => {
           ...prevState,
           ownTicketNumber: queueData.ticket.number,
           currentTicket: queueData.queue.currentTicketNumber,
-          remainingInQueue: queueData.queue.remainingTicketsInQueue - 1, // remove current user
+          remainingInQueue: queueData.queue.remainingTicketsInQueue - 1 // remove current user
         };
       });
 
@@ -208,7 +208,7 @@ const HomeContent = ({ openSnackbar }) => {
               style={{
                 marginBottom: "2.2em",
                 padding: "0 3em",
-                justifyContent: "center",
+                justifyContent: "center"
               }}
             >
               <Grid item>
@@ -220,7 +220,7 @@ const HomeContent = ({ openSnackbar }) => {
                     color: "#401D7F",
                     fontSize: "2.5em",
                     lineHeight: "1em",
-                    fontWeight: 900,
+                    fontWeight: 900
                   }}
                 >
                   {ticketsStoreInfo.remainingInQueue} {t("home#queue_people")}
@@ -240,14 +240,14 @@ const HomeContent = ({ openSnackbar }) => {
             variant="h4"
             style={{ padding: "0 2em" }}
             dangerouslySetInnerHTML={{
-              __html: t("home#notification_description"),
+              __html: t("home#notification_description")
             }}
           />
           <Input
             placeholder={t("home#notification_inputPlaceholder")}
             classes={{ root: classes.inputRoot, input: classes.inputElement }}
             style={{
-              marginTop: "2.5em",
+              marginTop: "2.5em"
             }}
             value={userEmail}
             onChange={handleUserEmailChange}
@@ -256,7 +256,7 @@ const HomeContent = ({ openSnackbar }) => {
             <div style={{ marginBottom: "1.75em", padding: "0 2em" }}>
               <span
                 dangerouslySetInnerHTML={{
-                  __html: t("home#notification_terms"),
+                  __html: t("home#notification_terms")
                 }}
               />
               {` `}

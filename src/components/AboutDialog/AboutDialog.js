@@ -13,7 +13,7 @@ import {
   IconButton,
   List,
   ListItem,
-  ListItemText,
+  ListItemText
 } from "@material-ui/core";
 
 import { Close as CloseIcon } from "@material-ui/icons";
@@ -22,8 +22,8 @@ const styles = theme => ({
   closeButton: {
     position: "absolute",
     right: theme.spacing(1),
-    top: theme.spacing(1),
-  },
+    top: theme.spacing(1)
+  }
 });
 
 class AboutDialog extends Component {
@@ -81,7 +81,7 @@ AboutDialog.propTypes = {
   dialogProps: PropTypes.object.isRequired,
 
   // Custom Properties
-  user: PropTypes.object,
+  user: PropTypes.object
 };
 
 export default withStyles(styles)(AboutDialog);

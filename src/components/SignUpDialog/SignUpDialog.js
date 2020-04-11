@@ -18,7 +18,7 @@ import {
   Grid,
   Button,
   Divider,
-  TextField,
+  TextField
 } from "@material-ui/core";
 
 import { Close as CloseIcon } from "@material-ui/icons";
@@ -32,20 +32,20 @@ const styles = theme => ({
   closeButton: {
     position: "absolute",
     right: theme.spacing(1),
-    top: theme.spacing(1),
+    top: theme.spacing(1)
   },
 
   icon: {
-    marginRight: theme.spacing(0.5),
+    marginRight: theme.spacing(0.5)
   },
 
   divider: {
-    margin: "auto",
+    margin: "auto"
   },
 
   grid: {
-    marginBottom: theme.spacing(2),
-  },
+    marginBottom: theme.spacing(2)
+  }
 });
 
 const initialState = {
@@ -54,7 +54,7 @@ const initialState = {
   emailAddressConfirmation: "",
   password: "",
   passwordConfirmation: "",
-  errors: null,
+  errors: null
 };
 
 class SignUpDialog extends Component {
@@ -69,7 +69,7 @@ class SignUpDialog extends Component {
       emailAddress,
       emailAddressConfirmation,
       password,
-      passwordConfirmation,
+      passwordConfirmation
     } = this.state;
 
     const errors = validate(
@@ -77,25 +77,25 @@ class SignUpDialog extends Component {
         emailAddress: emailAddress,
         emailAddressConfirmation: emailAddressConfirmation,
         password: password,
-        passwordConfirmation: passwordConfirmation,
+        passwordConfirmation: passwordConfirmation
       },
       {
         emailAddress: constraints.emailAddress,
         emailAddressConfirmation: constraints.emailAddressConfirmation,
         password: constraints.password,
-        passwordConfirmation: constraints.passwordConfirmation,
+        passwordConfirmation: constraints.passwordConfirmation
       }
     );
 
     if (errors) {
       this.setState({
-        errors: errors,
+        errors: errors
       });
     } else {
       this.setState(
         {
           performingAction: true,
-          errors: null,
+          errors: null
         },
         () => {
           authentication
@@ -122,7 +122,7 @@ class SignUpDialog extends Component {
             })
             .finally(() => {
               this.setState({
-                performingAction: false,
+                performingAction: false
               });
             });
         }
@@ -133,7 +133,7 @@ class SignUpDialog extends Component {
   signInWithAuthProvider = providerId => {
     this.setState(
       {
-        performingAction: true,
+        performingAction: true
       },
       () => {
         authentication
@@ -171,7 +171,7 @@ class SignUpDialog extends Component {
           })
           .finally(() => {
             this.setState({
-              performingAction: false,
+              performingAction: false
             });
           });
       }
@@ -183,7 +183,7 @@ class SignUpDialog extends Component {
       emailAddress,
       emailAddressConfirmation,
       password,
-      passwordConfirmation,
+      passwordConfirmation
     } = this.state;
 
     if (
@@ -214,7 +214,7 @@ class SignUpDialog extends Component {
     const emailAddress = event.target.value;
 
     this.setState({
-      emailAddress: emailAddress,
+      emailAddress: emailAddress
     });
   };
 
@@ -222,7 +222,7 @@ class SignUpDialog extends Component {
     const emailAddressConfirmation = event.target.value;
 
     this.setState({
-      emailAddressConfirmation: emailAddressConfirmation,
+      emailAddressConfirmation: emailAddressConfirmation
     });
   };
 
@@ -230,7 +230,7 @@ class SignUpDialog extends Component {
     const password = event.target.value;
 
     this.setState({
-      password: password,
+      password: password
     });
   };
 
@@ -238,7 +238,7 @@ class SignUpDialog extends Component {
     const passwordConfirmation = event.target.value;
 
     this.setState({
-      passwordConfirmation: passwordConfirmation,
+      passwordConfirmation: passwordConfirmation
     });
   };
 
@@ -255,7 +255,7 @@ class SignUpDialog extends Component {
       emailAddressConfirmation,
       password,
       passwordConfirmation,
-      errors,
+      errors
     } = this.state;
 
     return (
@@ -506,7 +506,7 @@ SignUpDialog.propTypes = {
   dialogProps: PropTypes.object.isRequired,
 
   // Custom Functions
-  openSnackbar: PropTypes.func.isRequired,
+  openSnackbar: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(SignUpDialog);

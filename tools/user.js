@@ -9,7 +9,7 @@ const packageFile = require("../package");
 
 admin.initializeApp({
   credential: admin.credential.applicationDefault(),
-  databaseURL: packageFile.config.firebase.databaseUrl,
+  databaseURL: packageFile.config.firebase.databaseUrl
 });
 
 const auth = admin.auth();
@@ -30,34 +30,34 @@ program
       .prompt([
         {
           type: "input",
-          name: "uid",
+          name: "uid"
         },
         {
           type: "input",
-          name: "email",
+          name: "email"
         },
         {
           type: "confirm",
           name: "emailVerified",
-          default: false,
+          default: false
         },
         {
           type: "input",
-          name: "password",
+          name: "password"
         },
         {
           type: "input",
-          name: "displayName",
+          name: "displayName"
         },
         {
           type: "input",
-          name: "photoURL",
+          name: "photoURL"
         },
         {
           type: "confirm",
           name: "disabled",
-          default: false,
-        },
+          default: false
+        }
       ])
       .then(value => {
         if (!value) {
@@ -84,8 +84,8 @@ program
           .prompt([
             {
               type: "confirm",
-              name: "create",
-            },
+              name: "create"
+            }
           ])
           .then(value => {
             if (!value) {
@@ -105,7 +105,7 @@ program
                 password: user.password || undefined,
                 displayName: user.displayName || undefined,
                 photoURL: user.photoURL || undefined,
-                disabled: user.disabled,
+                disabled: user.disabled
               })
               .then(() => {
                 process.exit(0);
@@ -207,28 +207,28 @@ program
               {
                 type: "input",
                 name: "email",
-                default: currentUser.email,
+                default: currentUser.email
               },
               {
                 type: "confirm",
                 name: "emailVerified",
-                default: currentUser.emailVerified,
+                default: currentUser.emailVerified
               },
               {
                 type: "input",
                 name: "displayName",
-                default: currentUser.displayName,
+                default: currentUser.displayName
               },
               {
                 type: "input",
                 name: "photoURL",
-                default: currentUser.photoURL,
+                default: currentUser.photoURL
               },
               {
                 type: "confirm",
                 name: "disabled",
-                default: currentUser.disabled,
-              },
+                default: currentUser.disabled
+              }
             ])
             .then(newUser => {
               if (!newUser) {
@@ -253,7 +253,7 @@ program
               }
 
               const table = new Table({
-                head: ["Key", "Current Value", "New Value"],
+                head: ["Key", "Current Value", "New Value"]
               });
 
               table.push(
@@ -262,7 +262,7 @@ program
                 [
                   "displayName",
                   currentUser.displayName || "",
-                  displayName || "",
+                  displayName || ""
                 ],
                 ["photoURL", currentUser.photoURL || "", photoURL || ""],
                 ["disabled", currentUser.disabled, disabled]
@@ -274,8 +274,8 @@ program
                 .prompt([
                   {
                     type: "confirm",
-                    name: "update",
-                  },
+                    name: "update"
+                  }
                 ])
                 .then(value => {
                   if (!value) {
@@ -293,7 +293,7 @@ program
                       emailVerified: emailVerified,
                       displayName: displayName,
                       photoURL: photoURL,
-                      disabled: disabled,
+                      disabled: disabled
                     })
                     .then(() => {
                       process.exit(0);
@@ -326,28 +326,28 @@ program
             {
               type: "input",
               name: "email",
-              default: currentUser.email,
+              default: currentUser.email
             },
             {
               type: "confirm",
               name: "emailVerified",
-              default: currentUser.emailVerified,
+              default: currentUser.emailVerified
             },
             {
               type: "input",
               name: "displayName",
-              default: currentUser.displayName,
+              default: currentUser.displayName
             },
             {
               type: "input",
               name: "photoURL",
-              default: currentUser.photoURL,
+              default: currentUser.photoURL
             },
             {
               type: "confirm",
               name: "disabled",
-              default: currentUser.disabled,
-            },
+              default: currentUser.disabled
+            }
           ])
           .then(newUser => {
             if (!newUser) {
@@ -372,7 +372,7 @@ program
             }
 
             const table = new Table({
-              head: ["Key", "Current Value", "New Value"],
+              head: ["Key", "Current Value", "New Value"]
             });
 
             table.push(
@@ -389,8 +389,8 @@ program
               .prompt([
                 {
                   type: "confirm",
-                  name: "update",
-                },
+                  name: "update"
+                }
               ])
               .then(value => {
                 if (!value) {
@@ -408,7 +408,7 @@ program
                     emailVerified: emailVerified,
                     displayName: displayName,
                     photoURL: photoURL,
-                    disabled: disabled,
+                    disabled: disabled
                   })
                   .then(() => {
                     process.exit(0);

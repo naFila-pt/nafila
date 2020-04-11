@@ -18,7 +18,7 @@ import {
   Hidden,
   Checkbox,
   Switch,
-  Button,
+  Button
 } from "@material-ui/core";
 
 import { FiberManualRecord as FiberManualRecordIcon } from "@material-ui/icons";
@@ -34,7 +34,7 @@ class AppearanceTab extends Component {
     this.state = {
       performingAction: false,
       primaryColorLabelWidth: 0,
-      secondaryColorLabelWidth: 0,
+      secondaryColorLabelWidth: 0
     };
 
     this.primaryColorLabel = React.createRef();
@@ -64,14 +64,14 @@ class AppearanceTab extends Component {
 
     this.setState(
       {
-        performingAction: true,
+        performingAction: true
       },
       () => {
         appearance
           .changeTheme({
             primaryColor: primaryColor,
             secondaryColor: theme.secondaryColor.id,
-            dark: theme.dark,
+            dark: theme.dark
           })
           .catch(reason => {
             const code = reason.code;
@@ -85,7 +85,7 @@ class AppearanceTab extends Component {
           })
           .finally(() => {
             this.setState({
-              performingAction: false,
+              performingAction: false
             });
           });
       }
@@ -115,14 +115,14 @@ class AppearanceTab extends Component {
 
     this.setState(
       {
-        performingAction: true,
+        performingAction: true
       },
       () => {
         appearance
           .changeTheme({
             primaryColor: theme.primaryColor.id,
             secondaryColor: secondaryColor,
-            dark: theme.dark,
+            dark: theme.dark
           })
           .catch(reason => {
             const code = reason.code;
@@ -136,7 +136,7 @@ class AppearanceTab extends Component {
           })
           .finally(() => {
             this.setState({
-              performingAction: false,
+              performingAction: false
             });
           });
       }
@@ -162,14 +162,14 @@ class AppearanceTab extends Component {
 
     this.setState(
       {
-        performingAction: true,
+        performingAction: true
       },
       () => {
         appearance
           .changeTheme({
             primaryColor: theme.primaryColor.id,
             secondaryColor: theme.secondaryColor.id,
-            dark: dark,
+            dark: dark
           })
           .catch(reason => {
             const code = reason.code;
@@ -183,7 +183,7 @@ class AppearanceTab extends Component {
           })
           .finally(() => {
             this.setState({
-              performingAction: false,
+              performingAction: false
             });
           });
       }
@@ -203,7 +203,7 @@ class AppearanceTab extends Component {
 
     this.setState(
       {
-        performingAction: true,
+        performingAction: true
       },
       () => {
         appearance
@@ -220,7 +220,7 @@ class AppearanceTab extends Component {
           })
           .finally(() => {
             this.setState({
-              performingAction: false,
+              performingAction: false
             });
           });
       }
@@ -238,7 +238,7 @@ class AppearanceTab extends Component {
     const {
       performingAction,
       primaryColorLabelWidth,
-      secondaryColorLabelWidth,
+      secondaryColorLabelWidth
     } = this.state;
 
     return (
@@ -428,7 +428,7 @@ class AppearanceTab extends Component {
   componentDidMount() {
     this.setState({
       primaryColorLabelWidth: this.primaryColorLabel.current.offsetWidth,
-      secondaryColorLabelWidth: this.secondaryColorLabel.current.offsetWidth,
+      secondaryColorLabelWidth: this.secondaryColorLabel.current.offsetWidth
     });
   }
 }
@@ -438,7 +438,7 @@ AppearanceTab.propTypes = {
   theme: PropTypes.object.isRequired,
 
   // Functions
-  openSnackbar: PropTypes.func.isRequired,
+  openSnackbar: PropTypes.func.isRequired
 };
 
 export default AppearanceTab;

@@ -18,26 +18,26 @@ import { ReactComponent as EmailNotification } from "../../assets/icons/onboardi
 const useStyles = makeStyles({
   gridContainer: {
     alignContent: "center",
-    marginTop: "-1em",
+    marginTop: "-1em"
   },
   gridItemIntro: {
     textAlign: "center",
-    marginTop: "-2.5em",
+    marginTop: "-2.5em"
   },
   gridItem: {
     textAlign: "center",
-    paddingTop: "1.8em",
+    paddingTop: "1.8em"
   },
   inputRoot: {
     width: "calc(100% - 4em)",
     textAlign: "center",
     fontWeight: 900,
-    margin: "0 2em",
+    margin: "0 2em"
   },
   inputElement: {
     textAlign: "center",
-    color: "#4C0788",
-  },
+    color: "#4C0788"
+  }
 });
 
 const OnBoardingContent = () => {
@@ -84,7 +84,7 @@ const OnBoardingContent = () => {
             variant="h4"
             style={{ padding: "0 1em" }}
             dangerouslySetInnerHTML={{
-              __html: t("onboarding#store_description"),
+              __html: t("onboarding#store_description")
             }}
           />
         </Grid>
@@ -102,7 +102,7 @@ const OnBoardingContent = () => {
             variant="h4"
             style={{ padding: "0 1.5em" }}
             dangerouslySetInnerHTML={{
-              __html: t("onboarding#useCode_description"),
+              __html: t("onboarding#useCode_description")
             }}
           />
           <Input
@@ -110,7 +110,7 @@ const OnBoardingContent = () => {
             classes={{ root: classes.inputRoot, input: classes.inputElement }}
             style={{
               fontSize: "1.625em",
-              margin: "0.9em 0 0.385em",
+              margin: "0.9em 0 0.385em"
             }}
             disabled
           />
@@ -139,7 +139,7 @@ const OnBoardingContent = () => {
             gutterBottom
             style={{ padding: "0 1em" }}
             dangerouslySetInnerHTML={{
-              __html: t("onboarding#insertEmail_description"),
+              __html: t("onboarding#insertEmail_description")
             }}
           />
           <EmailNotification className="email-icon" />
@@ -148,14 +148,14 @@ const OnBoardingContent = () => {
             gutterBottom
             style={{ marginBottom: "2em" }}
             dangerouslySetInnerHTML={{
-              __html: t("onboarding#insertEmail_notification"),
+              __html: t("onboarding#insertEmail_notification")
             }}
           />
           <Button
             onClick={endOnBoarding}
             forward
             dangerouslySetInnerHTML={{
-              __html: t("onboarding#insertEmail_button"),
+              __html: t("onboarding#insertEmail_button")
             }}
           />
         </Grid>

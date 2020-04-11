@@ -14,14 +14,14 @@ import { PRIMARY_COLOR } from "../../../constants/ColorConstants";
 import {
   ADMIN_RECOVER_PASSWORD_PATH,
   ADMIN_QUEUE_MANAGEMENT_PATH,
-  ADMIN_PRE_QUEUE_PATH,
+  ADMIN_PRE_QUEUE_PATH
 } from "../../../constants/RoutesConstants";
 import * as S from "./style";
 import { HeadlineContainer, ButtonsContainer } from "../common";
 
 const inputProps = {
   fullWidth: true,
-  required: true,
+  required: true
 };
 
 function Login({ openSnackbar }) {
@@ -29,13 +29,13 @@ function Login({ openSnackbar }) {
   const [fields, setFields] = useState();
   const [loading, setLoading] = useState(false);
   const mappedMessages = {
-    "auth/wrong-password": t("admin#login_wrongPassword"),
+    "auth/wrong-password": t("admin#login_wrongPassword")
   };
 
   const handleChange = ({ target: { name, value } }) => {
     setFields({
       ...fields,
-      [name]: value,
+      [name]: value
     });
   };
 

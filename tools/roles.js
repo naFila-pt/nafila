@@ -8,7 +8,7 @@ const packageFile = require("../package");
 
 admin.initializeApp({
   credential: admin.credential.applicationDefault(),
-  databaseURL: packageFile.config.firebase.databaseUrl,
+  databaseURL: packageFile.config.firebase.databaseUrl
 });
 
 const auth = admin.auth();

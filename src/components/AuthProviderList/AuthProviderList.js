@@ -27,8 +27,8 @@ class AuthProviderList extends Component {
           {authProviders.map(authProvider => {
             const AuthProviderButton = withStyles({
               root: {
-                color: authProvider.color,
-              },
+                color: authProvider.color
+              }
             })(Button);
 
             return (
@@ -49,7 +49,7 @@ class AuthProviderList extends Component {
 
 AuthProviderList.defaultProps = {
   gutterBottom: false,
-  performingAction: false,
+  performingAction: false
 };
 
 AuthProviderList.propTypes = {
@@ -58,7 +58,7 @@ AuthProviderList.propTypes = {
   performingAction: PropTypes.bool,
 
   // Events
-  onAuthProviderClick: PropTypes.func.isRequired,
+  onAuthProviderClick: PropTypes.func.isRequired
 };
 
 export default AuthProviderList;

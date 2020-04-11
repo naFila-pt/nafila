@@ -15,7 +15,7 @@ import {
   Hidden,
   TextField,
   Tooltip,
-  IconButton,
+  IconButton
 } from "@material-ui/core";
 
 import { Lock as LockIcon } from "@material-ui/icons";
@@ -29,7 +29,7 @@ const initialState = {
   password: "",
   passwordConfirmation: "",
   performingAction: false,
-  errors: null,
+  errors: null
 };
 
 class SecurityTab extends Component {
@@ -45,7 +45,7 @@ class SecurityTab extends Component {
     }
 
     this.setState({
-      showingField: fieldId,
+      showingField: fieldId
     });
   };
 
@@ -55,7 +55,7 @@ class SecurityTab extends Component {
         showingField: "",
         password: "",
         passwordConfirmation: "",
-        errors: null,
+        errors: null
       },
       () => {
         if (callback && typeof callback === "function") {
@@ -72,16 +72,16 @@ class SecurityTab extends Component {
 
         const errors = validate(
           {
-            password: password,
+            password: password
           },
           {
-            password: constraints.password,
+            password: constraints.password
           }
         );
 
         if (errors) {
           this.setState({
-            errors: errors,
+            errors: errors
           });
 
           return;
@@ -89,7 +89,7 @@ class SecurityTab extends Component {
 
         this.setState(
           {
-            errors: null,
+            errors: null
           },
           () => {
             this.showField("password-confirmation");
@@ -112,17 +112,17 @@ class SecurityTab extends Component {
     const errors = validate(
       {
         password: password,
-        passwordConfirmation: passwordConfirmation,
+        passwordConfirmation: passwordConfirmation
       },
       {
         password: constraints.password,
-        passwordConfirmation: constraints.passwordConfirmation,
+        passwordConfirmation: constraints.passwordConfirmation
       }
     );
 
     if (errors) {
       this.setState({
-        errors: errors,
+        errors: errors
       });
 
       return;
@@ -130,12 +130,12 @@ class SecurityTab extends Component {
 
     this.setState(
       {
-        errors: null,
+        errors: null
       },
       () => {
         this.setState(
           {
-            performingAction: true,
+            performingAction: true
           },
           () => {
             authentication
@@ -157,7 +157,7 @@ class SecurityTab extends Component {
               })
               .finally(() => {
                 this.setState({
-                  performingAction: false,
+                  performingAction: false
                 });
               });
           }
@@ -196,7 +196,7 @@ class SecurityTab extends Component {
     const password = event.target.value;
 
     this.setState({
-      password: password,
+      password: password
     });
   };
 
@@ -208,7 +208,7 @@ class SecurityTab extends Component {
     const passwordConfirmation = event.target.value;
 
     this.setState({
-      passwordConfirmation: passwordConfirmation,
+      passwordConfirmation: passwordConfirmation
     });
   };
 
@@ -221,7 +221,7 @@ class SecurityTab extends Component {
       password,
       passwordConfirmation,
       performingAction,
-      errors,
+      errors
     } = this.state;
 
     const hasChangedPassword = userData && userData.lastPasswordChange;
@@ -339,7 +339,7 @@ SecurityTab.propTypes = {
   userData: PropTypes.object,
 
   // Functions
-  openSnackbar: PropTypes.func.isRequired,
+  openSnackbar: PropTypes.func.isRequired
 };
 
 export default SecurityTab;

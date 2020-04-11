@@ -11,7 +11,7 @@ import Ticket from "../../../../assets/icons/ticket.svg";
 import { firestore, functions } from "../../../../firebase";
 import {
   ADMIN_ADD_CUSTOMER_PATH,
-  ADMIN_END_QUEUE_PATH,
+  ADMIN_END_QUEUE_PATH
 } from "../../../../constants/RoutesConstants";
 
 import { ButtonsContainer } from "../../common";
@@ -153,7 +153,7 @@ function Manage({ queueId, openSnackbar }) {
                     requestingNext
                       ? "admin#queueManagement_wait"
                       : "admin#queueManagement_nextInQueue"
-                  ),
+                  )
                 }}
               />
             </Button>
@@ -169,7 +169,7 @@ function Manage({ queueId, openSnackbar }) {
             <Button variant="gray" href={ADMIN_END_QUEUE_PATH}>
               <div
                 dangerouslySetInnerHTML={{
-                  __html: t("admin#queueManagement_endQueue"),
+                  __html: t("admin#queueManagement_endQueue")
                 }}
               />
             </Button>

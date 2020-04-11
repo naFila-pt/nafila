@@ -1,6 +1,6 @@
 import {
   PRIMARY_COLOR,
-  SECONDARY_COLOR,
+  SECONDARY_COLOR
 } from "../../../constants/ColorConstants";
 import styled from "styled-components";
 

@@ -84,7 +84,7 @@ class EmptyState extends Component {
 EmptyState.defaultProps = {
   type: "content",
   size: "medium",
-  padding: 2,
+  padding: 2
 };
 
 EmptyState.propTypes = {
@@ -94,7 +94,7 @@ EmptyState.propTypes = {
   padding: PropTypes.number,
   icon: PropTypes.element,
   title: PropTypes.string,
-  description: PropTypes.string,
+  description: PropTypes.string
 };
 
 export default EmptyState;

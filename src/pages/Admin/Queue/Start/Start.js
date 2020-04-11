@@ -83,7 +83,7 @@ function Start({ user, setQueue, openSnackbar }) {
 
       <EmailWithCode
         dangerouslySetInnerHTML={{
-          __html: t("admin#queueManagement_emailWithCode"),
+          __html: t("admin#queueManagement_emailWithCode")
         }}
       />
 

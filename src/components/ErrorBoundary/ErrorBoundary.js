@@ -13,7 +13,7 @@ class ErrorBoundary extends Component {
     super(props);
 
     this.state = {
-      hasError: false, //,
+      hasError: false //,
       // eventId: null
     };
   }
@@ -50,7 +50,7 @@ class ErrorBoundary extends Component {
 
 ErrorBoundary.propTypes = {
   // Properties
-  children: PropTypes.array.isRequired,
+  children: PropTypes.array.isRequired
 };
 
 export default ErrorBoundary;

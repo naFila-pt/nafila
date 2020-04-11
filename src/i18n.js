@@ -251,15 +251,15 @@ Lisboa (?), XXX Março 2020
           "admin#queuePoster_queueCode": "Código da Fila",
           "admin#queuePoster_enterQueueWith":
             "Entre &nbsp <b>nafila</b> &nbsp com...",
-          "admin#queuePoster_brandSlogan": "<b>naFila</b>, sem filas.",
-        },
-      },
+          "admin#queuePoster_brandSlogan": "<b>naFila</b>, sem filas."
+        }
+      }
     },
     fallbackLng: "en",
 
     interpolation: {
-      escapeValue: false,
-    },
+      escapeValue: false
+    }
   });
 
 export default i18n;
