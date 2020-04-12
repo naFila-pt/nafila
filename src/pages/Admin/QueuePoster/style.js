@@ -31,16 +31,22 @@ export const PosterContainer = styled.div`
   }
 
   .queue-enter-with {
+    display: flex;
+    justify-content: flex-start;
     font-size: 22px;
-    margin: 0 0 20px;
   }
 
   .queue-icon {
-    display: inline-block;
-    width: 33%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1vh;
   }
 
   .brand-slogan {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 50px;
     color: #111;
     font-size: 24px;
 
