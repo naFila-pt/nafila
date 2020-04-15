@@ -46,6 +46,11 @@ const useStyles = makeStyles({
   },
   inputElement: {
     textAlign: "center"
+  },
+  inputUnderline: {
+    "&:after": {
+      borderBottomColor: "#4C0788"
+    }
   }
 });
 
@@ -182,7 +187,11 @@ const HomeContent = ({ openSnackbar }) => {
           </Typography>
           <Input
             placeholder={t("home#insertCode_inputPlaceholder")}
-            classes={{ root: classes.inputRoot, input: classes.inputElement }}
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputElement,
+              underline: classes.inputUnderline
+            }}
             value={queueId}
             onChange={handleStoreCodeChange}
           />
