@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Typography, TextField } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-
 import SignUpBg from "../../../assets/bg/main.svg";
 import Layout from "../../../components/AdminLayout";
 import Button from "../../../components/Button";
 import Loader from "../../../components/Loader";
+import PasswordInput from "../../../components/PasswordInput";
 import {
   PRIMARY_COLOR,
   SECONDARY_COLOR
@@ -137,9 +137,8 @@ function SignUp({ openSnackbar }) {
           {...inputProps}
         />
 
-        <TextField
+        <PasswordInput
           label={t("admin#signup_passwordLabel")}
-          type="password"
           name="password"
           onChange={e => handleChange(e)}
           min="6"
