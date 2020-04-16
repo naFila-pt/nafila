@@ -17,7 +17,13 @@ class Router extends Component {
     // Properties
     const { user } = this.props;
 
-    const shouldSkipOnBoarding = localStorage.getItem("skipOnBoarding");
+    let shouldSkipOnBoarding;
+
+    try {
+      shouldSkipOnBoarding = localStorage.getItem("skipOnBoarding");
+    } catch (error) {
+      shouldSkipOnBoarding = false;
+    }
 
     return (
       <BrowserRouter basename={process.env.REACT_APP_BASENAME}>

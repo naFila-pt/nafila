@@ -7698,9 +7698,9 @@ md5.js@^1.3.4:
     safe-buffer "^5.1.2"
 
 mdi-material-ui@^6.12.0:
-  version "6.12.0"
-  resolved "https://registry.yarnpkg.com/mdi-material-ui/-/mdi-material-ui-6.12.0.tgz#b7225f76d15acceee1edc796b6b4b9714a5bc378"
-  integrity sha512-UwhNsojXfpSe4LVrxTlasgy4D3RXXCTcLo1FJ8RpflmBaPAsWEHhKeCwtQwGCkpB6m6C+asiGjbGI77VJwI0AA==
+  version "6.13.2"
+  resolved "https://registry.yarnpkg.com/mdi-material-ui/-/mdi-material-ui-6.13.2.tgz#0bac3c544be8faf4d639dd195306810cb630e034"
+  integrity sha512-JyFOQjs6XmAIxesSeItriwre2vY5cKbSVab5BrLp6NBPBva+58ehClJgW9HOBN2AWZHTyueugldWX/u+4SjsIg==
 
 mdn-data@2.0.4:
   version "2.0.4"

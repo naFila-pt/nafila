@@ -12,7 +12,8 @@ i18n
           appTitle: "na<b>fila</b>",
           "global#return_button": "Retroceder",
           "global#wait_please": "Aguarde ...",
-
+          "global#cookie_banner": "Ao utilizar este website, aceita a nossa",
+          "global#cookie_bannerLink": " política de privacidade.",
           "onboarding#intro_welcome": "Bem Vindo!",
           "onboarding#intro_pitch": "na<b>fila</b>. Sem filas.",
           "onboarding#store_title": "É simples!",
@@ -250,7 +251,7 @@ Porto, 10 Abril 2020
           // Queue Poster
           "admin#queuePoster_queueCode": "Código da Fila",
           "admin#queuePoster_enterQueueWith":
-            "Entre &nbsp <b>nafila</b> &nbsp com...",
+            "Entre  <b>nafila</b> &nbsp com...",
           "admin#queuePoster_brandSlogan": "<b>naFila</b>, sem filas."
         }
       }

@@ -228,7 +228,9 @@ authentication.sendSignInLinkToEmail = emailAddress => {
       .then(value => {
         analytics.logEvent("send_sign_in_link_to_email");
 
-        localStorage.setItem("emailAddress", emailAddress);
+        try {
+          localStorage.setItem("emailAddress", emailAddress);
+        } catch (error) {}
 
         resolve(value);
       })
@@ -259,7 +261,9 @@ authentication.signInWithEmailLink = (emailAddress, emailLink) => {
           method: "email-link"
         });
 
-        localStorage.removeItem("emailAddress");
+        try {
+          localStorage.removeItem("emailAddress");
+        } catch (error) {}
 
         resolve(value);
       })
