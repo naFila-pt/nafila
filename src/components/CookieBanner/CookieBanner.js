@@ -8,7 +8,6 @@ import { PRIVACY_PATH } from "../../constants/RoutesConstants";
 
 const CookieBannerContainer = styled.div`
   width: 100%;
-  max-width: 600px;
   height: 56px;
   background-color: #ffc836;
   text-align: center;
