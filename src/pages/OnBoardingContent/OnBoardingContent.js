@@ -12,6 +12,13 @@ import bgIntro from "../../assets/bg/user_intro.svg";
 import bgStore from "../../assets/bg/user_store.svg";
 import bgMain from "../../assets/bg/user_onboard_main.svg";
 
+import { ReactComponent as NaFilaIcon } from "../../assets/icons/nafila-text.svg";
+import { ReactComponent as NaFilaIconBanner } from "../../assets/icons/nafila-text-second.svg";
+import { ReactComponent as Tech4CovidIcon } from "../../assets/icons/tech4covid19-text.svg";
+import { ReactComponent as GoogleIcon } from "../../assets/icons/google-icon.svg";
+import { ReactComponent as NOSIcon } from "../../assets/icons/nos-icon.svg";
+import { ReactComponent as AmazonIcon } from "../../assets/icons/amazon-icon.svg";
+
 import { ReactComponent as Logo } from "../../assets/logo.svg";
 import { ReactComponent as EmailNotification } from "../../assets/icons/onboarding_email_notification.svg";
 
@@ -37,12 +44,54 @@ const useStyles = makeStyles({
   inputElement: {
     textAlign: "center",
     color: "#4C0788"
+  },
+  linkLabel: {
+    marginTop: "10px",
+    fontSize: "20px"
+  },
+  column: {
+    display: "flex",
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    "@media (min-width:768px)": {
+      width: "50%"
+    }
+  },
+  logoIcon: {
+    margin: "3em 0 1.5em 0"
+  },
+  desktopButtons: {
+    display: "none",
+    flexDirection: "column",
+    textAlign: "center",
+    "@media (min-width:768px)": {
+      display: "flex"
+    }
+  },
+  mobileButtons: {
+    display: "flex",
+    flexDirection: "column",
+    textAlign: "center",
+    "@media (min-width:768px)": {
+      display: "none"
+    }
+  },
+  footer: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(19em, 1fr))",
+    width: "100%",
+    height: "30vh",
+    backgroundColor: "#8464AC",
+    padding: "10px 15% 10px 15%"
   }
 });
 
 const OnBoardingContent = () => {
   const classes = useStyles();
   const { t } = useTranslation();
+  const [activeMenu, setActiveMenu] = React.useState("home");
 
   const endOnBoarding = () => {
     try {
@@ -51,6 +100,116 @@ const OnBoardingContent = () => {
     window.location.href = "/?skipIntro";
   };
 
+  const HomeContent = () => (
+    <div style={{ height: "100vh" }}>
+      <div className="Home-Container-Wrapper">
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "10%"
+          }}
+        >
+          <div>
+            <NaFilaIconBanner />
+          </div>
+        </div>
+        <Grid container direction="column" className={classes.column}>
+          <div
+            style={{
+              height: "100%",
+              display: "grid",
+              gridTemplateRows: "20% 50% 30%",
+              alignItems: "center"
+            }}
+          >
+            <Grid item className={classes.gridItemIntro}>
+              <Typography
+                variant="h1"
+                style={{ marginBottom: "0.3em", fontSize: "2.375em" }}
+              >
+                {t("onboarding#intro_welcome")}
+              </Typography>
+              <span
+                style={{ fontSize: "24px" }}
+                dangerouslySetInnerHTML={{
+                  __html: t("onboarding#intro_pitch")
+                }}
+              />
+            </Grid>
+            <Grid item className={classes.gridItemIntro}>
+              <Logo className={classes.logoIcon} />
+            </Grid>
+            <Grid className={classes.desktopButtons}>
+              <Button
+                forward
+                onClick={() => setActiveMenu("onboarding")}
+                dangerouslySetInnerHTML={{
+                  __html: t("home#lojista_label")
+                }}
+              />
+            </Grid>
+            <Grid className={classes.mobileButtons}>
+              <Button
+                forward
+                onClick={() => setActiveMenu("onboarding")}
+                dangerouslySetInnerHTML={{
+                  __html: t("home#help_label")
+                }}
+              />
+              <a
+                href="http://google.pt"
+                rel="noopener noreferrer"
+                target="_blank"
+                className={classes.linkLabel}
+              >
+                {t("home#lojista_label")}
+              </a>
+            </Grid>
+          </div>
+        </Grid>
+      </div>
+      <Grid className={classes.footer}>
+        <div>
+          <div style={{ display: "flex", alignItems: "center", height: "50%" }}>
+            <NaFilaIcon />
+          </div>
+          <div style={{ display: "flex", alignItems: "center", height: "50%" }}>
+            <Tech4CovidIcon />
+          </div>
+        </div>
+        <div>
+          <div style={{ display: "flex", alignItems: "center", height: "30%" }}>
+            <p style={{ margin: 0, color: "white", fontSize: "20px" }}>
+              Parceiros
+            </p>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              height: "30%",
+              justifyContent: "space-between",
+              alignItems: "center"
+            }}
+          >
+            <GoogleIcon />
+            <NOSIcon />
+            <AmazonIcon />
+          </div>
+          <div style={{ display: "flex", alignItems: "center", height: "30%" }}>
+            <p style={{ margin: 0, color: "white", fontSize: "13px" }}>
+              Termos e Condições | Privacidade | Contactos | Facebook
+            </p>
+          </div>
+        </div>
+      </Grid>
+    </div>
+  );
+  if (activeMenu === "home") {
+    return <HomeContent />;
+  }
   return (
     <OnBoardingLayout
       bg={[bgIntro, bgStore, bgMain]}

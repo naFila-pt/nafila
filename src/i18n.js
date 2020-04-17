@@ -56,7 +56,8 @@ i18n
           "home#ticket_length": "À sua frente",
           "home#ticket_notification":
             "Receberá um email quando estiver a chegar a sua vez.",
-
+          "home#help_label": "Ver como funciona",
+          "home#lojista_label": "É lojista ?",
           "terms#title": "Termos e Condições",
           "terms#subtitle": "Texto de exemplo/not compliant",
           "terms#text": `
