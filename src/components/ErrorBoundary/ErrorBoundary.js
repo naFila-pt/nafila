@@ -19,7 +19,7 @@ class ErrorBoundary extends Component {
   }
 
   static getDerivedStateFromError(error) {
-    return { hasError: true };
+    return { hasError: true, error };
   }
 
   // componentDidCatch(error, errorInfo) {
@@ -38,7 +38,9 @@ class ErrorBoundary extends Component {
     // Properties
     const { children } = this.props;
 
-    const { hasError } = this.state;
+    const { hasError, error } = this.state;
+
+    hasError && console.warn(error);
 
     if (hasError) {
       return <EmptyState icon={<ErrorIcon />} title="Something went wrong" />;

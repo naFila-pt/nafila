@@ -45,7 +45,9 @@ const OnBoardingContent = () => {
   const { t } = useTranslation();
 
   const endOnBoarding = () => {
-    localStorage.setItem("skipOnBoarding", true);
+    try {
+      localStorage.setItem("skipOnBoarding", true);
+    } catch (error) {}
     window.location.href = "/?skipIntro";
   };
 

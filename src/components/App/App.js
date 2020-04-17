@@ -15,6 +15,8 @@ import LaunchScreen from "../LaunchScreen";
 import Router from "../Router";
 import DialogHost from "../DialogHost";
 
+import CookieBanner from "../CookieBanner";
+
 const initialState = {
   ready: false,
   performingAction: false,
@@ -242,18 +244,20 @@ class App extends Component {
   };
 
   render() {
-    const { ready, performingAction, theme, user, userData } = this.state;
-
     const {
+      ready,
+      performingAction,
+      theme,
+      user,
+      userData,
       aboutDialog,
       signUpDialog,
       signInDialog,
       settingsDialog,
       deleteAccountDialog,
-      signOutDialog
+      signOutDialog,
+      snackbar
     } = this.state;
-
-    const { snackbar } = this.state;
 
     return (
       <MuiThemeProvider theme={theme}>
@@ -264,12 +268,10 @@ class App extends Component {
 
           {ready && (
             <>
-              <Grid
-                container
-                alignItems="center"
-                justify="center"
-                style={{ height: "100%" }}
-              >
+              <CookieBanner
+                handleBannerCloseClick={this.handleBannerCloseClick}
+              />
+              <Grid container justify="center" style={{ height: "100%" }}>
                 <Grid
                   item
                   style={{
