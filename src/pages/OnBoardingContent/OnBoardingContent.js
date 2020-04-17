@@ -145,7 +145,8 @@ const OnBoardingContent = () => {
             <Grid className={classes.desktopButtons}>
               <Button
                 forward
-                onClick={() => setActiveMenu("onboarding")}
+                href={"https://geralnafilapt.typeform.com/to/VtDUdM"}
+                target={"_blank"}
                 dangerouslySetInnerHTML={{
                   __html: t("home#lojista_label")
                 }}
@@ -160,7 +161,7 @@ const OnBoardingContent = () => {
                 }}
               />
               <a
-                href="http://google.pt"
+                href="https://geralnafilapt.typeform.com/to/VtDUdM"
                 rel="noopener noreferrer"
                 target="_blank"
                 className={classes.linkLabel}
