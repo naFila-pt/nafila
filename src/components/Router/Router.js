@@ -18,6 +18,7 @@ class Router extends Component {
     const { user } = this.props;
 
     let shouldSkipOnBoarding;
+    const isDesktop = window.innerWidth > 768;
 
     try {
       shouldSkipOnBoarding = localStorage.getItem("skipOnBoarding");
@@ -29,7 +30,7 @@ class Router extends Component {
       <BrowserRouter basename={process.env.REACT_APP_BASENAME}>
         <Switch>
           <Route path="/" exact>
-            {shouldSkipOnBoarding ? (
+            {shouldSkipOnBoarding && !isDesktop ? (
               <HomeContent openSnackbar={this.props.openSnackbar} user={user} />
             ) : (
               <OnBoardingContent />
