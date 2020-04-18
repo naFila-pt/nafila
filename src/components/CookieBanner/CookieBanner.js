@@ -35,6 +35,9 @@ const CookieBanner = ({ handleBannerCloseClick }) => {
     cookieBannerSeen = false;
   }
 
+  //disable temporarily until we have privacy policy online
+  cookieBannerSeen = true;
+
   const [shouldShowCookieBanner, setShouldShowCookieBanner] = useState(
     !cookieBannerSeen
   );

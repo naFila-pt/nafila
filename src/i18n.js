@@ -254,7 +254,7 @@ Porto, 10 Abril 2020
           // Queue Poster
           "admin#queuePoster_queueCode": "Código da Fila",
           "admin#queuePoster_enterQueueWith":
-            "Entre  <b>nafila</b> &nbsp com...",
+            "Entre &nbsp <b>nafila</b> &nbsp com...",
           "admin#queuePoster_brandSlogan": "<b>naFila</b>, sem filas."
         }
       }
