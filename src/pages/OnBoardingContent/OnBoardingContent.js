@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Input from "@material-ui/core/Input";
+import Link from "@material-ui/core/Link";
 
 import OnBoardingLayout from "../../components/OnBoardingLayout";
 import Button from "../../components/Button";
@@ -135,6 +136,36 @@ const OnBoardingContent = () => {
     window.location.href = "/?skipIntro";
   };
 
+  const handleTermsOnClick = e => {
+    e.preventDefault();
+    window.open("/termos-condicoes", "_blank");
+  };
+
+  const handleFBOnClick = e => {
+    e.preventDefault();
+    window.open("https://facebook.com", "_blank");
+  };
+
+  const handleGoogleOnClick = e => {
+    e.preventDefault();
+    window.open("https://google.pt", "_blank");
+  };
+
+  const handleNOSOnClick = e => {
+    e.preventDefault();
+    window.open("https://nos.pt", "_blank");
+  };
+
+  const handleAmazonOnClick = e => {
+    e.preventDefault();
+    window.open("https://amazon.com", "_blank");
+  };
+
+  const handleTech4covid19OnClick = e => {
+    e.preventDefault();
+    window.open("https://tech4covid19.org", "_blank");
+  };
+
   const HomeContent = () => (
     <div style={{ height: "100vh" }}>
       <div className="Home-Container-Wrapper">
@@ -247,7 +278,12 @@ const OnBoardingContent = () => {
             <NaFilaIcon />
           </div>
           <div style={{ display: "flex", alignItems: "center", height: "50%" }}>
-            <Tech4CovidIcon />
+            <Link
+              style={{ color: "white" }}
+              onClick={handleTech4covid19OnClick}
+            >
+              <Tech4CovidIcon />
+            </Link>
           </div>
         </div>
         <div>
@@ -264,13 +300,25 @@ const OnBoardingContent = () => {
               alignItems: "center"
             }}
           >
-            <GoogleIcon />
-            <NOSIcon />
-            <AmazonIcon />
+            <Link style={{ color: "white" }} onClick={handleGoogleOnClick}>
+              <GoogleIcon />
+            </Link>
+            <Link style={{ color: "white" }} onClick={handleNOSOnClick}>
+              <NOSIcon />
+            </Link>
+            <Link style={{ color: "white" }} onClick={handleAmazonOnClick}>
+              <AmazonIcon />
+            </Link>
           </div>
           <div style={{ display: "flex", alignItems: "center", height: "30%" }}>
             <p style={{ margin: 0, color: "white", fontSize: "13px" }}>
-              Termos e Condições | Privacidade | Contactos | Facebook
+              <Link style={{ color: "white" }} onClick={handleTermsOnClick}>
+                {t("terms#title")}
+              </Link>
+              {" | "}
+              <Link style={{ color: "white" }} onClick={handleFBOnClick}>
+                Facebook
+              </Link>
             </p>
           </div>
         </div>
