@@ -34,7 +34,7 @@ i18n
 
           "home#intro_welcome": "Bem-Vindo!",
           "home#intro_text":
-            "<b>nafila.pt</b> é um sistema de senhas virtuais que permite aguardar a sua vez em segurança, abrigado e longe das outras pessoas.",
+            "<b>nafila.pt</b> é um sistema de senhas virtuais que permite aguardar pela sua vez em segurança.",
           "home#intro_pitch": "na<b>fila</b>. Sem filas.",
           "home#intro_button": "entrar",
           "home#insertCode_title": "Insira o código da sua loja",
