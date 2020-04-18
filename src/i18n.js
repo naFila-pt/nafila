@@ -32,7 +32,9 @@ i18n
             "<b>E já está!</b><br/>Receberá um aviso quando a sua vez estiver a chegar.",
           "onboarding#insertEmail_button": "Entrar na<b>fila</b>",
 
-          "home#intro_welcome": "Bem Vindo!",
+          "home#intro_welcome": "Bem-Vindo!",
+          "home#intro_text":
+            "<b>nafila.pt</b> é um sistema de senhas virtuais que permite aguardar a sua vez em segurança, abrigado e longe das outras pessoas.",
           "home#intro_pitch": "na<b>fila</b>. Sem filas.",
           "home#intro_button": "entrar",
           "home#insertCode_title": "Insira o código da sua loja",
@@ -56,7 +58,8 @@ i18n
           "home#ticket_length": "À sua frente",
           "home#ticket_notification":
             "Receberá um email quando estiver a chegar a sua vez.",
-
+          "home#help_label": "Ver como funciona",
+          "home#lojista_label": "É lojista ?",
           "terms#title": "Termos e Condições",
           "terms#subtitle": "Texto de exemplo/not compliant",
           "terms#text": `

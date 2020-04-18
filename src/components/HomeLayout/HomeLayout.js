@@ -12,9 +12,8 @@ const useStyles = makeStyles({
     minWidth: "375px",
     height: "100%",
     padding: 0,
-    backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-    backgroundPosition: "0px"
+    backgroundPosition: "center"
   },
   toolbar: {
     position: "static",
