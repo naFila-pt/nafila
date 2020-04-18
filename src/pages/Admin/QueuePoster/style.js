@@ -33,6 +33,7 @@ export const PosterContainer = styled.div`
   .queue-enter-with {
     display: flex;
     justify-content: flex-start;
+    margin-left: 50px;
     font-size: 22px;
   }
 
@@ -46,6 +47,7 @@ export const PosterContainer = styled.div`
   .brand-slogan {
     display: flex;
     justify-content: flex-end;
+    margin-right: 50px;
     margin-bottom: 50px;
     color: #111;
     font-size: 24px;
