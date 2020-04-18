@@ -2,10 +2,11 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
-import OnBoardingLayout from "../../components/OnBoardingLayout";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Input from "@material-ui/core/Input";
+
+import OnBoardingLayout from "../../components/OnBoardingLayout";
 import Button from "../../components/Button";
 
 import bgIntro from "../../assets/bg/user_intro.svg";
@@ -13,23 +14,25 @@ import bgStore from "../../assets/bg/user_store.svg";
 import bgMain from "../../assets/bg/user_onboard_main.svg";
 
 import { ReactComponent as NaFilaIcon } from "../../assets/icons/nafila-text.svg";
-import { ReactComponent as NaFilaIconBanner } from "../../assets/icons/nafila-text-second.svg";
 import { ReactComponent as Tech4CovidIcon } from "../../assets/icons/tech4covid19-text.svg";
 import { ReactComponent as GoogleIcon } from "../../assets/icons/google-icon.svg";
 import { ReactComponent as NOSIcon } from "../../assets/icons/nos-icon.svg";
 import { ReactComponent as AmazonIcon } from "../../assets/icons/amazon-icon.svg";
 
 import { ReactComponent as Logo } from "../../assets/logo.svg";
+import logoSrc from "../../assets/logo.svg";
+import logoBannerSrc from "../../assets/icons/logo_nafila.svg";
+import storeSrc from "../../assets/icons/store_mobile.svg";
+import personSrc from "../../assets/icons/pessoa_homepage_desktop.svg";
 import { ReactComponent as EmailNotification } from "../../assets/icons/onboarding_email_notification.svg";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   gridContainer: {
     alignContent: "center",
     marginTop: "-1em"
   },
   gridItemIntro: {
-    textAlign: "center",
-    marginTop: "-2.5em"
+    textAlign: "center"
   },
   gridItem: {
     textAlign: "center",
@@ -49,18 +52,50 @@ const useStyles = makeStyles({
     marginTop: "10px",
     fontSize: "20px"
   },
+  bannerContainer: {
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "10%",
+    display: "none",
+    [theme.breakpoints.up("md")]: {
+      display: "flex"
+    }
+  },
+  bannerIcon: {
+    width: "60%",
+    height: "30%"
+  },
+  logoHome: {
+    width: "40%",
+    [theme.breakpoints.up("md")]: {
+      width: "60%"
+    }
+  },
   column: {
     display: "flex",
     width: "100%",
     height: "100%",
     alignItems: "center",
-    justifyContent: "center",
-    "@media (min-width:768px)": {
-      width: "50%"
+    justifyContent: "center"
+  },
+  rightColumn: {
+    display: "none",
+    [theme.breakpoints.up("md")]: {
+      display: "block"
     }
   },
   logoIcon: {
-    margin: "3em 0 1.5em 0"
+    margin: "3em 0 5.5em 0"
+  },
+  container: {
+    display: "grid",
+    gridTemplateColumns: "100%",
+    height: "100%",
+    justifyItems: "center",
+    [theme.breakpoints.up("md")]: {
+      gridTemplateColumns: "40% 60%"
+    }
   },
   desktopButtons: {
     display: "none",
@@ -86,7 +121,7 @@ const useStyles = makeStyles({
     backgroundColor: "#8464AC",
     padding: "10px 15% 10px 15%"
   }
-});
+}));
 
 const OnBoardingContent = () => {
   const classes = useStyles();
@@ -103,74 +138,108 @@ const OnBoardingContent = () => {
   const HomeContent = () => (
     <div style={{ height: "100vh" }}>
       <div className="Home-Container-Wrapper">
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            height: "10%"
-          }}
-        >
-          <div>
-            <NaFilaIconBanner />
-          </div>
+        <div className={classes.bannerContainer}>
+          <img src={logoBannerSrc} alt="logo" className={classes.bannerIcon} />
         </div>
-        <Grid container direction="column" className={classes.column}>
-          <div
-            style={{
-              height: "100%",
-              display: "grid",
-              gridTemplateRows: "20% 50% 30%",
-              alignItems: "center"
-            }}
-          >
-            <Grid item className={classes.gridItemIntro}>
-              <Typography
-                variant="h1"
-                style={{ marginBottom: "0.3em", fontSize: "2.375em" }}
+        <div className={classes.container}>
+          <Grid container direction="column" className={classes.column}>
+            <div
+              style={{
+                height: "100%",
+                display: "grid",
+                gridTemplateRows: "25% 50% 25%",
+                alignItems: "center"
+              }}
+            >
+              <Grid item className={classes.gridItemIntro}>
+                <Typography
+                  variant="h1"
+                  style={{ marginBottom: "0.3em", fontSize: "2.375em" }}
+                >
+                  {t("onboarding#intro_welcome")}
+                </Typography>
+                <span
+                  style={{ fontSize: "24px" }}
+                  dangerouslySetInnerHTML={{
+                    __html: t("onboarding#intro_pitch")
+                  }}
+                />
+              </Grid>
+              <div style={{ textAlign: "center", marginTop: "-2em" }}>
+                <img src={logoSrc} alt="logo" className={classes.logoHome} />
+              </div>
+              <Grid className={classes.desktopButtons}>
+                <Button
+                  forward
+                  href={"https://geralnafilapt.typeform.com/to/VtDUdM"}
+                  target={"_blank"}
+                  dangerouslySetInnerHTML={{
+                    __html: t("home#lojista_label")
+                  }}
+                />
+              </Grid>
+              <Grid className={classes.mobileButtons}>
+                <Button
+                  forward
+                  onClick={() => setActiveMenu("onboarding")}
+                  dangerouslySetInnerHTML={{
+                    __html: t("home#help_label")
+                  }}
+                />
+                <a
+                  href="https://geralnafilapt.typeform.com/to/VtDUdM"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  className={classes.linkLabel}
+                >
+                  {t("home#lojista_label")}
+                </a>
+              </Grid>
+            </div>
+          </Grid>
+          <Grid container direction="column" className={classes.rightColumn}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100%"
+              }}
+            >
+              <div
+                style={{
+                  width: "40%",
+                  height: "100%",
+                  display: "flex",
+                  alignItems: "end"
+                }}
               >
-                {t("onboarding#intro_welcome")}
-              </Typography>
-              <span
-                style={{ fontSize: "24px" }}
-                dangerouslySetInnerHTML={{
-                  __html: t("onboarding#intro_pitch")
+                <img src={personSrc} alt="store" height="80%" />
+              </div>
+              <div
+                style={{
+                  width: "60%",
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column"
                 }}
-              />
-            </Grid>
-            <Grid item className={classes.gridItemIntro}>
-              <Logo className={classes.logoIcon} />
-            </Grid>
-            <Grid className={classes.desktopButtons}>
-              <Button
-                forward
-                href={"https://geralnafilapt.typeform.com/to/VtDUdM"}
-                target={"_blank"}
-                dangerouslySetInnerHTML={{
-                  __html: t("home#lojista_label")
-                }}
-              />
-            </Grid>
-            <Grid className={classes.mobileButtons}>
-              <Button
-                forward
-                onClick={() => setActiveMenu("onboarding")}
-                dangerouslySetInnerHTML={{
-                  __html: t("home#help_label")
-                }}
-              />
-              <a
-                href="https://geralnafilapt.typeform.com/to/VtDUdM"
-                rel="noopener noreferrer"
-                target="_blank"
-                className={classes.linkLabel}
               >
-                {t("home#lojista_label")}
-              </a>
-            </Grid>
-          </div>
-        </Grid>
+                <img
+                  src={storeSrc}
+                  alt="store"
+                  height="50%"
+                  style={{ marginRight: "50%" }}
+                />
+                <div style={{ width: "50%" }}>
+                  <p
+                    style={{ fontSize: "25px" }}
+                    dangerouslySetInnerHTML={{ __html: t("home#intro_text") }}
+                  />
+                </div>
+              </div>
+            </div>
+          </Grid>
+        </div>
       </div>
       <Grid className={classes.footer}>
         <div>
