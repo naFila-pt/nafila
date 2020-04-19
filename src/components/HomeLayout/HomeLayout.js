@@ -10,10 +10,10 @@ const useStyles = makeStyles({
   container: {
     position: "relative",
     minWidth: "375px",
-    height: "100%",
     padding: 0,
     backgroundRepeat: "no-repeat",
-    backgroundPosition: "center"
+    backgroundPosition: props => props.bgPosition || "center",
+    backgroundSize: "cover"
   },
   toolbar: {
     position: "static",
@@ -26,13 +26,9 @@ const useStyles = makeStyles({
   }
 });
 
-const OnBoardingLayout = ({
-  children,
-  bg,
-  activeStep = 0,
-  forceLogoDisplay
-}) => {
-  const classes = useStyles();
+const HomeLayout = props => {
+  const { children, bg, activeStep = 0, forceLogoDisplay } = props;
+  const classes = useStyles(props);
   const bgUrl = bg[activeStep] ? bg[activeStep] : bg[bg.length - 1];
 
   return (
@@ -54,4 +50,4 @@ const OnBoardingLayout = ({
   );
 };
 
-export default OnBoardingLayout;
+export default HomeLayout;

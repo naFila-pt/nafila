@@ -2,58 +2,147 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
-import HomeLayout from "../../components/HomeLayout";
 import Typography from "@material-ui/core/Typography";
-import Button from "../../components/Button";
+import Grid from "@material-ui/core/Grid";
+import Link from "@material-ui/core/Link";
 
-import bgMain from "../../assets/bg/main.svg";
+import HomeLayout from "../../components/HomeLayout";
 
-const useStyles = makeStyles({
-  bottomButton: {
-    position: "absolute",
-    left: 0,
-    bottom: "2em",
+import bgMobile from "../../assets/bg/terms_mobile.svg";
+import bgDesktop from "../../assets/bg/terms_desktop.svg";
+
+import { ReactComponent as NaFilaIcon } from "../../assets/icons/nafila-text.svg";
+import { ReactComponent as Tech4CovidIcon } from "../../assets/icons/tech4covid19-text.svg";
+import { ReactComponent as GoogleIcon } from "../../assets/icons/google-icon.svg";
+import { ReactComponent as NOSIcon } from "../../assets/icons/nos-icon.svg";
+
+const useStyles = makeStyles(theme => ({
+  gridContainer: {
+    alignContent: "center",
+    marginTop: "-1em",
+    padding: "0 32px 65px",
+    [theme.breakpoints.up("md")]: {
+      padding: "0 166px 65px"
+    }
+  },
+  footer: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(19em, 1fr))",
     width: "100%",
-    textAlign: "center"
+    height: "234px",
+    backgroundColor: "#8464AC",
+    padding: "10px 32px",
+    [theme.breakpoints.up("md")]: {
+      padding: "0 166px",
+      height: "200px"
+    }
+  },
+  partnerLink: {
+    color: "white",
+    paddingRight: "16px",
+    [theme.breakpoints.up("md")]: {
+      paddingRight: "64px"
+    }
   }
-});
+}));
 
 const TermsConditions = () => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const handleCloseButton = () => {
-    window.close();
-  };
+  const isDesktop = window.innerWidth > 768;
 
   return (
-    <HomeLayout bg={[bgMain]}>
-      <div style={{ padding: "0 1.3em" }}>
-        <div style={{ textAlign: "center", marginTop: "1em" }}>
-          <Typography variant="h1">{t("terms#title")}</Typography>
-        </div>
+    <>
+      <HomeLayout bg={[isDesktop ? bgDesktop : bgMobile]} bgPosition={"top"}>
+        <Grid container direction="column" className={classes.gridContainer}>
+          <Grid item>
+            <Typography variant="h1">{t("terms#title")}</Typography>
+          </Grid>
 
+          <div className="termosCondicoesText">
+            <pre
+              style={{
+                lineHeight: "150%",
+                whiteSpace: "pre-line",
+                textAlign: "justify",
+                color: "#484848"
+              }}
+              dangerouslySetInnerHTML={{ __html: t("terms#text") }}
+            />
+          </div>
+        </Grid>
+      </HomeLayout>
+      <Grid className={classes.footer}>
         <div
-          className="termosCondicoesText"
-          style={{ height: "56vh", overflowY: "scroll", padding: "0 15px" }}
+          style={{
+            justifyContent: "space-evenly",
+            display: "flex",
+            flexDirection: "column"
+          }}
         >
-          <pre
+          <div>
+            <NaFilaIcon />
+          </div>
+          <div>
+            <Link
+              style={{ color: "white" }}
+              href={"https://tech4covid19.org"}
+              target={"_blank"}
+            >
+              <Tech4CovidIcon />
+            </Link>
+          </div>
+        </div>
+        <div
+          style={{
+            justifyContent: "center",
+            display: "flex",
+            flexDirection: "column"
+          }}
+        >
+          <div style={{ marginBottom: "16px" }}>
+            <p style={{ margin: 0, color: "white", fontSize: "20px" }}>
+              Parceiros
+            </p>
+          </div>
+          <div
             style={{
-              lineHeight: "1.188em",
-              whiteSpace: "pre-line",
-              textAlign: "justify"
+              display: "flex",
+              alignItems: "center"
             }}
-            dangerouslySetInnerHTML={{ __html: t("terms#text") }}
-          />
+          >
+            <Link
+              className={classes.partnerLink}
+              href={"https://google.pt"}
+              target={"_blank"}
+            >
+              <GoogleIcon />
+            </Link>
+            <Link
+              className={classes.partnerLink}
+              href={"https://nos.pt"}
+              target={"_blank"}
+            >
+              <NOSIcon />
+            </Link>
+          </div>
+          <div>
+            <p style={{ margin: 0, color: "white", fontSize: "13px" }}>
+              <Link style={{ color: "white" }}>{t("terms#title")}</Link>
+              {" | "}
+              <Link
+                style={{ color: "white" }}
+                href={"https://facebook.com"}
+                target={"_blank"}
+              >
+                Facebook
+              </Link>
+            </p>
+          </div>
         </div>
-
-        <div className={classes.bottomButton}>
-          <Button variant="gray" onClick={handleCloseButton}>
-            {t("terms#close_button")}
-          </Button>
-        </div>
-      </div>
-    </HomeLayout>
+      </Grid>
+    </>
   );
 };
 
