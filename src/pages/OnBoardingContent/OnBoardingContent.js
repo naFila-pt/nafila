@@ -18,6 +18,7 @@ import { ReactComponent as NaFilaIcon } from "../../assets/icons/nafila-text.svg
 import { ReactComponent as Tech4CovidIcon } from "../../assets/icons/tech4covid19-text.svg";
 import { ReactComponent as GoogleIcon } from "../../assets/icons/google-icon.svg";
 import { ReactComponent as NOSIcon } from "../../assets/icons/nos-icon.svg";
+import { ReactComponent as AmazonIcon } from "../../assets/icons/amazon-icon.svg";
 
 import { ReactComponent as Logo } from "../../assets/logo.svg";
 import logoSrc from "../../assets/logo.svg";
@@ -32,10 +33,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: "-1em"
   },
   gridItemIntro: {
-    textAlign: "center",
-    [theme.breakpoints.up("md")]: {
-      textAlign: "left"
-    }
+    textAlign: "center"
   },
   gridItem: {
     textAlign: "center",
@@ -60,34 +58,32 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center",
     justifyContent: "center",
     height: "10%",
-    paddingTop: "30px",
     display: "none",
     [theme.breakpoints.up("md")]: {
       display: "flex"
     }
   },
   bannerIcon: {
-    width: "100px",
-    height: "33px",
-    marginTop: "20px"
+    width: "60%",
+    height: "30%"
   },
   logoHome: {
-    width: "85%"
+    width: "40%",
+    [theme.breakpoints.up("md")]: {
+      width: "60%"
+    }
   },
   column: {
     display: "flex",
     width: "100%",
     height: "100%",
     alignItems: "center",
-    justifyContent: "center",
-    [theme.breakpoints.up("md")]: {
-      justifyContent: "space-evenly"
-    }
+    justifyContent: "center"
   },
   rightColumn: {
     display: "none",
     [theme.breakpoints.up("md")]: {
-      display: "flex"
+      display: "block"
     }
   },
   logoIcon: {
@@ -99,11 +95,7 @@ const useStyles = makeStyles(theme => ({
     height: "100%",
     justifyItems: "center",
     [theme.breakpoints.up("md")]: {
-      gridTemplateColumns: "40% 60%",
-      paddingBottom: "20px",
-      paddingTop: "5px",
-      paddingLeft: "5px",
-      paddingRight: "100px"
+      gridTemplateColumns: "40% 60%"
     }
   },
   desktopButtons: {
@@ -122,23 +114,11 @@ const useStyles = makeStyles(theme => ({
       display: "none"
     }
   },
-  mobileLogo: {
-    display: "block",
-    "@media (min-width:768px)": {
-      display: "none"
-    }
-  },
-  desktopLogo: {
-    display: "none",
-    "@media (min-width:768px)": {
-      display: "block"
-    }
-  },
   footer: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(19em, 1fr))",
     width: "100%",
-    minHeight: "10vh",
+    height: "30vh",
     backgroundColor: "#8464AC",
     padding: "10px 15% 10px 15%"
   }
@@ -156,87 +136,139 @@ const OnBoardingContent = () => {
     window.location.href = "/?skipIntro";
   };
 
+  const handleTermsOnClick = e => {
+    e.preventDefault();
+    window.open("/termos-condicoes", "_blank");
+  };
+
+  const handleFBOnClick = e => {
+    e.preventDefault();
+    window.open("https://facebook.com", "_blank");
+  };
+
+  const handleGoogleOnClick = e => {
+    e.preventDefault();
+    window.open("https://google.pt", "_blank");
+  };
+
+  const handleNOSOnClick = e => {
+    e.preventDefault();
+    window.open("https://nos.pt", "_blank");
+  };
+
+  const handleAmazonOnClick = e => {
+    e.preventDefault();
+    window.open("https://amazon.com", "_blank");
+  };
+
+  const handleTech4covid19OnClick = e => {
+    e.preventDefault();
+    window.open("https://tech4covid19.org", "_blank");
+  };
+
   const HomeContent = () => (
-    <Grid container direction="column">
+    <div style={{ height: "100vh" }}>
       <div className="Home-Container-Wrapper">
         <div className={classes.bannerContainer}>
           <img src={logoBannerSrc} alt="logo" className={classes.bannerIcon} />
         </div>
         <div className={classes.container}>
           <Grid container direction="column" className={classes.column}>
-            <Grid item className={classes.mobileLogo}>
-              <img src={logoSrc} alt="logo" className={classes.logoHome} />
-            </Grid>
-            <Grid item className={classes.gridItemIntro}>
-              <Typography
-                variant="h1"
-                style={{ marginBottom: "0.3em", fontSize: "3.75em" }}
-              >
-                {t("onboarding#intro_welcome")}
-              </Typography>
-              <span
-                style={{ fontSize: "30px" }}
-                dangerouslySetInnerHTML={{
-                  __html: t("onboarding#intro_pitch")
-                }}
-              />
-            </Grid>
-            <Grid item className={classes.desktopLogo}>
-              <img src={logoSrc} alt="logo" className={classes.logoHome} />
-            </Grid>
-            <Grid className={classes.desktopButtons}>
-              <Button
-                forward
-                href={"https://geralnafilapt.typeform.com/to/VtDUdM"}
-                target={"_blank"}
-                dangerouslySetInnerHTML={{
-                  __html: t("home#lojista_label")
-                }}
-              />
-            </Grid>
-            <Grid className={classes.mobileButtons}>
-              <Button
-                forward
-                onClick={() => setActiveMenu("onboarding")}
-                dangerouslySetInnerHTML={{
-                  __html: t("home#help_label")
-                }}
-              />
-              <a
-                href="https://geralnafilapt.typeform.com/to/VtDUdM"
-                rel="noopener noreferrer"
-                target="_blank"
-                className={classes.linkLabel}
-              >
-                {t("home#lojista_label")}
-              </a>
-            </Grid>
-          </Grid>
-          <Grid
-            container
-            direction="row"
-            wrap="nowrap"
-            className={classes.rightColumn}
-          >
-            <Grid container alignItems="flex-end" item>
-              <img src={personSrc} alt="store" height="80%" />
-            </Grid>
-            <Grid
-              container
-              direction="column"
-              alignItems="center"
-              justify="space-evenly"
+            <div
+              style={{
+                height: "100%",
+                display: "grid",
+                gridTemplateRows: "25% 50% 25%",
+                alignItems: "center"
+              }}
             >
-              <Grid item>
-                <img src={storeSrc} alt="store" />
-              </Grid>
-              <Grid item style={{ width: "90%" }}>
-                <p
-                  style={{ fontSize: "36px", lineHeight: "43px" }}
-                  dangerouslySetInnerHTML={{ __html: t("home#intro_text") }}
+              <Grid item className={classes.gridItemIntro}>
+                <Typography
+                  variant="h1"
+                  style={{ marginBottom: "0.3em", fontSize: "2.375em" }}
+                >
+                  {t("onboarding#intro_welcome")}
+                </Typography>
+                <span
+                  style={{ fontSize: "24px" }}
+                  dangerouslySetInnerHTML={{
+                    __html: t("onboarding#intro_pitch")
+                  }}
                 />
               </Grid>
-            </Grid>
+              <div style={{ textAlign: "center", marginTop: "-2em" }}>
+                <img src={logoSrc} alt="logo" className={classes.logoHome} />
+              </div>
+              <Grid className={classes.desktopButtons}>
+                <Button
+                  forward
+                  href={"https://geralnafilapt.typeform.com/to/VtDUdM"}
+                  target={"_blank"}
+                  dangerouslySetInnerHTML={{
+                    __html: t("home#lojista_label")
+                  }}
+                />
+              </Grid>
+              <Grid className={classes.mobileButtons}>
+                <Button
+                  forward
+                  onClick={() => setActiveMenu("onboarding")}
+                  dangerouslySetInnerHTML={{
+                    __html: t("home#help_label")
+                  }}
+                />
+                <a
+                  href="https://geralnafilapt.typeform.com/to/VtDUdM"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  className={classes.linkLabel}
+                >
+                  {t("home#lojista_label")}
+                </a>
+              </Grid>
+            </div>
+          </Grid>
+          <Grid container direction="column" className={classes.rightColumn}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100%"
+              }}
+            >
+              <div
+                style={{
+                  width: "40%",
+                  height: "100%",
+                  display: "flex",
+                  alignItems: "end"
+                }}
+              >
+                <img src={personSrc} alt="store" height="80%" />
+              </div>
+              <div
+                style={{
+                  width: "60%",
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column"
+                }}
+              >
+                <img
+                  src={storeSrc}
+                  alt="store"
+                  height="50%"
+                  style={{ marginRight: "50%" }}
+                />
+                <div style={{ width: "50%" }}>
+                  <p
+                    style={{ fontSize: "25px" }}
+                    dangerouslySetInnerHTML={{ __html: t("home#intro_text") }}
+                  />
+                </div>
+              </div>
+            </div>
           </Grid>
         </div>
       </div>
@@ -248,9 +280,7 @@ const OnBoardingContent = () => {
           <div style={{ display: "flex", alignItems: "center", height: "50%" }}>
             <Link
               style={{ color: "white" }}
-              target="_blank"
-              rel="noopener"
-              href="https://tech4covid19.org"
+              onClick={handleTech4covid19OnClick}
             >
               <Tech4CovidIcon />
             </Link>
@@ -270,47 +300,30 @@ const OnBoardingContent = () => {
               alignItems: "center"
             }}
           >
-            <Link
-              style={{ color: "white" }}
-              target="_blank"
-              rel="noopener"
-              href="https://google.pt"
-            >
+            <Link style={{ color: "white" }} onClick={handleGoogleOnClick}>
               <GoogleIcon />
             </Link>
-            <Link
-              style={{ color: "white" }}
-              target="_blank"
-              rel="noopener"
-              href="https://nos.pt"
-            >
+            <Link style={{ color: "white" }} onClick={handleNOSOnClick}>
               <NOSIcon />
+            </Link>
+            <Link style={{ color: "white" }} onClick={handleAmazonOnClick}>
+              <AmazonIcon />
             </Link>
           </div>
           <div style={{ display: "flex", alignItems: "center", height: "30%" }}>
             <p style={{ margin: 0, color: "white", fontSize: "13px" }}>
-              <Link
-                style={{ color: "white" }}
-                href="/termos-condicoes"
-                target="_blank"
-                rel="noopener"
-              >
+              <Link style={{ color: "white" }} onClick={handleTermsOnClick}>
                 {t("terms#title")}
               </Link>
               {" | "}
-              <Link
-                style={{ color: "white" }}
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener"
-              >
+              <Link style={{ color: "white" }} onClick={handleFBOnClick}>
                 Facebook
               </Link>
             </p>
           </div>
         </div>
       </Grid>
-    </Grid>
+    </div>
   );
   if (activeMenu === "home") {
     return <HomeContent />;
