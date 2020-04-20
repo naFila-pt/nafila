@@ -300,7 +300,7 @@ const OnBoardingContent = () => {
               {" | "}
               <Link
                 style={{ color: "white" }}
-                href="https://facebook.com"
+                href="https://facebook.com/nafila.pt"
                 target="_blank"
                 rel="noopener"
               >

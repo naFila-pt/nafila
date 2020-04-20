@@ -133,7 +133,7 @@ const TermsConditions = () => {
               {" | "}
               <Link
                 style={{ color: "white" }}
-                href={"https://facebook.com"}
+                href={"https://www.facebook.com/nafila.pt"}
                 target={"_blank"}
               >
                 Facebook
