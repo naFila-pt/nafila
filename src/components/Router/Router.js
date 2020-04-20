@@ -7,7 +7,12 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import PrivateRoute from "../PrivateRoute";
 
 import OnBoardingContent from "../../pages/OnBoardingContent";
-import { HomeContent, Leave, TermsConditions } from "../../pages/HomeContent";
+import {
+  HomeContent,
+  Leave,
+  TermsConditions,
+  Home
+} from "../../pages/HomeContent";
 import Admin from "../../pages/Admin";
 import NotFoundContent from "../../pages/NotFoundContent";
 import * as Routes from "../../constants/RoutesConstants";
@@ -30,11 +35,7 @@ class Router extends Component {
       <BrowserRouter basename={process.env.REACT_APP_BASENAME}>
         <Switch>
           <Route path="/" exact>
-            {shouldSkipOnBoarding && !isDesktop ? (
-              <HomeContent openSnackbar={this.props.openSnackbar} user={user} />
-            ) : (
-              <OnBoardingContent />
-            )}
+            <Home />
           </Route>
 
           <Route
