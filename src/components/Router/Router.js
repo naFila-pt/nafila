@@ -7,12 +7,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import PrivateRoute from "../PrivateRoute";
 
 import OnBoardingContent from "../../pages/OnBoardingContent";
-import {
-  HomeContent,
-  Leave,
-  TermsConditions,
-  Home
-} from "../../pages/HomeContent";
+import { Ticket, Leave, TermsConditions, Home } from "../../pages/HomeContent";
 import Admin from "../../pages/Admin";
 import NotFoundContent from "../../pages/NotFoundContent";
 import * as Routes from "../../constants/RoutesConstants";
@@ -35,7 +30,19 @@ class Router extends Component {
       <BrowserRouter basename={process.env.REACT_APP_BASENAME}>
         <Switch>
           <Route path="/" exact>
-            <Home />
+            {shouldSkipOnBoarding && !isDesktop ? (
+              <Ticket openSnackbar={this.props.openSnackbar} />
+            ) : (
+              <Home />
+            )}
+          </Route>
+
+          <Route path="/como-funciona">
+            <p> COMO FUNCIONA </p>
+          </Route>
+
+          <Route path="/lojista">
+            <p> LOJISTA </p>
           </Route>
 
           <Route

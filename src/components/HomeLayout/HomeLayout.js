@@ -8,6 +8,7 @@ import { ReactComponent as LogoMini } from "../../assets/logo-mini.svg";
 
 const useStyles = makeStyles({
   container: {
+    height: "100vh",
     position: "relative",
     minWidth: "375px",
     padding: 0,

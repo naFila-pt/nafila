@@ -60,6 +60,7 @@ i18n
             "Receberá um email quando estiver a chegar a sua vez.",
           "home#help_label": "Ver como funciona",
           "home#lojista_label": "É lojista ?",
+          "home#consumidor_label": "É consumidor ?",
           "terms#title": "Termos e Condições",
           "terms#subtitle": "Texto de exemplo/not compliant",
           "terms#text": `

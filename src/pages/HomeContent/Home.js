@@ -22,7 +22,7 @@ import storeSrc from "../../assets/icons/store_mobile.svg";
 import personSrc from "../../assets/icons/pessoa_homepage_desktop.svg";
 
 const Header = styled.div`
-  backgroud-color: whit;
+  background-color: #fff;
   width: "100%";
   align-items: center;
   justify-content: center;
@@ -52,6 +52,50 @@ const MainContainer = styled.div`
   }
 `;
 
+const LeftColumn = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (min-width: 768px) {
+    justify-content: space-evenly;
+  }
+`;
+
+const MobileLogo = styled(Grid)`
+  display: flex;
+  justify-content: center;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+  img {
+    width: 65%;
+  }
+`;
+
+const DektopLogo = styled(Grid)`
+  height: 50%;
+  display: none;
+  @media (min-width: 768px) {
+    display: flex;
+  }
+`;
+
+const Footer = styled(Grid)`
+  width: 100%;
+  height: 170px;
+  display: grid;
+  padding: 10px 15% 10px 15%;
+  background-color: #8464ac;
+  grid-template-columns: repeat(auto-fit, minmax(19em, 1fr));
+  @media (min-width: 768px) {
+    height: 200px;
+  }
+`;
+
 const useStyles = makeStyles(theme => ({
   gridContainer: {
     alignContent: "center",
@@ -59,7 +103,7 @@ const useStyles = makeStyles(theme => ({
   },
   gridItemIntro: {
     textAlign: "center",
-    [theme.breakpoints.up("md")]: {
+    "@media (min-width:768px)": {
       textAlign: "left"
     }
   },
@@ -71,17 +115,14 @@ const useStyles = makeStyles(theme => ({
     marginTop: "10px",
     fontSize: "20px"
   },
-  logoHome: {
-    width: "85%"
-  },
   column: {
     display: "flex",
     width: "100%",
     height: "100%",
     alignItems: "center",
-    justifyContent: "center",
-    [theme.breakpoints.up("md")]: {
-      justifyContent: "space-evenly"
+    justifyContent: "space-evenly",
+    "@media (min-width:768px)": {
+      justifyContent: "center"
     }
   },
   rightColumn: {
@@ -115,16 +156,12 @@ const useStyles = makeStyles(theme => ({
     }
   },
   mobileButtons: {
+    position: "absolute",
+    bottom: 0,
+    marginBottom: "10px",
     display: "flex",
     flexDirection: "column",
     textAlign: "center",
-    "@media (min-width:768px)": {
-      display: "none"
-    }
-  },
-  mobileLogo: {
-    display: "flex",
-    justifyContent: "center",
     "@media (min-width:768px)": {
       display: "none"
     }
@@ -134,20 +171,13 @@ const useStyles = makeStyles(theme => ({
     "@media (min-width:768px)": {
       display: "flex"
     }
-  },
-  footer: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(19em, 1fr))",
-    width: "100%",
-    height: "100px",
-    backgroundColor: "#8464AC",
-    padding: "10px 15% 10px 15%"
   }
 }));
 
 const Home = () => {
   const classes = useStyles();
   const { t } = useTranslation();
+  const isDesktop = window.innerWidth > 768;
 
   return (
     <Grid style={{ display: "flex", height: "100vh", flexDirection: "column" }}>
@@ -156,10 +186,10 @@ const Home = () => {
       </Header>
       <MainContainer>
         <div className={classes.container}>
-          <Grid container direction="column" className={classes.column}>
-            <Grid item className={classes.mobileLogo}>
-              <img src={logoSrc} alt="logo" className={classes.logoHome} />
-            </Grid>
+          <LeftColumn>
+            <MobileLogo>
+              <img src={logoSrc} alt="logo" />
+            </MobileLogo>
             <Grid item className={classes.gridItemIntro}>
               <Typography
                 variant="h1"
@@ -174,14 +204,22 @@ const Home = () => {
                 }}
               />
             </Grid>
-            <Grid item className={classes.desktopLogo}>
-              <img src={logoSrc} alt="logo" className={classes.logoHome} />
-            </Grid>
+            <DektopLogo>
+              <img src={logoSrc} alt="logo" />
+            </DektopLogo>
             <Grid className={classes.desktopButtons}>
               <Button
                 forward
-                href={"https://geralnafilapt.typeform.com/to/VtDUdM"}
-                target={"_blank"}
+                href="/como-funciona"
+                dangerouslySetInnerHTML={{
+                  __html: t("home#consumidor_label")
+                }}
+                style={{ marginBottom: "10px" }}
+              />
+              <Button
+                forward
+                variant="secondary"
+                href="/lojista"
                 dangerouslySetInnerHTML={{
                   __html: t("home#lojista_label")
                 }}
@@ -190,21 +228,16 @@ const Home = () => {
             <Grid className={classes.mobileButtons}>
               <Button
                 forward
-                onClick={() => {}}
+                href="/como-funciona"
                 dangerouslySetInnerHTML={{
                   __html: t("home#help_label")
                 }}
               />
-              <a
-                href="https://geralnafilapt.typeform.com/to/VtDUdM"
-                rel="noopener noreferrer"
-                target="_blank"
-                className={classes.linkLabel}
-              >
+              <a href="/lojista" className={classes.linkLabel}>
                 {t("home#lojista_label")}
               </a>
             </Grid>
-          </Grid>
+          </LeftColumn>
           <Grid
             container
             direction="row"
@@ -233,7 +266,7 @@ const Home = () => {
           </Grid>
         </div>
       </MainContainer>
-      <Grid className={classes.footer}>
+      <Footer>
         <div>
           <div style={{ display: "flex", alignItems: "center", height: "50%" }}>
             <NaFilaIcon />
@@ -302,7 +335,7 @@ const Home = () => {
             </p>
           </div>
         </div>
-      </Grid>
+      </Footer>
     </Grid>
   );
 };
