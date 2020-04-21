@@ -12,7 +12,7 @@ import bgMainMobile from "../../assets/bg/home_mobile.svg";
 import bgMain from "../../assets/bg/home_desktop.svg";
 
 import { ReactComponent as NaFilaIcon } from "../../assets/icons/nafila-text.svg";
-import { ReactComponent as Tech4CovidIcon } from "../../assets/icons/tech4covid19-text.svg";
+import { ReactComponent as Tech4CovidIcon } from "../../assets/icons/tech4covid.svg";
 import { ReactComponent as GoogleIcon } from "../../assets/icons/google-icon.svg";
 import { ReactComponent as NOSIcon } from "../../assets/icons/nos-icon.svg";
 
@@ -37,11 +37,32 @@ const Header = styled.div`
   }
 `;
 
+const GridIntro = styled(Grid)`
+  text-align: center;
+  & h1 {
+    font-size: 1.75em !important;
+  }
+  & span {
+    font-size: 20px !important;
+  }
+  @media (min-width: 768px) {
+    text-align: left;
+  }
+  @media (min-width: 340px) {
+    & h1 {
+      font-size: 3.75em !important;
+    }
+    & span {
+      font-size: 30px !important;
+    }
+  }
+`;
+
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  flex: 1;
+  height: 100vh;
   padding: 0;
   background-size: cover;
   background-repeat: no-repeat;
@@ -49,6 +70,7 @@ const MainContainer = styled.div`
   background-image: url(${bgMainMobile});
   @media (min-width: 768px) {
     background-image: url(${bgMain});
+    flex: 1;
   }
 `;
 
@@ -86,11 +108,15 @@ const DektopLogo = styled(Grid)`
 
 const Footer = styled(Grid)`
   width: 100%;
-  height: 170px;
+  height: 30%;
   display: grid;
   padding: 10px 15% 10px 15%;
   background-color: #8464ac;
   grid-template-columns: repeat(auto-fit, minmax(19em, 1fr));
+  grid-row-gap: 20px;
+  & .columns {
+    width: 70%;
+  }
   @media (min-width: 768px) {
     height: 200px;
   }
@@ -100,12 +126,6 @@ const useStyles = makeStyles(theme => ({
   gridContainer: {
     alignContent: "center",
     marginTop: "-1em"
-  },
-  gridItemIntro: {
-    textAlign: "center",
-    "@media (min-width:768px)": {
-      textAlign: "left"
-    }
   },
   gridItem: {
     textAlign: "center",
@@ -174,13 +194,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Home = () => {
+const Home = props => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const isDesktop = window.innerWidth > 768;
 
   return (
-    <Grid style={{ display: "flex", height: "100vh", flexDirection: "column" }}>
+    <Grid
+      style={{ display: "flex", minHeight: "100vh", flexDirection: "column" }}
+    >
       <Header>
         <img src={logoBannerSrc} alt="logo" />
       </Header>
@@ -190,20 +211,16 @@ const Home = () => {
             <MobileLogo>
               <img src={logoSrc} alt="logo" />
             </MobileLogo>
-            <Grid item className={classes.gridItemIntro}>
-              <Typography
-                variant="h1"
-                style={{ marginBottom: "0.3em", fontSize: "3.75em" }}
-              >
+            <GridIntro>
+              <Typography variant="h1">
                 {t("onboarding#intro_welcome")}
               </Typography>
               <span
-                style={{ fontSize: "30px" }}
                 dangerouslySetInnerHTML={{
                   __html: t("onboarding#intro_pitch")
                 }}
               />
-            </Grid>
+            </GridIntro>
             <DektopLogo>
               <img src={logoSrc} alt="logo" />
             </DektopLogo>
@@ -226,13 +243,23 @@ const Home = () => {
               />
             </Grid>
             <Grid className={classes.mobileButtons}>
-              <Button
-                forward
-                href="/como-funciona"
-                dangerouslySetInnerHTML={{
-                  __html: t("home#help_label")
-                }}
-              />
+              {props.shouldSkipOnBoarding ? (
+                <Button
+                  forward
+                  href={"/tirar-senha"}
+                  dangerouslySetInnerHTML={{
+                    __html: t("home#intro_button")
+                  }}
+                />
+              ) : (
+                <Button
+                  forward
+                  href={"/como-funciona"}
+                  dangerouslySetInnerHTML={{
+                    __html: t("home#help_label")
+                  }}
+                />
+              )}
               <a href="/lojista" className={classes.linkLabel}>
                 {t("home#lojista_label")}
               </a>
@@ -267,7 +294,7 @@ const Home = () => {
         </div>
       </MainContainer>
       <Footer>
-        <div>
+        <div className="columns">
           <div style={{ display: "flex", alignItems: "center", height: "50%" }}>
             <NaFilaIcon />
           </div>
@@ -278,11 +305,15 @@ const Home = () => {
               rel="noopener"
               href="https://tech4covid19.org"
             >
-              <Tech4CovidIcon />
+              <div style={{ display: "flex" }}>
+                <p>Um projecto no âmbito do</p>
+                <Tech4CovidIcon />
+                <p>#tech4COVID19</p>
+              </div>
             </Link>
           </div>
         </div>
-        <div>
+        <div className="columns">
           <div style={{ display: "flex", alignItems: "center", height: "30%" }}>
             <p style={{ margin: 0, color: "white", fontSize: "20px" }}>
               Parceiros
