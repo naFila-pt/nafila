@@ -5,7 +5,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Input from "@material-ui/core/Input";
-import Link from "@material-ui/core/Link";
 
 import OnBoardingLayout from "../../components/OnBoardingLayout";
 import Button from "../../components/Button";
@@ -14,17 +13,10 @@ import bgIntro from "../../assets/bg/user_intro.svg";
 import bgStore from "../../assets/bg/user_store.svg";
 import bgMain from "../../assets/bg/user_onboard_main.svg";
 
-import { ReactComponent as NaFilaIcon } from "../../assets/icons/nafila-text.svg";
-import { ReactComponent as Tech4CovidIcon } from "../../assets/icons/tech4covid19-text.svg";
-import { ReactComponent as GoogleIcon } from "../../assets/icons/google-icon.svg";
-import { ReactComponent as NOSIcon } from "../../assets/icons/nos-icon.svg";
-
 import { ReactComponent as Logo } from "../../assets/logo.svg";
-import logoSrc from "../../assets/logo.svg";
-import logoBannerSrc from "../../assets/icons/logo_nafila.svg";
-import storeSrc from "../../assets/icons/store_mobile.svg";
-import personSrc from "../../assets/icons/pessoa_homepage_desktop.svg";
 import { ReactComponent as EmailNotification } from "../../assets/icons/onboarding_email_notification.svg";
+
+import * as Routes from "../../constants/RoutesConstants";
 
 const useStyles = makeStyles(theme => ({
   gridContainer: {
@@ -147,174 +139,14 @@ const useStyles = makeStyles(theme => ({
 const OnBoardingContent = () => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const [activeMenu, setActiveMenu] = React.useState("home");
 
   const endOnBoarding = () => {
     try {
       localStorage.setItem("skipOnBoarding", true);
     } catch (error) {}
-    window.location.href = "/?skipIntro";
+    window.location.href = Routes.TICKET_PATH;
   };
 
-  const HomeContent = () => (
-    <Grid container direction="column">
-      <div className="Home-Container-Wrapper">
-        <div className={classes.bannerContainer}>
-          <img src={logoBannerSrc} alt="logo" className={classes.bannerIcon} />
-        </div>
-        <div className={classes.container}>
-          <Grid container direction="column" className={classes.column}>
-            <Grid item className={classes.mobileLogo}>
-              <img src={logoSrc} alt="logo" className={classes.logoHome} />
-            </Grid>
-            <Grid item className={classes.gridItemIntro}>
-              <Typography
-                variant="h1"
-                style={{ marginBottom: "0.3em", fontSize: "3.75em" }}
-              >
-                {t("onboarding#intro_welcome")}
-              </Typography>
-              <span
-                style={{ fontSize: "30px" }}
-                dangerouslySetInnerHTML={{
-                  __html: t("onboarding#intro_pitch")
-                }}
-              />
-            </Grid>
-            <Grid item className={classes.desktopLogo}>
-              <img src={logoSrc} alt="logo" className={classes.logoHome} />
-            </Grid>
-            <Grid className={classes.desktopButtons}>
-              <Button
-                forward
-                href={"https://geralnafilapt.typeform.com/to/VtDUdM"}
-                target={"_blank"}
-                dangerouslySetInnerHTML={{
-                  __html: t("home#lojista_label")
-                }}
-              />
-            </Grid>
-            <Grid className={classes.mobileButtons}>
-              <Button
-                forward
-                onClick={() => setActiveMenu("onboarding")}
-                dangerouslySetInnerHTML={{
-                  __html: t("home#help_label")
-                }}
-              />
-              <a
-                href="https://geralnafilapt.typeform.com/to/VtDUdM"
-                rel="noopener noreferrer"
-                target="_blank"
-                className={classes.linkLabel}
-              >
-                {t("home#lojista_label")}
-              </a>
-            </Grid>
-          </Grid>
-          <Grid
-            container
-            direction="row"
-            wrap="nowrap"
-            className={classes.rightColumn}
-          >
-            <Grid container alignItems="flex-end" item>
-              <img src={personSrc} alt="store" height="80%" />
-            </Grid>
-            <Grid
-              container
-              direction="column"
-              alignItems="center"
-              justify="space-evenly"
-            >
-              <Grid item>
-                <img src={storeSrc} alt="store" />
-              </Grid>
-              <Grid item style={{ width: "90%" }}>
-                <p
-                  style={{ fontSize: "36px", lineHeight: "43px" }}
-                  dangerouslySetInnerHTML={{ __html: t("home#intro_text") }}
-                />
-              </Grid>
-            </Grid>
-          </Grid>
-        </div>
-      </div>
-      <Grid className={classes.footer}>
-        <div>
-          <div style={{ display: "flex", alignItems: "center", height: "50%" }}>
-            <NaFilaIcon />
-          </div>
-          <div style={{ display: "flex", alignItems: "center", height: "50%" }}>
-            <Link
-              style={{ color: "white" }}
-              target="_blank"
-              rel="noopener"
-              href="https://tech4covid19.org"
-            >
-              <Tech4CovidIcon />
-            </Link>
-          </div>
-        </div>
-        <div>
-          <div style={{ display: "flex", alignItems: "center", height: "30%" }}>
-            <p style={{ margin: 0, color: "white", fontSize: "20px" }}>
-              Parceiros
-            </p>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              height: "30%",
-              justifyContent: "space-between",
-              alignItems: "center"
-            }}
-          >
-            <Link
-              style={{ color: "white" }}
-              target="_blank"
-              rel="noopener"
-              href="https://google.pt"
-            >
-              <GoogleIcon />
-            </Link>
-            <Link
-              style={{ color: "white" }}
-              target="_blank"
-              rel="noopener"
-              href="https://nos.pt"
-            >
-              <NOSIcon />
-            </Link>
-          </div>
-          <div style={{ display: "flex", alignItems: "center", height: "30%" }}>
-            <p style={{ margin: 0, color: "white", fontSize: "13px" }}>
-              <Link
-                style={{ color: "white" }}
-                href="/termos-condicoes"
-                target="_blank"
-                rel="noopener"
-              >
-                {t("terms#title")}
-              </Link>
-              {" | "}
-              <Link
-                style={{ color: "white" }}
-                href="https://facebook.com/nafila.pt"
-                target="_blank"
-                rel="noopener"
-              >
-                Facebook
-              </Link>
-            </p>
-          </div>
-        </div>
-      </Grid>
-    </Grid>
-  );
-  if (activeMenu === "home") {
-    return <HomeContent />;
-  }
   return (
     <OnBoardingLayout
       bg={[bgIntro, bgStore, bgMain]}
