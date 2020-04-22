@@ -178,7 +178,7 @@ const Home = () => {
                 forward
                 fullWidth
                 variant="secondary"
-                href={Routes.ADMIN_HOME_PATH}
+                href={Routes.ADMIN_HOME_ONBOARDING_PATH}
                 dangerouslySetInnerHTML={{
                   __html: t("home#help_label")
                 }}

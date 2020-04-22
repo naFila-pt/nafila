@@ -32,6 +32,10 @@ class Router extends Component {
             <Admin.Home openSnackbar={this.props.openSnackbar} />
           </Route>
 
+          <Route path={Routes.ADMIN_HOME_ONBOARDING_PATH} exact>
+            <Admin.OnBoarding {...this.props} />
+          </Route>
+
           <Route path={Routes.TICKET_LEAVE_PATH} exact>
             <Leave {...this.props} />
           </Route>

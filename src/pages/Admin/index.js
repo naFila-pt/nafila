@@ -1,4 +1,5 @@
 import Home from "./Home";
+import OnBoarding from "./OnBoarding";
 import WelcomePanel from "./WelcomePanel";
 import SignUp from "./SignUp";
 import Login from "./Login";
@@ -11,6 +12,7 @@ import QueuePoster from "./QueuePoster";
 
 const Admin = {
   Home,
+  OnBoarding,
   WelcomePanel,
   SignUp,
   Login,
