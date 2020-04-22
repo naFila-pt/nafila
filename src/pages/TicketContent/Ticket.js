@@ -11,7 +11,6 @@ import Link from "@material-ui/core/Link";
 import Button from "../../components/Button";
 import ConsumerTicket from "../../components/ConsumerTicket";
 
-import bgIntro from "../../assets/bg/user_intro.svg";
 import bgStore from "../../assets/bg/user_store.svg";
 import bgMain from "../../assets/bg/main.svg";
 
@@ -152,31 +151,7 @@ const HomeContent = ({ openSnackbar }) => {
   };
 
   return (
-    <HomeLayout bg={[bgIntro, bgStore, bgMain]} activeStep={activeStep}>
-      <Grid container direction="column" className={classes.gridContainer}>
-        <div style={{ textAlign: "center" }}>
-          <Logo className="logo-icon" />
-        </div>
-        <Grid item className={classes.gridItemIntro}>
-          <Typography
-            variant="h1"
-            style={{ margin: "0.3em 0 0", fontSize: "2.375em" }}
-          >
-            {t("home#intro_welcome")}
-          </Typography>
-          <span
-            style={{ fontSize: "24px" }}
-            dangerouslySetInnerHTML={{ __html: t("home#intro_pitch") }}
-          />
-        </Grid>
-        <div className={classes.bottomButton}>
-          <Button
-            forward
-            onClick={handleNextButton}
-            dangerouslySetInnerHTML={{ __html: t("home#intro_button") }}
-          />
-        </div>
-      </Grid>
+    <HomeLayout bg={[bgStore, bgMain]} activeStep={activeStep}>
       <Grid container direction="column" className={classes.gridContainer}>
         <Grid item className={classes.gridItem}>
           <Typography
