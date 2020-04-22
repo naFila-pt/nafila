@@ -6,7 +6,9 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import PrivateRoute from "../PrivateRoute";
 
-import { Ticket, Leave, TermsConditions, Home } from "../../pages/HomeContent";
+import OnBoardingContent from "../../pages/OnBoardingContent";
+import { TermsConditions, Home } from "../../pages/HomeContent";
+import { Ticket, Leave } from "../../pages/TicketContent";
 import Admin from "../../pages/Admin";
 import NotFoundContent from "../../pages/NotFoundContent";
 import * as Routes from "../../constants/RoutesConstants";
@@ -16,7 +18,7 @@ class Router extends Component {
     let shouldSkipOnBoarding;
 
     try {
-      shouldSkipOnBoarding = true;
+      shouldSkipOnBoarding = localStorage.getItem("skipOnBoarding");
     } catch (error) {
       shouldSkipOnBoarding = false;
     }
@@ -24,31 +26,34 @@ class Router extends Component {
     return (
       <BrowserRouter basename={process.env.REACT_APP_BASENAME}>
         <Switch>
-          <Route path="/" exact>
-            <Home shouldSkipOnBoarding={shouldSkipOnBoarding} />
+          <Route path={Routes.ROOT_PATH} exact>
+            <Home
+              shouldSkipOnBoarding={shouldSkipOnBoarding}
+              openSnackbar={this.props.openSnackbar}
+            />
           </Route>
 
-          <Route path="/tirar-senha">
+          <Route path={Routes.TICKET_PATH}>
             <Ticket openSnackbar={this.props.openSnackbar} />
           </Route>
 
-          <Route path="/como-funciona">
-            <p> COMO FUNCIONA </p>
+          <Route path={Routes.ONBOARDING_PATH} exact>
+            <OnBoardingContent openSnackbar={this.props.openSnackbar} />
           </Route>
 
-          <Route path="/lojista">
-            <p> LOJISTA </p>
+          <Route path={Routes.ADMIN_HELLO_PATH} exact>
+            <Admin.Hello openSnackbar={this.props.openSnackbar} />
           </Route>
 
           <Route
-            path="/sair/:queueId/:ticketId"
+            path={Routes.TICKET_LEAVE_PATH}
             render={props => (
               <Leave {...props} openSnackbar={this.props.openSnackbar} />
             )}
             exact
           />
 
-          <Route path="/termos-condicoes" component={TermsConditions} exact />
+          <Route path={Routes.TCS_PATH} component={TermsConditions} exact />
 
           <Route
             path={Routes.ADMIN_WELCOME_PATH}

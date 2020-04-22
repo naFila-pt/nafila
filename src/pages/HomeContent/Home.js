@@ -21,6 +21,8 @@ import logoBannerSrc from "../../assets/icons/logo_nafila.svg";
 import storeSrc from "../../assets/icons/store_mobile.svg";
 import personSrc from "../../assets/icons/pessoa_homepage_desktop.svg";
 
+import * as Routes from "../../constants/RoutesConstants";
+
 const Header = styled.div`
   background-color: #fff;
   width: "100%";
@@ -227,7 +229,7 @@ const Home = props => {
             <Grid className={classes.desktopButtons}>
               <Button
                 forward
-                href="/como-funciona"
+                href={Routes.ONBOARDING_PATH}
                 dangerouslySetInnerHTML={{
                   __html: t("home#consumidor_label")
                 }}
@@ -236,7 +238,7 @@ const Home = props => {
               <Button
                 forward
                 variant="secondary"
-                href="/lojista"
+                href={Routes.ADMIN_HELLO_PATH}
                 dangerouslySetInnerHTML={{
                   __html: t("home#lojista_label")
                 }}
@@ -246,7 +248,7 @@ const Home = props => {
               {props.shouldSkipOnBoarding ? (
                 <Button
                   forward
-                  href={"/tirar-senha"}
+                  href={Routes.TICKET_PATH}
                   dangerouslySetInnerHTML={{
                     __html: t("home#intro_button")
                   }}
@@ -254,13 +256,13 @@ const Home = props => {
               ) : (
                 <Button
                   forward
-                  href={"/como-funciona"}
+                  href={Routes.ONBOARDING_PATH}
                   dangerouslySetInnerHTML={{
                     __html: t("home#help_label")
                   }}
                 />
               )}
-              <a href="/lojista" className={classes.linkLabel}>
+              <a href={Routes.ADMIN_HELLO_PATH} className={classes.linkLabel}>
                 {t("home#lojista_label")}
               </a>
             </Grid>
