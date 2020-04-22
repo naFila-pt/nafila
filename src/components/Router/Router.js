@@ -6,22 +6,17 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import PrivateRoute from "../PrivateRoute";
 
-import OnBoardingContent from "../../pages/OnBoardingContent";
-import { HomeContent, Leave, TermsConditions } from "../../pages/HomeContent";
+import { Ticket, Leave, TermsConditions, Home } from "../../pages/HomeContent";
 import Admin from "../../pages/Admin";
 import NotFoundContent from "../../pages/NotFoundContent";
 import * as Routes from "../../constants/RoutesConstants";
 
 class Router extends Component {
   render() {
-    // Properties
-    const { user } = this.props;
-
     let shouldSkipOnBoarding;
-    const isDesktop = window.innerWidth > 768;
 
     try {
-      shouldSkipOnBoarding = localStorage.getItem("skipOnBoarding");
+      shouldSkipOnBoarding = true;
     } catch (error) {
       shouldSkipOnBoarding = false;
     }
@@ -30,11 +25,19 @@ class Router extends Component {
       <BrowserRouter basename={process.env.REACT_APP_BASENAME}>
         <Switch>
           <Route path="/" exact>
-            {shouldSkipOnBoarding && !isDesktop ? (
-              <HomeContent openSnackbar={this.props.openSnackbar} user={user} />
-            ) : (
-              <OnBoardingContent />
-            )}
+            <Home shouldSkipOnBoarding={shouldSkipOnBoarding} />
+          </Route>
+
+          <Route path="/tirar-senha">
+            <Ticket openSnackbar={this.props.openSnackbar} />
+          </Route>
+
+          <Route path="/como-funciona">
+            <p> COMO FUNCIONA </p>
+          </Route>
+
+          <Route path="/lojista">
+            <p> LOJISTA </p>
           </Route>
 
           <Route

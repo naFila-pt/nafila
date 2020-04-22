@@ -103,7 +103,7 @@ code {
   display: flex;
   flex-direction: column;
   position: relative;
-  height: 100%;
+  flex: 1;
   padding: 0;
   background-size: cover;
   background-repeat: no-repeat;
