@@ -1,4 +1,5 @@
-import Hello from "./Hello";
+import Home from "./Home";
+import OnBoarding from "./OnBoarding";
 import WelcomePanel from "./WelcomePanel";
 import SignUp from "./SignUp";
 import Login from "./Login";
@@ -10,7 +11,8 @@ import EndQueue from "./EndQueue";
 import QueuePoster from "./QueuePoster";
 
 const Admin = {
-  Hello,
+  Home,
+  OnBoarding,
   WelcomePanel,
   SignUp,
   Login,

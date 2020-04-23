@@ -5,16 +5,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
 
 import Button from "../../components/Button";
+import Footer from "../../components/Footer";
 import bgMainMobile from "../../assets/bg/home_mobile.svg";
 import bgMain from "../../assets/bg/home_desktop.svg";
-
-import { ReactComponent as NaFilaIcon } from "../../assets/icons/nafila-text.svg";
-import { ReactComponent as Tech4CovidIcon } from "../../assets/icons/tech4covid.svg";
-import { ReactComponent as GoogleIcon } from "../../assets/icons/google-icon.svg";
-import { ReactComponent as NOSIcon } from "../../assets/icons/nos-icon.svg";
 
 import logoSrc from "../../assets/logo.svg";
 import logoBannerSrc from "../../assets/icons/logo_nafila.svg";
@@ -108,22 +103,6 @@ const DektopLogo = styled(Grid)`
   }
 `;
 
-const Footer = styled(Grid)`
-  width: 100%;
-  height: 30%;
-  display: grid;
-  padding: 10px 15% 10px 15%;
-  background-color: #8464ac;
-  grid-template-columns: repeat(auto-fit, minmax(19em, 1fr));
-  grid-row-gap: 20px;
-  & .columns {
-    width: 70%;
-  }
-  @media (min-width: 768px) {
-    height: 200px;
-  }
-`;
-
 const useStyles = makeStyles(theme => ({
   gridContainer: {
     alignContent: "center",
@@ -158,15 +137,13 @@ const useStyles = makeStyles(theme => ({
   },
   container: {
     display: "grid",
+    flex: 1,
     gridTemplateColumns: "100%",
     height: "100%",
     justifyItems: "center",
     [theme.breakpoints.up("md")]: {
       gridTemplateColumns: "40% 60%",
-      paddingBottom: "20px",
-      paddingTop: "5px",
-      paddingLeft: "5px",
-      paddingRight: "100px"
+      padding: "5px 100px 20px 5px"
     }
   },
   desktopButtons: {
@@ -238,7 +215,7 @@ const Home = props => {
               <Button
                 forward
                 variant="secondary"
-                href={Routes.ADMIN_HELLO_PATH}
+                href={Routes.ADMIN_HOME_PATH}
                 dangerouslySetInnerHTML={{
                   __html: t("home#lojista_label")
                 }}
@@ -262,7 +239,7 @@ const Home = props => {
                   }}
                 />
               )}
-              <a href={Routes.ADMIN_HELLO_PATH} className={classes.linkLabel}>
+              <a href={Routes.ADMIN_HOME_PATH} className={classes.linkLabel}>
                 {t("home#lojista_label")}
               </a>
             </Grid>
@@ -295,80 +272,7 @@ const Home = props => {
           </Grid>
         </div>
       </MainContainer>
-      <Footer>
-        <div className="columns">
-          <div style={{ display: "flex", alignItems: "center", height: "50%" }}>
-            <NaFilaIcon />
-          </div>
-          <div style={{ display: "flex", alignItems: "center", height: "50%" }}>
-            <Link
-              style={{ color: "white" }}
-              target="_blank"
-              rel="noopener"
-              href="https://tech4covid19.org"
-            >
-              <div style={{ display: "flex" }}>
-                <p>Um projecto no âmbito do</p>
-                <Tech4CovidIcon />
-                <p>#tech4COVID19</p>
-              </div>
-            </Link>
-          </div>
-        </div>
-        <div className="columns">
-          <div style={{ display: "flex", alignItems: "center", height: "30%" }}>
-            <p style={{ margin: 0, color: "white", fontSize: "20px" }}>
-              Parceiros
-            </p>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              height: "30%",
-              justifyContent: "space-between",
-              alignItems: "center"
-            }}
-          >
-            <Link
-              style={{ color: "white" }}
-              target="_blank"
-              rel="noopener"
-              href="https://google.pt"
-            >
-              <GoogleIcon />
-            </Link>
-            <Link
-              style={{ color: "white" }}
-              target="_blank"
-              rel="noopener"
-              href="https://nos.pt"
-            >
-              <NOSIcon />
-            </Link>
-          </div>
-          <div style={{ display: "flex", alignItems: "center", height: "30%" }}>
-            <p style={{ margin: 0, color: "white", fontSize: "13px" }}>
-              <Link
-                style={{ color: "white" }}
-                href="/termos-condicoes"
-                target="_blank"
-                rel="noopener"
-              >
-                {t("terms#title")}
-              </Link>
-              {" | "}
-              <Link
-                style={{ color: "white" }}
-                href="https://facebook.com/nafila.pt"
-                target="_blank"
-                rel="noopener"
-              >
-                Facebook
-              </Link>
-            </p>
-          </div>
-        </div>
-      </Footer>
+      <Footer />
     </Grid>
   );
 };

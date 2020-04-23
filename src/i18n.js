@@ -119,6 +119,7 @@ i18n
           "admin#intro_pitch": "na<b>fila</b>. Sem filas.",
           "admin#intro_login": "Entrar",
           "admin#intro_signup": "Registo de Loja",
+          "admin#register": "Pré-registo",
 
           // Admin SignUp
           "admin#signup_title": "Introduza os dados de Registo",
