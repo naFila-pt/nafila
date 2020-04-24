@@ -89,7 +89,9 @@ const Footer = () => {
           >
             Parceiros
           </div>
-          <div style={{ display: "flex", marginTop: "10px" }}>
+          <div
+            style={{ display: "flex", marginTop: "10px", alignItems: "center" }}
+          >
             <Link
               style={{ color: "white" }}
               target="_blank"
@@ -117,6 +119,14 @@ const Footer = () => {
               rel="noopener"
             >
               {t("terms#title")}
+            </Link>
+            {" | "}
+            <Link style={{ color: "white" }} target="_blank" rel="noopener">
+              {t("terms#privacy")}
+            </Link>
+            {" | "}
+            <Link style={{ color: "white" }} target="_blank" rel="noopener">
+              {t("terms#contact")}
             </Link>
             {" | "}
             <Link

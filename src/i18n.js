@@ -62,6 +62,8 @@ i18n
           "home#lojista_label": "É lojista ?",
           "home#consumidor_label": "É consumidor ?",
           "terms#title": "Termos e Condições",
+          "terms#privacy": "Privacidade",
+          "terms#contact": "Contatos",
           "terms#subtitle": "Texto de exemplo/not compliant",
           "terms#text": `
           Os presentes Termos e Condições estabelecem as regras que regulam o acesso e utilização do website e aplicação naFila (“naFila”). NaFila resultou do esforço de voluntários associados ao Movimento Tech4Covid19.
