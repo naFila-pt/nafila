@@ -1,6 +1,7 @@
 {
   "name": "safequeue",
   "version": "0.1.0",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "@material-ui/codemod": "^4.5.0",
