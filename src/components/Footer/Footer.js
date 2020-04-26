@@ -5,23 +5,41 @@ import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
 
 import { ReactComponent as NaFilaIcon } from "../../assets/icons/nafila-text.svg";
-import { ReactComponent as Tech4CovidIcon } from "../../assets/icons/tech4covid.svg";
+import { ReactComponent as Tech4CovidIcon } from "../../assets/icons/Logo-Tech4COVID19.svg";
 import { ReactComponent as GoogleIcon } from "../../assets/icons/google-icon.svg";
 import { ReactComponent as NOSIcon } from "../../assets/icons/nos-icon.svg";
 
 const FooterWrapper = styled(Grid)`
   width: 100%;
   height: 30%;
-  display: grid;
-  padding: 10px 15% 10px 15%;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
   background-color: #8464ac;
-  grid-template-columns: repeat(auto-fit, minmax(19em, 1fr));
-  grid-row-gap: 20px;
-  & .column {
-    width: 70%;
+
+  & .partners {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    @media (min-width: 768px) {
+      flex-direction: row;
+      align-items: center;
+      margin-top: 0px;
+    }
   }
+  .logo path {
+    fill: white;
+  }
+  .logo {
+    display: flex;
+  }
+
   @media (min-width: 768px) {
-    height: 150px;
+    height: 125px;
+    align-items: center;
+    flex-direction: row;
+
+    padding: 10px 15% 10px 15%;
   }
 `;
 
@@ -30,7 +48,7 @@ const Footer = () => {
 
   return (
     <FooterWrapper>
-      <div className="column">
+      <div style={{ width: "77%" }}>
         <div style={{ display: "flex", alignItems: "center", height: "50%" }}>
           <NaFilaIcon />
         </div>
@@ -41,44 +59,56 @@ const Footer = () => {
             rel="noopener"
             href="https://tech4covid19.org"
           >
-            <div style={{ display: "flex" }}>
-              <p>Um projecto no âmbito do</p>
-              <Tech4CovidIcon />
-              <p>#tech4COVID19</p>
+            <div style={{ display: "flex", marginTop: "10px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  flexWrap: "nowrap"
+                }}
+              >
+                Um projecto no âmbito do &nbsp;
+                <span className="logo">
+                  <Tech4CovidIcon height="30px" width="150px" />
+                </span>
+              </div>
             </div>
           </Link>
         </div>
       </div>
-      <div className="column">
-        <div style={{ display: "flex", alignItems: "center", height: "30%" }}>
-          <p style={{ margin: 0, color: "white", fontSize: "20px" }}>
+      <div>
+        <div className="partners">
+          <div
+            style={{
+              color: "white",
+              fontSize: "16px",
+              lineHeight: "19px",
+              textTransform: "uppercase",
+              marginRight: "28px"
+            }}
+          >
             Parceiros
-          </p>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            height: "30%",
-            justifyContent: "space-between",
-            alignItems: "center"
-          }}
-        >
-          <Link
-            style={{ color: "white" }}
-            target="_blank"
-            rel="noopener"
-            href="https://google.pt"
+          </div>
+          <div
+            style={{ display: "flex", marginTop: "10px", alignItems: "center" }}
           >
-            <GoogleIcon />
-          </Link>
-          <Link
-            style={{ color: "white" }}
-            target="_blank"
-            rel="noopener"
-            href="https://nos.pt"
-          >
-            <NOSIcon />
-          </Link>
+            <Link
+              style={{ color: "white" }}
+              target="_blank"
+              rel="noopener"
+              href="https://google.pt"
+            >
+              <GoogleIcon />
+            </Link>
+            <Link
+              style={{ color: "white", marginLeft: "28px" }}
+              target="_blank"
+              rel="noopener"
+              href="https://nos.pt"
+            >
+              <NOSIcon />
+            </Link>
+          </div>
         </div>
         <div style={{ display: "flex", alignItems: "center", height: "30%" }}>
           <p style={{ margin: 0, color: "white", fontSize: "13px" }}>
@@ -89,6 +119,14 @@ const Footer = () => {
               rel="noopener"
             >
               {t("terms#title")}
+            </Link>
+            {" | "}
+            <Link style={{ color: "white" }} target="_blank" rel="noopener">
+              {t("terms#privacy")}
+            </Link>
+            {" | "}
+            <Link style={{ color: "white" }} target="_blank" rel="noopener">
+              {t("terms#contact")}
             </Link>
             {" | "}
             <Link
