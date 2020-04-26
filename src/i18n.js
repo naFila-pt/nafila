@@ -228,6 +228,7 @@ i18n
           "admin#queueManagement_creatingQueue": "A criar fila ...",
           "admin#queueManagement_queueCode": "Código da Fila",
           "admin#queueManagement_call": "Chamar",
+          "admin#queueManagement_callByName": "Chame o Cliente pelo Nome",
           "admin#queueManagement_nextInQueue": `Próximo <span class="logo">na<b>fila</b></span>`,
           "admin#queueManagement_createTicket": "Gerar senha",
           "admin#queueManagement_endQueue": `Terminar <span class="logo">na<b>fila</b></span>`,
