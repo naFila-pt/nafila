@@ -109,6 +109,7 @@ code {
   background-repeat: no-repeat;
   background-position: center;
   background-image: url("./assets/bg/home_mobile.svg");
+  grid-template-areas: "text text" "mail sms" "text text" "chamada sms" "text text";
 }
 
 @media (min-width:768px) {

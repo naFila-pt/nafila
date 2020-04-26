@@ -8,6 +8,8 @@ import Button from "@material-ui/core/Button";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 
+import Footer from "../../components/Footer";
+
 import { ReactComponent as LogoMini } from "../../assets/logo-mini.svg";
 
 const useStyles = makeStyles({
@@ -28,12 +30,12 @@ const useStyles = makeStyles({
     fontSize: "2.24em",
     color: "rgba(0, 0, 0, .54)"
   },
-  stepper: {
+  stepper: props => ({
     flexGrow: 1,
     position: "static",
-    backgroundColor: "#FFC836",
-    height: "80px"
-  },
+    backgroundColor: props.backgroundColor,
+    height: "60px"
+  }),
   stepperDot: {
     backgroundColor: "#4C0788",
     opacity: "0.33"
@@ -43,11 +45,20 @@ const useStyles = makeStyles({
   },
   stepperArrows: {
     color: "#4C0788"
+  },
+  arrowContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "7%"
   }
 });
 
-const OnBoardingLayout = ({ children, bg, endOnBoarding }) => {
-  const classes = useStyles();
+const OnBoardingLayout = ({ children, bg, endOnBoarding, isDesktop }) => {
+  const dotsBackground = {
+    backgroundColor: isDesktop ? "#00000000" : "#FFC836"
+  };
+  const classes = useStyles(dotsBackground);
   const [activeStep, setActiveStep] = useState(0);
   const bgUrl = bg[activeStep] ? bg[activeStep] : bg[bg.length - 1];
   const skipTestColor = ["#4C0788", "#FFFFFF", "#A0A0A0"];
@@ -62,16 +73,53 @@ const OnBoardingLayout = ({ children, bg, endOnBoarding }) => {
   return (
     <Box
       className={`${classes.container} OnboardingWrapper`}
-      style={{ backgroundImage: `url(${bgUrl})` }}
+      style={{ backgroundImage: `url(${bgUrl})`, height: "100vh" }}
     >
-      <Grid container>
-        <Grid container direction="column">
+      <Grid container direction="column" style={{ height: "100%" }}>
+        <Grid container direction="column" style={{ height: "70px" }}>
           <Toolbar className={classes.toolbar}>
-            {activeStep !== 0 && <LogoMini style={{ flex: 1 }} />}
+            <LogoMini
+              style={{ flex: 1, opacity: `${activeStep !== 0 ? "1" : "0"}` }}
+            />
           </Toolbar>
         </Grid>
-        {children[activeStep]}
-        <Grid container style={{ position: "absolute", bottom: 0 }}>
+        {isDesktop ? (
+          <Grid container direction="column" style={{ flex: 1 }}>
+            <Grid container style={{ height: "100%" }}>
+              <Grid className={classes.arrowContainer}>
+                <Button
+                  size="small"
+                  classes={{ label: classes.stepperArrows }}
+                  onClick={handleBack}
+                  disabled={activeStep === 0}
+                  style={{
+                    visibility: activeStep === 0 ? "hidden" : "visible"
+                  }}
+                >
+                  <ArrowBackIcon />
+                </Button>
+              </Grid>
+              {children[activeStep]}
+              <Grid className={classes.arrowContainer}>
+                <Button
+                  size="small"
+                  classes={{ label: classes.stepperArrows }}
+                  onClick={handleNext}
+                  disabled={activeStep === bg.length - 1}
+                  style={{
+                    visibility:
+                      activeStep === bg.length - 1 ? "hidden" : "visible"
+                  }}
+                >
+                  <ArrowForwardIcon />
+                </Button>
+              </Grid>
+            </Grid>
+          </Grid>
+        ) : (
+          children[activeStep]
+        )}
+        <Grid>
           <Grid
             container
             direction="column"
@@ -80,20 +128,22 @@ const OnBoardingLayout = ({ children, bg, endOnBoarding }) => {
             style={{
               marginRight: "1.5em",
               marginBottom: ".5em",
-              visibility: activeStep === 3 ? "hidden" : "visible"
+              visibility: activeStep === bg.length - 1 ? "hidden" : "visible"
             }}
           >
-            <Button
-              onClick={endOnBoarding}
-              style={{ color: skipTestColor[activeStep] }}
-            >
-              <b>Saltar</b>
-            </Button>
+            {!isDesktop && (
+              <Button
+                onClick={endOnBoarding}
+                style={{ color: skipTestColor[activeStep] }}
+              >
+                <b>Saltar</b>
+              </Button>
+            )}
           </Grid>
           <Grid item style={{ width: "100%" }}>
             <MobileStepper
               variant="dots"
-              steps={4}
+              steps={bg.length}
               activeStep={activeStep}
               classes={{
                 root: classes.stepper,
@@ -107,27 +157,44 @@ const OnBoardingLayout = ({ children, bg, endOnBoarding }) => {
                   onClick={handleBack}
                   disabled={activeStep === 0}
                   style={{
-                    visibility: activeStep === 0 ? "hidden" : "visible"
+                    visibility:
+                      activeStep === 0 || isDesktop ? "hidden" : "visible"
                   }}
                 >
                   <ArrowBackIcon />
                 </Button>
               }
               nextButton={
-                <Button
-                  size="small"
-                  classes={{ label: classes.stepperArrows }}
-                  onClick={handleNext}
-                  disabled={activeStep === 5}
-                  style={{
-                    visibility: activeStep === 3 ? "hidden" : "visible"
-                  }}
-                >
-                  <ArrowForwardIcon />
-                </Button>
+                !isDesktop ? (
+                  <Button
+                    size="small"
+                    classes={{ label: classes.stepperArrows }}
+                    onClick={handleNext}
+                    disabled={activeStep === bg.length - 1}
+                    style={{
+                      visibility:
+                        activeStep === bg.length - 1 ? "hidden" : "visible"
+                    }}
+                  >
+                    <ArrowForwardIcon />
+                  </Button>
+                ) : (
+                  <div>
+                    <Button
+                      onClick={endOnBoarding}
+                      style={{
+                        visibility:
+                          activeStep === bg.length - 1 ? "hidden" : "visible"
+                      }}
+                    >
+                      <b>Saltar</b>
+                    </Button>
+                  </div>
+                )
               }
             />
           </Grid>
+          <Footer />
         </Grid>
       </Grid>
     </Box>
