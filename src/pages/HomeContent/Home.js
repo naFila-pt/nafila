@@ -68,12 +68,13 @@ const MainContainer = styled.div`
   @media (min-width: 768px) {
     background-image: url(${bgMain});
     flex: 1;
+    height: unset;
   }
 `;
 
 const LeftColumn = styled.div`
   width: 100%;
-  height: 100%;
+  flex: 40%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -129,20 +130,19 @@ const useStyles = makeStyles(theme => ({
   rightColumn: {
     display: "none",
     [theme.breakpoints.up("md")]: {
-      display: "flex"
+      display: "flex",
+      flex: "60%"
     }
   },
   logoIcon: {
     margin: "3em 0 5.5em 0"
   },
   container: {
-    display: "grid",
+    display: "flex",
     flex: 1,
-    gridTemplateColumns: "100%",
     height: "100%",
     justifyItems: "center",
     [theme.breakpoints.up("md")]: {
-      gridTemplateColumns: "40% 60%",
       padding: "5px 100px 20px 5px"
     }
   },
