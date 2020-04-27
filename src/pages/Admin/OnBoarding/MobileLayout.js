@@ -8,7 +8,9 @@ import Button from "@material-ui/core/Button";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 
-import { ReactComponent as LogoMini } from "../../assets/logo-mini.svg";
+import { ReactComponent as LogoMini } from "../../../assets/logo-mini.svg";
+
+import bgMainMobile from "../../../assets/bg/user_onboard_main.svg";
 
 const useStyles = makeStyles({
   container: {
@@ -46,11 +48,9 @@ const useStyles = makeStyles({
   }
 });
 
-const OnBoardingLayout = ({ children, bg, endOnBoarding }) => {
+const OnBoardingLayout = ({ children, endOnBoarding }) => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
-  const bgUrl = bg[activeStep] ? bg[activeStep] : bg[bg.length - 1];
-  const skipTestColor = ["#4C0788", "#FFFFFF", "#A0A0A0"];
 
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
@@ -62,16 +62,19 @@ const OnBoardingLayout = ({ children, bg, endOnBoarding }) => {
   return (
     <Box
       className={`${classes.container} OnboardingWrapper`}
-      style={{ backgroundImage: `url(${bgUrl})` }}
+      style={{ backgroundImage: `url(${bgMainMobile})` }}
     >
       <Grid container>
-        <Grid container direction="column">
+        <Grid container direction="column" style={{ height: "56px" }}>
           <Toolbar className={classes.toolbar}>
             {activeStep !== 0 && <LogoMini style={{ flex: 1 }} />}
           </Toolbar>
         </Grid>
         {children[activeStep]}
-        <Grid container style={{ position: "absolute", bottom: 0 }}>
+        <Grid
+          container
+          style={{ position: "absolute", bottom: 0, height: "128px" }}
+        >
           <Grid
             container
             direction="column"
@@ -80,20 +83,18 @@ const OnBoardingLayout = ({ children, bg, endOnBoarding }) => {
             style={{
               marginRight: "1.5em",
               marginBottom: ".5em",
-              visibility: activeStep === 3 ? "hidden" : "visible"
+              visibility:
+                activeStep === children.length - 1 ? "hidden" : "visible"
             }}
           >
-            <Button
-              onClick={endOnBoarding}
-              style={{ color: skipTestColor[activeStep] }}
-            >
+            <Button onClick={endOnBoarding}>
               <b>Saltar</b>
             </Button>
           </Grid>
           <Grid item style={{ width: "100%" }}>
             <MobileStepper
               variant="dots"
-              steps={4}
+              steps={children.length}
               activeStep={activeStep}
               classes={{
                 root: classes.stepper,
@@ -118,9 +119,9 @@ const OnBoardingLayout = ({ children, bg, endOnBoarding }) => {
                   size="small"
                   classes={{ label: classes.stepperArrows }}
                   onClick={handleNext}
-                  disabled={activeStep === 5}
                   style={{
-                    visibility: activeStep === 3 ? "hidden" : "visible"
+                    visibility:
+                      activeStep === children.length - 1 ? "hidden" : "visible"
                   }}
                 >
                   <ArrowForwardIcon />

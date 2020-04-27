@@ -6,8 +6,6 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "../../../components/Button";
 
-import bgMainMobile from "../../../assets/bg/home_mobile.svg";
-import bgMain from "../../../assets/bg/home_desktop.svg";
 import logoSrc from "../../../assets/logo.svg";
 import storeIcon from "../../../assets/icons/store-icon.svg";
 import emailIcon from "../../../assets/icons/email_notification.svg";
@@ -16,10 +14,10 @@ import smsIcon from "../../../assets/icons/icon_sms_mobile.svg";
 import howToUseIcon from "../../../assets/icons/ilustração_utilização_mobile.svg";
 import yellowLogo from "../../../assets/icons/logo_amarelo_naFila.svg";
 
-import OnBoardingLayout from "../../../components/OnBoardingLayout";
+import DesktopLayout from "./DesktopLayout";
+import MobileLayout from "./MobileLayout";
 
 const GridArea = styled(Grid)`
-  width: 60%;
   height: 90%;
   display: grid;
   grid-template-columns: 50% 50%;
@@ -37,6 +35,10 @@ const GridArea = styled(Grid)`
   }
   & p {
     margin: 0;
+  }
+
+  @media (min-width: 768px) {
+    width: 70%;
   }
 `;
 
@@ -71,8 +73,45 @@ const TextDesc = styled.p`
   font-size: 20px;
 `;
 
-const MainContent = props => (
-  <Grid container style={{ display: "flex", flex: 1 }}>
+const TicketContainer = styled.div`
+  width: 60%;
+  height: 90%;
+  & .code {
+    margin: 0 0 5px 0;
+  }
+  & .store {
+    margin: 5px 0 10px 0;
+    font-weight: bold;
+    font-size: 35px;
+  }
+
+  & .ticket {
+    display: flex;
+    height: 70%;
+    & div {
+      & .remaining {
+        font-size: 20px;
+        font-weight: bold;
+        margin: 0;
+      }
+
+      & .name {
+        font-size: 25px;
+        font-weight: bold;
+        margin: 70% 0 0 0;
+      }
+    }
+  }
+`;
+
+const MainContentDesktop = props => (
+  <Grid
+    container
+    style={{
+      display: "flex",
+      flex: 1
+    }}
+  >
     <Grid
       style={{
         display: "flex",
@@ -93,11 +132,13 @@ const MainContent = props => (
           ></Typography>
           <span
             style={{ fontSize: "24px", fontWeight: "bold" }}
-            dangerouslySetInnerHTML={{ __html: props.t("home#intro_welcome") }}
+            dangerouslySetInnerHTML={{
+              __html: props.t("home#intro_welcome")
+            }}
           />
         </Grid>
       </Grid>
-      <Grid item style={{ marginLeft: "10px" }}>
+      <Grid item style={{ width: "100%" }}>
         <Typography
           variant="h3"
           style={{ fontSize: "25px", color: "#FFC836", marginBottom: "10px" }}
@@ -106,7 +147,69 @@ const MainContent = props => (
         </Typography>
         <Typography
           variant="h2"
-          style={{ fontSize: "25px" }}
+          style={{ fontSize: "25px", wordWrap: "break-word" }}
+          dangerouslySetInnerHTML={{ __html: props.t(props.text) }}
+        />
+      </Grid>
+      {props.isLastPage && (
+        <div
+          style={{
+            display: "flex",
+            flex: 1,
+            alignItems: "end"
+          }}
+        >
+          <Button
+            forward
+            href="https://geralnafilapt.typeform.com/to/VtDUdM"
+            dangerouslySetInnerHTML={{
+              __html: props.t("admin#register")
+            }}
+            style={{ textAlign: "center" }}
+          />
+        </div>
+      )}
+    </Grid>
+    {props.rightColumn}
+  </Grid>
+);
+
+const MainContentMobile = props => (
+  <Grid
+    style={{
+      height: "calc(100vh - 184px)",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      padding: "10px"
+    }}
+  >
+    <Grid
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        width: "100%"
+      }}
+    >
+      <Grid item style={{ width: "100%" }}>
+        <Typography
+          variant="h3"
+          style={{
+            fontSize: "25px",
+            color: "#FFC836",
+            marginBottom: "10px",
+            textAlign: "center"
+          }}
+        >
+          {props.t(props.title)}
+        </Typography>
+        <Typography
+          variant="h2"
+          style={{
+            fontSize: "25px",
+            wordWrap: "break-word",
+            textAlign: "center"
+          }}
           dangerouslySetInnerHTML={{ __html: props.t(props.text) }}
         />
       </Grid>
@@ -137,36 +240,192 @@ const OnBoarding = props => {
   const { t } = useTranslation();
 
   const endOnBoarding = () => {
-    try {
-      localStorage.setItem("skipOnBoarding", true);
-    } catch (error) {}
+    window.open("https://geralnafilapt.typeform.com/to/VtDUdM", "_blank");
   };
 
+  if (props.isDesktop) {
+    return (
+      <DesktopLayout endOnBoarding={endOnBoarding}>
+        <MainContentDesktop
+          t={t}
+          title=""
+          text="admin#onboarding_firstText"
+          rightColumn={
+            <Grid
+              style={{
+                display: "flex",
+                flex: 1,
+                alignItems: "end",
+                justifyContent: "end",
+                marginLeft: "20px"
+              }}
+            >
+              <img src={storeIcon} alt="asset" height="70%" />
+            </Grid>
+          }
+        />
+        <MainContentDesktop
+          t={t}
+          title="admin#onboarding_secondTitle"
+          text="admin#onboarding_secondText"
+          rightColumn={
+            <Grid
+              style={{
+                display: "flex",
+                flex: 1,
+                alignItems: "end",
+                justifyContent: "end",
+                marginLeft: "20px"
+              }}
+            >
+              <img src={storeIcon} alt="asset" height="70%" />
+            </Grid>
+          }
+        />
+        <MainContentDesktop
+          t={t}
+          title="admin#onboarding_thirdTitle"
+          text="admin#onboarding_thirdText"
+          rightColumn={
+            <Grid
+              style={{
+                display: "flex",
+                flex: 1,
+                alignItems: "end",
+                justifyContent: "end",
+                marginLeft: "20px"
+              }}
+            >
+              <GridArea>
+                <BigText style={{ gridArea: "text1" }}>
+                  {t("admin#onboarding_autonomous")}
+                </BigText>
+                <EmailIcon src={emailIcon} alt="iconEmail" />
+                <SmsIcon src={smsIcon} alt="smsIcon" />
+                <TextDesc style={{ gridArea: "mailDesc" }}>
+                  {t("admin#onboarding_email")}
+                </TextDesc>
+                <TextDesc style={{ gridArea: "sms1Desc" }}>
+                  {t("admin#onboarding_sms")}
+                </TextDesc>
+                <BigText style={{ gridArea: "text2" }}>
+                  {t("admin#onboarding_shopkeeper")}
+                </BigText>
+                <CallIcon src={chamadaIcon} alt="chamada" />
+                <SmsIcon
+                  src={smsIcon}
+                  alt="smsIcon"
+                  style={{ gridArea: "sms2" }}
+                />
+                <TextDesc style={{ gridArea: "chamadaDesc" }}>
+                  {t("admin#onboarding_call")}
+                </TextDesc>
+                <TextDesc style={{ gridArea: "sms2Desc" }}>
+                  {t("admin#onboarding_phone")}
+                </TextDesc>
+              </GridArea>
+            </Grid>
+          }
+        />
+        <MainContentDesktop
+          t={t}
+          title="admin#onboarding_fourthTitle"
+          text="admin#onboarding_fourthText"
+          rightColumn={
+            <Grid
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                flex: 1,
+                alignItems: "end",
+                justifyContent: "end",
+                marginLeft: "20px"
+              }}
+            >
+              <TicketContainer>
+                <p className="code">{t("admin#onboarding_code")}</p>
+                <p className="store">LojaCartaxo</p>
+                <div className="ticket">
+                  <img src={yellowLogo} alt="asset" height="100%" />
+                  <div style={{ marginLeft: "30px" }}>
+                    <p className="remaining">
+                      {t("admin#onboarding_remaining")}
+                    </p>
+                    <p
+                      className="remaining"
+                      style={{
+                        fontSize: "30px"
+                      }}
+                    >
+                      10
+                    </p>
+                    <p className="name">Ana Maria</p>
+                  </div>
+                </div>
+              </TicketContainer>
+            </Grid>
+          }
+        />
+        <MainContentDesktop
+          t={t}
+          title="admin#onboarding_fifthTitle"
+          text="admin#onboarding_fifthText"
+          rightColumn={
+            <Grid
+              style={{
+                display: "flex",
+                flex: 1,
+                alignItems: "end",
+                justifyContent: "end",
+                marginLeft: "20px"
+              }}
+            >
+              <img src={howToUseIcon} alt="asset" height="90%" />
+            </Grid>
+          }
+        />
+        <MainContentDesktop
+          t={t}
+          isLastPage
+          title="admin#onboarding_sixthTitle"
+          text="admin#onboarding_sixthText"
+          rightColumn={
+            <Grid
+              style={{
+                display: "flex",
+                flex: 1,
+                alignItems: "end",
+                justifyContent: "end",
+                marginLeft: "20px"
+              }}
+            >
+              <img src={storeIcon} alt="asset" height="70%" />
+            </Grid>
+          }
+        />
+      </DesktopLayout>
+    );
+  }
   return (
-    <OnBoardingLayout
-      bg={[bgMain, bgMain, bgMain, bgMain, bgMain, bgMain]}
-      endOnBoarding={endOnBoarding}
-      isDesktop={props.isDesktop}
-    >
-      <MainContent
+    <MobileLayout endOnBoarding={endOnBoarding}>
+      <MainContentMobile
         t={t}
-        title=""
         text="admin#onboarding_firstText"
         rightColumn={
           <Grid
             style={{
               display: "flex",
-              flex: 1,
               alignItems: "end",
-              justifyContent: "end",
-              marginLeft: "20px"
+              justifyContent: "center",
+              padding: "20px",
+              width: "100%"
             }}
           >
-            <img src={storeIcon} alt="asset" height="70%" />
+            <img src={storeIcon} alt="asset" width="100%" />
           </Grid>
         }
       />
-      <MainContent
+      <MainContentMobile
         t={t}
         title="admin#onboarding_secondTitle"
         text="admin#onboarding_secondText"
@@ -174,17 +433,17 @@ const OnBoarding = props => {
           <Grid
             style={{
               display: "flex",
-              flex: 1,
               alignItems: "end",
-              justifyContent: "end",
-              marginLeft: "20px"
+              justifyContent: "center",
+              width: "100%",
+              padding: "20px"
             }}
           >
-            <img src={storeIcon} alt="asset" height="70%" />
+            <img src={storeIcon} alt="asset" width="100%" />
           </Grid>
         }
       />
-      <MainContent
+      <MainContentMobile
         t={t}
         title="admin#onboarding_thirdTitle"
         text="admin#onboarding_thirdText"
@@ -192,10 +451,9 @@ const OnBoarding = props => {
           <Grid
             style={{
               display: "flex",
-              flex: 1,
               alignItems: "end",
-              justifyContent: "end",
-              marginLeft: "20px"
+              justifyContent: "center",
+              width: "center"
             }}
           >
             <GridArea>
@@ -229,7 +487,7 @@ const OnBoarding = props => {
           </Grid>
         }
       />
-      <MainContent
+      <MainContentMobile
         t={t}
         title="admin#onboarding_fourthTitle"
         text="admin#onboarding_fourthText"
@@ -237,92 +495,80 @@ const OnBoarding = props => {
           <Grid
             style={{
               display: "flex",
-              flexDirection: "column",
-              flex: 1,
               alignItems: "end",
-              justifyContent: "end",
-              marginLeft: "20px"
+              justifyContent: "center",
+              width: "center",
+              padding: "20px"
             }}
           >
-            <div style={{ width: "60%", height: "90%" }}>
-              <p style={{ margin: "0 0 5px 0" }}>
-                {t("admin#onboarding_code")}
-              </p>
-              <p
-                style={{
-                  margin: "5px 0 10px 0",
-                  fontWeight: "bold",
-                  fontSize: "35px"
-                }}
-              >
-                LojaCartaxo
-              </p>
-              <div style={{ display: "flex", height: "70%" }}>
+            <TicketContainer style={{ width: "100%", height: "100%" }}>
+              <div className="ticket" style={{ height: "100%" }}>
                 <img src={yellowLogo} alt="asset" height="100%" />
-                <div style={{ marginLeft: "30px" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    marginLeft: "30px",
+                    justifyContent: "center"
+                  }}
+                >
+                  <p className="remaining">{t("admin#onboarding_remaining")}</p>
                   <p
-                    style={{ fontSize: "20px", fontWeight: "bold", margin: 0 }}
-                  >
-                    {t("admin#onboarding_remaining")}
-                  </p>
-                  <p
-                    style={{ fontSize: "30px", fontWeight: "bold", margin: 0 }}
+                    className="remaining"
+                    style={{
+                      fontSize: "30px"
+                    }}
                   >
                     10
                   </p>
-                  <p
-                    style={{
-                      fontSize: "25px",
-                      fontWeight: "bold",
-                      margin: "70% 0 0 0"
-                    }}
-                  >
-                    Ana Maria
-                  </p>
                 </div>
               </div>
-            </div>
+            </TicketContainer>
           </Grid>
         }
       />
-      <MainContent
+      <MainContentMobile
         t={t}
-        title="admin#onboarding_fifthTitle"
-        text="admin#onboarding_fifthText"
-        rightColumn={
-          <Grid
-            style={{
-              display: "flex",
-              flex: 1,
-              alignItems: "end",
-              justifyContent: "end",
-              marginLeft: "20px"
-            }}
-          >
-            <img src={howToUseIcon} alt="asset" height="90%" />
-          </Grid>
-        }
-      />
-      <MainContent
-        t={t}
-        isLastPage
         title="admin#onboarding_sixthTitle"
-        text="admin#onboarding_sixthText"
         rightColumn={
           <Grid
             style={{
               display: "flex",
-              flex: 1,
-              alignItems: "end",
-              justifyContent: "end",
-              marginLeft: "20px"
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center"
             }}
           >
-            <img src={storeIcon} alt="asset" height="70%" />
+            <img
+              src={storeIcon}
+              alt="asset"
+              width="100%"
+              style={{ margin: "5px" }}
+            />
+            <Typography
+              variant="h2"
+              style={{
+                fontSize: "25px",
+                wordWrap: "break-word",
+                textAlign: "center",
+                margin: "10px"
+              }}
+              dangerouslySetInnerHTML={{
+                __html: t("admin#onboarding_sixthText")
+              }}
+            />
+            <Button
+              forward
+              href="https://geralnafilapt.typeform.com/to/VtDUdM"
+              dangerouslySetInnerHTML={{
+                __html: t("admin#register")
+              }}
+              style={{ textAlign: "center" }}
+            />
           </Grid>
         }
       />
-    </OnBoardingLayout>
+    </MobileLayout>
   );
 };
 
