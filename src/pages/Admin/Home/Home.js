@@ -13,7 +13,7 @@ import bgMain from "../../../assets/bg/home_desktop.svg";
 import logoBannerSrc from "../../../assets/icons/logo_nafila.svg";
 import logoSrc from "../../../assets/logo.svg";
 import personSrc from "../../../assets/icons/pessoa_homepage_desktop.svg";
-import personManSrc from "../../../assets/icons/person_man-svg.svg";
+import personManSrc from "../../../assets/icons/person_man.svg";
 
 import * as Routes from "../../../constants/RoutesConstants";
 
