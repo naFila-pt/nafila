@@ -99,20 +99,3 @@ code {
     margin-top: 0px;
   }
 } */
-.Home-Container-Wrapper {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  flex: 1;
-  padding: 0;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-image: url("./assets/bg/home_mobile.svg");
-}
-
-@media (min-width:768px) {
-  .Home-Container-Wrapper {
-    background-image: url("./assets/bg/home_desktop.svg");
-  }
-}

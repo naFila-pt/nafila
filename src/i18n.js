@@ -142,6 +142,33 @@ i18n
           "admin#intro_signup": "Registo de Loja",
           "admin#register": "Pré-registo",
 
+          // Admin onboarding
+          "admin#onboarding_firstText":
+            "<b>Tem uma loja</b> ou trabalha num serviço de atendimento ao público? Gostava de utilizar o nafila na sua loja?",
+          "admin#onboarding_secondText":
+            "Faça o <b>pré-registo</b> e será contactado pela nossa equipa de suporte. Assim que receber o contacto do Suporte, <b>poderá começar a usar o nafila.</b>",
+          "admin#onboarding_secondTitle": "É simples!",
+          "admin#onboarding_thirdTitle": "3 em 1",
+          "admin#onboarding_thirdText":
+            "Os consumidores podem tirar a sua Senha de várias formas diferentes.",
+          "admin#onboarding_autonomous": "De forma autónoma",
+          "admin#onboarding_shopkeeper": "Com o lojista",
+          "admin#onboarding_email": "Email",
+          "admin#onboarding_sms": "SMS",
+          "admin#onboarding_call": "Nome",
+          "admin#onboarding_phone": "Telemóvel",
+          "admin#onboarding_code": "Código da Fila",
+          "admin#onboarding_remaining": "Restantes",
+          "admin#onboarding_fourthTitle": "A fila na palma da mão",
+          "admin#onboarding_fourthText":
+            "Gira a sua fila e chame os seus Clientes com o nafila.",
+          "admin#onboarding_fifthTitle": "Notificações seguras",
+          "admin#onboarding_fifthText":
+            "O seu Cliente <b>recebe a notificação,</b> enquanto aguarda em segurança.",
+          "admin#onboarding_sixthTitle": "O Cliente entra na Loja na sua vez.",
+          "admin#onboarding_sixthText":
+            "<b>E já está!</b> O seu Cliente é atendido em segurança.",
+
           // Admin SignUp
           "admin#signup_title": "Introduza os dados de Registo",
           "admin#signup_weakPassword":
