@@ -46,7 +46,7 @@ const useStyles = makeStyles({
   }
 });
 
-const OnBoardingLayout = ({ children, bg, endOnBoarding }) => {
+const OnBoardingLayoutMobile = ({ children, bg, endOnBoarding }) => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
   const bgUrl = bg[activeStep] ? bg[activeStep] : bg[bg.length - 1];
@@ -134,4 +134,4 @@ const OnBoardingLayout = ({ children, bg, endOnBoarding }) => {
   );
 };
 
-export default OnBoardingLayout;
+export default OnBoardingLayoutMobile;

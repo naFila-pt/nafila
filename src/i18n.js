@@ -20,6 +20,25 @@ i18n
           "onboarding#store_description":
             "A sua Loja Favorita afixa <b>um código por dia</b>, que deve utilizar para <b>entrar</b> na<b>fila</b>.",
           "onboarding#useCode_title": "Utilize o código",
+          "onboarding#three_ways": "3 maneiras",
+          "onboarding#signup_ways":
+            "Pode inscrever-se na<b>fila</b> através de <b>SMS</b>, <b>Email</b> ou com o <b>seu Nome</b>.",
+          "onboarding#one_sms": "Basta uma SMS!",
+          "onboarding#register_nafila":
+            "Registe-se na<b>fila</b> enviando uma <b>SMS grátis</b> para o 4902 com: <b>nafila {código da Fila}",
+          "onboarding#difficulties":
+            "Se tiver alguma dificuldade, fale com o colaborador de loja.",
+          "onboarding#prefer_email": "Prefere receber Email?",
+          "onboarding#insertCodeEmail":
+            "Visite <b>nafila.pt</b>, insira o <b>código da fila</b> e <b>o seu email</b> para ser notificado.",
+          "onboarding#prefer_name": "Prefere ser chamado pelo Nome?",
+          "onboarding#ask_colaborator_register":
+            "Peça ao colaborador de loja para registar <b>o seu Nome.</b>",
+          "onboarding#name_register_extra_info":
+            "Vai ser <b>chamado pelo nome</b>. Aguarde próximo da loja mas em segurança.",
+          "onboarding#its_done": "E já está!",
+          "onboarding#your_turn_notification":
+            "Quando <b>chegar a sua vez</b>, será notificado e pode entrar na loja.",
           "onboarding#useCode_description":
             "Insira o código de loja no campo<br/>abaixo e clique em<br/>VALIDAR CÓDIGO para entrar na<b>fila</b>",
           "onboarding#useCode_inputPlaceholder": "LojaCodigo123",
@@ -122,6 +141,33 @@ i18n
           "admin#intro_login": "Entrar",
           "admin#intro_signup": "Registo de Loja",
           "admin#register": "Pré-registo",
+
+          // Admin onboarding
+          "admin#onboarding_firstText":
+            "<b>Tem uma loja</b> ou trabalha num serviço de atendimento ao público? Gostava de utilizar o nafila na sua loja?",
+          "admin#onboarding_secondText":
+            "Faça o <b>pré-registo</b> e será contactado pela nossa equipa de suporte. Assim que receber o contacto do Suporte, <b>poderá começar a usar o nafila.</b>",
+          "admin#onboarding_secondTitle": "É simples!",
+          "admin#onboarding_thirdTitle": "3 em 1",
+          "admin#onboarding_thirdText":
+            "Os consumidores podem tirar a sua Senha de várias formas diferentes.",
+          "admin#onboarding_autonomous": "De forma autónoma",
+          "admin#onboarding_shopkeeper": "Com o lojista",
+          "admin#onboarding_email": "Email",
+          "admin#onboarding_sms": "SMS",
+          "admin#onboarding_call": "Nome",
+          "admin#onboarding_phone": "Telemóvel",
+          "admin#onboarding_code": "Código da Fila",
+          "admin#onboarding_remaining": "Restantes",
+          "admin#onboarding_fourthTitle": "A fila na palma da mão",
+          "admin#onboarding_fourthText":
+            "Gira a sua fila e chame os seus Clientes com o nafila.",
+          "admin#onboarding_fifthTitle": "Notificações seguras",
+          "admin#onboarding_fifthText":
+            "O seu Cliente <b>recebe a notificação,</b> enquanto aguarda em segurança.",
+          "admin#onboarding_sixthTitle": "O Cliente entra na Loja na sua vez.",
+          "admin#onboarding_sixthText":
+            "<b>E já está!</b> O seu Cliente é atendido em segurança.",
 
           // Admin SignUp
           "admin#signup_title": "Introduza os dados de Registo",

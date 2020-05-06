@@ -19,7 +19,7 @@ import * as Routes from "../../../constants/RoutesConstants";
 
 const Header = styled.div`
   background-color: #fff;
-  width: "100%";
+  width: 100%;
   align-items: center;
   justify-content: center;
   height: 50px;
@@ -45,7 +45,6 @@ const Container = styled.div`
   background-image: url(${bgMainMobile});
   & .content {
     display: grid;
-    flex: 1;
     grid-template-columns: 100%;
     height: 100%;
     justify-items: center;
@@ -187,10 +186,10 @@ const Home = () => {
           </Column>
           <HiddenColumn container direction="row" wrap="nowrap">
             <Grid container alignItems="flex-end" item>
-              <img src={personSrc} alt="store" height="80%" />
+              <img src={personSrc} alt="store" height="70%" />
             </Grid>
             <Grid container alignItems="flex-end" item>
-              <img src={personManSrc} alt="store" height="80%" />
+              <img src={personManSrc} alt="store" height="70%" />
             </Grid>
           </HiddenColumn>
         </div>

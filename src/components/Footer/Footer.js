@@ -16,6 +16,7 @@ const FooterWrapper = styled(Grid)`
   flex-direction: column;
   padding: 30px;
   background-color: #8464ac;
+  z-index: 1;
 
   & .partners {
     display: flex;
