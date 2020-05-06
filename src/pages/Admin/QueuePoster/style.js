@@ -42,6 +42,19 @@ export const PosterContainer = styled.div`
     justify-content: center;
     align-items: center;
     margin-top: 1vh;
+    position: relative;
+  }
+
+  .sms-explainer {
+    position: absolute;
+    top: 144px;
+    margin-left: -20px;
+    color: black;
+    font-size: 1.13em;
+    line-height: 1.2em;
+  }
+  .sms-explainer > span {
+    font-weight: bold;
   }
 
   .brand-slogan {
