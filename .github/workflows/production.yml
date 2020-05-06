@@ -5,8 +5,8 @@ name: Production
 # Controls when the action will run. Triggers the workflow on push or pull request 
 # events but only for the master branch
 on:
-  push:
-    branches: [ master ]
+  repository_dispatch:
+    types: [master-lint-passed]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -18,12 +18,14 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2
+      with:
+        ref: master
 
     # install / build
     - uses: borales/actions-yarn@v2.0.0
     - run: yarn install
-    - run: yarn build-test
+    - run: yarn build
     
     # dev deploy
     # - uses: w9jds/firebase-action@master
