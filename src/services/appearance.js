@@ -152,11 +152,9 @@ const getColor = colorId => {
   return colors[colorId];
 };
 
-const defaultPrimaryColor = getColor(process.env.REACT_APP_THEME_PRIMARY_COLOR);
-const defaultSecondaryColor = getColor(
-  process.env.REACT_APP_THEME_SECONDARY_COLOR
-);
-const defaultDark = process.env.REACT_APP_THEME_DARK === "true";
+const defaultPrimaryColor = getColor("blue");
+const defaultSecondaryColor = getColor("red");
+const defaultDark = false;
 
 const defaultTheme = createMuiTheme({
   palette: {

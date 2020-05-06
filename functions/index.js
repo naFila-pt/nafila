@@ -263,18 +263,24 @@ exports.removeMeFromQueue = functions.https.onCall(async (data, context) => {
 });
 
 //---- REGULAR SCHEDULED JOB ----
-exports.scheduledFunction = functions.pubsub
-  .schedule("every " + config.smspro.getmessagesinterval)
-  .onRun(async () => {
-    //schedule running next in 10s
-    let turns = parseInt(config.smspro.getmessagessubintervalturns);
-    if (!isNaN(turns) && turns > 0) {
-      await scheduleNextSMSRoutine(config.smspro.getmessagessubintervalsecs, 1);
-    }
+//ATTENTION - PROD ONLY!!
+if (config.smspro.getmessagesenabled === "true") {
+  exports.scheduledFunction = functions.pubsub
+    .schedule("every " + config.smspro.getmessagesinterval)
+    .onRun(async () => {
+      //schedule running next in 10s
+      let turns = parseInt(config.smspro.getmessagessubintervalturns);
+      if (!isNaN(turns) && turns > 0) {
+        await scheduleNextSMSRoutine(
+          config.smspro.getmessagessubintervalsecs,
+          1
+        );
+      }
 
-    //run now
-    return await getNewSMSRoutine();
-  });
+      //run now
+      return await getNewSMSRoutine();
+    });
+}
 
 exports.smsRoutine = functions.https.onRequest(async (req, res) => {
   let runTurn = req.body.runTurn;

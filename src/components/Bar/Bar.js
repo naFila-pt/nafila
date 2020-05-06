@@ -88,7 +88,7 @@ class Bar extends Component {
         <Toolbar>
           <Box display="flex" flexGrow={1}>
             <Typography color="inherit" variant="h6">
-              {process.env.REACT_APP_TITLE}
+              naFila
             </Typography>
           </Box>
 
