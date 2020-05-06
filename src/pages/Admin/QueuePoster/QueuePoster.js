@@ -68,6 +68,10 @@ function QueuePoster({
       />
 
       <div className="queue-icon">
+        <div className="sms-explainer">
+          Envie <span>nafila {queueId}</span><br/>
+          para o <span>4902</span>
+        </div>
         <Group />
       </div>
     </S.PosterContainer>
