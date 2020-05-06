@@ -42,6 +42,7 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-scripts build",
+    "build-test": "dotenv -e .env.test react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
@@ -95,5 +96,8 @@
       "appId": "1:187567047588:web:20fc95aa8fce5d09ddb731",
       "measurementId": "G-P5HV36CBMN"
     }
+  },
+  "devDependencies": {
+    "dotenv-cli": "^3.1.0"
   }
 }
