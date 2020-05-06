@@ -22,8 +22,11 @@ jobs:
 
     # install / build
     - uses: borales/actions-yarn@v2.0.0
-    - run: yarn install
-    - run: yarn build-test
+      with:
+        cmd: install # will run `yarn install` command
+    - uses: borales/actions-yarn@v2.0.0
+      with:
+        cmd: build-test # will run `yarn build-test` command
     
     # dev deploy
     - uses: w9jds/firebase-action@master
