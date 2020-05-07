@@ -8,7 +8,7 @@ import Loader from "../../../../components/Loader";
 import Button from "../../../../components/Button";
 import Bg from "../../../../assets/bg/main.svg";
 import Ticket from "../../../../assets/icons/ticket.svg";
-import { firestore, functions, analytics } from "../../../../firebase";
+import { firestore, functions, analytics, auth } from "../../../../firebase";
 import {
   ADMIN_ADD_CUSTOMER_PATH,
   ADMIN_END_QUEUE_PATH
@@ -81,20 +81,45 @@ function Manage({ queueId, openSnackbar }) {
   };
 
   useEffect(() => {
-    const queuesDocumentSnapshotListener = firestore
-      .collection("queues")
-      .doc(queueId)
-      .onSnapshot(snapshot => {
-        const data = snapshot.data();
+    //FIXME: this piece of code avoids analyticsServerEvents to be processed over and over 
+    //on every onSnapshot() callback.
+    //Could probably be improved in the future--
+    let queuesDocumentSnapshotListener;
+    const userDocumentReference = firestore.collection("users").doc(queueId);
 
-        //log server (smsm-routine) events into google analytics
-        !!data.analyticsServerEvents &&
-          data.analyticsServerEvents.forEach(ev => {
-            analytics.logEvent(ev);
-          });
+    userDocumentReference.get().then(userData => {
+      let currentAnalyticsIndex =
+        (userData.analyticsServerEventsIndexes &&
+          userData.analyticsServerEventsIndexes[queueId]) ||
+        0;
 
-        setQueue(data);
-      });
+      queuesDocumentSnapshotListener = firestore
+        .collection("queues")
+        .doc(queueId)
+        .onSnapshot(snapshot => {
+          const data = snapshot.data();
+
+          if (
+            data.analyticsServerEvents &&
+            data.analyticsServerEvents.length >= currentAnalyticsIndex
+          ) {
+            //log server (smsm-routine) events into google analytics
+            data.analyticsServerEvents
+              .slice(currentAnalyticsIndex)
+              .forEach(ev => {
+                analytics.logEvent(ev);
+              });
+
+            //store analyticsServerEventsIndexes update
+            let key = `analyticsServerEventsIndexes.${queueId}`;
+            let updateData = {};
+            updateData[key] = data.analyticsServerEvents.length + 1;
+            userDocumentReference.update(updateData);
+          }
+
+          setQueue(data);
+        });
+    });
 
     return () => {
       queuesDocumentSnapshotListener();
