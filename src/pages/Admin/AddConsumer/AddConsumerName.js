@@ -7,7 +7,7 @@ import LoginBg from "../../../assets/bg/main.svg";
 import Layout from "../../../components/AdminLayout";
 import * as S from "./style";
 import AddConsumerSuccess from "./AddConsumerSuccess";
-import { functions } from "../../../firebase";
+import { functions, analytics } from "../../../firebase";
 
 import { HeadlineContainer, ButtonsContainer } from "../common";
 
@@ -30,6 +30,9 @@ function AddConsumerName({ user, returnFunction, openSnackbar }) {
 
     manuallyAddToQueue({ queueId: user.queues[0], name })
       .then(async function({ data: { ticket } }) {
+        analytics.logEvent("ticket");
+        analytics.logEvent("ticket_manual");
+        analytics.logEvent("ticket_by_name");
         setTicket(ticket);
         setSuccess(true);
       })

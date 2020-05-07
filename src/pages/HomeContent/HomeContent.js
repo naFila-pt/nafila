@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
-import { firestore, functions } from "../../firebase";
+import { firestore, functions, analytics } from "../../firebase";
 import HomeLayout from "../../components/HomeLayout";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -134,6 +134,10 @@ const HomeContent = ({ openSnackbar }) => {
         email: userEmail
       });
       const queueData = queueInfo.data;
+
+      //new ticket
+      analytics.logEvent("ticket");
+      analytics.logEvent("ticket_by_email");
 
       setTicketsStoreInfo(prevState => {
         return {

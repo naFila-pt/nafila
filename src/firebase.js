@@ -25,9 +25,3 @@ export const firestore = firebase.firestore();
 export const storage = firebase.storage(); //not needed - to be removed
 export const functions = firebase.app().functions("europe-west1");
 export const performance = firebase.performance();
-
-//functions.useFunctionsEmulator('http://localhost:5001')
-// (async function(){
-//   var testSendMail = functions.httpsCallable('testSendMail');
-//   console.log('testSendMail', await testSendMail())
-// })()

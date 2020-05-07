@@ -8,7 +8,7 @@ import Loader from "../../../../components/Loader";
 import Button from "../../../../components/Button";
 import Bg from "../../../../assets/bg/main.svg";
 import Ticket from "../../../../assets/icons/ticket.svg";
-import { firestore, functions } from "../../../../firebase";
+import { firestore, functions, analytics } from "../../../../firebase";
 import {
   ADMIN_ADD_CUSTOMER_PATH,
   ADMIN_END_QUEUE_PATH
@@ -70,6 +70,7 @@ function Manage({ queueId, openSnackbar }) {
 
     callNextOnQueue({ queueId })
       .then(function({ data: { queue } }) {
+        analytics.logEvent("ticket_called");
         setQueue(queue);
         setRequestingNext(false);
       })
@@ -85,6 +86,12 @@ function Manage({ queueId, openSnackbar }) {
       .doc(queueId)
       .onSnapshot(snapshot => {
         const data = snapshot.data();
+
+        //log server (smsm-routine) events into google analytics
+        !!data.analyticsServerEvents &&
+          data.analyticsServerEvents.forEach(ev => {
+            analytics.logEvent(ev);
+          });
 
         setQueue(data);
       });

@@ -145,7 +145,10 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
     );
   }
 
-  return { deletedCount: result.tickets.length };
+  return {
+    deletedCount: result.tickets.length,
+    totalTickets: result.queue.ticketTopNumber
+  };
 });
 
 //Call next person in queue
@@ -235,7 +238,7 @@ exports.manuallyAddToQueue = functions.https.onCall(async (data, context) => {
 exports.addMeToQueue = functions.https.onCall(async (data, context) => {
   return await createTicketInQueue(
     { queueId: data.queueId, email: data.email, phone: data.phone },
-    false
+    context
   );
 });
 
@@ -403,6 +406,16 @@ async function getNewSMSRoutine() {
           }
           let ticketRef = querySnap.docs[0].ref;
           let queueData = queueDoc.data();
+
+          //log event in analytics
+          queueData.analyticsServerEvents =
+            queueData.analyticsServerEvents || [];
+
+          queueData.analyticsServerEvents.push(
+            "ticket_cancelled",
+            "ticket_cancelled_by_sms"
+          );
+
           return await removeTicket(
             transaction,
             ticketRef,
@@ -482,12 +495,19 @@ async function createTicketInQueue(
     //get queue
     let queueData = queueDoc.data();
 
-    //needs to validate userId ownership of queue
-    if (!!context && queueData.owner_id !== context.auth.uid) {
+    //only queue owner can add people by name
+    if (!!ticketData.name && queueData.owner_id !== context.auth.uid) {
       throw new functionsMain.https.HttpsError(
         "unauthenticated",
-        "Apenas o dono da fila pode criar senhas manualmente"
+        "Apenas o dono da fila pode criar senhas por nome"
       );
+    }
+
+    //needs to validate userId ownership of queue
+    if (!context && !!ticketData.phone) {
+      //SMS mode - log event in analytics
+      queueData.analyticsServerEvents = queueData.analyticsServerEvents || [];
+      queueData.analyticsServerEvents.push("ticket", "ticket_by_sms");
     }
 
     return await addTicket(

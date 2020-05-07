@@ -8,7 +8,7 @@ import Bg from "../../../assets/bg/store_queue_end.svg";
 import Layout from "../../../components/AdminLayout";
 import { ADMIN_QUEUE_MANAGEMENT_PATH } from "../../../constants/RoutesConstants";
 import Logo from "../../../assets/logo.svg";
-import { firestore, auth, functions } from "../../../firebase";
+import { firestore, auth, functions, analytics } from "../../../firebase";
 
 import { HeadlineContainer, ButtonsContainer } from "../common";
 
@@ -27,7 +27,15 @@ function EndQueue({ openSnackbar }) {
     const deleteQueue = functions.httpsCallable("deleteQueue");
 
     deleteQueue({ queueId: user.queues[0] })
-      .then(async function({ data: { ticket } }) {
+      .then(async function({ data: { deletedCount, totalTickets } }) {
+        analytics.logEvent("queue_closed");
+        analytics.logEvent("queue_tickets", { value: totalTickets });
+        analytics.logEvent("queue_tickets_force_closed", {
+          value: deletedCount
+        });
+        //TO-DO: analytics.logEvent("queue_tickets_cancelled", {value}); //requires data schema/flow change of keeping track of old tickets
+        //TO-DO: analytics.logEvent("queue_tickets_called", {value}); //requires data schema/flow change of keeping track of old tickets
+
         setSuccess(true);
       })
       .catch(error => {

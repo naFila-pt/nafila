@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import bgMain from "../../assets/bg/main.svg";
 import { ReactComponent as Logo } from "../../assets/logo.svg";
 
-import { functions } from "../../firebase";
+import { functions, analytics } from "../../firebase";
 
 const useStyles = makeStyles({
   gridContainer: {
@@ -49,6 +49,8 @@ const Leave = ({
 
       removeMeFromQueue({ queueId, ticketId })
         .then(async function() {
+          analytics.logEvent("ticket_cancelled");
+          analytics.logEvent("ticket_cancelled_by_email");
           setSuccess(true);
         })
         .catch(error => {
