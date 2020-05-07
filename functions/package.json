@@ -15,7 +15,7 @@
     "@google-cloud/tasks": "^1.9.0",
     "@sendgrid/mail": "^6.5.5",
     "firebase-admin": "^8.6.0",
-    "firebase-functions": "^3.3.0",
+    "firebase-functions": "^3.6.1",
     "soap": "^0.31.0",
     "validator": "^13.0.0"
   },
