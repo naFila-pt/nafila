@@ -157,51 +157,51 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
   let queueRef = firestore.collection("queues").doc(data.queueId);
 
   //transaction is cheaper
-  let { result, notifyTicketData } = await firestore.runTransaction(async function(
-    transaction
-  ) {
-    let queueDoc = await transaction.get(queueRef);
+  let { result, notifyTicketData } = await firestore.runTransaction(
+    async function(transaction) {
+      let queueDoc = await transaction.get(queueRef);
 
-    //get queue
-    let queueData = queueDoc.data();
+      //get queue
+      let queueData = queueDoc.data();
 
-    //needs to validate userId ownership of queue
-    if (queueData.owner_id !== context.auth.uid) {
-      throw new functionsMain.https.HttpsError(
-        "unauthenticated",
-        "Apenas o dono da fila pode chamar a próxima senha"
+      //needs to validate userId ownership of queue
+      if (queueData.owner_id !== context.auth.uid) {
+        throw new functionsMain.https.HttpsError(
+          "unauthenticated",
+          "Apenas o dono da fila pode chamar a próxima senha"
+        );
+      }
+
+      //get next ticket
+      let querySnap = await transaction.get(
+        queueRef
+          .collection("tickets")
+          .orderBy("number")
+          .limit(4)
       );
+
+      //in case there is no ticket left
+      if (querySnap.empty) {
+        throw new functionsMain.https.HttpsError(
+          "out-of-range",
+          "Não existem senhas ativas na fila"
+        );
+      }
+
+      let ticketDoc = querySnap.docs[0];
+
+      return {
+        result: await removeTicket(
+          transaction,
+          ticketDoc.ref,
+          queueRef,
+          queueData,
+          true
+        ),
+        notifyTicketData: querySnap.size > 3 ? querySnap.docs[3].data() : null
+      };
     }
-
-    //get next ticket
-    let querySnap = await transaction.get(
-      queueRef
-        .collection("tickets")
-        .orderBy("number")
-        .limit(4)
-    );
-
-    //in case there is no ticket left
-    if (querySnap.empty) {
-      throw new functionsMain.https.HttpsError(
-        "out-of-range",
-        "Não existem senhas ativas na fila"
-      );
-    }
-
-    let ticketDoc = querySnap.docs[0];
-
-    return {
-      result: await removeTicket(
-        transaction,
-        ticketDoc.ref,
-        queueRef,
-        queueData,
-        true
-      ),
-      notifyTicketData: querySnap.size > 3 ? querySnap.docs[3].data() : null
-    };
-  });
+  );
 
   //Ticket called
   if (!!result.ticket.email) {
@@ -232,17 +232,21 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
       //send notification email
 
       //{{queueName}} {{queueId}} {{ticketNumber}}
-      await sendMail([notifyTicketData.email], "d-c1d1634d885448649c39f60d9fd5bd18", {
-        ticketNumber: notifyTicketData.number,
-        queueId: queueRef.id,
-        queueName: result.queue.name,
-        remainingTicketsInQueue: 3
-      });
+      await sendMail(
+        [notifyTicketData.email],
+        "d-c1d1634d885448649c39f60d9fd5bd18",
+        {
+          ticketNumber: notifyTicketData.number,
+          queueId: queueRef.id,
+          queueName: result.queue.name,
+          remainingTicketsInQueue: 3
+        }
+      );
     } else if (!!notifyTicketData.phone) {
       //send notification SMS
       await sendSMS(
         [notifyTicketData.phone],
-        `Faltam 3 senhas para a sua vez naFila ${result.queue.name} (${queueRef.id}). Dirija-se à entrada da loja. Receberá outra mensagem quando for a sua vez.`
+        `\nFaltam 3 senhas para a sua vez naFila ${result.queue.name} (${queueRef.id}). Dirija-se à entrada da loja. Receberá outra mensagem quando for a sua vez.`
       );
     }
   }
