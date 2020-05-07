@@ -89,9 +89,11 @@ function Manage({ queueId, openSnackbar }) {
       .collection("users")
       .doc(auth.currentUser.uid);
 
-    userDocumentReference.get().then(userData => {
+    userDocumentReference.get().then(userDoc => {
+      let userData = userDoc.data();
+
       let currentAnalyticsIndex =
-        (userData.analyticsServerEventsIndexes &&
+        (!!userData.analyticsServerEventsIndexes &&
           userData.analyticsServerEventsIndexes[queueId]) ||
         0;
 
