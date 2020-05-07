@@ -141,7 +141,7 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
   if (phonesToNotify.length) {
     await sendSMS(
       phonesToNotify,
-      `A fila ${queueRef.id} foi fechada pelo administrador da fila. A sua senha foi removida.`
+      `A fila ${result.queue.name} (${queueRef.id}) foi encerrada. Para mais informaçōes pedimos que se dirija à entrada do estabelecimento.`
     );
   }
 
@@ -157,7 +157,9 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
   let queueRef = firestore.collection("queues").doc(data.queueId);
 
   //transaction is cheaper
-  let result = await firestore.runTransaction(async function(transaction) {
+  let { result, notify } = await firestore.runTransaction(async function(
+    transaction
+  ) {
     let queueDoc = await transaction.get(queueRef);
 
     //get queue
@@ -176,7 +178,7 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
       queueRef
         .collection("tickets")
         .orderBy("number")
-        .limit(1)
+        .limit(4)
     );
 
     //in case there is no ticket left
@@ -188,15 +190,20 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
     }
 
     let ticketDoc = querySnap.docs[0];
-    return await removeTicket(
-      transaction,
-      ticketDoc.ref,
-      queueRef,
-      queueData,
-      true
-    );
+
+    return {
+      result: await removeTicket(
+        transaction,
+        ticketDoc.ref,
+        queueRef,
+        queueData,
+        true
+      ),
+      notify: querySnap.docs[3] || null
+    };
   });
 
+  //Ticket called
   if (!!result.ticket.email) {
     //send notification email
 
@@ -214,8 +221,30 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
     //send notification SMS
     await sendSMS(
       [result.ticket.phone],
-      `Está a chegar a sua vez naFila ${queueRef.id}! Dirija-se à entrada de loja. Obrigado por aguardar naFila!`
+      `Chegou a sua vez! Por favor dirija-se a ${result.queue.name} (${queueRef.id}). A sua senha é a ${result.ticket.number}. Obrigado por aguardar naFila!`
     );
+  }
+
+  //notification ahead of time (nearly your time)
+  //may or may not exist
+  if (!!notify) {
+    if (!!notify.email) {
+      //send notification email
+
+      //{{queueName}} {{queueId}} {{ticketNumber}}
+      await sendMail([notify.email], "d-c1d1634d885448649c39f60d9fd5bd18", {
+        ticketNumber: notify.number,
+        queueId: queueRef.id,
+        queueName: result.queue.name,
+        remainingTicketsInQueue: 3
+      });
+    } else if (!!notify.phone) {
+      //send notification SMS
+      await sendSMS(
+        [notify.phone],
+        `Faltam 3 senhas para a sua vez naFila ${result.queue.name} (${queueRef.id}). Dirija-se à entrada da loja. Receberá outra mensagem quando for a sua vez.`
+      );
+    }
   }
 
   return result;
@@ -531,11 +560,12 @@ async function createTicketInQueue(
     //send notification SMS
     await sendSMS(
       [result.ticket.phone],
-      `Já está naFila ${queueRef.id}! A sua senha é ${
+      `Já está naFila para ${result.queue.name}! A sua senha é ${
         result.ticket.number
       } e tem ${result.queue.remainingTicketsInQueue -
-        1} pessoas à sua frente.` +
-        ` Caso queira sair da fila envie CODIGO sair para 4902 e passe a vez ao próximo.`
+        1} pessoas à sua frente. Para sair da fila, envie “nafila ${
+        queueRef.id
+      } sair” para 4902.`
     );
   }
 
