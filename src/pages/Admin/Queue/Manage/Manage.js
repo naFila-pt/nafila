@@ -81,11 +81,13 @@ function Manage({ queueId, openSnackbar }) {
   };
 
   useEffect(() => {
-    //FIXME: this piece of code avoids analyticsServerEvents to be processed over and over 
+    //FIXME: this piece of code avoids analyticsServerEvents to be processed over and over
     //on every onSnapshot() callback.
     //Could probably be improved in the future--
     let queuesDocumentSnapshotListener;
-    const userDocumentReference = firestore.collection("users").doc(queueId);
+    const userDocumentReference = firestore
+      .collection("users")
+      .doc(auth.currentUser.uid);
 
     userDocumentReference.get().then(userData => {
       let currentAnalyticsIndex =
