@@ -113,9 +113,10 @@ function Manage({ queueId, openSnackbar }) {
               });
 
             //store analyticsServerEventsIndexes update
+            currentAnalyticsIndex = data.analyticsServerEvents.length + 1;
             let key = `analyticsServerEventsIndexes.${queueId}`;
             let updateData = {};
-            updateData[key] = data.analyticsServerEvents.length + 1;
+            updateData[key] = currentAnalyticsIndex;
             userDocumentReference.update(updateData);
           }
 
