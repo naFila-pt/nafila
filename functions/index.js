@@ -124,7 +124,7 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
     if (!!ticketData.email) {
       emailsToNotify.push(ticketData.email);
     } else if (!!ticketData.phone) {
-      phonesToNotify.push(ticketData.email);
+      phonesToNotify.push(ticketData.phone);
     }
   });
 
