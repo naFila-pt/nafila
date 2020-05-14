@@ -464,14 +464,11 @@ async function getNewSMSRoutine() {
       } else {
         throw new functionsMain.https.HttpsError(
           "invalid-argument",
-          "Unexpected msg format"
+          "Comando não reconhecido. Por favor verifique que escreveu a mensagem e o código de fila corretos."
         );
       }
     } catch (e) {
-      await sendSMS(
-        [m["MSISDN"]],
-        `\nEste código não foi encontrado. Por favor verifique que escreveu a mensagem e o código de fila corretos.`
-      );
+      await sendSMS([m["MSISDN"]], `\n${e.message}`);
       console.error(m, e);
     }
   });
@@ -587,6 +584,31 @@ async function addTicket(
   queueRef,
   queueData
 ) {
+  //do not allow repeated tickets!
+  if (!ticketData.name) {
+    //phone or email based
+    let what, compareTo;
+    if (!!ticketData.phone) {
+      what = "phone";
+      compareTo = ticketData.phone;
+    } else {
+      what = "email";
+      compareTo = ticketData.email;
+    }
+
+    let querySnap = await transaction.get(
+      queueRef.collection("tickets").where(what, "==", compareTo)
+    );
+
+    //there is one already in the list!!
+    if (!querySnap.empty) {
+      throw new functionsMain.https.HttpsError(
+        "out-of-range",
+        `Já tem uma senha prévia em espera naFila ${queueRef.id}`
+      );
+    }
+  }
+
   queueData.ticketTopNumber++;
   queueData.remainingTicketsInQueue++;
   ticketData.number = queueData.ticketTopNumber;
@@ -597,7 +619,7 @@ async function addTicket(
   //add ticket to count
   await transaction.update(queueRef, queueData);
 
-  return { queue: queueData, ticket: ticketData };
+  return { queue: queueData, ticket: ticketData, ticketId: ticketRef.id };
 }
 
 async function removeTicket(

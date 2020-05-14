@@ -8,6 +8,7 @@ import PrivateRoute from "../PrivateRoute";
 
 import OnBoardingContent from "../../pages/OnBoardingContent";
 import { HomeContent, Leave, TermsConditions } from "../../pages/HomeContent";
+import TicketStatus from "../../pages/TicketStatus";
 import Admin from "../../pages/Admin";
 import NotFoundContent from "../../pages/NotFoundContent";
 import * as Routes from "../../constants/RoutesConstants";
@@ -46,6 +47,12 @@ class Router extends Component {
           />
 
           <Route path="/termos-condicoes" component={TermsConditions} exact />
+
+          <Route
+            path={Routes.TICKET_STATUS_PATH}
+            component={TicketStatus}
+            exact
+          />
 
           <Route
             path={Routes.ADMIN_WELCOME_PATH}

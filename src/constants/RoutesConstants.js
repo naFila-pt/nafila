@@ -10,3 +10,4 @@ export const ADMIN_ADD_CUSTOMER_PATH = "/admin/add-customer";
 export const ADMIN_END_QUEUE_PATH = "/admin/end-queue";
 export const ADMIN_QUEUE_POSTER_PATH = "/loja/cartaz-fila/:queueId";
 export const PRIVACY_PATH = "/privacidade";
+export const TICKET_STATUS_PATH = "/t";
