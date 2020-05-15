@@ -70,7 +70,7 @@ const GridArea = styled(Grid)`
   width: 70%;
   display: grid;
   grid-template-columns: 50% 50%;
-  grid-template-rows: auto;
+  grid-template-rows: 15% 25% 5% 15% 25% 5%;
   grid-row-gap: 5px;
   grid-template-areas:
     "text1 text1"
@@ -201,11 +201,13 @@ const MainContentDesktop = props => (
           style={{
             display: "flex",
             flex: 1,
-            alignItems: "end"
+            alignItems: "flex-end"
           }}
         >
           <StyledButton
+            forward
             href="https://geralnafilapt.typeform.com/to/VtDUdM"
+            target="_blank"
             dangerouslySetInnerHTML={{
               __html: props.t("admin#register")
             }}
@@ -322,8 +324,8 @@ const OnBoardingLayout = props => {
             style={{
               display: "flex",
               flex: 1,
-              alignItems: "end",
-              justifyContent: "end",
+              alignItems: "flex-end",
+              justifyContent: "flex-end",
               marginLeft: "20px"
             }}
           >
@@ -340,8 +342,8 @@ const OnBoardingLayout = props => {
             style={{
               display: "flex",
               flex: 1,
-              alignItems: "end",
-              justifyContent: "end",
+              alignItems: "flex-end",
+              justifyContent: "flex-end",
               marginLeft: "20px"
             }}
           >
@@ -358,8 +360,8 @@ const OnBoardingLayout = props => {
             style={{
               display: "flex",
               flex: 1,
-              alignItems: "end",
-              justifyContent: "end",
+              alignItems: "flex-end",
+              justifyContent: "flex-end",
               marginLeft: "20px"
             }}
           >
@@ -404,8 +406,8 @@ const OnBoardingLayout = props => {
               display: "flex",
               flexDirection: "column",
               flex: 1,
-              alignItems: "end",
-              justifyContent: "end",
+              alignItems: "flex-end",
+              justifyContent: "flex-end",
               marginLeft: "20px"
             }}
           >
@@ -440,8 +442,8 @@ const OnBoardingLayout = props => {
             style={{
               display: "flex",
               flex: 1,
-              alignItems: "end",
-              justifyContent: "end",
+              alignItems: "flex-end",
+              justifyContent: "flex-end",
               marginLeft: "20px"
             }}
           >
@@ -459,8 +461,8 @@ const OnBoardingLayout = props => {
             style={{
               display: "flex",
               flex: 1,
-              alignItems: "end",
-              justifyContent: "end",
+              alignItems: "flex-end",
+              justifyContent: "flex-end",
               marginLeft: "20px"
             }}
           >
