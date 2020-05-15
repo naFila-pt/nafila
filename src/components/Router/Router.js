@@ -9,6 +9,7 @@ import PrivateRoute from "../PrivateRoute";
 import OnBoardingContent from "../../pages/OnBoardingContent";
 import { HomeContent, Leave, TermsConditions } from "../../pages/HomeContent";
 import TicketStatus from "../../pages/TicketStatus";
+import QueuePoster from "../../pages/QueuePoster";
 import Admin from "../../pages/Admin";
 import NotFoundContent from "../../pages/NotFoundContent";
 import * as Routes from "../../constants/RoutesConstants";
@@ -125,13 +126,10 @@ class Router extends Component {
             exact
           />
 
-          <PrivateRoute
-            path={Routes.ADMIN_QUEUE_POSTER_PATH}
+          <Route
+            path={Routes.QUEUE_POSTER_PATH}
             render={props => (
-              <Admin.QueuePoster
-                {...props}
-                openSnackbar={this.props.openSnackbar}
-              />
+              <QueuePoster {...props} openSnackbar={this.props.openSnackbar} />
             )}
           />
 
