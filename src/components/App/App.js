@@ -6,6 +6,7 @@ import { MuiThemeProvider } from "@material-ui/core/styles";
 
 import { CssBaseline, Grid, Button, Snackbar } from "@material-ui/core";
 
+import * as firebase from "firebase/app";
 import { auth, firestore } from "../../firebase";
 import authentication from "../../services/authentication";
 import appearance from "../../services/appearance";
@@ -400,54 +401,70 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.onAuthStateChangedObserver = auth.onAuthStateChanged(
-      user => {
-        // The user is not signed in or doesn’t have a user ID.
-        if (!user || !user.uid) {
-          if (this.userDocumentSnapshotListener) {
-            this.userDocumentSnapshotListener();
-          }
-
-          this.resetState();
-
-          return;
-        }
-
-        // The user is signed in, begin retrieval of external user data.
-        this.userDocumentSnapshotListener = firestore
-          .collection("users")
-          .doc(user.uid)
-          .onSnapshot(
-            snapshot => {
-              const data = snapshot.data();
-
-              // The user doesn’t have a data point, equivalent to not signed in.
-              if (!snapshot.exists || !data) {
-                if (this.userDocumentSnapshotListener) {
-                  this.userDocumentSnapshotListener();
-                }
-
-                this.resetState();
-
-                return;
+    this.onAuthStateChangedObserver = auth
+      .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+      .then(() => {
+        auth.onAuthStateChanged(
+          user => {
+            // The user is not signed in or doesn’t have a user ID.
+            if (!user || !user.uid) {
+              if (this.userDocumentSnapshotListener) {
+                this.userDocumentSnapshotListener();
               }
 
-              authentication
-                .getRoles()
-                .then(value => {
-                  this.setTheme(data.theme, () => {
-                    this.setState({
-                      ready: true,
-                      user: user,
-                      userData: data,
-                      roles: value || []
+              this.resetState();
+
+              return;
+            }
+
+            // The user is signed in, begin retrieval of external user data.
+            this.userDocumentSnapshotListener = firestore
+              .collection("users")
+              .doc(user.uid)
+              .onSnapshot(
+                snapshot => {
+                  const data = snapshot.data();
+
+                  // The user doesn’t have a data point, equivalent to not signed in.
+                  if (!snapshot.exists || !data) {
+                    if (this.userDocumentSnapshotListener) {
+                      this.userDocumentSnapshotListener();
+                    }
+
+                    this.resetState();
+
+                    return;
+                  }
+
+                  authentication
+                    .getRoles()
+                    .then(value => {
+                      this.setTheme(data.theme, () => {
+                        this.setState({
+                          ready: true,
+                          user: user,
+                          userData: data,
+                          roles: value || []
+                        });
+                      });
+                    })
+                    .catch(reason => {
+                      this.resetState(() => {
+                        const code = reason.code;
+                        const message = reason.message;
+
+                        switch (code) {
+                          default:
+                            this.openSnackbar(message);
+                            return;
+                        }
+                      });
                     });
-                  });
-                })
-                .catch(reason => {
+                },
+                error => {
                   this.resetState(() => {
-                    const code = reason.code;
-                    const message = reason.message;
+                    const code = error.code;
+                    const message = error.message;
 
                     switch (code) {
                       default:
@@ -455,35 +472,23 @@ class App extends Component {
                         return;
                     }
                   });
-                });
-            },
-            error => {
-              this.resetState(() => {
-                const code = error.code;
-                const message = error.message;
-
-                switch (code) {
-                  default:
-                    this.openSnackbar(message);
-                    return;
                 }
-              });
-            }
-          );
-      },
-      error => {
-        this.resetState(() => {
-          const code = error.code;
-          const message = error.message;
+              );
+          },
+          error => {
+            this.resetState(() => {
+              const code = error.code;
+              const message = error.message;
 
-          switch (code) {
-            default:
-              this.openSnackbar(message);
-              return;
+              switch (code) {
+                default:
+                  this.openSnackbar(message);
+                  return;
+              }
+            });
           }
-        });
-      }
-    );
+        );
+      });
   }
 
   componentWillUnmount() {
