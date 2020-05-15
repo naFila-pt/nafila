@@ -144,7 +144,9 @@ function Manage({ queueId, openSnackbar }) {
     >
       <ManageQueueContainer>
         <div>{t("admin#queueManagement_queueCode")}</div>
-        <Typography variant="h3">{queueId}</Typography>
+        <Typography variant="h3">
+          {queue && queue.name} ({queueId})
+        </Typography>
 
         <TicketContainer>
           <div>
