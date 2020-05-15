@@ -234,7 +234,7 @@ Porto, 10 Abril 2020
             "Depois de receber o <strong>código de fila</strong> no seu email, <strong>imprima-o e coloque-o num lugar visível ao público.</strong>",
           "admin#queueManagement_startQueue": "Começar",
           "admin#queueManagement_creatingQueue": "A criar fila ...",
-          "admin#queueManagement_queueCode": "Código da Fila",
+          "admin#queueManagement_queueCode": "Nome e código da Fila",
           "admin#queueManagement_call": "Chamar",
           "admin#queueManagement_nextInQueue": `Próximo <span class="logo">na<b>fila</b></span>`,
           "admin#queueManagement_createTicket": "Gerar senha",
