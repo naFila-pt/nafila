@@ -214,15 +214,15 @@ const OnBoardingDesktop = () => {
   const steppers = getSteppers();
 
   const handleNext = () => {
-    const nextStep = Math.min(
-      activeStep + 1,
-      React.Children.count(steppers.props.children) - 1
-    );
-    if (activeStep === nextStep) {
+    if (activeStep === steppers.props.children.length - 1) {
       endOnBoarding();
     } else {
-      setActiveStep(nextStep);
+      setActiveStep(prevState => prevState + 1);
     }
+  };
+
+  const handleBack = () => {
+    setActiveStep(prevState => prevState - 1);
   };
 
   return (
@@ -242,8 +242,11 @@ const OnBoardingDesktop = () => {
           <Grid item style={{ flex: "10%", zIndex: 1 }}>
             <ArrowBack
               fontSize="large"
-              style={{ cursor: "pointer" }}
-              onClick={() => setActiveStep(Math.max(activeStep - 1, 1))}
+              style={{
+                cursor: "pointer",
+                visibility: activeStep === 0 ? "hidden" : "visible"
+              }}
+              onClick={handleBack}
             />
           </Grid>
           {steppers.props.children[activeStep]}
