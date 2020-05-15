@@ -8,7 +8,6 @@ import PreQueue from "./PreQueue";
 import Queue from "./Queue";
 import AddConsumer from "./AddConsumer";
 import EndQueue from "./EndQueue";
-import QueuePoster from "./QueuePoster";
 
 const Admin = {
   Home,
@@ -20,8 +19,7 @@ const Admin = {
   PreQueue,
   Queue,
   AddConsumer,
-  EndQueue,
-  QueuePoster
+  EndQueue
 };
 
 export default Admin;

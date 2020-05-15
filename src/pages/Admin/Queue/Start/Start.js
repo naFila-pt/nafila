@@ -7,7 +7,7 @@ import styled from "styled-components";
 import Layout from "../../../../components/AdminLayout";
 import Button from "../../../../components/Button";
 import Bg from "../../../../assets/bg/store_queue_start.svg";
-import { auth, functions } from "../../../../firebase";
+import { auth, functions, analytics } from "../../../../firebase";
 
 import { HeadlineContainer, ButtonsContainer } from "../../common";
 
@@ -54,6 +54,7 @@ function Start({ user, setQueue, openSnackbar }) {
 
     createQueue({ name: defaultQueueName, email: auth.currentUser.email })
       .then(({ data: { queueId } }) => {
+        analytics.logEvent("queue");
         setQueue(queueId);
       })
       .catch(e => {

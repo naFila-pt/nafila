@@ -124,7 +124,7 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
     if (!!ticketData.email) {
       emailsToNotify.push(ticketData.email);
     } else if (!!ticketData.phone) {
-      phonesToNotify.push(ticketData.email);
+      phonesToNotify.push(ticketData.phone);
     }
   });
 
@@ -141,11 +141,14 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
   if (phonesToNotify.length) {
     await sendSMS(
       phonesToNotify,
-      `A fila ${queueRef.id} foi fechada pelo administrador da fila. A sua senha foi removida.`
+      `\nA fila ${result.queue.name} (${queueRef.id}) foi encerrada. Para mais informaçōes pedimos que se dirija à entrada do estabelecimento.`
     );
   }
 
-  return { deletedCount: result.tickets.length };
+  return {
+    deletedCount: result.tickets.length,
+    totalTickets: result.queue.ticketTopNumber
+  };
 });
 
 //Call next person in queue
@@ -154,46 +157,53 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
   let queueRef = firestore.collection("queues").doc(data.queueId);
 
   //transaction is cheaper
-  let result = await firestore.runTransaction(async function(transaction) {
-    let queueDoc = await transaction.get(queueRef);
+  let { result, notifyTicketData } = await firestore.runTransaction(
+    async function(transaction) {
+      let queueDoc = await transaction.get(queueRef);
 
-    //get queue
-    let queueData = queueDoc.data();
+      //get queue
+      let queueData = queueDoc.data();
 
-    //needs to validate userId ownership of queue
-    if (queueData.owner_id !== context.auth.uid) {
-      throw new functionsMain.https.HttpsError(
-        "unauthenticated",
-        "Apenas o dono da fila pode chamar a próxima senha"
+      //needs to validate userId ownership of queue
+      if (queueData.owner_id !== context.auth.uid) {
+        throw new functionsMain.https.HttpsError(
+          "unauthenticated",
+          "Apenas o dono da fila pode chamar a próxima senha"
+        );
+      }
+
+      //get next ticket
+      let querySnap = await transaction.get(
+        queueRef
+          .collection("tickets")
+          .orderBy("number")
+          .limit(4)
       );
+
+      //in case there is no ticket left
+      if (querySnap.empty) {
+        throw new functionsMain.https.HttpsError(
+          "out-of-range",
+          "Não existem senhas ativas na fila"
+        );
+      }
+
+      let ticketDoc = querySnap.docs[0];
+
+      return {
+        result: await removeTicket(
+          transaction,
+          ticketDoc.ref,
+          queueRef,
+          queueData,
+          true
+        ),
+        notifyTicketData: querySnap.size > 3 ? querySnap.docs[3].data() : null
+      };
     }
+  );
 
-    //get next ticket
-    let querySnap = await transaction.get(
-      queueRef
-        .collection("tickets")
-        .orderBy("number")
-        .limit(1)
-    );
-
-    //in case there is no ticket left
-    if (querySnap.empty) {
-      throw new functionsMain.https.HttpsError(
-        "out-of-range",
-        "Não existem senhas ativas na fila"
-      );
-    }
-
-    let ticketDoc = querySnap.docs[0];
-    return await removeTicket(
-      transaction,
-      ticketDoc.ref,
-      queueRef,
-      queueData,
-      true
-    );
-  });
-
+  //Ticket called
   if (!!result.ticket.email) {
     //send notification email
 
@@ -211,8 +221,34 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
     //send notification SMS
     await sendSMS(
       [result.ticket.phone],
-      `Está a chegar a sua vez naFila ${queueRef.id}! Dirija-se à entrada de loja. Obrigado por aguardar naFila!`
+      `\nChegou a sua vez! Por favor dirija-se a ${result.queue.name} (${queueRef.id}). A sua senha é a ${result.ticket.number}. Obrigado por aguardar naFila!`
     );
+  }
+
+  //notification ahead of time (nearly your time)
+  //may or may not exist
+  if (!!notifyTicketData) {
+    if (!!notifyTicketData.email) {
+      //send notification email
+
+      //{{queueName}} {{queueId}} {{ticketNumber}}
+      await sendMail(
+        [notifyTicketData.email],
+        "d-c1d1634d885448649c39f60d9fd5bd18",
+        {
+          ticketNumber: notifyTicketData.number,
+          queueId: queueRef.id,
+          queueName: result.queue.name,
+          remainingTicketsInQueue: 3
+        }
+      );
+    } else if (!!notifyTicketData.phone) {
+      //send notification SMS
+      await sendSMS(
+        [notifyTicketData.phone],
+        `\nFaltam 3 senhas para a sua vez naFila ${result.queue.name} (${queueRef.id}). Dirija-se à entrada da loja. Receberá outra mensagem quando for a sua vez.`
+      );
+    }
   }
 
   return result;
@@ -235,7 +271,7 @@ exports.manuallyAddToQueue = functions.https.onCall(async (data, context) => {
 exports.addMeToQueue = functions.https.onCall(async (data, context) => {
   return await createTicketInQueue(
     { queueId: data.queueId, email: data.email, phone: data.phone },
-    false
+    context
   );
 });
 
@@ -403,6 +439,16 @@ async function getNewSMSRoutine() {
           }
           let ticketRef = querySnap.docs[0].ref;
           let queueData = queueDoc.data();
+
+          //log event in analytics
+          queueData.analyticsServerEvents =
+            queueData.analyticsServerEvents || [];
+
+          queueData.analyticsServerEvents.push(
+            "ticket_cancelled",
+            "ticket_cancelled_by_sms"
+          );
+
           return await removeTicket(
             transaction,
             ticketRef,
@@ -413,15 +459,16 @@ async function getNewSMSRoutine() {
         });
         await sendSMS(
           [m["MSISDN"]],
-          "Foi removido da fila com sucesso. Obrigado por aguardar naFila."
+          "\nFoi removido da fila com sucesso. Obrigado por aguardar naFila."
         );
       } else {
         throw new functionsMain.https.HttpsError(
           "invalid-argument",
-          "Unexpected msg format"
+          "Comando não reconhecido. Por favor verifique que escreveu a mensagem e o código de fila corretos."
         );
       }
     } catch (e) {
+      await sendSMS([m["MSISDN"]], `\n${e.message}`);
       console.error(m, e);
     }
   });
@@ -482,12 +529,19 @@ async function createTicketInQueue(
     //get queue
     let queueData = queueDoc.data();
 
-    //needs to validate userId ownership of queue
-    if (!!context && queueData.owner_id !== context.auth.uid) {
+    //only queue owner can add people by name
+    if (!!ticketData.name && queueData.owner_id !== context.auth.uid) {
       throw new functionsMain.https.HttpsError(
         "unauthenticated",
-        "Apenas o dono da fila pode criar senhas manualmente"
+        "Apenas o dono da fila pode criar senhas por nome"
       );
+    }
+
+    //needs to validate userId ownership of queue
+    if (!context && !!ticketData.phone) {
+      //SMS mode - log event in analytics
+      queueData.analyticsServerEvents = queueData.analyticsServerEvents || [];
+      queueData.analyticsServerEvents.push("ticket", "ticket_by_sms");
     }
 
     return await addTicket(
@@ -511,11 +565,12 @@ async function createTicketInQueue(
     //send notification SMS
     await sendSMS(
       [result.ticket.phone],
-      `Já está naFila ${queueRef.id}! A sua senha é ${
+      `\nJá está naFila para ${result.queue.name}! A sua senha é ${
         result.ticket.number
       } e tem ${result.queue.remainingTicketsInQueue -
-        1} pessoas à sua frente.` +
-        ` Caso queira sair da fila envie CODIGO sair para 4902 e passe a vez ao próximo.`
+        1} pessoas à sua frente. Para sair da fila, envie "nafila ${
+        queueRef.id
+      } sair" para 4902.`
     );
   }
 
@@ -529,6 +584,31 @@ async function addTicket(
   queueRef,
   queueData
 ) {
+  //do not allow repeated tickets!
+  if (!ticketData.name) {
+    //phone or email based
+    let what, compareTo;
+    if (!!ticketData.phone) {
+      what = "phone";
+      compareTo = ticketData.phone;
+    } else {
+      what = "email";
+      compareTo = ticketData.email;
+    }
+
+    let querySnap = await transaction.get(
+      queueRef.collection("tickets").where(what, "==", compareTo)
+    );
+
+    //there is one already in the list!!
+    if (!querySnap.empty) {
+      throw new functionsMain.https.HttpsError(
+        "out-of-range",
+        `Já tem uma senha prévia em espera naFila ${queueRef.id}`
+      );
+    }
+  }
+
   queueData.ticketTopNumber++;
   queueData.remainingTicketsInQueue++;
   ticketData.number = queueData.ticketTopNumber;
@@ -539,7 +619,7 @@ async function addTicket(
   //add ticket to count
   await transaction.update(queueRef, queueData);
 
-  return { queue: queueData, ticket: ticketData };
+  return { queue: queueData, ticket: ticketData, ticketId: ticketRef.id };
 }
 
 async function removeTicket(

@@ -1,21 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
-import { firestore, functions } from "../../firebase";
+import { firestore, functions, analytics } from "../../firebase";
 import HomeLayout from "../../components/HomeLayout";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Input from "@material-ui/core/Input";
 import Link from "@material-ui/core/Link";
 import Button from "../../components/Button";
-import ConsumerTicket from "../../components/ConsumerTicket";
 
 import bgStore from "../../assets/bg/user_store.svg";
 import bgMain from "../../assets/bg/main.svg";
 
 import { ReactComponent as Logo } from "../../assets/logo.svg";
 import { ReactComponent as EmailNotification } from "../../assets/icons/email_notification.svg";
+
+import { TICKET_STATUS_PATH } from "../../constants/RoutesConstants";
 
 const useStyles = makeStyles({
   gridContainer: {
@@ -73,6 +74,14 @@ const HomeContent = ({ openSnackbar }) => {
   const handleNextButton = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
   };
+
+  useEffect(() => {
+    if (ticketsStoreInfo.ticketId) {
+      window.location.href =
+        TICKET_STATUS_PATH +
+        `#${queueId}-${ticketsStoreInfo.ownTicketNumber}-${ticketsStoreInfo.ticketId}`;
+    }
+  }, [ticketsStoreInfo, queueId]);
 
   const handleStoreCodeChange = event => {
     setQueueId(event.target.value);
@@ -134,16 +143,19 @@ const HomeContent = ({ openSnackbar }) => {
       });
       const queueData = queueInfo.data;
 
+      //new ticket
+      analytics.logEvent("ticket");
+      analytics.logEvent("ticket_by_email");
+
       setTicketsStoreInfo(prevState => {
         return {
           ...prevState,
+          ticketId: queueData.ticketId,
           ownTicketNumber: queueData.ticket.number,
           currentTicket: queueData.queue.currentTicketNumber,
           remainingInQueue: queueData.queue.remainingTicketsInQueue - 1 // remove current user
         };
       });
-
-      handleNextButton();
     } catch (e) {
       setLoading(false);
       openSnackbar(e.message || `Error: ${e}`);
@@ -260,43 +272,6 @@ const HomeContent = ({ openSnackbar }) => {
               {t(loading ? "global#wait_please" : "home#notification_button")}
             </Button>
           </div>
-        </Grid>
-      </Grid>
-      <Grid container direction="column">
-        <Grid item className={classes.gridItem} style={{ paddingTop: ".8em" }}>
-          <div style={{ fontSize: "1.25em" }}>
-            <div>{t("home#ticket_store")}</div>
-            <Typography variant="h3">{ticketsStoreInfo.name}</Typography>
-          </div>
-          <Grid
-            container
-            style={{ justifyContent: "center", marginTop: "1.25em" }}
-          >
-            <ConsumerTicket number={ticketsStoreInfo.ownTicketNumber} />
-          </Grid>
-          <Grid container justify="space-between" style={{ padding: "0 3em" }}>
-            <Grid item>
-              <div style={{ fontSize: "1.25em" }}>
-                {t("home#ticket_currentQueue")}
-              </div>
-              <div style={{ fontSize: "2.8125em", fontWeight: 900 }}>
-                {ticketsStoreInfo.currentTicket}
-              </div>
-            </Grid>
-            <Grid item>
-              <div style={{ fontSize: "1.25em" }}>
-                {t("home#ticket_length")}
-              </div>
-              <div style={{ fontSize: "2.8125em", fontWeight: 900 }}>
-                {ticketsStoreInfo.remainingInQueue}
-              </div>
-            </Grid>
-          </Grid>
-          <p
-            style={{ fontSize: "1.375em", padding: "0 2em", marginTop: ".5em" }}
-          >
-            {t("home#ticket_notification")}
-          </p>
         </Grid>
       </Grid>
     </HomeLayout>

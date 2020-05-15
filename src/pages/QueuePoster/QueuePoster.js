@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Typography } from "@material-ui/core";
 
-import Loader from "../../../components/Loader";
-import { ReactComponent as Logo } from "../../../assets/images/logo.svg";
-import { ReactComponent as Group } from "../../../assets/images/group.svg";
-import { firestore } from "../../../firebase";
+import Loader from "../../components/Loader";
+import { ReactComponent as Logo } from "../../assets/images/logo.svg";
+import { ReactComponent as Group } from "../../assets/images/group.svg";
+import { firestore } from "../../firebase";
 
 import * as S from "./style";
 
