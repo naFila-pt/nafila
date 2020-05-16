@@ -11,7 +11,6 @@ import { ReactComponent as NOSIcon } from "../../assets/icons/nos-icon.svg";
 
 const FooterWrapper = styled(Grid)`
   width: 100%;
-  height: 30%;
   display: flex;
   flex-direction: column;
   padding: 30px;

@@ -1,60 +1,55 @@
 import React from "react";
+import styled from "styled-components";
+import Box from "@material-ui/core/Box";
+
 import { withRouter } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import Link from "@material-ui/core/Link";
 
-import HomeLayout from "../../components/HomeLayout";
+import Footer from "../../components/Footer";
 
 import bgMobile from "../../assets/bg/terms_mobile.svg";
 import bgDesktop from "../../assets/bg/terms_desktop.svg";
 
-import { ReactComponent as NaFilaIcon } from "../../assets/icons/nafila-text.svg";
-import { ReactComponent as Tech4CovidIcon } from "../../assets/icons/tech4covid19-text.svg";
-import { ReactComponent as GoogleIcon } from "../../assets/icons/google-icon.svg";
-import { ReactComponent as NOSIcon } from "../../assets/icons/nos-icon.svg";
+const Container = styled(Box)`
+  position: relative;
+  height: 100%;
+  padding: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 0px;
+`;
 
 const useStyles = makeStyles(theme => ({
   gridContainer: {
     alignContent: "center",
-    marginTop: "-1em",
-    padding: "0 32px 65px",
+    padding: "20px 32px 50px",
     [theme.breakpoints.up("md")]: {
-      padding: "0 166px 65px"
+      padding: "20px 166px 50px"
     }
   },
   footer: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(19em, 1fr))",
-    width: "100%",
-    height: "234px",
-    backgroundColor: "#8464AC",
-    padding: "10px 32px",
-    [theme.breakpoints.up("md")]: {
-      padding: "0 166px",
-      height: "200px"
-    }
-  },
-  partnerLink: {
-    color: "white",
-    paddingRight: "16px",
-    [theme.breakpoints.up("md")]: {
-      paddingRight: "64px"
-    }
+    position: "fixed",
+    bottom: 0,
+    left: 0,
+    width: "100%"
   }
 }));
 
-const TermsConditions = () => {
+const TermsConditions = props => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const isDesktop = window.innerWidth > 768;
-
   return (
     <>
-      <HomeLayout bg={[isDesktop ? bgDesktop : bgMobile]} bgPosition={"top"}>
+      <Container
+        style={{
+          backgroundImage: `url(${props.isDesktop ? bgDesktop : bgMobile})`,
+          height: "100vh"
+        }}
+      >
         <Grid container direction="column" className={classes.gridContainer}>
           <Grid item>
             <Typography variant="h1">{t("terms#title")}</Typography>
@@ -72,76 +67,8 @@ const TermsConditions = () => {
             />
           </div>
         </Grid>
-      </HomeLayout>
-      <Grid className={classes.footer}>
-        <div
-          style={{
-            justifyContent: "space-evenly",
-            display: "flex",
-            flexDirection: "column"
-          }}
-        >
-          <div>
-            <NaFilaIcon />
-          </div>
-          <div>
-            <Link
-              style={{ color: "white" }}
-              href={"https://tech4covid19.org"}
-              target={"_blank"}
-            >
-              <Tech4CovidIcon />
-            </Link>
-          </div>
-        </div>
-        <div
-          style={{
-            justifyContent: "center",
-            display: "flex",
-            flexDirection: "column"
-          }}
-        >
-          <div style={{ marginBottom: "16px" }}>
-            <p style={{ margin: 0, color: "white", fontSize: "20px" }}>
-              Parceiros
-            </p>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center"
-            }}
-          >
-            <Link
-              className={classes.partnerLink}
-              href={"https://google.pt"}
-              target={"_blank"}
-            >
-              <GoogleIcon />
-            </Link>
-            <Link
-              className={classes.partnerLink}
-              href={"https://nos.pt"}
-              target={"_blank"}
-            >
-              <NOSIcon />
-            </Link>
-          </div>
-          <div>
-            <p style={{ margin: 0, color: "white", fontSize: "13px" }}>
-              <Link style={{ color: "white" }}>{t("terms#title")}</Link>
-              {" | "}
-              <Link
-                style={{ color: "white" }}
-                href={"https://www.facebook.com/nafila.pt"}
-                target={"_blank"}
-              >
-                Facebook
-              </Link>
-            </p>
-          </div>
-        </div>
-      </Grid>
+        <Footer />
+      </Container>
     </>
   );
 };
