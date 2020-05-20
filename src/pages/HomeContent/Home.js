@@ -115,7 +115,8 @@ const useStyles = makeStyles(theme => ({
   },
   linkLabel: {
     marginTop: "10px",
-    fontSize: "20px"
+    fontSize: "20px",
+    color: "#4C0788"
   },
   column: {
     display: "flex",
