@@ -252,9 +252,7 @@ const Layout = ({ children, endOnBoarding }) => {
       <Grid container direction="column" style={{ height: "100%" }}>
         <Grid container direction="column" style={{ height: "70px" }}>
           <ToolbarWrapper>
-            <LogoMini
-              style={{ flex: 1, opacity: `${activeStep !== 0 ? "1" : "0"}` }}
-            />
+            <LogoMini style={{ flex: 1 }} />
           </ToolbarWrapper>
         </Grid>
         <Grid container direction="column" style={{ flex: 1 }}>
