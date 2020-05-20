@@ -29,7 +29,8 @@ function Login({ openSnackbar }) {
   const [fields, setFields] = useState();
   const [loading, setLoading] = useState(false);
   const mappedMessages = {
-    "auth/wrong-password": t("admin#login_wrongPassword")
+    "auth/wrong-password": t("admin#login_wrongPassword"),
+    "auth/email-not-verified": t("admin#signup_checkYourEmail")
   };
 
   const handleChange = ({ target: { name, value } }) => {
@@ -42,9 +43,10 @@ function Login({ openSnackbar }) {
   const checkUserState = () => {
     if (auth.currentUser && !auth.currentUser.emailVerified) {
       authentication.signOut();
+      return Promise.reject({ code: "auth/email-not-verified" });
     } else if (auth.currentUser && auth.currentUser.emailVerified) {
       // User has session and access to private routes
-      firestore
+      return firestore
         .collection("users")
         .doc(auth.currentUser.uid)
         .get()
@@ -58,6 +60,7 @@ function Login({ openSnackbar }) {
           }
         });
     }
+    return Promise.resolve();
   };
 
   const handleSubmit = e => {
@@ -76,13 +79,9 @@ function Login({ openSnackbar }) {
   };
 
   useEffect(() => {
-    if (auth.currentUser && !auth.currentUser.emailVerified) {
-      openSnackbar(t("admin#signup_checkYourEmail"));
-      authentication.signOut();
-    } else if (auth.currentUser && auth.currentUser.emailVerified) {
-      // User has session and access to private routes
-      checkUserState();
-    }
+    checkUserState().catch(error => {
+      openSnackbar(mappedMessages[error.code] || t("admin#login_failed"));
+    });
   }, [t, openSnackbar]);
 
   if (loading) return <Loader />;
