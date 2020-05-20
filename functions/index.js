@@ -522,7 +522,7 @@ async function createTicketInQueue(
     if (!queueDoc.exists) {
       throw new functionsMain.https.HttpsError(
         "not-found",
-        "Fila " + queueId + " não encontrada."
+        `Fila ${queueId} não encontrada.`
       );
     }
 
