@@ -36,7 +36,7 @@ function QueuePoster({
       .doc(queueId)
       .get()
       .then(response => {
-        let queueData = response.data()
+        let queueData = response.data();
         if (!!queueData.accountGroup) {
           analytics.setUserProperties({ accountGroup: queueData.accountGroup });
         }
