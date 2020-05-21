@@ -82,7 +82,7 @@ function Login({ openSnackbar }) {
     checkUserState().catch(error => {
       openSnackbar(mappedMessages[error.code] || t("admin#login_failed"));
     });
-  }, [t, openSnackbar]);
+  }, [t, openSnackbar, mappedMessages]);
 
   if (loading) return <Loader />;
 
