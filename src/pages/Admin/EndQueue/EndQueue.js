@@ -14,6 +14,8 @@ import { HeadlineContainer, ButtonsContainer } from "../common";
 
 import EndQueueSuccess from "./EndQueueSuccess";
 
+import TitleComponent from "../../../components/TitleComponent";
+
 function EndQueue({ openSnackbar }) {
   const { t } = useTranslation();
   const [success, setSuccess] = useState(false);
@@ -65,6 +67,7 @@ function EndQueue({ openSnackbar }) {
 
   return (
     <Layout bg={Bg}>
+      <TitleComponent title="Encerrar fila" />
       <HeadlineContainer>
         <Typography variant="h3">{t("main#endQueue_title")}</Typography>
       </HeadlineContainer>

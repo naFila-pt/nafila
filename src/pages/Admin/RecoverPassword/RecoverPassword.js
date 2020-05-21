@@ -13,6 +13,8 @@ import authentication from "../../../services/authentication";
 
 import { HeadlineContainer, ButtonsContainer } from "../common";
 
+import TitleComponent from "../../../components/TitleComponent";
+
 function RecoverPassword() {
   const { t } = useTranslation();
   const [requesting, setRequesting] = useState(false);
@@ -44,6 +46,7 @@ function RecoverPassword() {
 
   return (
     <Layout bg={LoginBg}>
+      <TitleComponent title="Recuperar password" />
       <HeadlineContainer>
         <Typography variant="h3">{t("admin#recoverPassword_title")}</Typography>
       </HeadlineContainer>

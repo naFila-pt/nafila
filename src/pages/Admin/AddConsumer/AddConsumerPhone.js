@@ -11,6 +11,8 @@ import { functions, analytics } from "../../../firebase";
 
 import { HeadlineContainer, ButtonsContainer } from "../common";
 
+import TitleComponent from "../../../components/TitleComponent";
+
 function AddConsumerPhone({ user, returnFunction, openSnackbar }) {
   const { t } = useTranslation();
   const [phone, setPhone] = useState("");
@@ -46,6 +48,7 @@ function AddConsumerPhone({ user, returnFunction, openSnackbar }) {
 
   return (
     <Layout bg={LoginBg}>
+      <TitleComponent title="Senha manual por telefone" />
       <HeadlineContainer>
         <Typography variant="h3">{t("main#addConsumerPhone_title")}</Typography>
       </HeadlineContainer>

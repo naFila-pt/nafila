@@ -4,7 +4,9 @@ import styled from "styled-components";
 import logoBannerSrc from "../../assets/icons/logo_nafila.svg";
 import bgMainDesktop from "../../assets/bg/home_desktop.svg";
 
-import Footer from "../../components/Footer";
+import Footer from "../Footer";
+
+import TitleComponent from "../TitleComponent";
 
 const Header = styled.div`
   background-color: #fff;
@@ -39,6 +41,7 @@ const OnBoardingLayoutDesktop = ({ children }) => {
     <Grid
       style={{ display: "flex", minHeight: "100vh", flexDirection: "column" }}
     >
+      <TitleComponent title="Como funciona" />
       <Header>
         <img src={logoBannerSrc} alt="logo" />
       </Header>

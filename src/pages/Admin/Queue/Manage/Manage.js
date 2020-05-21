@@ -15,6 +15,8 @@ import {
   ADMIN_END_QUEUE_PATH
 } from "../../../../constants/RoutesConstants";
 
+import TitleComponent from "../../../../components/TitleComponent";
+
 import { ButtonsContainer } from "../../common";
 
 const pageMinHeight = 550;
@@ -178,6 +180,7 @@ function Manage({ queueId, openSnackbar }) {
       style={{ position: "relative", minHeight: pageMinHeight + 56 }}
       bg={Bg}
     >
+      <TitleComponent title="Gerir fila" />
       <Modal
         open={showModal}
         onClose={handleCloseModal}

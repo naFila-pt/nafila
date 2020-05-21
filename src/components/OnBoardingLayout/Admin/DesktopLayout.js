@@ -26,6 +26,8 @@ import yellowLogo from "../../../assets/icons/logo_amarelo_naFila.svg";
 
 import { ReactComponent as LogoMini } from "../../../assets/logo-mini.svg";
 
+import TitleComponent from "../../TitleComponent";
+
 const useStyles = makeStyles({
   stepper: {
     flexGrow: 1,
@@ -165,6 +167,7 @@ const MainContentDesktop = props => (
         marginRight: "20px"
       }}
     >
+      <TitleComponent title="Lojista - Como funciona" />
       <Grid item style={{ display: "flex", alignItems: "center" }}>
         <img src={logoSrc} alt="log" width="120" height="160" />
         <Grid style={{ marginBottom: "1em" }}>

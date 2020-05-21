@@ -18,6 +18,8 @@ import { ReactComponent as EmailNotification } from "../../assets/icons/email_no
 
 import { TICKET_STATUS_PATH } from "../../constants/RoutesConstants";
 
+import TitleComponent from "../../components/TitleComponent";
+
 const useStyles = makeStyles({
   gridContainer: {
     alignContent: "center",
@@ -117,6 +119,10 @@ const HomeContent = ({ openSnackbar }) => {
 
       const queueData = queue.data();
 
+      if (!!queueData.accountGroup) {
+        analytics.setUserProperties({ accountGroup: queueData.accountGroup });
+      }
+
       setTicketsStoreInfo(prevState => {
         return {
           ...prevState,
@@ -164,6 +170,7 @@ const HomeContent = ({ openSnackbar }) => {
 
   return (
     <HomeLayout bg={[bgStore, bgMain]} activeStep={activeStep}>
+      <TitleComponent title="Nova senha" />
       <Grid container direction="column" className={classes.gridContainer}>
         <Grid item className={classes.gridItem}>
           <Typography

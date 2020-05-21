@@ -22,6 +22,8 @@ import smsIcon from "../../../assets/icons/icon_sms_mobile.svg";
 import howToUseIcon from "../../../assets/icons/ilustração_utilização_mobile.svg";
 import yellowLogo from "../../../assets/icons/logo_amarelo_naFila.svg";
 
+import TitleComponent from "../../TitleComponent";
+
 const useStyles = makeStyles({
   stepper: {
     flexGrow: 1,
@@ -231,6 +233,7 @@ const Layout = ({ children, endOnBoarding }) => {
       className={"OnboardingWrapper"}
       style={{ backgroundImage: `url(${bgMainMobile})` }}
     >
+      <TitleComponent title="Lojista - Como funciona" />
       <Grid container>
         <Grid container direction="column" style={{ height: "56px" }}>
           <ToolbarWrapper>

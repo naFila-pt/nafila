@@ -10,11 +10,14 @@ import Logo from "../../../assets/logo.svg";
 
 import { HeadlineContainer, ButtonsContainer } from "../common";
 
+import TitleComponent from "../../../components/TitleComponent";
+
 function EndQueueSuccess() {
   const { t } = useTranslation();
 
   return (
     <Layout bg={Bg}>
+      <TitleComponent title="Fila encerrada" />
       <HeadlineContainer style={{ marginBottom: 0 }}>
         <Typography variant="h3">{t("main#endQueueSuccess_title")}</Typography>
       </HeadlineContainer>

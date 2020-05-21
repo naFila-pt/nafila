@@ -17,6 +17,8 @@ import personManSrc from "../../../assets/icons/person_man.svg";
 
 import * as Routes from "../../../constants/RoutesConstants";
 
+import TitleComponent from "../../../components/TitleComponent";
+
 const Header = styled.div`
   background-color: #fff;
   width: 100%;
@@ -140,6 +142,7 @@ const Home = () => {
     <Grid
       style={{ display: "flex", minHeight: "100vh", flexDirection: "column" }}
     >
+      <TitleComponent title="Logista" />
       <Header>
         <img src={logoBannerSrc} alt="logo" />
       </Header>

@@ -17,6 +17,8 @@ import { HeadlineContainer, ButtonsContainer } from "../common";
 
 import SuccessfulSignUp from "./SuccessfulSignUp";
 
+import TitleComponent from "../../../components/TitleComponent";
+
 const Form = styled.form`
   padding: 0 30px;
 
@@ -116,6 +118,7 @@ function SignUp({ openSnackbar }) {
 
   return (
     <Layout bg={SignUpBg}>
+      <TitleComponent title="Novo registo" />
       <HeadlineContainer>
         <Typography variant="h3">{t("admin#signup_title")}</Typography>
       </HeadlineContainer>

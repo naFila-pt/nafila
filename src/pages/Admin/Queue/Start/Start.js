@@ -11,6 +11,8 @@ import { auth, functions, analytics } from "../../../../firebase";
 
 import { HeadlineContainer, ButtonsContainer } from "../../common";
 
+import TitleComponent from "../../../../components/TitleComponent";
+
 const StoreName = styled.div`
   margin: 4em 10% 0;
 
@@ -65,6 +67,7 @@ function Start({ user, setQueue, openSnackbar }) {
 
   return (
     <Layout bg={Bg}>
+      <TitleComponent title="Iniciar fila" />
       <HeadlineContainer>
         <Typography variant="h3">
           {t("admin#queueManagement_letsStart")}
