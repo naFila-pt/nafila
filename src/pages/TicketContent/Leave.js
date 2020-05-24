@@ -48,7 +48,7 @@ const Leave = ({
       const removeMeFromQueue = functions.httpsCallable("removeMeFromQueue");
 
       removeMeFromQueue({ queueId, ticketId })
-        .then(async function() {
+        .then(async function () {
           analytics.logEvent("ticket_cancelled");
           analytics.logEvent("ticket_cancelled_by_email");
           setSuccess(true);
