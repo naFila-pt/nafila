@@ -20,6 +20,25 @@ i18n
           "onboarding#store_description":
             "A sua Loja Favorita afixa <b>um código por dia</b>, que deve utilizar para <b>entrar</b> na<b>fila</b>.",
           "onboarding#useCode_title": "Utilize o código",
+          "onboarding#three_ways": "3 maneiras",
+          "onboarding#signup_ways":
+            "Pode inscrever-se na<b>fila</b> através de <b>SMS</b>, <b>Email</b> ou com o <b>seu Nome</b>.",
+          "onboarding#one_sms": "Basta uma SMS!",
+          "onboarding#register_nafila":
+            "Registe-se na<b>fila</b> enviando uma <b>SMS grátis</b> para o 4902 com: <b>nafila {código da Fila}",
+          "onboarding#difficulties":
+            "Se tiver alguma dificuldade, fale com o colaborador de loja.",
+          "onboarding#prefer_email": "Prefere receber Email?",
+          "onboarding#insertCodeEmail":
+            "Visite <b>nafila.pt</b>, insira o <b>código da fila</b> e <b>o seu email</b> para ser notificado.",
+          "onboarding#prefer_name": "Prefere ser chamado pelo Nome?",
+          "onboarding#ask_colaborator_register":
+            "Peça ao colaborador de loja para registar <b>o seu Nome.</b>",
+          "onboarding#name_register_extra_info":
+            "Vai ser <b>chamado pelo nome</b>. Aguarde próximo da loja mas em segurança.",
+          "onboarding#its_done": "E já está!",
+          "onboarding#your_turn_notification":
+            "Quando <b>chegar a sua vez</b>, será notificado e pode entrar na loja.",
           "onboarding#useCode_description":
             "Insira o código de loja no campo<br/>abaixo e clique em<br/>VALIDAR CÓDIGO para entrar na<b>fila</b>",
           "onboarding#useCode_inputPlaceholder": "LojaCodigo123",
@@ -34,7 +53,7 @@ i18n
 
           "home#intro_welcome": "Bem-Vindo!",
           "home#intro_text":
-            "<b>nafila.pt</b> é um sistema de senhas virtuais que permite aguardar a sua vez em segurança, abrigado e longe das outras pessoas.",
+            "<b>nafila.pt</b> é um sistema de senhas virtuais que permite aguardar pela sua vez em segurança.",
           "home#intro_pitch": "na<b>fila</b>. Sem filas.",
           "home#intro_button": "entrar",
           "home#insertCode_title": "Insira o código da sua loja",
@@ -60,62 +79,55 @@ i18n
             "Receberá um email quando estiver a chegar a sua vez.",
           "home#help_label": "Ver como funciona",
           "home#lojista_label": "É lojista ?",
+          "home#consumidor_label": "É consumidor ?",
           "home#atualizar": "Atualizar",
           "home#sair_da_fila": "Sair da fila",
           "terms#title": "Termos e Condições",
+          "terms#privacy": "Privacidade",
+          "terms#contact": "Contatos",
           "terms#subtitle": "Texto de exemplo/not compliant",
           "terms#text": `
-Bem-vindo à Na Fila.
- 
-Os presentes Termos e Condições estabelecem as regras que regulam o acesso e utilização do website e aplicação naFila (“naFila”).
+          Os presentes Termos e Condições estabelecem as regras que regulam o acesso e utilização do website e aplicação naFila (“naFila”). NaFila resultou do esforço de voluntários associados ao Movimento Tech4Covid19.
 
-NaFila resultou do esforço de voluntários associados ao Movimento Tech4Covid19.
+          Estes Termos e Condições são complementados e integrados, em tudo o que não estiver previsto neste documento, pela Notificação de Privacidade que pode também ser consultada no website.
+          
+          A aplicação reside em ambiente de website, não sendo necessário instalar qualquer ficheiro no smartphone. naFila destina-se a pessoas singulares, residentes em Portugal e maiores de idade (“Utilizador” ou “Utilizadores”), sendo a sua utilização regulada pelos Termos e Condições, disponíveis à data de cada acesso ao naFila pelos Utilizadores, implicando a sua utilização uma aceitação pelo Utilizador.
+          
+          Para utilizar naFila, o Utilizador:
+          
+          <b>Se possuir smartphone e plano de dados</b>
+          Dirige-se à loja, consulta o código da fila na vitrine e vai a nafila.pt e regista o código e email. Posteriormente, recebe 2 emails: o primeiro com a senha e o segundo quando for a sua vez para entrar na loja.
+          
+          <b>Se possuir telemóvel, mas sem plano de dados (ou existir impedimento técnico)</b>
+          Dirige-se ao gestor da fila, dá o número de telemóvel. Posteriormente, recebe 2 sms: a primeira com a senha e a segunda, quando for a sua vez, para entrar na loja.
+          
+          
+          Dirige-se ao Lojista e fornece o seu nome. Ser-lhe-á atribuído um número de senha, sendo chamado posteriormente pelo gestor da fila pelo nome providenciado.
+          
+          Caso não concorde com o disposto nos Termos e Condições, pedimos-lhe que não utilize naFila, uma vez que qualquer utilização que faça da mesma ou dos conteúdos nela disponibilizados implicará a sua aceitação.
+          
+          naFila pode, a qualquer momento, modificar os estes Termos e Condições, notificando sempre o Utilizador através de um banner. Caso o Utilizador continue a utilizar naFila, considera-se que aceita os termos e condições alterados.
+          
+          naFila tem o direito exclusivo de, a todo o tempo, suspender, bloquear, interromper ou fazer cessar parcial ou totalmente, o acesso a naFila, em especial nas operações de gestão, manutenção, reparação, alteração ou modernização ou encerrar, definitiva ou temporariamente, parcial ou totalmente, a qualquer momento, de acordo com a sua vontade, naFila, sem aviso prévio.
+          
+          O Utilizador reconhece e aceita que o conteúdo apresentado no naFila (textos, imagens, gráficos, som e animação e todas as outras informações disponibilizadas) está protegido por direitos de propriedade intelectual.
+          
+          naFila concede ao Utilizador uma licença pessoal, intransferível, mundial, não passível de sub-
+          -licenciamento, não exclusiva, livre, revogável de acesso e utilização do naFila, conforme necessário para aceder e utilizar a mesma, desde que o Utilizador cumpra os presentes Termos e Condições.
+          
+          A informação disponibilizada no website naFila não pretende substituir qualquer serviço, recomendação, conselho ou dado emitido ou disponibilizado por uma entidade governamental, administrativa ou estadual, assim como entidades privadas do setor da saúde ou profissionais de saúde, familiarizados com o historial clínico e situação concreta do Utilizador.
+          
+          naFila irá empregar os seus melhores esforços para que exista a menor possibilidade de qualquer tipo de malwarevírus ou outro código malicioso. No entanto, uma vez que naFila não controla integralmente a circulação de informação através da Internet, não consegue garantir que na Fila não contém qualquer tipo de vírus ou outros elementos que possam danificar o seu equipamento.
 
-Estes Termos e Condições são complementados e integrados, em tudo o que não estiver previsto neste documento, pela Notificação de Privacidade que pode também ser consultada no website.
-
-A aplicação reside em ambiente de website, não sendo necessário instalar qualquer ficheiro no smartphone.
-naFila destina-se a pessoas singulares, residentes em Portugal e maiores de idade (“Utilizador” ou “Utilizadores”), sendo a sua utilização regulada pelos Termos e Condições, disponíveis à data de cada acesso ao naFila pelos Utilizadores, implicando a sua utilização uma aceitação pelo Utilizador.
-
-Para utilizar naFila, o Utilizador:
-
-<b>Se possuir smartphone e plano de dados</b>
-  Dirige-se à loja, consulta o código da fila na vitrine e vai a nafila.pt e regista o código e email.
-
-  Posteriormente, recebe 2 emails: o primeiro com a senha e o segundo quando for a sua vez para entrar na loja.
-<b>Se possuir telemóvel, mas sem plano de dados (ou existir impedimento técnico)</b>
-  Dirige-se ao gestor da fila, dá o nº de telemóvel.
-
-  Posteriormente, recebe 2 sms: a primeira com a senha e a segunda quando for a sua vez para entrar na loja.
-<b>Se não possuir telefone móvel</b>
-  Dirige-se ao Lojista e fornece o seu nome. Ser-lhe-á atribuído um número de senha, sendo chamado posteriormente pelo gestor da fila pelo nome providenciado.
-
-Caso não concorde com o disposto nos Termos e Condições, pedimos-lhe que não utilize aFila, uma vez que qualquer utilização que faça da mesma ou dos conteúdos nela disponibilizados implicará a sua aceitação.
-
-naFila pode, a qualquer momento, modificar os estes Termos e Condições, notificando sempre o Utilizador através de um banner.
-
-Caso o Utilizador continue a utilizar naFila, considera-se que aceita os termos e condições alterados.
-
-naFila tem o direito exclusivo de, a todo o tempo, suspender, bloquear, interromper ou fazer cessar parcial ou totalmente, o acesso a naFila, em especial nas operações de gestão, manutenção, reparação, alteração ou modernização ou encerrar, definitiva ou temporariamente, parcial ou totalmente, a qualquer momento, de acordo com a sua vontade, naFila, sem aviso prévio.
-
-O Utilizador reconhece e aceita que o conteúdo apresentado no naFila (textos, imagens, gráficos, som e animação e todas as outras informações disponibilizadas) está protegido por direitos de propriedade intelectual.
-
-naFila concede ao Utilizador uma licença pessoal, intransferível, mundial, não passível de sublicenciamento, não exclusiva, livre, revogável de acesso e utilização do naFila, conforme necessário para aceder e utilizar a mesma, desde que o Utilizador cumpra os presentes Termos e Condições.
-
-A informação disponibilizada no website naFila não pretende substituir qualquer serviço, recomendação, conselho ou dado emitido ou disponibilizado por uma entidade governamental, administrativa ou estadual, assim como entidades privadas do setor da saúde ou profissionais de saúde, familiarizados com o historial clínico e situação concreta do Utilizador.
-
-naFila irá empregar os seus melhores esforços para que exista a menor possibilidade de qualquer tipo de malwarevírus ou outro código malicioso. No entanto, uma vez que naFila não controla integralmente a circulação de informação através da Internet, não consegue garantir que na Fila não contém qualquer tipo de vírus ou outros elementos que possam danificar o seu equipamento.
-
-naFila tem ainda o direito exclusivo de, a todo o tempo, encerrar, definitiva ou temporariamente, parcial ou totalmente, a qualquer momento, de acordo com a sua vontade, a Na Fila ou qualquer uma das suas funcionalidades sem aviso prévio.
-
-Se alguma parte ou disposição dos presentes Termos e Condições não for executável ou estiver em conflito com a lei aplicável, a validade das restantes partes ou disposições não será afetada.
-
-Caso tenha alguma questão sobre os presentes Termos e Condições, por favor envie-nos o seu pedido de esclarecimento através do e-mail <a href="mailto:geral.nafila.pt@gmail.com">geral.nafila.pt@gmail.com</a>.
-
-Estes Termos e Condições são regidos pela lei portuguesa e, em caso de litígio na interpretação ou aplicação dos presentes Termos e Condições, será competente em exclusivo o foro da Comarca do Porto, com expressa renúncia a qualquer outro
-  
-  
-Porto, 10 Abril 2020
-            `,
+          naFila tem ainda o direito exclusivo de, a todo o tempo, encerrar, definitiva ou temporariamente, parcial ou totalmente, a qualquer momento, de acordo com a sua vontade, o naFila ou qualquer uma das suas funcionalidades sem aviso prévio.
+          
+          Se alguma parte ou disposição dos presentes Termos e Condições não for executável ou estiver em conflito com a lei aplicável, a validade das restantes partes ou disposições não será afetada.
+          
+          Caso tenha alguma questão sobre os presentes Termos e Condições, por favor envie-nos o seu pedido de esclarecimento através do e-mail geral.nafila.pt@gmail.com.
+          Estes Termos e Condições são regidos pela lei portuguesa e, em caso de litígio na interpretação ou aplicação dos presentes Termos e Condições, será competente em exclusivo o foro da Comarca do Porto(ou Lisboa? - a definir), com expressa renúncia a qualquer outro.
+           
+           
+          Porto, 10 Abril 2020`,
           "terms#close_button": "Fechar",
 
           "leave#title": "Saiu da Fila",
@@ -130,6 +142,34 @@ Porto, 10 Abril 2020
           "admin#intro_pitch": "na<b>fila</b>. Sem filas.",
           "admin#intro_login": "Entrar",
           "admin#intro_signup": "Registo de Loja",
+          "admin#register": "Pré-registo",
+
+          // Admin onboarding
+          "admin#onboarding_firstText":
+            "<b>Tem uma loja</b> ou trabalha num serviço de atendimento ao público? Gostava de utilizar o nafila na sua loja?",
+          "admin#onboarding_secondText":
+            "Faça o <b>pré-registo</b> e será contactado pela nossa equipa de suporte. Assim que receber o contacto do Suporte, <b>poderá começar a usar o nafila.</b>",
+          "admin#onboarding_secondTitle": "É simples!",
+          "admin#onboarding_thirdTitle": "3 em 1",
+          "admin#onboarding_thirdText":
+            "Os consumidores podem tirar a sua Senha de várias formas diferentes.",
+          "admin#onboarding_autonomous": "De forma autónoma",
+          "admin#onboarding_shopkeeper": "Com o lojista",
+          "admin#onboarding_email": "Email",
+          "admin#onboarding_sms": "SMS",
+          "admin#onboarding_call": "Nome",
+          "admin#onboarding_phone": "Telemóvel",
+          "admin#onboarding_code": "Código da Fila",
+          "admin#onboarding_remaining": "Restantes",
+          "admin#onboarding_fourthTitle": "A fila na palma da mão",
+          "admin#onboarding_fourthText":
+            "Gira a sua fila e chame os seus Clientes com o nafila.",
+          "admin#onboarding_fifthTitle": "Notificações seguras",
+          "admin#onboarding_fifthText":
+            "O seu Cliente <b>recebe a notificação,</b> enquanto aguarda em segurança.",
+          "admin#onboarding_sixthTitle": "O Cliente entra na Loja na sua vez.",
+          "admin#onboarding_sixthText":
+            "<b>E já está!</b> O seu Cliente é atendido em segurança.",
 
           // Admin SignUp
           "admin#signup_title": "Introduza os dados de Registo",
@@ -236,6 +276,7 @@ Porto, 10 Abril 2020
           "admin#queueManagement_creatingQueue": "A criar fila ...",
           "admin#queueManagement_queueCode": "Nome e código da Fila",
           "admin#queueManagement_call": "Chamar",
+          "admin#queueManagement_callByName": "Chame o Cliente pelo Nome",
           "admin#queueManagement_nextInQueue": `Próximo <span class="logo">na<b>fila</b></span>`,
           "admin#queueManagement_createTicket": "Gerar senha",
           "admin#queueManagement_endQueue": `Terminar <span class="logo">na<b>fila</b></span>`,

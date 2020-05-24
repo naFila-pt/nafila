@@ -1,3 +1,5 @@
+import Home from "./Home";
+import OnBoarding from "./OnBoarding";
 import WelcomePanel from "./WelcomePanel";
 import SignUp from "./SignUp";
 import Login from "./Login";
@@ -6,9 +8,10 @@ import PreQueue from "./PreQueue";
 import Queue from "./Queue";
 import AddConsumer from "./AddConsumer";
 import EndQueue from "./EndQueue";
-import QueuePoster from "./QueuePoster";
 
 const Admin = {
+  Home,
+  OnBoarding,
   WelcomePanel,
   SignUp,
   Login,
@@ -16,8 +19,7 @@ const Admin = {
   PreQueue,
   Queue,
   AddConsumer,
-  EndQueue,
-  QueuePoster
+  EndQueue
 };
 
 export default Admin;

@@ -54,6 +54,9 @@ const TicketStatus = ({ openSnackbar }) => {
   const urlParam = window.location.hash.substr(1);
 
   let [queueId, ticketNumber, ticketId] = urlParam.split("-");
+
+  queueId = (queueId || "").toUpperCase();
+
   ticketNumber = parseInt(ticketNumber);
   const classes = useStyles();
   const { t } = useTranslation();

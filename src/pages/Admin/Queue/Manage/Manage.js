@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Typography } from "@material-ui/core";
+import { Typography, Modal } from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
@@ -58,11 +59,42 @@ const TicketsRemaining = styled.div`
   }
 `;
 
+const Alert = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  bottom: 25%;
+  position: absolute;
+  text-align: center;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  min-width: 90%;
+  min-height: 150px;
+  background-color: #323337;
+  color: white;
+  border-radius: 8px;
+  padding: 0 16px;
+
+  @media (min-width: 768px) {
+    min-width: 50%;
+  }
+`;
+
 function Manage({ queueId, openSnackbar }) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [requestingNext, setRequestingNext] = useState(false);
   const [queue, setQueue] = useState();
+  const [showModal, setShowModal] = useState(false);
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   const callNext = () => {
     setRequestingNext(true);
 
@@ -70,6 +102,10 @@ function Manage({ queueId, openSnackbar }) {
 
     callNextOnQueue({ queueId })
       .then(function({ data: { queue } }) {
+        if (queue.currentTicketName) {
+          handleOpenModal();
+        }
+
         analytics.logEvent("ticket_called");
         setQueue(queue);
         setRequestingNext(false);
@@ -142,6 +178,30 @@ function Manage({ queueId, openSnackbar }) {
       style={{ position: "relative", minHeight: pageMinHeight + 56 }}
       bg={Bg}
     >
+      <Modal
+        open={showModal}
+        onClose={handleCloseModal}
+        aria-labelledby={t("admin#queueManagement_call")}
+        aria-describedby={t("admin#queueManagement_callByName")}
+      >
+        {
+          <Alert>
+            <CloseIcon
+              style={{
+                position: "absolute",
+                right: "8px",
+                top: "8px",
+                color: "white",
+                cursor: "pointer"
+              }}
+              onClick={handleCloseModal}
+            />
+            <Typography variant="h3">
+              {t("admin#queueManagement_callByName")}
+            </Typography>
+          </Alert>
+        }
+      </Modal>
       <ManageQueueContainer>
         <div>{t("admin#queueManagement_queueCode")}</div>
         <Typography variant="h3">

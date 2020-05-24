@@ -13,12 +13,14 @@ const Button = ({
   backward,
   onClick,
   dangerouslySetInnerHTML,
+  mobile,
   ...rest
 }) => {
   const styles = {
     base: {
       minWidth: "18em",
       background: "#4C0788",
+      border: "1px solid #4C0788",
       borderRadius: "2.13em",
       boxShadow: "0px 11px 19px rgba(0, 0, 0, 0.2)",
       color: "#fff"
@@ -83,17 +85,19 @@ const Button = ({
       >
         <Grid container style={{ padding: ".4em .5em" }}>
           <ArrowBackIcon
+            fontSize={mobile ? "small" : "default"}
             style={{ visibility: backward ? "visible" : "hidden" }}
           />
           <Grid item style={{ flex: 1 }}>
             <Typography
-              variant="h5"
+              variant={mobile ? "body2" : "h5"}
               dangerouslySetInnerHTML={dangerouslySetInnerHTML}
             >
               {children}
             </Typography>
           </Grid>
           <ArrowForwardIcon
+            fontSize={mobile ? "small" : "default"}
             style={{ visibility: forward ? "visible" : "hidden" }}
           />
         </Grid>

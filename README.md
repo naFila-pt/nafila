@@ -10,8 +10,8 @@ NaFila.pt, project relacionado com [Tech4Covid19](https://tech4covid19.org).
 
 **Production branch:** `master` 
 - Live code in production (https://nafila.pt)
-- Reviewed & Approved PR from `dev` branch only
-- @carlosouro / @thegiantbeast / @telmogoncalves to organise PRs & deploys
+- Reviewed (reviewers: [@naFila-pt/reviewers](https://github.com/orgs/naFila-pt/teams/reviewers)) & Approved PR from `dev` branch only
+- [@carlosouro](https://github.com/carlosouro) / [@thegiantbeast](https://github.com/thegiantbeast) / [@telmogoncalves](https://github.com/telmogoncalves) to organise PRs & deploys
 
 **Development branch:** `dev`
 - Live code in dev/qa environment (https://dev.nafila.pt)

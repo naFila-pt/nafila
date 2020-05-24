@@ -4,7 +4,7 @@ import readingTime from "reading-time";
 
 import { MuiThemeProvider } from "@material-ui/core/styles";
 
-import { CssBaseline, Grid, Button, Snackbar } from "@material-ui/core";
+import { CssBaseline, Grid, Snackbar } from "@material-ui/core";
 
 import * as firebase from "firebase/app";
 import { auth, firestore } from "../../firebase";
@@ -14,9 +14,12 @@ import appearance from "../../services/appearance";
 import ErrorBoundary from "../ErrorBoundary";
 import LaunchScreen from "../LaunchScreen";
 import Router from "../Router";
-import DialogHost from "../DialogHost";
 
 import CookieBanner from "../CookieBanner";
+
+function detectIsDesktop() {
+  return window.innerWidth >= 768;
+}
 
 const initialState = {
   ready: false,
@@ -24,37 +27,16 @@ const initialState = {
   theme: appearance.defaultTheme,
   user: null,
   userData: null,
-  roles: [],
-
-  aboutDialog: {
-    open: false
-  },
-
-  signUpDialog: {
-    open: false
-  },
-
-  signInDialog: {
-    open: false
-  },
-
-  settingsDialog: {
-    open: false
-  },
-
-  deleteAccountDialog: {
-    open: false
-  },
-
-  signOutDialog: {
-    open: false
-  },
 
   snackbar: {
     autoHideDuration: 0,
     message: "",
     open: false
-  }
+  },
+
+  isDesktop: detectIsDesktop(),
+
+  shouldSkipOnBoarding: false
 };
 
 class App extends Component {
@@ -62,6 +44,16 @@ class App extends Component {
     super(props);
 
     this.state = initialState;
+
+    try {
+      this.state.shouldSkipOnBoarding = localStorage.getItem("skipOnBoarding");
+    } catch (error) {}
+
+    this.resizeHandler = () => {
+      this.setState({
+        isDesktop: detectIsDesktop() //setState only updates when needed
+      });
+    };
   }
 
   resetState = callback => {
@@ -70,8 +62,7 @@ class App extends Component {
         ready: true,
         theme: appearance.defaultTheme,
         user: null,
-        userData: null,
-        roles: []
+        userData: null
       },
       callback
     );
@@ -94,93 +85,6 @@ class App extends Component {
         theme: appearance.createTheme(theme)
       },
       callback
-    );
-  };
-
-  openDialog = (dialogId, callback) => {
-    const dialog = this.state[dialogId];
-
-    if (!dialog || dialog.open === undefined || null) {
-      return;
-    }
-
-    dialog.open = true;
-
-    this.setState({ dialog }, callback);
-  };
-
-  closeDialog = (dialogId, callback) => {
-    const dialog = this.state[dialogId];
-
-    if (!dialog || dialog.open === undefined || null) {
-      return;
-    }
-
-    dialog.open = false;
-
-    this.setState({ dialog }, callback);
-  };
-
-  closeAllDialogs = callback => {
-    this.setState(
-      {
-        aboutDialog: {
-          open: false
-        },
-
-        signUpDialog: {
-          open: false
-        },
-
-        signInDialog: {
-          open: false
-        },
-
-        settingsDialog: {
-          open: false
-        },
-
-        deleteAccountDialog: {
-          open: false
-        },
-
-        signOutDialog: {
-          open: false
-        }
-      },
-      callback
-    );
-  };
-
-  deleteAccount = () => {
-    this.setState(
-      {
-        performingAction: true
-      },
-      () => {
-        authentication
-          .deleteAccount()
-          .then(() => {
-            this.closeAllDialogs(() => {
-              this.openSnackbar("Deleted account");
-            });
-          })
-          .catch(reason => {
-            const code = reason.code;
-            const message = reason.message;
-
-            switch (code) {
-              default:
-                this.openSnackbar(message);
-                return;
-            }
-          })
-          .finally(() => {
-            this.setState({
-              performingAction: false
-            });
-          });
-      }
     );
   };
 
@@ -251,13 +155,9 @@ class App extends Component {
       theme,
       user,
       userData,
-      aboutDialog,
-      signUpDialog,
-      signInDialog,
-      settingsDialog,
-      deleteAccountDialog,
-      signOutDialog,
-      snackbar
+      snackbar,
+      isDesktop,
+      shouldSkipOnBoarding
     } = this.state;
 
     return (
@@ -281,111 +181,16 @@ class App extends Component {
                     height: "100%"
                   }}
                 >
-                  <Router user={user} openSnackbar={this.openSnackbar} />
+                  <Router
+                    user={user}
+                    userData={userData}
+                    performingAction={performingAction}
+                    openSnackbar={this.openSnackbar}
+                    isDesktop={isDesktop}
+                    shouldSkipOnBoarding={shouldSkipOnBoarding}
+                  />
                 </Grid>
               </Grid>
-
-              <DialogHost
-                performingAction={performingAction}
-                theme={theme}
-                user={user}
-                userData={userData}
-                openSnackbar={this.openSnackbar}
-                dialogs={{
-                  aboutDialog: {
-                    dialogProps: {
-                      open: aboutDialog.open,
-
-                      onClose: () => this.closeDialog("aboutDialog")
-                    }
-                  },
-
-                  signUpDialog: {
-                    dialogProps: {
-                      open: signUpDialog.open,
-
-                      onClose: callback => {
-                        this.closeDialog("signUpDialog");
-
-                        if (callback && typeof callback === "function") {
-                          callback();
-                        }
-                      }
-                    }
-                  },
-
-                  signInDialog: {
-                    dialogProps: {
-                      open: signInDialog.open,
-
-                      onClose: callback => {
-                        this.closeDialog("signInDialog");
-
-                        if (callback && typeof callback === "function") {
-                          callback();
-                        }
-                      }
-                    }
-                  },
-
-                  settingsDialog: {
-                    dialogProps: {
-                      open: settingsDialog.open,
-
-                      onClose: () => this.closeDialog("settingsDialog")
-                    },
-
-                    props: {
-                      onDeleteAccountClick: () =>
-                        this.openDialog("deleteAccountDialog")
-                    }
-                  },
-
-                  deleteAccountDialog: {
-                    dialogProps: {
-                      open: deleteAccountDialog.open,
-
-                      onClose: () => this.closeDialog("deleteAccountDialog")
-                    },
-
-                    props: {
-                      deleteAccount: this.deleteAccount
-                    }
-                  },
-
-                  signOutDialog: {
-                    dialogProps: {
-                      open: signOutDialog.open,
-
-                      onClose: () => this.closeDialog("signOutDialog")
-                    },
-
-                    props: {
-                      title: "Sign out?",
-                      contentText:
-                        "While signed out you are unable to manage your profile and conduct other activities that require you to be signed in.",
-                      dismissiveAction: (
-                        <Button
-                          color="primary"
-                          onClick={() => this.closeDialog("signOutDialog")}
-                        >
-                          Cancel
-                        </Button>
-                      ),
-                      confirmingAction: (
-                        <Button
-                          color="primary"
-                          disabled={performingAction}
-                          variant="contained"
-                          onClick={this.signOut}
-                        >
-                          Sign Out
-                        </Button>
-                      )
-                    }
-                  }
-                }}
-              />
 
               <Snackbar
                 autoHideDuration={snackbar.autoHideDuration}
@@ -489,6 +294,9 @@ class App extends Component {
           }
         );
       });
+
+    //auto-update mobile/desktop state on resize
+    window.addEventListener("resize", this.resizeHandler);
   }
 
   componentWillUnmount() {
@@ -499,6 +307,8 @@ class App extends Component {
     if (this.userDocumentSnapshotListener) {
       this.userDocumentSnapshotListener();
     }
+
+    window.removeEventListener("resize", this.resizeHandler);
   }
 }
 
