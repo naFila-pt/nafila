@@ -1,8 +1,0 @@
-{
-  "recommendations": [
-    "mikestead.dotenv",
-    "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
-    "jpoissonnier.vscode-styled-components"
-  ]
-}
