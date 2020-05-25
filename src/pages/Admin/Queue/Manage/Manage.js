@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Modal } from "@material-ui/core";
+import { Typography, Modal, Grid } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import Layout from "../../../../components/AdminLayout";
 import Loader from "../../../../components/Loader";
 import Button from "../../../../components/Button";
+import Footer from "../../../../components/Footer/Footer";
 import Bg from "../../../../assets/bg/main.svg";
 import Ticket from "../../../../assets/icons/ticket.svg";
 import { firestore, functions, analytics, auth } from "../../../../firebase";
@@ -15,11 +16,13 @@ import {
   ADMIN_END_QUEUE_PATH
 } from "../../../../constants/RoutesConstants";
 
-import { ButtonsContainer } from "../../common";
-
 const pageMinHeight = 550;
 
 const ManageQueueContainer = styled.div`
+  margin-top: 10vh;
+
+  position: relative;
+
   min-height: ${pageMinHeight}px;
 
   h3 {
@@ -47,8 +50,8 @@ const TicketContainer = styled.div`
 `;
 const TicketsRemaining = styled.div`
   position: absolute;
-  right: ${window.innerWidth <= 320 ? 4 : 10}px;
-  top: 38vh;
+  left: 5%;
+  top: 20%;
 
   > div {
     font-size: ${window.innerWidth <= 320 ? 18 : 20}px;
@@ -56,6 +59,10 @@ const TicketsRemaining = styled.div`
 
   h4 {
     font-weight: 900;
+  }
+
+  @media (min-width: 768px) {
+    left: 25%;
   }
 `;
 
@@ -80,6 +87,14 @@ const Alert = styled.div`
   }
 `;
 
+const ButtonGroupWrapper = styled.div`
+  margin-top: 10vh;
+
+  .MuiButtonWrapper {
+    margin-bottom: 20px;
+  }
+`;
+
 function Manage({ queueId, openSnackbar }) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
@@ -101,7 +116,7 @@ function Manage({ queueId, openSnackbar }) {
     const callNextOnQueue = functions.httpsCallable("callNextOnQueue");
 
     callNextOnQueue({ queueId })
-      .then(function ({ data: { queue } }) {
+      .then(function({ data: { queue } }) {
         if (queue.currentTicketName) {
           handleOpenModal();
         }
@@ -174,108 +189,123 @@ function Manage({ queueId, openSnackbar }) {
   if (loading) return <Loader />;
 
   return (
-    <Layout
-      style={{ position: "relative", minHeight: pageMinHeight + 56 }}
-      bg={Bg}
-    >
-      <Modal
-        open={showModal}
-        onClose={handleCloseModal}
-        aria-labelledby={t("admin#queueManagement_call")}
-        aria-describedby={t("admin#queueManagement_callByName")}
+    <>
+      <Layout
+        style={{ position: "relative", minHeight: pageMinHeight + 56 }}
+        bg={Bg}
       >
-        {
-          <Alert>
-            <CloseIcon
-              style={{
-                position: "absolute",
-                right: "8px",
-                top: "8px",
-                color: "white",
-                cursor: "pointer"
-              }}
-              onClick={handleCloseModal}
-            />
-            <Typography variant="h3">
-              {t("admin#queueManagement_callByName")}
-            </Typography>
-          </Alert>
-        }
-      </Modal>
-      <ManageQueueContainer>
-        <div>{t("admin#queueManagement_queueCode")}</div>
-        <Typography variant="h3">
-          {queue && queue.name} ({queueId})
-        </Typography>
-
-        <TicketContainer>
-          <div>
-            <Typography variant="h2">
-              {queue && String(queue.currentTicketNumber).padStart(3, "0")}
-            </Typography>
-          </div>
-
-          <div>
-            <Typography variant="h5">
-              {t("admin#queueManagement_call")}
-            </Typography>
-          </div>
-        </TicketContainer>
-
-        <TicketsRemaining>
-          <div>{t("admin#queueManagement_remaining")}</div>
-          <Typography variant="h4">
-            {queue ? queue.remainingTicketsInQueue : 0}
-          </Typography>
-        </TicketsRemaining>
-
-        {queue && queue.currentTicketName && (
-          <>
-            <Typography variant="h4" style={{ fontWeight: 600 }}>
-              {queue.currentTicketName}
-            </Typography>
-
-            <br />
-          </>
-        )}
-
-        <ButtonsContainer>
-          <div>
-            <Button
-              onClick={() => callNext()}
-              variant={requestingNext ? "inactive" : ""}
-              disabled={requestingNext}
-            >
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: t(
-                    requestingNext
-                      ? "admin#queueManagement_wait"
-                      : "admin#queueManagement_nextInQueue"
-                  )
+        <Modal
+          open={showModal}
+          onClose={handleCloseModal}
+          aria-labelledby={t("admin#queueManagement_call")}
+          aria-describedby={t("admin#queueManagement_callByName")}
+        >
+          {
+            <Alert>
+              <CloseIcon
+                style={{
+                  position: "absolute",
+                  right: "8px",
+                  top: "8px",
+                  color: "white",
+                  cursor: "pointer"
                 }}
+                onClick={handleCloseModal}
               />
-            </Button>
-          </div>
+              <Typography variant="h3">
+                {t("admin#queueManagement_callByName")}
+              </Typography>
+            </Alert>
+          }
+        </Modal>
+        <Grid>
+          <Grid item sm={5}>
+            <ManageQueueContainer>
+              <div>{t("admin#queueManagement_queueCode")}</div>
+              <Typography variant="h3">
+                {queue && queue.name} ({queueId})
+              </Typography>
 
-          <div>
-            <Button variant="secondary" href={ADMIN_ADD_CUSTOMER_PATH} forward>
-              {t("admin#queueManagement_createTicket")}
-            </Button>
-          </div>
+              <TicketContainer>
+                <div>
+                  <Typography variant="h2">
+                    {queue &&
+                      String(queue.currentTicketNumber).padStart(3, "0")}
+                  </Typography>
+                </div>
 
-          <div>
-            <Button variant="gray" href={ADMIN_END_QUEUE_PATH}>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: t("admin#queueManagement_endQueue")
-                }}
-              />
-            </Button>
-          </div>
-        </ButtonsContainer>
-      </ManageQueueContainer>
-    </Layout>
+                <div>
+                  <Typography variant="h5">
+                    {t("admin#queueManagement_call")}
+                  </Typography>
+                </div>
+              </TicketContainer>
+
+              <TicketsRemaining>
+                <div>{t("admin#queueManagement_remaining")}</div>
+                <Typography variant="h4">
+                  {queue ? queue.remainingTicketsInQueue : 0}
+                </Typography>
+              </TicketsRemaining>
+
+              {queue && queue.currentTicketName && (
+                <>
+                  <Typography variant="h4" style={{ fontWeight: 600 }}>
+                    {queue.currentTicketName}
+                  </Typography>
+
+                  <br />
+                </>
+              )}
+
+              <ButtonGroupWrapper>
+                <div>
+                  <Button
+                    onClick={() => callNext()}
+                    variant={requestingNext ? "inactive" : ""}
+                    disabled={requestingNext}
+                    mobile
+                  >
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: t(
+                          requestingNext
+                            ? "admin#queueManagement_wait"
+                            : "admin#queueManagement_nextInQueue"
+                        )
+                      }}
+                    />
+                  </Button>
+                </div>
+
+                <div>
+                  <Button
+                    variant="secondary"
+                    href={ADMIN_ADD_CUSTOMER_PATH}
+                    forward
+                    mobile
+                  >
+                    {t("admin#queueManagement_createTicket")}
+                  </Button>
+                </div>
+
+                <div>
+                  <Button variant="gray" href={ADMIN_END_QUEUE_PATH} mobile>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: t("admin#queueManagement_endQueue")
+                      }}
+                    />
+                  </Button>
+                </div>
+              </ButtonGroupWrapper>
+            </ManageQueueContainer>
+          </Grid>
+          <Grid item sm={7}></Grid>
+        </Grid>
+      </Layout>
+      <Footer />
+    </>
   );
 }
 
