@@ -126,7 +126,7 @@ function SignUp({ openSnackbar }) {
           name="defaultQueueName"
           onChange={e => handleChange(e)}
           helperText="ex: PDoceCartaxo"
-          inputProps={{ maxLength: 20 }}
+          inputProps={{ maxLength: 30 }}
           {...inputProps}
         />
 
