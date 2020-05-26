@@ -3,18 +3,23 @@ import { Typography, Modal, Grid } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import AddIcon from "@material-ui/icons/Add";
+import MaterialButton from "@material-ui/core/Button";
+import RemoveIcon from "@material-ui/icons/Remove";
 
 import Layout from "../../../../components/AdminLayout";
 import Loader from "../../../../components/Loader";
 import Button from "../../../../components/Button";
 import Footer from "../../../../components/Footer/Footer";
-import Bg from "../../../../assets/bg/main.svg";
+import Bg from "../../../../assets/bg/home_desktop.svg";
 import Ticket from "../../../../assets/icons/ticket.svg";
 import { firestore, functions, analytics, auth } from "../../../../firebase";
 import {
   ADMIN_ADD_CUSTOMER_PATH,
   ADMIN_END_QUEUE_PATH
 } from "../../../../constants/RoutesConstants";
+import IconGirl from "../../../../assets/icons/rapariga-queue.svg";
+import IconGirlTwo from "../../../../assets/icons/rapariga-gravida-queue.svg";
 
 const pageMinHeight = 550;
 
@@ -95,12 +100,53 @@ const ButtonGroupWrapper = styled.div`
   }
 `;
 
+const IconGirlWalking = styled.div`
+  align-items: flex-end;
+  display: flex;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+`;
+
+const IconGirlPregnant = styled.div`
+  align-items: flex-start;
+  display: flex;
+  margin-bottom: 15vh;
+  margin-left: 5vh;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+`;
+
+const ButtonCircle = styled(MaterialButton)`
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  background-color: #ffc836 !important;
+  box-shadow: 0px 11px 19px rgba(0, 0, 0, 0.248689);
+  border-radius: 50%;
+  margin-bottom: 25px;
+  margin-top: 25px;
+`;
+
+const CounterWrapper = styled.div`
+  position: absolute;
+  top: 9vh;
+  right: 6vh;
+
+  @media (min-width: 768px) {
+    top: 6vh;
+    right: 30vh;
+  }
+`;
+
 function Manage({ queueId, openSnackbar }) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [requestingNext, setRequestingNext] = useState(false);
   const [queue, setQueue] = useState();
   const [showModal, setShowModal] = useState(false);
+  const [counter, setCounter] = useState(0);
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -130,6 +176,34 @@ function Manage({ queueId, openSnackbar }) {
         openSnackbar(e.message);
       });
   };
+
+  const handleAddCounter = () => {
+    //TODO validate max capacity, if it capped, an error message should appear.
+    setCounter(prevState => prevState + 1);
+  };
+
+  const handleRemoveCounter = () => {
+    if (counter > 0) {
+      setCounter(prevState => prevState - 1);
+    }
+  };
+
+  const ImagesWrapper = styled(Grid)`
+    display: none;
+
+    @media (min-width: 768px) {
+      display: flex;
+      align-items: flex-end;
+    }
+  `;
+
+  const FooterWrapper = styled.div`
+    display: none;
+
+    @media (min-width: 768px) {
+      display: flex;
+    }
+  `;
 
   useEffect(() => {
     //FIXME: this piece of code avoids analyticsServerEvents to be processed over and over
@@ -218,8 +292,8 @@ function Manage({ queueId, openSnackbar }) {
             </Alert>
           }
         </Modal>
-        <Grid>
-          <Grid item sm={5}>
+        <Grid container>
+          <Grid item xs={12} sm={5}>
             <ManageQueueContainer>
               <div>{t("admin#queueManagement_queueCode")}</div>
               <Typography variant="h3">
@@ -247,6 +321,16 @@ function Manage({ queueId, openSnackbar }) {
                   {queue ? queue.remainingTicketsInQueue : 0}
                 </Typography>
               </TicketsRemaining>
+
+              <CounterWrapper>
+                <ButtonCircle onClick={handleAddCounter}>
+                  <AddIcon />
+                </ButtonCircle>
+                <Typography variant="h4">{counter}</Typography>
+                <ButtonCircle onClick={handleRemoveCounter}>
+                  <RemoveIcon />
+                </ButtonCircle>
+              </CounterWrapper>
 
               {queue && queue.currentTicketName && (
                 <>
@@ -301,10 +385,21 @@ function Manage({ queueId, openSnackbar }) {
               </ButtonGroupWrapper>
             </ManageQueueContainer>
           </Grid>
-          <Grid item sm={7}></Grid>
+          <ImagesWrapper item sm={7}>
+            <div style={{ display: "flex" }}>
+              <IconGirlWalking>
+                <img src={IconGirl} width="100%" />
+              </IconGirlWalking>
+              <IconGirlPregnant>
+                <img src={IconGirlTwo} width="100%" />
+              </IconGirlPregnant>
+            </div>
+          </ImagesWrapper>
         </Grid>
+        <FooterWrapper>
+          <Footer />
+        </FooterWrapper>
       </Layout>
-      <Footer />
     </>
   );
 }
