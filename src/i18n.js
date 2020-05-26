@@ -67,21 +67,21 @@ i18n
           "home#queue_store": "Loja",
           "home#queue_length": "À sua frente",
           "home#queue_people": "pessoas",
-          "home#queue_button": "Continuar",
+          "home#queue_button": "Tirar senha",
           "home#notification_description":
-            "Indique-nos o seu email para receber a <b>notificação</b>.",
-          "home#notification_inputPlaceholder": "Email",
+            "Indique-nos o seu telemóvel para receber a <b>notificação</b>.",
+          "home#notification_inputPlaceholder": "Número de telemóvel",
           "home#notification_terms":
-            '<b>Ao carregar em "Tirar Senha"</b>, confirma que leu e compreendeu os',
+            '<b>Ao carregar em "Continuar"</b>, confirma que leu e compreendeu os',
           "home#notification_termsLink":
             "termos e condições da proteção de dados",
-          "home#notification_button": "Tirar Senha",
+          "home#notification_button": "Continuar",
           "home#ticket_store": "Loja",
           "home#ticket_turn": "A sua vez",
           "home#ticket_currentQueue": "Agora",
           "home#ticket_length": "À sua frente",
           "home#ticket_notification":
-            "Receberá um email quando estiver a chegar a sua vez.",
+            "Acompanhe neste ecrã o progresso da fila.",
           "home#help_label": "Ver como funciona",
           "home#lojista_label": "É lojista ?",
           "home#consumidor_label": "É consumidor ?",
