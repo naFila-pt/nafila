@@ -13,6 +13,7 @@ const Button = ({
   backward,
   onClick,
   dangerouslySetInnerHTML,
+  mobile,
   ...rest
 }) => {
   const styles = {
@@ -84,17 +85,19 @@ const Button = ({
       >
         <Grid container style={{ padding: ".4em .5em" }}>
           <ArrowBackIcon
+            fontSize={mobile ? "small" : "default"}
             style={{ visibility: backward ? "visible" : "hidden" }}
           />
           <Grid item style={{ flex: 1 }}>
             <Typography
-              variant="h5"
+              variant={mobile ? "body2" : "h5"}
               dangerouslySetInnerHTML={dangerouslySetInnerHTML}
             >
               {children}
             </Typography>
           </Grid>
           <ArrowForwardIcon
+            fontSize={mobile ? "small" : "default"}
             style={{ visibility: forward ? "visible" : "hidden" }}
           />
         </Grid>

@@ -29,7 +29,7 @@ function EndQueue({ openSnackbar }) {
     const deleteQueue = functions.httpsCallable("deleteQueue");
 
     deleteQueue({ queueId: user.queues[0] })
-      .then(async function({ data: { deletedCount, totalTickets } }) {
+      .then(async function ({ data: { deletedCount, totalTickets } }) {
         analytics.logEvent("queue_closed");
         analytics.logEvent("queue_tickets", { value: totalTickets });
         analytics.logEvent("queue_tickets_force_closed", {

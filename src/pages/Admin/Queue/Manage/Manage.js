@@ -103,7 +103,7 @@ function Manage({ queueId, openSnackbar }) {
     const callNextOnQueue = functions.httpsCallable("callNextOnQueue");
 
     callNextOnQueue({ queueId })
-      .then(function({ data: { queue } }) {
+      .then(function ({ data: { queue } }) {
         if (queue.currentTicketName) {
           handleOpenModal();
         }

@@ -29,7 +29,7 @@ const useStyles = makeStyles({
     flexGrow: 1,
     position: "static",
     backgroundColor: "#FFC836",
-    height: "80px"
+    height: "100%"
   },
   stepperDot: {
     backgroundColor: "#4C0788",
@@ -45,7 +45,7 @@ const useStyles = makeStyles({
 
 const Container = styled(Box)`
   position: relative;
-  height: 100%;
+  height: 100vh;
   padding: 0;
   background-size: cover;
   background-repeat: no-repeat;
@@ -58,55 +58,41 @@ const ToolbarWrapper = styled(Toolbar)`
 `;
 
 const GridArea = styled(Grid)`
-  height: 90%;
-  display: grid;
-  grid-template-columns: 50% 50%;
-  grid-template-rows: auto;
-  grid-row-gap: 5px;
-  grid-template-areas:
-    "text1 text1"
-    "mail sms1"
-    "mailDesc sms1Desc"
-    "text2 text2"
-    "chamada sms2"
-    "chamadaDesc sms2Desc";
-  & img {
-    align-self: center;
-  }
-  & p {
-    margin: 0;
+  height: 80%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 80%;
+  margin-top: 10px;
+
+  & .row {
+    display: flex;
+    width: 100%;
+    margin: 5px 0;
+    & .column {
+      width: 50%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
   }
 `;
 
 const BigText = styled.p`
   justify-self: center;
   font-weight: bold;
-  font-size: 30px;
+  font-size: 7vw;
   align-self: center;
-`;
-
-const EmailIcon = styled.img`
-  grid-area: mail;
-  justify-self: center;
-  height: 60%;
-`;
-
-const SmsIcon = styled.img`
-  grid-area: sms1;
-  justify-self: center;
-  height: 90%;
-`;
-
-const CallIcon = styled.img`
-  grid-area: chamada;
-  justify-self: center;
-  height: 90%;
+  margin: 5px 0;
 `;
 
 const TextDesc = styled.p`
   justify-self: center;
   font-weight: bold;
   font-size: 20px;
+  margin: 5px 0 0 0;
 `;
 
 const TicketContainer = styled.div`
@@ -148,12 +134,9 @@ const TicketContainer = styled.div`
 const MainContentMobile = props => (
   <Grid
     style={{
-      height: "calc(100vh - 184px)",
+      flex: 1,
       display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      padding: "10px",
-      marginTop: "10px"
+      flexDirection: "column"
     }}
   >
     <Grid
@@ -164,26 +147,30 @@ const MainContentMobile = props => (
       }}
     >
       <Grid item style={{ width: "100%" }}>
-        <Typography
-          variant="h3"
-          style={{
-            fontSize: "25px",
-            color: "#FFC836",
-            marginBottom: "10px",
-            textAlign: "center"
-          }}
-        >
-          {props.t(props.title)}
-        </Typography>
-        <Typography
-          variant="h2"
-          style={{
-            fontSize: "25px",
-            wordWrap: "break-word",
-            textAlign: "center"
-          }}
-          dangerouslySetInnerHTML={{ __html: props.t(props.text) }}
-        />
+        {props.title && (
+          <Typography
+            variant="h3"
+            style={{
+              fontSize: "20px",
+              color: "#FFC836",
+              marginBottom: "10px",
+              textAlign: "center"
+            }}
+          >
+            {props.t(props.title)}
+          </Typography>
+        )}
+        {props.text && (
+          <Typography
+            variant="h2"
+            style={{
+              fontSize: "6vw",
+              wordWrap: "break-word",
+              textAlign: "center"
+            }}
+            dangerouslySetInnerHTML={{ __html: props.t(props.text) }}
+          />
+        )}
       </Grid>
     </Grid>
     {props.rightColumn}
@@ -234,23 +221,21 @@ const Layout = ({ children, endOnBoarding }) => {
       style={{ backgroundImage: `url(${bgMainMobile})` }}
     >
       <TitleComponent title="Lojista - Como funciona" />
-      <Grid container>
+      <Grid direction="column" style={{ height: "100vh", display: "flex" }}>
         <Grid container direction="column" style={{ height: "56px" }}>
           <ToolbarWrapper>
             <LogoMini style={{ flex: 1 }} />
           </ToolbarWrapper>
         </Grid>
         {children[activeStep]}
-        <Grid
-          container
-          style={{ position: "absolute", bottom: 0, height: "128px" }}
-        >
+        <Grid container style={{ height: "100px" }}>
           <Grid
             container
             direction="column"
             alignContent="flex-end"
             alignItems="flex-end"
             style={{
+              height: "30%",
               marginRight: "1.5em",
               marginBottom: ".5em",
               visibility:
@@ -261,7 +246,7 @@ const Layout = ({ children, endOnBoarding }) => {
               <b>Saltar</b>
             </Button>
           </Grid>
-          <Grid item style={{ width: "100%" }}>
+          <Grid item style={{ width: "100%", height: "70%" }}>
             <MobileStepper
               variant="dots"
               steps={children.length}
@@ -292,13 +277,14 @@ const OnBoardingLayout = props => {
           <Grid
             style={{
               display: "flex",
-              alignItems: "end",
+              alignItems: "flex-end",
               justifyContent: "center",
-              padding: "20px",
-              width: "100%"
+              width: "100%",
+              height: "70%",
+              marginTop: "10px"
             }}
           >
-            <img src={storeIcon} alt="asset" width="100%" />
+            <img src={storeIcon} alt="asset" width="100%" height="100%" />
           </Grid>
         }
       />
@@ -310,13 +296,14 @@ const OnBoardingLayout = props => {
           <Grid
             style={{
               display: "flex",
-              alignItems: "end",
+              alignItems: "flex-end",
               justifyContent: "center",
               width: "100%",
-              padding: "20px"
+              height: "60%",
+              marginTop: "10px"
             }}
           >
-            <img src={storeIcon} alt="asset" width="100%" />
+            <img src={storeIcon} alt="asset" width="100%" height="100%" />
           </Grid>
         }
       />
@@ -325,43 +312,32 @@ const OnBoardingLayout = props => {
         title="admin#onboarding_thirdTitle"
         text="admin#onboarding_thirdText"
         rightColumn={
-          <Grid
-            style={{
-              display: "flex",
-              alignItems: "end",
-              justifyContent: "center",
-              width: "center"
-            }}
-          >
-            <GridArea>
-              <BigText style={{ gridArea: "text1" }}>
-                {t("admin#onboarding_autonomous")}
-              </BigText>
-              <EmailIcon src={emailIcon} alt="iconEmail" />
-              <SmsIcon src={smsIcon} alt="smsIcon" />
-              <TextDesc style={{ gridArea: "mailDesc" }}>
-                {t("admin#onboarding_email")}
-              </TextDesc>
-              <TextDesc style={{ gridArea: "sms1Desc" }}>
-                {t("admin#onboarding_sms")}
-              </TextDesc>
-              <BigText style={{ gridArea: "text2" }}>
-                {t("admin#onboarding_shopkeeper")}
-              </BigText>
-              <CallIcon src={chamadaIcon} alt="chamada" />
-              <SmsIcon
-                src={smsIcon}
-                alt="smsIcon"
-                style={{ gridArea: "sms2" }}
-              />
-              <TextDesc style={{ gridArea: "chamadaDesc" }}>
-                {t("admin#onboarding_call")}
-              </TextDesc>
-              <TextDesc style={{ gridArea: "sms2Desc" }}>
-                {t("admin#onboarding_phone")}
-              </TextDesc>
-            </GridArea>
-          </Grid>
+          <GridArea>
+            <BigText>{t("admin#onboarding_autonomous")}</BigText>
+            <div className="row">
+              <div className="column">
+                <img src={emailIcon} alt="iconEmail" />
+                <TextDesc>{t("admin#onboarding_email")}</TextDesc>
+              </div>
+              <div className="column">
+                <img src={smsIcon} alt="smsIcon" height="70%" />
+                <TextDesc>{t("admin#onboarding_sms")}</TextDesc>
+              </div>
+            </div>
+            <BigText>{t("admin#onboarding_shopkeeper")}</BigText>
+            <div className="row">
+              <div className="column">
+                <img src={chamadaIcon} alt="chamada" height="70%" />
+                <TextDesc style={{ gridArea: "chamadaDesc" }}>
+                  {t("admin#onboarding_call")}
+                </TextDesc>
+              </div>
+              <div className="column">
+                <img src={smsIcon} alt="smsIcon" height="70%" />
+                <TextDesc>{t("admin#onboarding_phone")}</TextDesc>
+              </div>
+            </div>
+          </GridArea>
         }
       />
       <MainContentMobile
@@ -372,10 +348,11 @@ const OnBoardingLayout = props => {
           <Grid
             style={{
               display: "flex",
-              alignItems: "end",
+              alignItems: "flex-end",
               justifyContent: "center",
-              width: "center",
-              padding: "20px"
+              width: "100%",
+              height: "60%",
+              marginTop: "10px"
             }}
           >
             <TicketContainer style={{ width: "100%", height: "100%" }}>
@@ -412,13 +389,14 @@ const OnBoardingLayout = props => {
           <Grid
             style={{
               display: "flex",
-              alignItems: "end",
+              alignItems: "flex-end",
               justifyContent: "center",
               width: "100%",
-              padding: "20px"
+              height: "80%",
+              marginTop: "10px"
             }}
           >
-            <img src={howToUseIcon} alt="asset" width="100%" />
+            <img src={howToUseIcon} alt="asset" width="100%" height="100%" />
           </Grid>
         }
       />
@@ -430,20 +408,17 @@ const OnBoardingLayout = props => {
             style={{
               display: "flex",
               flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center"
+              alignItems: "flex-end",
+              justifyContent: "center",
+              width: "100%",
+              height: "100%"
             }}
           >
-            <img
-              src={storeIcon}
-              alt="asset"
-              width="100%"
-              style={{ margin: "5px" }}
-            />
+            <img src={storeIcon} alt="asset" width="100%" height="60%" />
             <Typography
               variant="h2"
               style={{
-                fontSize: "25px",
+                fontSize: "6vw",
                 wordWrap: "break-word",
                 textAlign: "center",
                 margin: "10px"
@@ -452,13 +427,16 @@ const OnBoardingLayout = props => {
                 __html: t("admin#onboarding_sixthText")
               }}
             />
-            <StyledButton
-              onClick={endOnBoarding}
-              dangerouslySetInnerHTML={{
-                __html: t("admin#register")
-              }}
-              style={{ textAlign: "center" }}
-            />
+            <div style={{ width: "100%", textAlign: "center" }}>
+              <StyledButton
+                forward
+                onClick={endOnBoarding}
+                dangerouslySetInnerHTML={{
+                  __html: t("admin#register")
+                }}
+                style={{ textAlign: "center" }}
+              />
+            </div>
           </Grid>
         }
       />

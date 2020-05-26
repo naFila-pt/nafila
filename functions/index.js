@@ -83,7 +83,7 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
   let queueRef = firestore.collection("queues").doc(data.queueId);
 
   //transaction is cheaper
-  let result = await firestore.runTransaction(async function(transaction) {
+  let result = await firestore.runTransaction(async function (transaction) {
     let queueDoc = await transaction.get(queueRef);
 
     //get queue
@@ -159,7 +159,7 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
 
   //transaction is cheaper
   let { result, notifyTicketData } = await firestore.runTransaction(
-    async function(transaction) {
+    async function (transaction) {
       let queueDoc = await transaction.get(queueRef);
 
       //get queue
@@ -175,10 +175,7 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
 
       //get next ticket
       let querySnap = await transaction.get(
-        queueRef
-          .collection("tickets")
-          .orderBy("number")
-          .limit(4)
+        queueRef.collection("tickets").orderBy("number").limit(4)
       );
 
       //in case there is no ticket left
@@ -284,7 +281,7 @@ exports.removeMeFromQueue = functions.https.onCall(async (data, context) => {
   let ticketRef = queueRef.collection("tickets").doc(data.ticketId);
 
   //transaction is cheaper
-  let result = await firestore.runTransaction(async function(transaction) {
+  let result = await firestore.runTransaction(async function (transaction) {
     let queueDoc = await transaction.get(queueRef);
     let queueData = queueDoc.data();
     return await removeTicket(
@@ -409,10 +406,7 @@ async function getNewSMSRoutine() {
   replies.forEach(async m => {
     try {
       //validate queueId
-      let [queueId, leave] = m["Message"]
-        .trim()
-        .toUpperCase()
-        .split(" ");
+      let [queueId, leave] = m["Message"].trim().toUpperCase().split(" ");
       //add to queue
       if (typeof leave === "undefined") {
         await createTicketInQueue({ queueId, phone: m["MSISDN"] }, false);
@@ -422,7 +416,7 @@ async function getNewSMSRoutine() {
         let queueRef = firestore.collection("queues").doc(queueId);
         //get the ticket
         //transaction is cheaper
-        await firestore.runTransaction(async function(transaction) {
+        await firestore.runTransaction(async function (transaction) {
           let queueDoc = await transaction.get(queueRef);
           //get next ticket
           let querySnap = await transaction.get(
@@ -517,7 +511,7 @@ async function createTicketInQueue(
   }
 
   //transaction is cheaper
-  let result = await firestore.runTransaction(async function(transaction) {
+  let result = await firestore.runTransaction(async function (transaction) {
     let queueDoc = await transaction.get(queueRef);
 
     if (!queueDoc.exists) {
@@ -568,8 +562,9 @@ async function createTicketInQueue(
       [result.ticket.phone],
       `\nJá está naFila para ${result.queue.name}! A sua senha é ${
         result.ticket.number
-      } e tem ${result.queue.remainingTicketsInQueue -
-        1} pessoas à sua frente. Para sair da fila, envie "nafila ${
+      } e tem ${
+        result.queue.remainingTicketsInQueue - 1
+      } pessoas à sua frente. Para sair da fila, envie "nafila ${
         queueRef.id
       } sair" para 4902.`
     );
@@ -694,8 +689,8 @@ var cacheSMSProClient;
 async function callSMSPro(method, args) {
   return await new Promise((resolve, reject) => {
     try {
-      var makeCall = function() {
-        cacheSMSProClient[method](args, function(err, result) {
+      var makeCall = function () {
+        cacheSMSProClient[method](args, function (err, result) {
           if (!!err) {
             reject(err);
           } else {
@@ -708,7 +703,7 @@ async function callSMSPro(method, args) {
       if (!cacheSMSProClient) {
         soap = require("soap");
 
-        soap.createClient(urlSMSPro, function(err, client) {
+        soap.createClient(urlSMSPro, function (err, client) {
           if (!!err) {
             reject(err);
           } else {

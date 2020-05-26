@@ -15,14 +15,10 @@ export const HeadlineContainer = styled.div`
 export const ButtonsContainer = styled.div`
   position: absolute;
   left: 0;
-  bottom: 10vh;
+  bottom: 5vh;
   width: 100%;
   display: flex;
   flex-direction: column;
-
-  @media screen and (min-width: 768px) {
-    bottom: 5vh;
-  }
 
   .MuiButtonWrapper {
     margin-bottom: 20px;

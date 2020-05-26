@@ -19,6 +19,15 @@ import * as Routes from "../../../constants/RoutesConstants";
 
 import TitleComponent from "../../../components/TitleComponent";
 
+const HomeContent = styled(Grid)`
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  @media (min-width: 768px) {
+    height: 100vh;
+  }
+`;
+
 const Header = styled.div`
   background-color: #fff;
   width: 100%;
@@ -48,15 +57,17 @@ const Container = styled.div`
   & .content {
     display: grid;
     grid-template-columns: 100%;
-    height: 100%;
+    height: 100vh;
     justify-items: center;
   }
   @media (min-width: 768px) {
     background-image: url(${bgMain});
+    min-height: 0;
     flex: 1;
     & .content {
       grid-template-columns: 50% 50%;
-      padding: 5px 100px 20px 5px;
+      grid-template-rows: 100%;
+      height: 100%;
     }
   }
 `;
@@ -132,6 +143,7 @@ const HiddenColumn = styled(Grid)`
   display: none;
   @media (min-width: 768px) {
     display: flex;
+    width: 100%;
   }
 `;
 
@@ -139,9 +151,7 @@ const Home = () => {
   const { t } = useTranslation();
 
   return (
-    <Grid
-      style={{ display: "flex", minHeight: "100vh", flexDirection: "column" }}
-    >
+    <HomeContent>
       <TitleComponent title="Logista" />
       <Header>
         <img src={logoBannerSrc} alt="logo" />
@@ -187,18 +197,26 @@ const Home = () => {
               />
             </ButtonsWrapper>
           </Column>
-          <HiddenColumn container direction="row" wrap="nowrap">
-            <Grid container alignItems="flex-end" item>
-              <img src={personSrc} alt="store" height="70%" />
+          <HiddenColumn direction="row">
+            <Grid
+              container
+              alignItems="flex-end"
+              style={{ justifyContent: "center" }}
+            >
+              <img src={personSrc} alt="store" height="70%" width="100%" />
             </Grid>
-            <Grid container alignItems="flex-end" item>
-              <img src={personManSrc} alt="store" height="70%" />
+            <Grid
+              container
+              alignItems="flex-end"
+              style={{ justifyContent: "center" }}
+            >
+              <img src={personManSrc} alt="store" height="70%" width="100%" />
             </Grid>
           </HiddenColumn>
         </div>
       </Container>
       <Footer />
-    </Grid>
+    </HomeContent>
   );
 };
 

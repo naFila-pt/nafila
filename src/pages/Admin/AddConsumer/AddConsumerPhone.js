@@ -31,7 +31,7 @@ function AddConsumerPhone({ user, returnFunction, openSnackbar }) {
     const manuallyAddToQueue = functions.httpsCallable("manuallyAddToQueue");
 
     manuallyAddToQueue({ queueId: user.queues[0], phone })
-      .then(async function({ data: { ticket } }) {
+      .then(async function ({ data: { ticket } }) {
         analytics.logEvent("ticket");
         analytics.logEvent("ticket_manual");
         analytics.logEvent("ticket_by_sms");

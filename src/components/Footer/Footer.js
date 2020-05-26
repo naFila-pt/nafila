@@ -139,14 +139,14 @@ const Footer = () => {
             >
               {t("terms#title")}
             </Link>
-            {" | "}
+            {/* {" | "}
             <Link style={{ color: "white" }} target="_blank" rel="noopener">
               {t("terms#privacy")}
             </Link>
             {" | "}
             <Link style={{ color: "white" }} target="_blank" rel="noopener">
               {t("terms#contact")}
-            </Link>
+            </Link> */}
             {" | "}
             <Link
               style={{ color: "white" }}
