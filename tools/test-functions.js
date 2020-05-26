@@ -17,7 +17,7 @@ var callNextOnQueue = functions.httpsCallable("callNextOnQueue"); //out: {number
 //in: {queueId, email/phone/name}
 var manuallyAddToQueue = functions.httpsCallable("manuallyAddToQueue"); //out: {id, number, remaining}
 
-createQueue({ name: "My queue" }).then(async function(res) {
+createQueue({ name: "My queue" }).then(async function (res) {
   console.log("queue created", res);
   let queueId = res.data.queueId;
 
