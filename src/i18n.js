@@ -14,9 +14,14 @@ i18n
           "global#wait_please": "Aguarde ...",
           "global#cookie_banner": "Ao utilizar este website, aceita a nossa",
           "global#cookie_bannerLink": " política de privacidade.",
+          "onboarding#justOneSMS": "Basta uma SMS!",
           "onboarding#intro_welcome": "Bem Vindo!",
           "onboarding#intro_pitch": "na<b>fila</b>. Sem filas.",
           "onboarding#store_title": "É simples!",
+          "onboarding#register_site_title": "Prefere registar-se no site?",
+          "onboarding#register_site_description":
+            "Visite <b>nafila.pt</b>, insira <b>o código da fila</b> e <b>o seu telemóvel</b>, para ser notificado.",
+          "onboarding#phone_number": "Número de Telemóvel",
           "onboarding#store_description":
             "A sua Loja Favorita afixa <b>um código por dia</b>, que deve utilizar para <b>entrar</b> na<b>fila</b>.",
           "onboarding#useCode_title": "Utilize o código",
