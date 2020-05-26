@@ -72,7 +72,10 @@ var firestore = firebase.firestore();
 
 ```javascript
 var userDoc = firestore.collection("users").doc(uid);
-userDoc.set({ queues: [] }).then(ok).catch(error);
+userDoc
+  .set({ queues: [] })
+  .then(ok)
+  .catch(error);
 ```
 
 ---
@@ -92,7 +95,7 @@ Note: `email` parameter is the store manager (user) email - in order for him to 
 ```javascript
 var createQueue = functions.httpsCallable("createQueue");
 createQueue({ name, email })
-  .then(function (result) {
+  .then(function(result) {
     //result: {queueId, queue}
     //.queue: {owner_id, name, remainingTicketsInQueue, ticketTopNumber, currentTicketNumber, currentTicketName}
     console.log(result);
@@ -107,7 +110,7 @@ createQueue({ name, email })
 ```javascript
 var addMeToQueue = functions.httpsCallable("addMeToQueue");
 addMeToQueue({ queueId, email: "carlos.mr.ouro@gmail.com" })
-  .then(function (result) {
+  .then(function(result) {
     //result: {ticket, queue}
     //.ticket: {number, email}
     //.queue: {owner_id, name, remainingTicketsInQueue, ticketTopNumber, currentTicketNumber, currentTicketName}
@@ -126,7 +129,7 @@ Note: fires email/SMS if necessary and updates queue `.currentTicketIndex`
 ```javascript
 var removeMeFromQueue = functions.httpsCallable("removeMeFromQueue");
 removeMeFromQueue({ queueId, ticketId })
-  .then(function (result) {
+  .then(function(result) {
     //result: {ticket, queue}
     //.ticket: {number, email}
     //.queue: {owner_id, name, remainingTicketsInQueue, ticketTopNumber, currentTicketNumber, currentTicketName}
@@ -145,7 +148,7 @@ Note: in case multiple are provided, function prefers email --> phone --> name
 ```javascript
 var manuallyAddToQueue = functions.httpsCallable("manuallyAddToQueue");
 manuallyAddToQueue({ queueId, phone: "+351910196551" })
-  .then(function (result) {
+  .then(function(result) {
     //result: {ticket, queue}
     //.ticket: {number, email/phone/name}
     //.queue: {owner_id, name, remainingTicketsInQueue, ticketTopNumber, currentTicketNumber, currentTicketName}
@@ -164,7 +167,7 @@ Note: fires email/SMS if necessary, removes ticket from queue and updates queue'
 ```javascript
 var callNextOnQueue = functions.httpsCallable("callNextOnQueue");
 callNextOnQueue({ queueId })
-  .then(function (result) {
+  .then(function(result) {
     //result: {queue, ticket}
     //.ticket: {number, email/phone/name}
     //.queue: {owner_id, name, remainingTicketsInQueue, ticketTopNumber, currentTicketNumber, currentTicketName}
@@ -183,7 +186,7 @@ Note: fires emails/SMS if necessary warning remaining people on queue and remove
 ```javascript
 var deleteQueue = functions.httpsCallable("deleteQueue");
 deleteQueue({ queueId })
-  .then(function (result) {
+  .then(function(result) {
     //result: {deletedCount}
     //.deletedCount -- number of deleted tickets that were still active in queue
     console.log(result);
