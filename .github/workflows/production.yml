@@ -2,11 +2,11 @@
 
 name: Production
 
-# Controls when the action will run. Triggers the workflow on push or pull request 
+# Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
   push:
-    branches: [ master ]
+    branches: [master]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -17,26 +17,24 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
 
-    # install / build (web-app)
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '12'
-    - run: cd functions && npm install
+      # install / build (serverless functions)
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+      - run: cd functions && npm install
 
-    # install / build (web-app)
-    - uses: borales/actions-yarn@v2.0.0
-      with:
-        cmd: install # will run `yarn install` command
-    - uses: borales/actions-yarn@v2.0.0
-      with:
-        cmd: build # will run `yarn build` command
-    
-    # production deploy
-    - uses: w9jds/firebase-action@master
-      with:
-        args: deploy --project civil-treat-275523
-      env:
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      # install / build (web-app)
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Run ESLint
+        run: yarn build
+
+      # production deploy
+      - uses: w9jds/firebase-action@master
+        with:
+          args: deploy --project civil-treat-275523
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
