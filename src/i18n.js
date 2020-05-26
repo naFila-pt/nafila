@@ -147,20 +147,23 @@ i18n
           // Admin onboarding
           "admin#onboarding_firstText":
             "<b>Tem uma loja</b> ou trabalha num serviço de atendimento ao público? Gostava de utilizar o nafila na sua loja?",
+          "admin#onboarding_firstText_mobile":
+            "<h1>Tem uma loja</h1> <p>ou trabalha num serviço de atendimento ao público? <br/>  <div>Gostava de utilizar o nafila na sua loja?</div> </p>",
           "admin#onboarding_secondText":
             "Faça o <b>pré-registo</b> e será contactado pela nossa equipa de suporte. Assim que receber o contacto do Suporte, <b>poderá começar a usar o nafila.</b>",
           "admin#onboarding_secondTitle": "É simples!",
-          "admin#onboarding_thirdTitle": "3 em 1",
+          "admin#onboarding_thirdTitle": "Tirar uma Senha",
           "admin#onboarding_thirdText":
-            "Os consumidores podem tirar a sua Senha de várias formas diferentes.",
-          "admin#onboarding_autonomous": "De forma autónoma",
+            "Os Clientes <b>tiram a Senha</b> e recebem uma notificação por <b>SMS</b>. Pode <b>ajudar o seu Cliente</b>, registando-o com o Nome ou o Número de Telemóvel.",
+          "admin#onboarding_autonomous": "Registo do cliente",
           "admin#onboarding_shopkeeper": "Com o lojista",
-          "admin#onboarding_email": "Email",
+          "admin#onboarding_site": "Site",
           "admin#onboarding_sms": "SMS",
           "admin#onboarding_call": "Nome",
           "admin#onboarding_phone": "Telemóvel",
           "admin#onboarding_code": "Código da Fila",
           "admin#onboarding_remaining": "Restantes",
+          "admin#onboarding_nextInQueue": `PRÓXIMO <span class="logo">na<b>fila</b></span>`,
           "admin#onboarding_fourthTitle": "A fila na palma da mão",
           "admin#onboarding_fourthText":
             "Gira a sua fila e chame os seus Clientes com o nafila.",
