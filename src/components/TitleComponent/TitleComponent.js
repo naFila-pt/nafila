@@ -4,19 +4,19 @@ import { Helmet } from "react-helmet";
 import { analytics } from "../../firebase";
 
 const defaultTitle = process.env.REACT_APP_TITLE;
-let currentPage = null; //global state
+let currentPageId = null; //global state
 
-const TitleComponent = ({ title }) => {
-  const [titleTagContent, setTitleTageContent] = useState(title);
+const TitleComponent = ({ title, pageId }) => {
+  const [analyticsScreen, setAnalyticsScreen] = useState(pageId);
 
   useEffect(() => {
-    if (titleTagContent !== currentPage) {
-      currentPage = titleTagContent;
-      analytics.setCurrentScreen(currentPage);
+    if (pageId !== currentPageId) {
+      currentPageId = pageId;
+      analytics.setCurrentScreen(currentPageId);
     } else {
-      setTitleTageContent(defaultTitle);
+      setAnalyticsScreen(defaultTitle);
     }
-  }, [titleTagContent]);
+  }, [analyticsScreen, pageId]);
 
   return (
     <Helmet>

@@ -170,7 +170,7 @@ const HomeContent = ({ openSnackbar }) => {
 
   return (
     <HomeLayout bg={[bgStore, bgMain]} activeStep={activeStep}>
-      <TitleComponent title="Nova senha" />
+      <TitleComponent title="Nova senha" pageId="new_ticket" />
       <Grid container direction="column" className={classes.gridContainer}>
         <Grid item className={classes.gridItem}>
           <Typography

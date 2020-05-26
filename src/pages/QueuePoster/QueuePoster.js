@@ -56,7 +56,7 @@ function QueuePoster({
         }}
       />
 
-      <TitleComponent title="Poster de fila" />
+      <TitleComponent title="Poster de fila" pageId="queue_poster" />
       <Logo />
 
       <div className="store-name">{queue.name}</div>

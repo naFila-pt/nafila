@@ -48,7 +48,10 @@ function AddConsumerPhone({ user, returnFunction, openSnackbar }) {
 
   return (
     <Layout bg={LoginBg}>
-      <TitleComponent title="Senha manual por telefone" />
+      <TitleComponent
+        title="Senha manual por telefone"
+        pageId="manual_ticket_phone"
+      />
       <HeadlineContainer>
         <Typography variant="h3">{t("main#addConsumerPhone_title")}</Typography>
       </HeadlineContainer>

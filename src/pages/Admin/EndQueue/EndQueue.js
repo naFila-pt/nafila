@@ -67,7 +67,7 @@ function EndQueue({ openSnackbar }) {
 
   return (
     <Layout bg={Bg}>
-      <TitleComponent title="Encerrar fila" />
+      <TitleComponent title="Encerrar fila" pageId="close_queue" />
       <HeadlineContainer>
         <Typography variant="h3">{t("main#endQueue_title")}</Typography>
       </HeadlineContainer>

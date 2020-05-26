@@ -184,7 +184,7 @@ const Home = props => {
     <Grid
       style={{ display: "flex", minHeight: "100vh", flexDirection: "column" }}
     >
-      <TitleComponent />
+      <TitleComponent pageId="home" />
       <Header>
         <img src={logoBannerSrc} alt="logo" />
       </Header>

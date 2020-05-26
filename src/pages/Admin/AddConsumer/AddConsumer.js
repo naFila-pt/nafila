@@ -58,7 +58,7 @@ function AddConsumer({ openSnackbar }) {
 
   return (
     <Layout bg={LoginBg}>
-      <TitleComponent title="Senha manual" />
+      <TitleComponent title="Senha manual" pageId="manual_ticket" />
       <HeadlineContainer style={{ marginBottom: 0 }}>
         <Typography variant="h3">{t("main#addConsumer_title")}</Typography>
       </HeadlineContainer>

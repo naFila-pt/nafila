@@ -17,7 +17,7 @@ function EndQueueSuccess() {
 
   return (
     <Layout bg={Bg}>
-      <TitleComponent title="Fila encerrada" />
+      <TitleComponent title="Fila encerrada" pageId="close_queue_success" />
       <HeadlineContainer style={{ marginBottom: 0 }}>
         <Typography variant="h3">{t("main#endQueueSuccess_title")}</Typography>
       </HeadlineContainer>

@@ -152,7 +152,7 @@ const Home = () => {
 
   return (
     <HomeContent>
-      <TitleComponent title="Logista" />
+      <TitleComponent title="Logista" pageId="operator_home" />
       <Header>
         <img src={logoBannerSrc} alt="logo" />
       </Header>

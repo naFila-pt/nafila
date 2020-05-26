@@ -48,7 +48,10 @@ function AddConsumerName({ user, returnFunction, openSnackbar }) {
 
   return (
     <Layout bg={LoginBg}>
-      <TitleComponent title="Senha manual por nome" />
+      <TitleComponent
+        title="Senha manual por nome"
+        pageId="manual_ticket_name"
+      />
       <HeadlineContainer>
         <Typography variant="h3">{t("main#addConsumerName_title")}</Typography>
       </HeadlineContainer>

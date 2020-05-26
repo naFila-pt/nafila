@@ -52,7 +52,7 @@ const TermsConditions = props => {
           height: "100vh"
         }}
       >
-        <TitleComponent title="Termos e Condições" />
+        <TitleComponent title="Termos e Condições" pageId="terms_conditions" />
         <Grid container direction="column" className={classes.gridContainer}>
           <Grid item>
             <Typography variant="h1">{t("terms#title")}</Typography>

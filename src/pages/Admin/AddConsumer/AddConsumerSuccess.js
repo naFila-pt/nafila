@@ -33,7 +33,10 @@ function AddConsumerSuccess({ ticket, type }) {
 
   return (
     <Layout bg={LoginBg}>
-      <TitleComponent title="Senha manual adicionada" />
+      <TitleComponent
+        title="Senha manual adicionada"
+        pageId="manual_ticket_success"
+      />
       <HeadlineContainer>
         <Typography variant="h3">
           {t("main#addConsumerSuccess_title")}

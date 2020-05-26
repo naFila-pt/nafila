@@ -33,7 +33,7 @@ function WelcomePanel() {
 
   return (
     <Layout bg={Background} hideLogo>
-      <TitleComponent title="Lojista - Bem-vindo" />
+      <TitleComponent title="Lojista - Bem-vindo" pageId="operator_welcome" />
       <S.LogoContainer>
         <img className="logo-icon" src={Logo} alt="nafila logo" />
       </S.LogoContainer>

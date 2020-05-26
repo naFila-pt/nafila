@@ -50,7 +50,7 @@ const Leave = ({
       const removeMeFromQueue = functions.httpsCallable("removeMeFromQueue");
 
       removeMeFromQueue({ queueId, ticketId })
-        .then(async function({ queue }) {
+        .then(async function ({ queue }) {
           if (!!queue.accountGroup) {
             analytics.setUserProperties({ accountGroup: queue.accountGroup });
           }
@@ -71,7 +71,7 @@ const Leave = ({
 
   return (
     <HomeLayout bg={[bgMain]} forceLogoDisplay>
-      <TitleComponent title="Saida da fila" />
+      <TitleComponent title="Saida da fila" pageId="exit_queue" />
       <Grid container direction="column" className={classes.gridContainer}>
         <Grid item className={classes.gridItem}>
           <Typography

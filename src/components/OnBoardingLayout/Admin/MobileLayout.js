@@ -220,7 +220,10 @@ const Layout = ({ children, endOnBoarding }) => {
       className={"OnboardingWrapper"}
       style={{ backgroundImage: `url(${bgMainMobile})` }}
     >
-      <TitleComponent title="Lojista - Como funciona" />
+      <TitleComponent
+        title="Lojista - Como funciona"
+        pageId="operator_tutorial"
+      />
       <Grid direction="column" style={{ height: "100vh", display: "flex" }}>
         <Grid container direction="column" style={{ height: "56px" }}>
           <ToolbarWrapper>

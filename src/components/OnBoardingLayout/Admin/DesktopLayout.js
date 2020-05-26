@@ -167,7 +167,10 @@ const MainContentDesktop = props => (
         marginRight: "20px"
       }}
     >
-      <TitleComponent title="Lojista - Como funciona" />
+      <TitleComponent
+        title="Lojista - Como funciona"
+        pageId="operator_tutorial"
+      />
       <Grid item style={{ display: "flex", alignItems: "center" }}>
         <img src={logoSrc} alt="log" width="120" height="160" />
         <Grid style={{ marginBottom: "1em" }}>

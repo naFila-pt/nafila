@@ -34,7 +34,7 @@ class EmptyState extends Component {
           left="50%"
           textAlign="center"
         >
-          <TitleComponent title="404 - Página inexistente" />
+          <TitleComponent title="404 - Página inexistente" pageId="not_found" />
           {icon && (
             <Box clone color="text.secondary" fontSize={fontSize}>
               {icon}

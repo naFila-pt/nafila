@@ -67,7 +67,7 @@ function Start({ user, setQueue, openSnackbar }) {
 
   return (
     <Layout bg={Bg}>
-      <TitleComponent title="Iniciar fila" />
+      <TitleComponent title="Iniciar fila" pageId="queue_start" />
       <HeadlineContainer>
         <Typography variant="h3">
           {t("admin#queueManagement_letsStart")}

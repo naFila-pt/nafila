@@ -46,7 +46,7 @@ function RecoverPassword() {
 
   return (
     <Layout bg={LoginBg}>
-      <TitleComponent title="Recuperar password" />
+      <TitleComponent title="Recuperar password" pageId="password_recovery" />
       <HeadlineContainer>
         <Typography variant="h3">{t("admin#recoverPassword_title")}</Typography>
       </HeadlineContainer>

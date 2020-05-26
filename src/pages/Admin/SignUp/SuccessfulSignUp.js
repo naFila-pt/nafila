@@ -31,7 +31,7 @@ function SuccessfulSignUp() {
 
   return (
     <Layout bg={SignUpBg}>
-      <TitleComponent title="Registado!" />
+      <TitleComponent title="Registado!" pageId="signup_success" />
       <Container>
         <Typography style={typographyStyles.MAIN}>
           {t("admin#signup_successTitle")}

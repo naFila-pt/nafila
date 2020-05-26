@@ -41,7 +41,7 @@ const OnBoardingLayoutDesktop = ({ children }) => {
     <Grid
       style={{ display: "flex", minHeight: "100vh", flexDirection: "column" }}
     >
-      <TitleComponent title="Como funciona" />
+      <TitleComponent title="Como funciona" pageId="tutorial" />
       <Header>
         <img src={logoBannerSrc} alt="logo" />
       </Header>

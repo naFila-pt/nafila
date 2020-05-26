@@ -118,7 +118,7 @@ function SignUp({ openSnackbar }) {
 
   return (
     <Layout bg={SignUpBg}>
-      <TitleComponent title="Novo registo" />
+      <TitleComponent title="Novo registo" pageId="signup" />
       <HeadlineContainer>
         <Typography variant="h3">{t("admin#signup_title")}</Typography>
       </HeadlineContainer>

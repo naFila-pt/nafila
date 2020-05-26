@@ -66,7 +66,7 @@ const OnBoardingLayoutMobile = ({ children, bg, endOnBoarding }) => {
       className={`${classes.container} OnboardingWrapper`}
       style={{ backgroundImage: `url(${bgUrl})` }}
     >
-      <TitleComponent title="Como funciona" />
+      <TitleComponent title="Como funciona" pageId="tutorial" />
       <Grid container>
         <Grid container direction="column">
           <Toolbar className={classes.toolbar}>

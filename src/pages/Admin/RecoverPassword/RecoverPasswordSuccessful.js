@@ -17,7 +17,10 @@ function SuccessfulRecoverPassword(props) {
 
   return (
     <Layout bg={LoginBg}>
-      <TitleComponent title="Password recuperada!" />
+      <TitleComponent
+        title="Password recuperada!"
+        pageId="password_recovery_success"
+      />
       <HeadlineContainer>
         <Typography variant="h3">
           {t("admin#recoverPasswordSuccess_title")}

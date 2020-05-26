@@ -19,7 +19,7 @@ function PreQueue() {
 
   return (
     <Layout bg={Bg}>
-      <TitleComponent title="As suas filas" />
+      <TitleComponent title="As suas filas" pageId="operator_queues" />
       <HeadlineContainer>
         <Typography variant="h3">{t("admin#preQueue_whatToDo")}</Typography>
       </HeadlineContainer>
