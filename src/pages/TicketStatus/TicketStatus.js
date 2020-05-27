@@ -143,6 +143,7 @@ const TicketStatus = ({ openSnackbar }) => {
             onClick={fakeUpdate}
             disabled={loading}
             variant={loading || updating ? "inactive" : ""}
+            refresh
           >
             {t(loading ? "global#wait_please" : "home#atualizar")}
           </Button>
@@ -155,7 +156,7 @@ const TicketStatus = ({ openSnackbar }) => {
               onClick={leaveQueue}
               disabled={loading || ticketPassed}
               variant={"gray"}
-              style
+              forward
             >
               {t(loading ? "global#wait_please" : "home#sair_da_fila")}
             </Button>

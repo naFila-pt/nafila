@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 
 import { ReactComponent as Ticket } from "../../assets/icons/ticket.svg";
 
-const ConsumerTicket = ({ number }) => {
+const ConsumerTicket = ({ number, showText = true }) => {
   const { t } = useTranslation();
 
   return (
@@ -20,7 +20,9 @@ const ConsumerTicket = ({ number }) => {
         }}
       >
         <div style={{ fontSize: "2.5em", fontWeight: 900 }}>{number}</div>
-        <div style={{ fontSize: "1.375em" }}>{t("home#ticket_turn")}</div>
+        {showText && (
+          <div style={{ fontSize: "1.375em" }}>{t("home#ticket_turn")}</div>
+        )}
       </div>
     </Grid>
   );
