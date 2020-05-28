@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 
-import PropTypes from "prop-types";
-
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import PrivateRoute from "../PrivateRoute";
 
 import OnBoardingContent from "../../pages/OnBoardingContent";
-import { HomeContent, Leave, TermsConditions } from "../../pages/HomeContent";
+import { TermsConditions, Home } from "../../pages/HomeContent";
+import { Ticket, Leave } from "../../pages/TicketContent";
 import TicketStatus from "../../pages/TicketStatus";
 import QueuePoster from "../../pages/QueuePoster";
 import Admin from "../../pages/Admin";
@@ -16,38 +15,20 @@ import * as Routes from "../../constants/RoutesConstants";
 
 class Router extends Component {
   render() {
-    // Properties
-    const { user } = this.props;
-
-    let shouldSkipOnBoarding;
-    const isDesktop = window.innerWidth > 768;
-
-    try {
-      shouldSkipOnBoarding = localStorage.getItem("skipOnBoarding");
-    } catch (error) {
-      shouldSkipOnBoarding = false;
-    }
-
     return (
       <BrowserRouter basename={process.env.REACT_APP_BASENAME}>
         <Switch>
-          <Route path="/" exact>
-            {shouldSkipOnBoarding && !isDesktop ? (
-              <HomeContent openSnackbar={this.props.openSnackbar} user={user} />
-            ) : (
-              <OnBoardingContent />
-            )}
+          <Route path={Routes.ROOT_PATH} exact>
+            <Home {...this.props} />
           </Route>
 
-          <Route
-            path="/sair/:queueId/:ticketId"
-            render={props => (
-              <Leave {...props} openSnackbar={this.props.openSnackbar} />
-            )}
-            exact
-          />
+          <Route path={Routes.TICKET_PATH}>
+            <Ticket {...this.props} />
+          </Route>
 
-          <Route path="/termos-condicoes" component={TermsConditions} exact />
+          <Route path={Routes.ONBOARDING_PATH} exact>
+            <OnBoardingContent {...this.props} />
+          </Route>
 
           <Route
             path={Routes.TICKET_STATUS_PATH}
@@ -55,40 +36,35 @@ class Router extends Component {
             exact
           />
 
-          <Route
-            path={Routes.ADMIN_WELCOME_PATH}
-            render={props => (
-              <Admin.WelcomePanel
-                {...props}
-                openSnackbar={this.props.openSnackbar}
-              />
-            )}
-            exact
-          />
-          <Route
-            path={Routes.ADMIN_SIGNUP_PATH}
-            render={props => (
-              <Admin.SignUp {...props} openSnackbar={this.props.openSnackbar} />
-            )}
-            exact
-          />
-          <Route
-            path={Routes.ADMIN_LOGIN_PATH}
-            render={props => (
-              <Admin.Login {...props} openSnackbar={this.props.openSnackbar} />
-            )}
-            exact
-          />
-          <Route
-            path={Routes.ADMIN_RECOVER_PASSWORD_PATH}
-            render={props => (
-              <Admin.RecoverPassword
-                {...props}
-                openSnackbar={this.props.openSnackbar}
-              />
-            )}
-            exact
-          />
+          <Route path={Routes.ADMIN_HOME_PATH} exact>
+            <Admin.Home openSnackbar={this.props.openSnackbar} />
+          </Route>
+
+          <Route path={Routes.ADMIN_HOME_ONBOARDING_PATH} exact>
+            <Admin.OnBoarding {...this.props} />
+          </Route>
+
+          <Route path={Routes.TICKET_LEAVE_PATH} exact>
+            <Leave {...this.props} />
+          </Route>
+
+          <Route path={Routes.TCS_PATH} exact>
+            <TermsConditions {...this.props} />
+          </Route>
+
+          <Route path={Routes.ADMIN_WELCOME_PATH} exact>
+            <Admin.WelcomePanel {...this.props} />
+          </Route>
+          <Route path={Routes.ADMIN_SIGNUP_PATH} exact>
+            <Admin.SignUp {...this.props} />
+          </Route>
+
+          <Route path={Routes.ADMIN_LOGIN_PATH} exact>
+            <Admin.Login {...this.props} />
+          </Route>
+          <Route path={Routes.ADMIN_RECOVER_PASSWORD_PATH} exact>
+            <Admin.RecoverPassword {...this.props} />
+          </Route>
 
           <PrivateRoute
             path={Routes.ADMIN_PRE_QUEUE_PATH}
@@ -98,39 +74,25 @@ class Router extends Component {
 
           <PrivateRoute
             path={Routes.ADMIN_QUEUE_MANAGEMENT_PATH}
-            render={props => (
-              <Admin.Queue {...props} openSnackbar={this.props.openSnackbar} />
-            )}
+            render={props => <Admin.Queue {...props} {...this.props} />}
             exact
           />
 
           <PrivateRoute
             path={Routes.ADMIN_END_QUEUE_PATH}
-            render={props => (
-              <Admin.EndQueue
-                {...props}
-                openSnackbar={this.props.openSnackbar}
-              />
-            )}
+            render={props => <Admin.EndQueue {...props} {...this.props} />}
             exact
           />
 
           <PrivateRoute
             path={Routes.ADMIN_ADD_CUSTOMER_PATH}
-            render={props => (
-              <Admin.AddConsumer
-                {...props}
-                openSnackbar={this.props.openSnackbar}
-              />
-            )}
+            render={props => <Admin.AddConsumer {...props} {...this.props} />}
             exact
           />
 
           <Route
             path={Routes.QUEUE_POSTER_PATH}
-            render={props => (
-              <QueuePoster {...props} openSnackbar={this.props.openSnackbar} />
-            )}
+            render={props => <QueuePoster {...props} {...this.props} />}
           />
 
           <Route>
@@ -141,10 +103,5 @@ class Router extends Component {
     );
   }
 }
-
-Router.propTypes = {
-  // Properties
-  user: PropTypes.object
-};
 
 export default Router;

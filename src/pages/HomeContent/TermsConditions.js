@@ -1,59 +1,75 @@
 import React from "react";
+import styled from "styled-components";
+import Box from "@material-ui/core/Box";
+
 import { withRouter } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
-import HomeLayout from "../../components/HomeLayout";
 import Typography from "@material-ui/core/Typography";
-import Button from "../../components/Button";
+import Grid from "@material-ui/core/Grid";
 
-import bgMain from "../../assets/bg/main.svg";
+import Footer from "../../components/Footer";
 
-const useStyles = makeStyles({
-  bottomButton: {
-    position: "absolute",
+import bgMobile from "../../assets/bg/terms_mobile.svg";
+import bgDesktop from "../../assets/bg/terms_desktop.svg";
+
+const Container = styled(Box)`
+  position: relative;
+  height: 100%;
+  padding: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 0px;
+`;
+
+const useStyles = makeStyles(theme => ({
+  gridContainer: {
+    alignContent: "center",
+    padding: "20px 32px 50px",
+    [theme.breakpoints.up("md")]: {
+      padding: "20px 166px 50px"
+    }
+  },
+  footer: {
+    position: "fixed",
+    bottom: 0,
     left: 0,
-    bottom: "2em",
-    width: "100%",
-    textAlign: "center"
+    width: "100%"
   }
-});
+}));
 
-const TermsConditions = () => {
+const TermsConditions = props => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const handleCloseButton = () => {
-    window.close();
-  };
-
   return (
-    <HomeLayout bg={[bgMain]}>
-      <div style={{ padding: "0 1.3em" }}>
-        <div style={{ textAlign: "center", marginTop: "1em" }}>
-          <Typography variant="h1">{t("terms#title")}</Typography>
-        </div>
+    <>
+      <Container
+        style={{
+          backgroundImage: `url(${props.isDesktop ? bgDesktop : bgMobile})`,
+          height: "100vh"
+        }}
+      >
+        <Grid container direction="column" className={classes.gridContainer}>
+          <Grid item>
+            <Typography variant="h1">{t("terms#title")}</Typography>
+          </Grid>
 
-        <div
-          className="termosCondicoesText"
-          style={{ height: "56vh", overflowY: "scroll", padding: "0 15px" }}
-        >
-          <pre
-            style={{
-              lineHeight: "1.188em",
-              whiteSpace: "pre-line",
-              textAlign: "justify"
-            }}
-            dangerouslySetInnerHTML={{ __html: t("terms#text") }}
-          />
-        </div>
-
-        <div className={classes.bottomButton}>
-          <Button variant="gray" onClick={handleCloseButton}>
-            {t("terms#close_button")}
-          </Button>
-        </div>
-      </div>
-    </HomeLayout>
+          <div className="termosCondicoesText">
+            <pre
+              style={{
+                lineHeight: "150%",
+                whiteSpace: "pre-line",
+                textAlign: "justify",
+                color: "#484848"
+              }}
+              dangerouslySetInnerHTML={{ __html: t("terms#text") }}
+            />
+          </div>
+        </Grid>
+        <Footer />
+      </Container>
+    </>
   );
 };
 
