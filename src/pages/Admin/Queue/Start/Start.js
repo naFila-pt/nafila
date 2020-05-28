@@ -75,7 +75,7 @@ function Start({ user, setQueue, openSnackbar }) {
         <Input
           value={defaultQueueName}
           onChange={handleChange}
-          inputProps={{ maxLength: 20 }}
+          inputProps={{ maxLength: 30 }}
         />
         <div className="queue-label">
           {t("admin#queueManagement_queueName")}
