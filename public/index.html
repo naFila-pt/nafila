@@ -2,7 +2,7 @@
 <html lang="pt">
   <head>
     <meta charset="utf-8" />
-    <meta property="og:image" content="%REACT_APP_PUBLIC_URL%/shareable_image.png">
+    <meta property="og:image" content="%REACT_APP_SITE_URL%/shareable_image.png">
     <meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="628">
@@ -60,4 +60,7 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
+  <script>
+    console.log("%REACT_APP_SITE_URL%");
+  </script>
 </html>
