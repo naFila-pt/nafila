@@ -24,4 +24,6 @@ export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 export const storage = firebase.storage(); //not needed - to be removed
 export const functions = firebase.app().functions("europe-west1");
+// Emulate firebase functions
+functions.useFunctionsEmulator("http://localhost:5001");
 export const performance = firebase.performance();

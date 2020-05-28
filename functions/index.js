@@ -3,7 +3,9 @@
 const functionsMain = require("firebase-functions");
 const config = functionsMain.config();
 const admin = require("firebase-admin");
-admin.initializeApp();
+admin.initializeApp({
+  credential: admin.credential.cert(require("../serviceAccountKey.json"))
+});
 const firestore = admin.firestore();
 const urlSMSPro = "https://smspro.nos.pt/smspro/smsprows.asmx?WSDL";
 const urlSMSProService = "https://smspro.nos.pt/SmsPro/smsprows.asmx";
@@ -39,6 +41,15 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
     );
   }
 
+  if (isNaN(data.maxCapacity)) {
+    throw new functionsMain.https.HttpsError(
+      "invalid-argument",
+      "Tem de inserir uma lotação máxima válida para a fila"
+    );
+  }
+
+  const countersRef = firestore.collection("counters").doc();
+
   //inserts queue
   const queue = {
     owner_id: context.auth.uid,
@@ -46,8 +57,16 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
     remainingTicketsInQueue: 0,
     ticketTopNumber: 0,
     currentTicketNumber: 0,
-    currentTicketName: null
+    currentTicketName: null,
+    counterId: countersRef.id
   };
+
+  // inserts counter with store max capacity
+  const counter = {
+    maxCapacity: data.maxCapacity,
+    current: 0
+  };
+
   const queueRef = firestore.collection("queues").doc(queueId);
 
   //updates user
@@ -62,15 +81,16 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
   //batch commit
   const batch = firestore.batch();
   batch.set(queueRef, queue);
+  batch.set(countersRef, counter);
   batch.update(userRef, userData);
   batch.commit();
 
   //{{queuePosterUrl}} {{queueName}} {{queueId}}
-  await sendMail([data.email], "d-6ac28f40006c4d178be4e00adae2bcb4", {
+  /* await sendMail([data.email], "d-6ac28f40006c4d178be4e00adae2bcb4", {
     queueId: queueRef.id,
     queueName: queue.name,
     queuePosterUrl: `https://nafila.pt/loja/cartaz-fila/${queueRef.id}`
-  });
+  }); */
 
   //returns queue object
   return { queueId, queue };
@@ -106,12 +126,18 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
     //get user
     let userData = userDoc.data();
 
+    //get counter ref
+    const counterRef = firestore
+      .collection("counters")
+      .doc(queueData.counterId);
+
     //remove queueId from queues
     userData.queues.splice(userData.queues.indexOf(queueRef.id), 1);
     transaction.update(userRef, userData);
 
     //delete queue entirely
     transaction.delete(queueRef);
+    transaction.delete(counterRef);
 
     return { tickets: queryRef.docs, queue: queueData };
   });
