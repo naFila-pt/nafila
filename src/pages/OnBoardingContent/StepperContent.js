@@ -7,6 +7,7 @@ const StepperContent = ({
   titleLabel,
   descriptionLabel,
   infoLabel,
+  extraContent,
   children
 }) => {
   const { t } = useTranslation();
@@ -64,6 +65,7 @@ const StepperContent = ({
                 }}
               />
             )}
+            {extraContent}
           </Grid>
         </Grid>
         {children}
