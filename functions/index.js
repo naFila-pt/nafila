@@ -350,24 +350,20 @@ if (config.smspro.getmessagesenabled === "true") {
     if (tasks.length > 1) {
       throw "too many smsPoll tasks scheduled";
     }
-    await executeSMSPoll(tasksClient, queuePath, project);
+    //run the poll
+    let replies = await getNewSMSRoutine();
+
+    //schedule next call
+    await scheduleNextSMSPoll(project, tasksClient, queuePath);
     res.send("ok");
+
+    //scheduling done, lets process the messages
+    //run now
+    await processNewSMSs(replies);
   });
 }
 
 //---- HELPERS ----
-async function executeSMSPoll(tasksClient, queuePath, project) {
-  //run the poll
-  let replies = await getNewSMSRoutine();
-
-  //scheduling done, lets process the messages
-  //run now
-  await processNewSMSs(replies);
-
-  //schedule next call
-  return await scheduleNextSMSPoll(project, tasksClient, queuePath);
-}
-
 async function scheduleNextSMSPoll(project, tasksClient, queuePath) {
   const intSecs = parseInt(config.smspro.getmessagessubintervalsecs);
   if (isNaN(intSecs)) {
