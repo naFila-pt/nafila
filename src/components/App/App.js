@@ -7,7 +7,7 @@ import { MuiThemeProvider } from "@material-ui/core/styles";
 import { CssBaseline, Grid, Snackbar } from "@material-ui/core";
 
 import * as firebase from "firebase/app";
-import { auth, firestore } from "../../firebase";
+import { auth, firestore, analytics } from "../../firebase";
 import authentication from "../../services/authentication";
 import appearance from "../../services/appearance";
 
@@ -221,6 +221,8 @@ class App extends Component {
 
               return;
             }
+
+            analytics.setUserId(user.uid);
 
             // The user is signed in, begin retrieval of external user data.
             this.userDocumentSnapshotListener = firestore

@@ -12,11 +12,14 @@ import {
 
 import { HeadlineContainer, ButtonsContainer } from "../common";
 
+import TitleComponent from "../../../components/TitleComponent";
+
 function PreQueue() {
   const { t } = useTranslation();
 
   return (
     <Layout bg={Bg}>
+      <TitleComponent title="As suas filas" pageId="operator_queues" />
       <HeadlineContainer>
         <Typography variant="h3">{t("admin#preQueue_whatToDo")}</Typography>
       </HeadlineContainer>

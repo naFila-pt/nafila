@@ -10,11 +10,17 @@ import { ADMIN_LOGIN_PATH } from "../../../constants/RoutesConstants";
 
 import { HeadlineContainer, ButtonsContainer } from "../common";
 
+import TitleComponent from "../../../components/TitleComponent";
+
 function SuccessfulRecoverPassword(props) {
   const { t } = useTranslation();
 
   return (
     <Layout bg={LoginBg}>
+      <TitleComponent
+        title="Password recuperada!"
+        pageId="password_recovery_success"
+      />
       <HeadlineContainer>
         <Typography variant="h3">
           {t("admin#recoverPasswordSuccess_title")}

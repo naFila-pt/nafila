@@ -5,7 +5,9 @@ import { Typography } from "@material-ui/core";
 import Loader from "../../components/Loader";
 import { ReactComponent as Logo } from "../../assets/images/logo.svg";
 import { ReactComponent as Group } from "../../assets/images/group.svg";
-import { firestore } from "../../firebase";
+import { firestore, analytics } from "../../firebase";
+
+import TitleComponent from "../../components/TitleComponent";
 
 import * as S from "./style";
 
@@ -34,7 +36,11 @@ function QueuePoster({
       .doc(queueId)
       .get()
       .then(response => {
-        setQueue(response.data());
+        let queueData = response.data();
+        if (!!queueData.accountGroup) {
+          analytics.setUserProperties({ accountGroup: queueData.accountGroup });
+        }
+        setQueue(queueData);
         setLoading(false);
       });
   }, [queueId]);
@@ -50,6 +56,7 @@ function QueuePoster({
         }}
       />
 
+      <TitleComponent title="Poster de fila" pageId="queue_poster" />
       <Logo />
 
       <div className="store-name">{queue.name}</div>

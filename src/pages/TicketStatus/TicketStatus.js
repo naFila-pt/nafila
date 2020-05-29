@@ -10,6 +10,10 @@ import Button from "../../components/Button";
 import ConsumerTicket from "../../components/ConsumerTicket";
 import bgMain from "../../assets/bg/main.svg";
 
+import TitleComponent from "../../components/TitleComponent";
+
+import { analytics } from "../../firebase";
+
 const useStyles = makeStyles({
   gridContainer: {
     alignContent: "center",
@@ -81,7 +85,11 @@ const TicketStatus = ({ openSnackbar }) => {
       .collection("queues")
       .doc(queueId)
       .onSnapshot(snapshot => {
-        setQueue(snapshot.data());
+        let queueData = snapshot.data();
+        if (!!queueData.accountGroup) {
+          analytics.setUserProperties({ accountGroup: queueData.accountGroup });
+        }
+        setQueue(queueData);
       });
 
     return () => {
@@ -98,6 +106,7 @@ const TicketStatus = ({ openSnackbar }) => {
 
   return (
     <HomeLayout bg={[bgMain]} forceLogoDisplay>
+      <TitleComponent title="Estado de senha" pageId="ticket_status" />
       <Grid container direction="column">
         <Grid item className={classes.gridItem} style={{ paddingTop: ".8em" }}>
           <div style={{ fontSize: "1.25em" }}>

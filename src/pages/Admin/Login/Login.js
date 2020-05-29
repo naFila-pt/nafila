@@ -19,6 +19,8 @@ import {
 import * as S from "./style";
 import { HeadlineContainer, ButtonsContainer } from "../common";
 
+import TitleComponent from "../../../components/TitleComponent";
+
 const inputProps = {
   fullWidth: true,
   required: true
@@ -88,6 +90,7 @@ function Login({ openSnackbar }) {
 
   return (
     <Layout bg={LoginBg}>
+      <TitleComponent title="Login" pageId="login" />
       <HeadlineContainer>
         <Typography variant="h3">{t("admin#login_title")}</Typography>
       </HeadlineContainer>

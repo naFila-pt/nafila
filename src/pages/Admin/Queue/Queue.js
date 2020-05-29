@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import Loader from "../../../components/Loader";
-import { auth, firestore } from "../../../firebase";
+import { auth, firestore, analytics } from "../../../firebase";
 
 import Start from "./Start";
 import Manage from "./Manage";
@@ -18,6 +18,10 @@ function Queue({ openSnackbar }) {
       .get()
       .then(response => {
         const user = response.data();
+
+        if (!!user.accountGroup) {
+          analytics.setUserProperties({ accountGroup: user.accountGroup });
+        }
 
         setUser(user);
         setLoading(false);

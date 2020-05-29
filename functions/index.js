@@ -58,6 +58,7 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
   if (!userData.queues) userData.queues = [];
   userData.queues.push(queueRef.id);
   userData.defaultQueueName = queue.name;
+  queue.accountGroup = userData.accountGroup;
 
   //batch commit
   const batch = firestore.batch();

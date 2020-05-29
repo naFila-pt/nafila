@@ -13,6 +13,8 @@ import Footer from "../../components/Footer";
 import bgMobile from "../../assets/bg/terms_mobile.svg";
 import bgDesktop from "../../assets/bg/terms_desktop.svg";
 
+import TitleComponent from "../../components/TitleComponent";
+
 const Container = styled(Box)`
   position: relative;
   height: 100%;
@@ -50,6 +52,7 @@ const TermsConditions = props => {
           height: "100vh"
         }}
       >
+        <TitleComponent title="Termos e Condições" pageId="terms_conditions" />
         <Grid container direction="column" className={classes.gridContainer}>
           <Grid item>
             <Typography variant="h1">{t("terms#title")}</Typography>
