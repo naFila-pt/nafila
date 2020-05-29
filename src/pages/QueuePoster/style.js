@@ -2,71 +2,75 @@ import styled from "styled-components";
 
 export const PosterContainer = styled.div`
   text-align: center;
-  padding: 7vh 0;
+  padding: 5vh 1vh;
+  color: black;
 
-  .store-name {
-    margin: 20px 0 10px;
-    color: #111;
-    font-size: 5vw;
-  }
-
-  h3 {
-    font-size: 6vw;
-  }
-
-  .queue-date {
-    color: #111;
-    font-size: 5vw;
-    margin: 20px 0;
-  }
-
-  .queue-code {
-    color: #111;
-    font-size: 64px;
-    border: 3px #4c0788 solid;
-    border-radius: 100px;
-    font-weight: 900;
-    margin: 0 30px 20px;
-    padding: 15px 0;
-  }
-
-  .queue-enter-with {
-    display: flex;
-    justify-content: flex-start;
-    margin-left: 50px;
-    font-size: 22px;
-  }
-
-  .queue-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 1vh;
-    position: relative;
-  }
-
-  .sms-explainer {
-    position: absolute;
-    top: 144px;
-    margin-left: -20px;
-    color: black;
-    font-size: 1.13em;
-    line-height: 1.2em;
-  }
-  .sms-explainer > span {
+  .queue-name {
+    font-size: 36px;
+    line-height: 29px;
     font-weight: bold;
   }
+  .date {
+    margin-top: 20px;
+    font-size: 28px;
+    line-height: 29px;
+    font-weight: bold;
+  }
+  .time-in-queue {
+    margin-top: 34px;
+    font-size: 46px;
+    line-height: 55px;
+    text-transform: uppercase;
+    font-weight: 800;
+    padding: 0 6rem;
+  }
+  .send-sms-queue {
+    margin-top: 34px;
+    font-size: 18px;
+    line-height: 22px;
+  }
 
-  .brand-slogan {
+  .logo-container {
+    position: relative;
+    height: 358px;
+    margin-top: 57px;
+  }
+
+  .queue-info {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+  }
+
+  .queue-code-label {
+    font-size: 26px;
+    line-height: 27px;
+    font-weight: 900;
+    margin: 0;
+  }
+
+  .queue-code-value {
+    font-size: 55px;
+    line-height: 27px;
+    font-weight: 900;
+    margin-top: 40px;
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
     display: flex;
-    justify-content: flex-end;
-    margin-right: 50px;
-    margin-bottom: 50px;
-    color: #111;
+    padding: 40px;
+    height: 50px;
+    box-sizing: content-box;
+    justify-content: space-between;
+  }
+  .larger {
     font-size: 24px;
-
-    b {
-      color: #4c0788;
-    }
+    line-height: 29px;
+    font-weight: 900;
   }
 `;

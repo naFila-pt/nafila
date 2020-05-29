@@ -309,7 +309,11 @@ i18n
           "admin#queuePoster_queueCode": "Código da Fila",
           "admin#queuePoster_enterQueueWith":
             "Entre &nbsp <b>nafila</b> &nbsp com...",
-          "admin#queuePoster_brandSlogan": "<b>naFila</b>, sem filas."
+          "admin#queuePoster_brandSlogan": "<b>naFila</b>, sem filas.",
+          "admin#queuePoster_mark_your_time_in_queue":
+            "MARQUE A SUA VEZ NA FILA",
+          "admin#send_free_sms_queue":
+            "Envie <b>SMS GRÁTIS</b> com <b><span class='larger'> nafila {{queueCode}}</span></b> para o <b>4902</b>"
         }
       }
     },
