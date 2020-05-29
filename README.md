@@ -49,4 +49,5 @@ Note: `/tools/` and many components/pages in `/src/` were originally auto-genera
 
 ## Analytics tracking
 
-For grouping data into Analytics overview dashboards (companies with several/distributed queues), manually set `.accountGroup = "sonae-sierra"` in the `/users/{userId}` collections in [firestore](https://console.firebase.google.com/u/0/project/safequeue/database/firestore/data~2Fusers) for each `user` belonging to the company.
+For grouping data into Analytics overview dashboards (shops/companies/groups with several/distributed queues), manually set `.shop = "Flores Maria"` and/or `.retailerGroup = "Flores lda"` and/or `.shoppingCentre = "Super Shopping"` in the `/users/{userId}` collections in [firestore](https://console.firebase.google.com/u/0/project/safequeue/database/firestore/data~2Fusers) for each `user` belonging to the company.
+These [user properties](https://support.google.com/analytics/answer/6317519?hl=en) will be available in Google Analytics to filter traffic data to create advanced dashboard and custom reports.

@@ -19,9 +19,11 @@ function Queue({ openSnackbar }) {
       .then(response => {
         const user = response.data();
 
-        if (!!user.accountGroup) {
-          analytics.setUserProperties({ accountGroup: user.accountGroup });
-        }
+        analytics.setUserProperties({
+          shop: user.shop,
+          retailerGroup: user.retailerGroup,
+          shoppingCentre: user.shoppingCentre
+        });
 
         setUser(user);
         setLoading(false);
