@@ -350,8 +350,8 @@ if (config.smspro.getmessagesenabled === "true") {
     if (tasks.length > 1) {
       throw "too many smsPoll tasks scheduled";
     }
-    res.send("ok");
     await executeSMSPoll(tasksClient, queuePath, project);
+    res.send("ok");
   });
 }
 
