@@ -6,12 +6,12 @@ import styled from "styled-components";
 
 import Layout from "../../../../components/AdminLayout";
 import Button from "../../../../components/Button";
-import Bg from "../../../../assets/bg/home_desktop.svg";
+import bg_desktop from "../../../../assets/bg/home_desktop.svg";
+import bg_mobile from "../../../../assets/bg/store_queue_start.svg";
+
 import redGirl from "../../../../assets/icons/girl_red.svg";
 import pregnantGirl from "../../../../assets/icons/girl_pregnant.svg";
 import { auth, functions, analytics } from "../../../../firebase";
-
-import { PRIMARY_COLOR } from "../../../../constants/ColorConstants";
 
 const ContainerWrapper = styled(Grid)`
   display: flex;
@@ -22,18 +22,31 @@ const ContainerWrapper = styled(Grid)`
 `;
 
 const AssetsContainer = styled(Grid)`
-  display: flex;
-  width: 100%;
-  height: 70%;
-  align-items: center;
-  justify-content: center;
+  display: none;
+  @media (min-width: 768px) {
+    display: flex;
+    width: 50%;
+    height: 70%;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 const FormWrapper = styled(Grid)`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 100%;
   height: 90%;
+  & h3 {
+    text-align: center;
+    @media (min-width: 768px) {
+      text-align: start;
+    }
+  }
+  @media (min-width: 768px) {
+    width: 50%;
+  }
 `;
 
 const StoreName = styled.div`
@@ -74,18 +87,27 @@ const HelperLabel = styled.div`
 
 const EmailWithCode = styled.p`
   margin-top: 30px;
+  padding: 0 15%;
   font-size: 1.25em;
-  text-align: start;
+  text-align: center;
+  @media (min-width: 768px) {
+    text-align: start;
+    padding: 0;
+  }
 `;
 
 const ButtonContainer = styled.div`
   width: 100%;
   display: flex;
+  justify-content: center;
+  @media (min-width: 768px) {
+    justify-content: start;
+  }
 `;
 
-function Start({ user, setQueue, openSnackbar }) {
+function Start({ user, setQueue, openSnackbar, isDesktop }) {
   const [requesting, setRequesting] = useState(false);
-  const [capacity, setCapacity] = useState(2);
+  const [capacity, setCapacity] = useState("");
   const [defaultQueueName, setDefaultQueueName] = useState(
     user.defaultQueueName
   );
@@ -115,10 +137,10 @@ function Start({ user, setQueue, openSnackbar }) {
   };
 
   return (
-    <Layout bg={Bg}>
+    <Layout bg={isDesktop ? bg_desktop : bg_mobile}>
       <ContainerWrapper container>
-        <FormWrapper sm={5} xs={12}>
-          <Typography variant="h3" align="left">
+        <FormWrapper>
+          <Typography variant="h3">
             {t("admin#queueManagement_letsStart")}
           </Typography>
           <StoreName className="start-queue-store">
@@ -132,14 +154,13 @@ function Start({ user, setQueue, openSnackbar }) {
 
           <CapacityNumber>
             <Input
+              defaultValue={capacity}
               value={capacity}
-              onChange={e => {
-                const value = e.target.validity.valid
-                  ? e.target.value
-                  : capacity;
-                setCapacity(value);
+              onChange={e => setCapacity(e.target.value)}
+              placeholder={t("admin#queueManagement_storeCapacity_placeholder")}
+              inputProps={{
+                type: "number"
               }}
-              inputProps={{ type: "number" }}
             />
             <HelperLabel>
               {t("admin#queueManagement_storeCapacity")}
@@ -164,7 +185,7 @@ function Start({ user, setQueue, openSnackbar }) {
             </Button>
           </ButtonContainer>
         </FormWrapper>
-        <AssetsContainer sm={7}>
+        <AssetsContainer>
           <Grid style={{ display: "flex", width: "100%", height: "100%" }}>
             <Box width="50%" height="100%" display="flex" alignItems="end">
               <img src={redGirl} alt="girl red" height="90%" width="100%" />

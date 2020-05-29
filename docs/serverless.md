@@ -2,7 +2,7 @@
 
 ## Firestore collections
 
-There are 3 collections in the app:
+There are 4 collections in the app:
 
 ### Main users collection: `/users/<userId>`
 
@@ -60,6 +60,22 @@ A ticket can be created by:
 - an anonymous user in the app (via email)
 - an anonymous user via phone SMS (backend loop)
 
+### Counters collections per queue: `/counters/<counterId>`
+
+A counter is identified by `counterId` and contains:
+
+- a `.maxCapacity` - the store maximum capacity defined by the queue owner
+- a `.current` - the counter used to store the number of clients simultaneously in the store
+
+A counter entry is created when the owner starts a new queue, and the counter object looks like
+
+```javascript
+{
+  maxCapacity: number, // store max capacity
+  current: number //store current clients
+}
+```
+
 ---
 
 ## Firestore operations from client
@@ -72,10 +88,7 @@ var firestore = firebase.firestore();
 
 ```javascript
 var userDoc = firestore.collection("users").doc(uid);
-userDoc
-  .set({ queues: [] })
-  .then(ok)
-  .catch(error);
+userDoc.set({ queues: [] }).then(ok).catch(error);
 ```
 
 ---
@@ -95,7 +108,7 @@ Note: `email` parameter is the store manager (user) email - in order for him to 
 ```javascript
 var createQueue = functions.httpsCallable("createQueue");
 createQueue({ name, email })
-  .then(function(result) {
+  .then(function (result) {
     //result: {queueId, queue}
     //.queue: {owner_id, name, remainingTicketsInQueue, ticketTopNumber, currentTicketNumber, currentTicketName}
     console.log(result);
@@ -110,7 +123,7 @@ createQueue({ name, email })
 ```javascript
 var addMeToQueue = functions.httpsCallable("addMeToQueue");
 addMeToQueue({ queueId, email: "carlos.mr.ouro@gmail.com" })
-  .then(function(result) {
+  .then(function (result) {
     //result: {ticket, queue}
     //.ticket: {number, email}
     //.queue: {owner_id, name, remainingTicketsInQueue, ticketTopNumber, currentTicketNumber, currentTicketName}
@@ -129,7 +142,7 @@ Note: fires email/SMS if necessary and updates queue `.currentTicketIndex`
 ```javascript
 var removeMeFromQueue = functions.httpsCallable("removeMeFromQueue");
 removeMeFromQueue({ queueId, ticketId })
-  .then(function(result) {
+  .then(function (result) {
     //result: {ticket, queue}
     //.ticket: {number, email}
     //.queue: {owner_id, name, remainingTicketsInQueue, ticketTopNumber, currentTicketNumber, currentTicketName}
@@ -148,7 +161,7 @@ Note: in case multiple are provided, function prefers email --> phone --> name
 ```javascript
 var manuallyAddToQueue = functions.httpsCallable("manuallyAddToQueue");
 manuallyAddToQueue({ queueId, phone: "+351910196551" })
-  .then(function(result) {
+  .then(function (result) {
     //result: {ticket, queue}
     //.ticket: {number, email/phone/name}
     //.queue: {owner_id, name, remainingTicketsInQueue, ticketTopNumber, currentTicketNumber, currentTicketName}
@@ -167,7 +180,7 @@ Note: fires email/SMS if necessary, removes ticket from queue and updates queue'
 ```javascript
 var callNextOnQueue = functions.httpsCallable("callNextOnQueue");
 callNextOnQueue({ queueId })
-  .then(function(result) {
+  .then(function (result) {
     //result: {queue, ticket}
     //.ticket: {number, email/phone/name}
     //.queue: {owner_id, name, remainingTicketsInQueue, ticketTopNumber, currentTicketNumber, currentTicketName}
@@ -186,7 +199,7 @@ Note: fires emails/SMS if necessary warning remaining people on queue and remove
 ```javascript
 var deleteQueue = functions.httpsCallable("deleteQueue");
 deleteQueue({ queueId })
-  .then(function(result) {
+  .then(function (result) {
     //result: {deletedCount}
     //.deletedCount -- number of deleted tickets that were still active in queue
     console.log(result);

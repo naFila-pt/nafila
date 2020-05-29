@@ -3,9 +3,13 @@
 const functionsMain = require("firebase-functions");
 const config = functionsMain.config();
 const admin = require("firebase-admin");
-admin.initializeApp({
+admin.initializeApp();
+
+// **** Emulate firebase functions **** //
+/* admin.initializeApp({
   credential: admin.credential.cert(require("../serviceAccountKey.json"))
-});
+}); */
+
 const firestore = admin.firestore();
 const urlSMSPro = "https://smspro.nos.pt/smspro/smsprows.asmx?WSDL";
 const urlSMSProService = "https://smspro.nos.pt/SmsPro/smsprows.asmx";
@@ -86,11 +90,11 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
   batch.commit();
 
   //{{queuePosterUrl}} {{queueName}} {{queueId}}
-  /* await sendMail([data.email], "d-6ac28f40006c4d178be4e00adae2bcb4", {
+  await sendMail([data.email], "d-6ac28f40006c4d178be4e00adae2bcb4", {
     queueId: queueRef.id,
     queueName: queue.name,
     queuePosterUrl: `https://nafila.pt/loja/cartaz-fila/${queueRef.id}`
-  }); */
+  });
 
   //returns queue object
   return { queueId, queue };
