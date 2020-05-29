@@ -11,7 +11,7 @@ const functionsRegion = "europe-west1";
 
 const runtimeOpts = {
   timeoutSeconds: 15,
-  memory: "256MB" //lowest cost possible
+  memory: "256MB", //lowest cost possible
 };
 
 //low cost / high perf settings
@@ -46,7 +46,7 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
     remainingTicketsInQueue: 0,
     ticketTopNumber: 0,
     currentTicketNumber: 0,
-    currentTicketName: null
+    currentTicketName: null,
   };
   const queueRef = firestore.collection("queues").doc(queueId);
 
@@ -69,7 +69,7 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
   await sendMail([data.email], "d-6ac28f40006c4d178be4e00adae2bcb4", {
     queueId: queueRef.id,
     queueName: queue.name,
-    queuePosterUrl: `https://nafila.pt/loja/cartaz-fila/${queueRef.id}`
+    queuePosterUrl: `https://nafila.pt/loja/cartaz-fila/${queueRef.id}`,
   });
 
   //returns queue object
@@ -82,7 +82,7 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
   let queueRef = firestore.collection("queues").doc(data.queueId);
 
   //transaction is cheaper
-  let result = await firestore.runTransaction(async function(transaction) {
+  let result = await firestore.runTransaction(async function (transaction) {
     let queueDoc = await transaction.get(queueRef);
 
     //get queue
@@ -119,7 +119,7 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
   //notify every remaining person in queue of queue deletion
   let emailsToNotify = [];
   let phonesToNotify = [];
-  result.tickets.forEach(t => {
+  result.tickets.forEach((t) => {
     let ticketData = t.data();
     if (!!ticketData.email) {
       emailsToNotify.push(ticketData.email);
@@ -133,7 +133,7 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
     //{{queueName}} {{queueId}}
     await sendMail(emailsToNotify, "d-b28224dd3dac48388f8e469ed82448a8", {
       queueId: queueRef.id,
-      queueName: result.queue.name
+      queueName: result.queue.name,
     });
   }
 
@@ -147,7 +147,7 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
 
   return {
     deletedCount: result.tickets.length,
-    totalTickets: result.queue.ticketTopNumber
+    totalTickets: result.queue.ticketTopNumber,
   };
 });
 
@@ -158,7 +158,7 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
 
   //transaction is cheaper
   let { result, notifyTicketData } = await firestore.runTransaction(
-    async function(transaction) {
+    async function (transaction) {
       let queueDoc = await transaction.get(queueRef);
 
       //get queue
@@ -174,10 +174,7 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
 
       //get next ticket
       let querySnap = await transaction.get(
-        queueRef
-          .collection("tickets")
-          .orderBy("number")
-          .limit(4)
+        queueRef.collection("tickets").orderBy("number").limit(4)
       );
 
       //in case there is no ticket left
@@ -198,7 +195,7 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
           queueData,
           true
         ),
-        notifyTicketData: querySnap.size > 3 ? querySnap.docs[3].data() : null
+        notifyTicketData: querySnap.size > 3 ? querySnap.docs[3].data() : null,
       };
     }
   );
@@ -214,7 +211,7 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
       {
         ticketNumber: result.ticket.number,
         queueId: queueRef.id,
-        queueName: result.queue.name
+        queueName: result.queue.name,
       }
     );
   } else if (!!result.ticket.phone) {
@@ -239,7 +236,7 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
           ticketNumber: notifyTicketData.number,
           queueId: queueRef.id,
           queueName: result.queue.name,
-          remainingTicketsInQueue: 3
+          remainingTicketsInQueue: 3,
         }
       );
     } else if (!!notifyTicketData.phone) {
@@ -261,7 +258,7 @@ exports.manuallyAddToQueue = functions.https.onCall(async (data, context) => {
       queueId: data.queueId,
       email: data.email,
       phone: data.phone,
-      name: data.name
+      name: data.name,
     },
     context
   );
@@ -283,7 +280,7 @@ exports.removeMeFromQueue = functions.https.onCall(async (data, context) => {
   let ticketRef = queueRef.collection("tickets").doc(data.ticketId);
 
   //transaction is cheaper
-  let result = await firestore.runTransaction(async function(transaction) {
+  let result = await firestore.runTransaction(async function (transaction) {
     let queueDoc = await transaction.get(queueRef);
     let queueData = queueDoc.data();
     return await removeTicket(
@@ -301,88 +298,102 @@ exports.removeMeFromQueue = functions.https.onCall(async (data, context) => {
 //---- REGULAR SCHEDULED JOB ----
 //ATTENTION - PROD ONLY!!
 if (config.smspro.getmessagesenabled === "true") {
-  exports.scheduledFunction = functions.pubsub
-    .schedule("every " + config.smspro.getmessagesinterval)
+  // exports.scheduledFunction = functions.pubsub
+  //   .schedule("every " + config.smspro.getmessagesinterval)
+  //   .onRun(async () => {
+  //     //schedule running next in 10s
+  //     let turns = parseInt(config.smspro.getmessagessubintervalturns);
+  //     if (!isNaN(turns) && turns > 0) {
+  //       await scheduleNextSMSRoutine(
+  //         config.smspro.getmessagessubintervalsecs,
+  //         1
+  //       );
+  //     }
+
+  //     //run now
+  //     return await getNewSMSRoutine();
+  //   });
+
+  exports.healthCheckSMS = functions.pubsub
+    .schedule("every " + config.smspro.healthcheckinterval)
     .onRun(async () => {
-      //schedule running next in 10s
-      let turns = parseInt(config.smspro.getmessagessubintervalturns);
-      if (!isNaN(turns) && turns > 0) {
-        await scheduleNextSMSRoutine(
-          config.smspro.getmessagessubintervalsecs,
-          1
+      const { CloudTasksClient } = require("@google-cloud/tasks");
+
+      const project = JSON.parse(process.env.FIREBASE_CONFIG).projectId;
+      const queue = "subscheduler";
+
+      const tasksClient = new CloudTasksClient();
+      const queuePath = tasksClient.queuePath(project, functionsRegion, queue);
+
+      let [tasks] = await tasksClient.listTasks({ parent: queuePath });
+      if (tasks.length === 0) {
+        await scheduleNextSMSPoll(project, tasksClient, queuePath);
+
+        console.error(
+          "health check detected a failure in SMSPoll routine, auto-restart attempted"
         );
       }
-
-      //run now
-      return await getNewSMSRoutine();
+      return true;
     });
+
+  exports.smsPoll = functions.https.onRequest(async (req, res) => {
+    const { CloudTasksClient } = require("@google-cloud/tasks");
+
+    const project = JSON.parse(process.env.FIREBASE_CONFIG).projectId;
+    const queue = "subscheduler";
+
+    const tasksClient = new CloudTasksClient();
+    const queuePath = tasksClient.queuePath(project, functionsRegion, queue);
+
+    let [tasks] = await tasksClient.listTasks({ parent: queuePath });
+
+    if (tasks.length > 1) {
+      throw "too many smsPoll tasks scheduled";
+    }
+    res.send("ok");
+    await executeSMSPoll(tasksClient, queuePath, project);
+  });
 }
 
-exports.smsRoutine = functions.https.onRequest(async (req, res) => {
-  let runTurn = req.body.runTurn;
-
-  if (typeof runTurn !== "number") {
-    throw new functionsMain.https.HttpsError(
-      "invalid-argument",
-      "Invalid argument"
-    );
-  }
-
-  let nextRunTurn = req.body.runTurn + 1;
-
-  //if needed, schedule running next in 10s
-  let turns = parseInt(config.smspro.getmessagessubintervalturns);
-
-  console.log("Execution " + req.body.runTurn + " of " + turns);
-  if (!isNaN(turns) && turns >= nextRunTurn) {
-    await scheduleNextSMSRoutine(
-      config.smspro.getmessagessubintervalsecs,
-      nextRunTurn
-    );
-  }
-
-  //run now
-  await getNewSMSRoutine();
-  res.send("ok");
-});
-
 //---- HELPERS ----
-async function scheduleNextSMSRoutine(secs, runTurn) {
-  const intSecs = parseInt(secs);
+async function executeSMSPoll(tasksClient, queuePath, project) {
+  //run the poll
+  let replies = await getNewSMSRoutine();
+
+  //scheduling done, lets process the messages
+  //run now
+  await processNewSMSs(replies);
+
+  //schedule next call
+  return await scheduleNextSMSPoll(project, tasksClient, queuePath);
+}
+
+async function scheduleNextSMSPoll(project, tasksClient, queuePath) {
+  const intSecs = parseInt(config.smspro.getmessagessubintervalsecs);
   if (isNaN(intSecs)) {
     throw new functionsMain.https.HttpsError(
       "invalid-argument",
       "Invalid configuration"
     );
   }
-  const { CloudTasksClient } = require("@google-cloud/tasks");
-
-  const project = JSON.parse(process.env.FIREBASE_CONFIG).projectId;
-  const queue = "subscheduler";
-
-  const tasksClient = new CloudTasksClient();
-  const queuePath = tasksClient.queuePath(project, functionsRegion, queue);
-
-  const url = `https://${functionsRegion}-${project}.cloudfunctions.net/smsRoutine`;
-
+  const url = `https://${functionsRegion}-${project}.cloudfunctions.net/smsPoll`;
   const task = {
     httpRequest: {
       httpMethod: "POST",
       url,
-      body: Buffer.from(JSON.stringify({ runTurn })).toString("base64"),
+      body: Buffer.from(JSON.stringify({})).toString("base64"),
       headers: {
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     },
     scheduleTime: {
-      seconds: Date.now() / 1000 + intSecs
-    }
+      seconds: Date.now() / 1000 + intSecs,
+    },
   };
-
   try {
-    return await tasksClient.createTask({ parent: queuePath, task });
+    await tasksClient.createTask({ parent: queuePath, task });
   } catch (e) {
-    console.error("sub-scheduler error ", e);
+    console.error("executeSMSPoll.createTask error ", e);
   }
 }
 
@@ -391,12 +402,17 @@ async function getNewSMSRoutine() {
     TenantName: config.smspro.tenant,
     strUsername: config.smspro.username,
     strPassword: config.smspro.password,
-    intCampaignId: parseInt(config.smspro.campaignid)
+    intCampaignId: parseInt(config.smspro.campaignid),
   };
   let serviceReply = await callSMSPro("GetCampaignUnreadReplies", args);
   let replies =
     (serviceReply.Replies && serviceReply.Replies.Reply_Record) || [];
   console.log("Found " + replies.length + " new messages");
+
+  return replies;
+}
+
+async function processNewSMSs(replies) {
   //sort our SMS according to when they were received
   try {
     replies = replies.sort((e1, e2) => {
@@ -405,13 +421,11 @@ async function getNewSMSRoutine() {
   } catch (e) {
     console.log("sorting error", e);
   }
-  replies.forEach(async m => {
+  for (let i = 0; i < replies.length; i++) {
+    let m = replies[i];
     try {
       //validate queueId
-      let [queueId, leave] = m["Message"]
-        .trim()
-        .toUpperCase()
-        .split(" ");
+      let [queueId, leave] = m["Message"].trim().toUpperCase().split(" ");
       //add to queue
       if (typeof leave === "undefined") {
         await createTicketInQueue({ queueId, phone: m["MSISDN"] }, false);
@@ -421,7 +435,7 @@ async function getNewSMSRoutine() {
         let queueRef = firestore.collection("queues").doc(queueId);
         //get the ticket
         //transaction is cheaper
-        await firestore.runTransaction(async function(transaction) {
+        await firestore.runTransaction(async function (transaction) {
           let queueDoc = await transaction.get(queueRef);
           //get next ticket
           let querySnap = await transaction.get(
@@ -471,7 +485,7 @@ async function getNewSMSRoutine() {
       await sendSMS([m["MSISDN"]], `\n${e.message}`);
       console.error(m, e);
     }
-  });
+  }
 }
 
 async function createTicketInQueue(
@@ -516,7 +530,7 @@ async function createTicketInQueue(
   }
 
   //transaction is cheaper
-  let result = await firestore.runTransaction(async function(transaction) {
+  let result = await firestore.runTransaction(async function (transaction) {
     let queueDoc = await transaction.get(queueRef);
 
     if (!queueDoc.exists) {
@@ -559,7 +573,7 @@ async function createTicketInQueue(
       ticketNumber: result.ticket.number,
       queueId: queueRef.id,
       queueName: result.queue.name,
-      exitQueueUrl: `https://nafila.pt/sair/${queueRef.id}/${ticketRef.id}`
+      exitQueueUrl: `https://nafila.pt/sair/${queueRef.id}/${ticketRef.id}`,
     });
   } else if (!!ticketData.phone) {
     //send notification SMS
@@ -567,8 +581,9 @@ async function createTicketInQueue(
       [result.ticket.phone],
       `\nJá está naFila para ${result.queue.name}! A sua senha é ${
         result.ticket.number
-      } e tem ${result.queue.remainingTicketsInQueue -
-        1} pessoas à sua frente. Para sair da fila, envie "nafila ${
+      } e tem ${
+        result.queue.remainingTicketsInQueue - 1
+      } pessoas à sua frente. Para sair da fila, envie "nafila ${
         queueRef.id
       } sair" para 4902.`
     );
@@ -671,7 +686,7 @@ async function sendMail(to, templateId, dynamic_template_data) {
     to,
     from: "no-reply@nafila.pt",
     templateId,
-    dynamic_template_data
+    dynamic_template_data,
   };
 
   sgMail.sendMultiple(msg);
@@ -683,7 +698,7 @@ async function sendSMS(MsisdnList, strMessage) {
     strUsername: config.smspro.username,
     strPassword: config.smspro.password,
     MsisdnList,
-    strMessage
+    strMessage,
   };
 
   return await callSMSPro("SendSMS", args);
@@ -693,8 +708,8 @@ var cacheSMSProClient;
 async function callSMSPro(method, args) {
   return await new Promise((resolve, reject) => {
     try {
-      var makeCall = function() {
-        cacheSMSProClient[method](args, function(err, result) {
+      var makeCall = function () {
+        cacheSMSProClient[method](args, function (err, result) {
           if (!!err) {
             reject(err);
           } else {
@@ -707,7 +722,7 @@ async function callSMSPro(method, args) {
       if (!cacheSMSProClient) {
         soap = require("soap");
 
-        soap.createClient(urlSMSPro, function(err, client) {
+        soap.createClient(urlSMSPro, function (err, client) {
           if (!!err) {
             reject(err);
           } else {
