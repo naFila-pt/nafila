@@ -7,16 +7,12 @@ const defaultTitle = process.env.REACT_APP_TITLE;
 let currentPageId = null; //global state
 
 const TitleComponent = ({ title, pageId }) => {
-  const [analyticsScreen, setAnalyticsScreen] = useState(pageId);
-
   useEffect(() => {
     if (pageId !== currentPageId) {
       currentPageId = pageId;
       analytics.setCurrentScreen(currentPageId);
-    } else {
-      setAnalyticsScreen(defaultTitle);
     }
-  }, [analyticsScreen, pageId]);
+  }, [pageId]);
 
   return (
     <Helmet>
