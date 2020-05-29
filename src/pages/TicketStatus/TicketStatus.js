@@ -50,6 +50,7 @@ const TicketStatus = ({ openSnackbar }) => {
   const [queue, setQueue] = useState();
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
+  const [ticketPassed, setTicketPassed] = useState(true);
 
   const urlParam = window.location.hash.substr(1);
 
@@ -89,8 +90,11 @@ const TicketStatus = ({ openSnackbar }) => {
   }, [queueId]);
 
   useEffect(() => {
-    if (queue) setLoading(false);
-  }, [queue]);
+    if (queue) {
+      setLoading(false);
+      setTicketPassed(ticketNumber <= queue.currentTicketNumber);
+    }
+  }, [queue, ticketNumber]);
 
   return (
     <HomeLayout bg={[bgMain]} forceLogoDisplay>
@@ -115,7 +119,7 @@ const TicketStatus = ({ openSnackbar }) => {
                 {loading ? "" : queue.currentTicketNumber}
               </div>
             </Grid>
-            {!loading && ticketNumber > queue.currentTicketNumber ? (
+            {!loading && !ticketPassed ? (
               <Grid item>
                 <div style={{ fontSize: "1.25em" }}>
                   {t("home#ticket_length")}
@@ -139,6 +143,7 @@ const TicketStatus = ({ openSnackbar }) => {
             onClick={fakeUpdate}
             disabled={loading}
             variant={loading || updating ? "inactive" : ""}
+            refresh
           >
             {t(loading ? "global#wait_please" : "home#atualizar")}
           </Button>
@@ -146,14 +151,16 @@ const TicketStatus = ({ openSnackbar }) => {
         <div
           style={{ textAlign: "center", marginTop: "1em", marginBottom: "2em" }}
         >
-          <Button
-            onClick={leaveQueue}
-            disabled={loading}
-            variant={"gray"}
-            style
-          >
-            {t(loading ? "global#wait_please" : "home#sair_da_fila")}
-          </Button>
+          {!ticketPassed && (
+            <Button
+              onClick={leaveQueue}
+              disabled={loading || ticketPassed}
+              variant={"gray"}
+              forward
+            >
+              {t(loading ? "global#wait_please" : "home#sair_da_fila")}
+            </Button>
+          )}
         </div>
       </Grid>
     </HomeLayout>
