@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import Loader from "../../../components/Loader";
-import { auth, firestore } from "../../../firebase";
+import { auth, firestore, analytics } from "../../../firebase";
 
 import Start from "./Start";
 import Manage from "./Manage";
@@ -18,6 +18,12 @@ function Queue({ openSnackbar, isDesktop }) {
       .get()
       .then(response => {
         const user = response.data();
+
+        analytics.setUserProperties({
+          shop: user.shop,
+          retailerGroup: user.retailerGroup,
+          shoppingCentre: user.shoppingCentre
+        });
 
         setUser(user);
         setLoading(false);

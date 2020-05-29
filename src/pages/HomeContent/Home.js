@@ -18,6 +18,8 @@ import personSrc from "../../assets/icons/pessoa_homepage_desktop.svg";
 
 import * as Routes from "../../constants/RoutesConstants";
 
+import TitleComponent from "../../components/TitleComponent";
+
 const Header = styled.div`
   background-color: #fff;
   width: "100%";
@@ -182,6 +184,7 @@ const Home = props => {
     <Grid
       style={{ display: "flex", minHeight: "100vh", flexDirection: "column" }}
     >
+      <TitleComponent pageId="home" />
       <Header>
         <img src={logoBannerSrc} alt="logo" />
       </Header>

@@ -17,6 +17,8 @@ import personManSrc from "../../../assets/icons/person_man.svg";
 
 import * as Routes from "../../../constants/RoutesConstants";
 
+import TitleComponent from "../../../components/TitleComponent";
+
 const HomeContent = styled(Grid)`
   display: flex;
   min-height: 100vh;
@@ -150,6 +152,7 @@ const Home = () => {
 
   return (
     <HomeContent>
+      <TitleComponent title="Logista" pageId="operator_home" />
       <Header>
         <img src={logoBannerSrc} alt="logo" />
       </Header>

@@ -10,6 +10,8 @@ import { ADMIN_LOGIN_PATH } from "../../../constants/RoutesConstants";
 
 import { ButtonsContainer } from "../common";
 
+import TitleComponent from "../../../components/TitleComponent";
+
 const Container = styled.div`
   padding: 20vh 20px 0;
 `;
@@ -29,6 +31,7 @@ function SuccessfulSignUp() {
 
   return (
     <Layout bg={SignUpBg}>
+      <TitleComponent title="Registado!" pageId="signup_success" />
       <Container>
         <Typography style={typographyStyles.MAIN}>
           {t("admin#signup_successTitle")}

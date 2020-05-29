@@ -8,6 +8,7 @@ import Layout from "../../../../components/AdminLayout";
 import Button from "../../../../components/Button";
 import bg_desktop from "../../../../assets/bg/home_desktop.svg";
 import bg_mobile from "../../../../assets/bg/store_queue_start.svg";
+import TitleComponent from "../../../../components/TitleComponent";
 
 import redGirl from "../../../../assets/icons/girl_red.svg";
 import pregnantGirl from "../../../../assets/icons/girl_pregnant.svg";
@@ -138,6 +139,7 @@ function Start({ user, setQueue, openSnackbar, isDesktop }) {
 
   return (
     <Layout bg={isDesktop ? bg_desktop : bg_mobile}>
+      <TitleComponent title="Iniciar fila" pageId="queue_start" />
       <ContainerWrapper container>
         <FormWrapper>
           <Typography variant="h3">

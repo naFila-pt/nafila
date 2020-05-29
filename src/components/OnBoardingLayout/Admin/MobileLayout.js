@@ -25,6 +25,8 @@ import logoSrc from "../../../assets/logo.svg";
 import leftPerson from "../../../assets/icons/human-onboarding-left.svg";
 import rightPerson from "../../../assets/icons/human-onboarding-right.svg";
 
+import TitleComponent from "../../TitleComponent";
+
 const useStyles = makeStyles({
   stepper: {
     flexGrow: 1,
@@ -291,6 +293,10 @@ const Layout = ({ children, endOnBoarding }) => {
       className={"OnboardingWrapper"}
       style={{ backgroundImage: `url(${bgMainMobile})` }}
     >
+      <TitleComponent
+        title="Lojista - Como funciona"
+        pageId="operator_tutorial"
+      />
       <Grid direction="column" style={{ height: "100vh", display: "flex" }}>
         <Grid container direction="column" style={{ height: "56px" }}>
           <ToolbarWrapper>
