@@ -14,9 +14,14 @@ i18n
           "global#wait_please": "Aguarde ...",
           "global#cookie_banner": "Ao utilizar este website, aceita a nossa",
           "global#cookie_bannerLink": " política de privacidade.",
+          "onboarding#justOneSMS": "Basta uma SMS!",
           "onboarding#intro_welcome": "Bem Vindo!",
           "onboarding#intro_pitch": "na<b>fila</b>. Sem filas.",
           "onboarding#store_title": "É simples!",
+          "onboarding#register_site_title": "Prefere registar-se no site?",
+          "onboarding#register_site_description":
+            "Visite <b>nafila.pt</b>, insira <b>o código da fila</b> e <b>o seu telemóvel</b>, para ser notificado.",
+          "onboarding#phone_number": "Número de Telemóvel",
           "onboarding#store_description":
             "A sua Loja Favorita afixa <b>um código por dia</b>, que deve utilizar para <b>entrar</b> na<b>fila</b>.",
           "onboarding#useCode_title": "Utilize o código",
@@ -28,7 +33,7 @@ i18n
             "Registe-se na<b>fila</b> enviando uma <b>SMS grátis</b> para o 4902 com: <b>nafila {código da Fila}",
           "onboarding#difficulties":
             "Se tiver alguma dificuldade, fale com o colaborador de loja.",
-          "onboarding#prefer_email": "Prefere receber Email?",
+          "onboarding#prefer_register_site": "Prefere registar-se no site?",
           "onboarding#insertCodeEmail":
             "Visite <b>nafila.pt</b>, insira o <b>código da fila</b> e <b>o seu email</b> para ser notificado.",
           "onboarding#prefer_name": "Prefere ser chamado pelo Nome?",
@@ -62,21 +67,21 @@ i18n
           "home#queue_store": "Loja",
           "home#queue_length": "À sua frente",
           "home#queue_people": "pessoas",
-          "home#queue_button": "Continuar",
+          "home#queue_button": "Tirar senha",
           "home#notification_description":
-            "Indique-nos o seu email para receber a <b>notificação</b>.",
-          "home#notification_inputPlaceholder": "Email",
+            "Indique-nos o seu telemóvel para receber a <b>notificação</b>.",
+          "home#notification_inputPlaceholder": "Número de telemóvel",
           "home#notification_terms":
-            '<b>Ao carregar em "Tirar Senha"</b>, confirma que leu e compreendeu os',
+            '<b>Ao carregar em "Continuar"</b>, confirma que leu e compreendeu os',
           "home#notification_termsLink":
             "termos e condições da proteção de dados",
-          "home#notification_button": "Tirar Senha",
+          "home#notification_button": "Continuar",
           "home#ticket_store": "Loja",
           "home#ticket_turn": "A sua vez",
           "home#ticket_currentQueue": "Agora",
           "home#ticket_length": "À sua frente",
           "home#ticket_notification":
-            "Receberá um email quando estiver a chegar a sua vez.",
+            "Acompanhe neste ecrã o progresso da fila.",
           "home#help_label": "Ver como funciona",
           "home#lojista_label": "É lojista ?",
           "home#consumidor_label": "É consumidor ?",
@@ -147,20 +152,23 @@ i18n
           // Admin onboarding
           "admin#onboarding_firstText":
             "<b>Tem uma loja</b> ou trabalha num serviço de atendimento ao público? Gostava de utilizar o nafila na sua loja?",
+          "admin#onboarding_firstText_mobile":
+            "<h1>Tem uma loja</h1> <p>ou trabalha num serviço de atendimento ao público? <br/>  <div>Gostava de utilizar o nafila na sua loja?</div> </p>",
           "admin#onboarding_secondText":
             "Faça o <b>pré-registo</b> e será contactado pela nossa equipa de suporte. Assim que receber o contacto do Suporte, <b>poderá começar a usar o nafila.</b>",
           "admin#onboarding_secondTitle": "É simples!",
-          "admin#onboarding_thirdTitle": "3 em 1",
+          "admin#onboarding_thirdTitle": "Tirar uma Senha",
           "admin#onboarding_thirdText":
-            "Os consumidores podem tirar a sua Senha de várias formas diferentes.",
-          "admin#onboarding_autonomous": "De forma autónoma",
+            "Os Clientes <b>tiram a Senha</b> e recebem uma notificação por <b>SMS</b>. Pode <b>ajudar o seu Cliente</b>, registando-o com o Nome ou o Número de Telemóvel.",
+          "admin#onboarding_autonomous": "Registo do cliente",
           "admin#onboarding_shopkeeper": "Com o lojista",
-          "admin#onboarding_email": "Email",
+          "admin#onboarding_site": "Site",
           "admin#onboarding_sms": "SMS",
           "admin#onboarding_call": "Nome",
           "admin#onboarding_phone": "Telemóvel",
           "admin#onboarding_code": "Código da Fila",
           "admin#onboarding_remaining": "Restantes",
+          "admin#onboarding_nextInQueue": `PRÓXIMO <span class="logo">na<b>fila</b></span>`,
           "admin#onboarding_fourthTitle": "A fila na palma da mão",
           "admin#onboarding_fourthText":
             "Gira a sua fila e chame os seus Clientes com o nafila.",

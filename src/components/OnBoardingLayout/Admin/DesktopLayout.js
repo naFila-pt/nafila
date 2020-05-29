@@ -18,7 +18,7 @@ import Footer from "../../../components/Footer";
 import StyledButton from "../../../components/Button";
 import logoSrc from "../../../assets/logo.svg";
 import storeIcon from "../../../assets/icons/store-icon.svg";
-import emailIcon from "../../../assets/icons/email_notification.svg";
+import siteIcon from "../../../assets/icons/site_icon.svg";
 import chamadaIcon from "../../../assets/icons/icon_chamada_mobile.svg";
 import smsIcon from "../../../assets/icons/icon_sms_mobile.svg";
 import howToUseIcon from "../../../assets/icons/ilustração_utilização_mobile.svg";
@@ -76,8 +76,8 @@ const GridArea = styled(Grid)`
   grid-row-gap: 5px;
   grid-template-areas:
     "text1 text1"
-    "mail sms1"
-    "mailDesc sms1Desc"
+    "sms1 mail"
+    "sms1Desc mailDesc"
     "text2 text2"
     "chamada sms2"
     "chamadaDesc sms2Desc";
@@ -96,22 +96,19 @@ const BigText = styled.p`
   align-self: center;
 `;
 
-const EmailIcon = styled.img`
+const SiteIcon = styled.img`
   grid-area: mail;
   justify-self: center;
-  height: 60%;
 `;
 
 const SmsIcon = styled.img`
   grid-area: sms1;
   justify-self: center;
-  height: 90%;
 `;
 
 const CallIcon = styled.img`
   grid-area: chamada;
   justify-self: center;
-  height: 90%;
 `;
 
 const TextDesc = styled.p`
@@ -121,8 +118,12 @@ const TextDesc = styled.p`
 `;
 
 const TicketContainer = styled.div`
-  width: 60%;
-  height: 90%;
+  width: 100%;
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   & .code {
     margin: 0 0 5px 0;
   }
@@ -132,20 +133,66 @@ const TicketContainer = styled.div`
     font-size: 35px;
   }
 
+  & .name {
+    width: 100%;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  & .nextInQueue {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+    font-size: 20px;
+    & span {
+      margin-right: 20px;
+    }
+  }
+
   & .ticket {
     display: flex;
-    height: 70%;
-    & div {
-      & .remaining {
+    width: 100%;
+    height: 80%;
+    justify-content: center;
+    align-items: center;
+    & .remaining-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 25%;
+      & .remaining-text {
         font-size: 20px;
         font-weight: bold;
         margin: 0;
       }
-
-      & .name {
-        font-size: 25px;
+    }
+    & .counter {
+      display: flex;
+      width: 25%;
+      height: 70%;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      & p {
+        margin: 0;
+        font-size: 20px;
         font-weight: bold;
-        margin: 70% 0 0 0;
+      }
+      & .roundButton {
+        text-align: center;
+        vertical-align: middle;
+        background-color: #ffc836;
+        color: #4c0788;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        line-height: 1.5;
+        font-size: 35px;
+        font-weight: bold;
       }
     }
   }
@@ -373,13 +420,13 @@ const OnBoardingLayout = props => {
               <BigText style={{ gridArea: "text1" }}>
                 {t("admin#onboarding_autonomous")}
               </BigText>
-              <EmailIcon src={emailIcon} alt="iconEmail" />
               <SmsIcon src={smsIcon} alt="smsIcon" />
-              <TextDesc style={{ gridArea: "mailDesc" }}>
-                {t("admin#onboarding_email")}
-              </TextDesc>
+              <SiteIcon src={siteIcon} alt="iconEmail" />
               <TextDesc style={{ gridArea: "sms1Desc" }}>
                 {t("admin#onboarding_sms")}
+              </TextDesc>
+              <TextDesc style={{ gridArea: "mailDesc" }}>
+                {t("admin#onboarding_site")}
               </TextDesc>
               <BigText style={{ gridArea: "text2" }}>
                 {t("admin#onboarding_shopkeeper")}
@@ -415,23 +462,38 @@ const OnBoardingLayout = props => {
               marginLeft: "20px"
             }}
           >
-            <TicketContainer>
+            <TicketContainer style={{ width: "70%", height: "90%" }}>
               <p className="code">{t("admin#onboarding_code")}</p>
               <p className="store">LojaCartaxo</p>
               <div className="ticket">
-                <img src={yellowLogo} alt="asset" height="100%" />
-                <div style={{ marginLeft: "30px" }}>
-                  <p className="remaining">{t("admin#onboarding_remaining")}</p>
+                <div className="remaining-container">
+                  <p className="remaining-text">
+                    {t("admin#onboarding_remaining")}
+                  </p>
                   <p
-                    className="remaining"
+                    className="remaining-text"
                     style={{
                       fontSize: "30px"
                     }}
                   >
                     10
                   </p>
-                  <p className="name">Ana Maria</p>
                 </div>
+                <img src={yellowLogo} alt="asset" height="70%" />
+                <div className="counter">
+                  <div class="roundButton">{"-"}</div>
+                  <p>10</p>
+                  <div class="roundButton">{"+"}</div>
+                </div>
+              </div>
+              <div className="name">{"Ana Maria"}</div>
+              <div className="nextInQueue">
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: t("admin#queueManagement_nextInQueue")
+                  }}
+                />
+                <ArrowForwardIcon fontSize="small" />
               </div>
             </TicketContainer>
           </Grid>
