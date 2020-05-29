@@ -350,12 +350,13 @@ if (config.smspro.getmessagesenabled === "true") {
     if (tasks.length > 1) {
       throw "too many smsPoll tasks scheduled";
     }
-    //run the poll
-    let replies = await getNewSMSRoutine();
 
     //schedule next call
     await scheduleNextSMSPoll(project, tasksClient, queuePath);
-    res.send("ok");
+    res.send("ok"); //tell Cloud Tasks we are done here
+
+    //run the poll
+    let replies = await getNewSMSRoutine();
 
     //scheduling done, lets process the messages
     //run now
