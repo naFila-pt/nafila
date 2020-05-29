@@ -163,6 +163,26 @@ i18n
           
           Se, por algum motivo, considerar necessário, pode sempre preencher uma reclamação junto da Comissão Nacional de Protecção de Dados (CNPD).`,
 
+          // About Us
+          "about_us#title_about_us": "Sobre nós",
+          "about_us#title_what": "O que é?",
+          "about_us#text_what":
+            "O na<b>fila</b> é uma solução de senhas virtuais que visa ajudar comerciantes e consumidores a tornar as compras essenciais mais cómodas e seguras. Através de um sistema 100% gratuito, qualquer pessoa pode dirigir-se a uma loja aderente nafila e introduzir o código da fila com o telemóvel, recebendo de seguida uma senha virtual que irá permitir aguardar a sua vez em segurança e longe das outras pessoas.",
+          "about_us#title_why": "Porquê?",
+          "about_us#text_why":
+            "O na<b>fila</b> é um <b>projecto do #movimentotech4covid19</b>, um esforço voluntário de procura de soluções contra a recente epidemia. O projecto na<b>fila</b> foi pensado para reduzir o risco de contágio em filas à porta de comércio essencial como supermercados ou farmácias.",
+          "about_us#title_team": "A equipa",
+          "about_us#text_team": `
+          O ano de 2020 ficará para a história como o ano em que a Terra parou. Em que a humanidade necessitou de se adaptar e ajustar a uma escala sem precedentes. Apesar de todas as dificuldades vividas, esta também será uma época que ficará recordada pela resiliência humana, pela solidariedade e espírito de sacrifício.
+          <br><br>
+          O <b>Movimento Tech4Covid19</b> e, em particular, o projeto na<b>fila</b> é um exemplo disso. Em pouco mais que 2 semanas, formámos uma equipa que conta hoje com mais de 40 voluntários que, sem se conhecerem de lado algum, uniram-se com um tremendo sentido de missão e decidiram dedicar o seu tempo e recursos para desenvolver em tempo recorde esta solução. <b>O nafila procura mitigar o contágio do Covid-19, protegendo os consumidores através de um sistema de gestão de filas touchless</b> (sem toque), de livre acesso a todos os empresários e consumidores portugueses.
+          <br><br>
+          É ainda importante deixar <b>uma palavra de agradecimento às empresas que apoiam esta iniciativa</b>. A MyTurn e a MobiQueue que contribuíram com inputs valiosos, partilhando a sua experiência, enquanto empresas fornecedoras de sistemas de gestão de filas com anos de presença no mercado, e também a NOS, e a Google, <b>que permitiram tornar possível o ambicioso objetivo de oferecer uma solução totalmente livre de custos aos empresários e consumidores portugueses</b>.
+          <br><br>
+          A todos um enorme obrigado. Juntos conseguimos. 💪
+          <br><br>
+          <b>Nuno Góis</b> Coordenação do na<b>fila</b>`,
+
           "leave#title": "Saiu da Fila",
           "leave#title-failed": "Senha não encontrada",
           "leave#description":

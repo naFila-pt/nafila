@@ -16,5 +16,6 @@ export const TICKET_PATH = "/tirar-senha";
 export const TICKET_LEAVE_PATH = "/sair/:queueId/:ticketId";
 export const ONBOARDING_PATH = "/como-funciona";
 export const TCS_PATH = "/termos-condicoes";
+export const ABOUT_US_PATH = "/sobre-nos";
 export const QUEUE_POSTER_PATH = "/loja/cartaz-fila/:queueId";
 export const TICKET_STATUS_PATH = "/t";

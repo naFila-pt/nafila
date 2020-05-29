@@ -6,6 +6,7 @@ import PrivateRoute from "../PrivateRoute";
 
 import OnBoardingContent from "../../pages/OnBoardingContent";
 import { Legal, Home } from "../../pages/HomeContent";
+import { TermsConditions, Home, AboutUs } from "../../pages/HomeContent";
 import { Ticket, Leave } from "../../pages/TicketContent";
 import TicketStatus from "../../pages/TicketStatus";
 import QueuePoster from "../../pages/QueuePoster";
@@ -66,6 +67,10 @@ class Router extends Component {
               pageId="privacy"
               analyticsTitle="Política de privacidade"
             />
+          </Route>
+
+          <Route path={Routes.ABOUT_US_PATH} exact>
+            <AboutUs {...this.props} />
           </Route>
 
           <Route path={Routes.ADMIN_WELCOME_PATH} exact>
