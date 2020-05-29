@@ -6,8 +6,8 @@ import Link from "@material-ui/core/Link";
 
 import Tech4CovidIcon from "../../assets/icons/Logo-Tech4COVID19-white.svg";
 import naFilaIcon from "../../assets/icons/nafila-text.svg";
-import googleIcon from "../../assets/icons/google-icon.svg";
-import NOSIcon from "../../assets/icons/nos-icon.svg";
+import GoogleIcon from "@src/components/Icons/google";
+import NosIcon from "../Icons/nos";
 
 const FooterWrapper = styled(Grid)`
   width: 100%;
@@ -48,6 +48,15 @@ const FooterWrapper = styled(Grid)`
       font-size: 16px;
       text-transform: uppercase;
       margin: 0 30px 0 0;
+    }
+
+    svg {
+      width: auto;
+      height: 20px;
+
+      @media (min-width: 768px) {
+        height: 100%;
+      }
     }
   }
   .logo {
@@ -111,7 +120,7 @@ const Footer = () => {
               rel="noopener"
               href="https://google.pt"
             >
-              <Logo src={googleIcon} />
+              <GoogleIcon />
             </Link>
             <Link
               style={{ color: "white", marginLeft: "28px" }}
@@ -119,7 +128,7 @@ const Footer = () => {
               rel="noopener"
               href="https://nos.pt"
             >
-              <Logo src={NOSIcon} />
+              <NosIcon />
             </Link>
           </div>
         </div>
