@@ -51,9 +51,11 @@ const Leave = ({
 
       removeMeFromQueue({ queueId, ticketId })
         .then(function ({ queue }) {
-          if (!!queue.accountGroup) {
-            analytics.setUserProperties({ accountGroup: queue.accountGroup });
-          }
+          analytics.setUserProperties({
+            shop: queue.shop,
+            retailerGroup: queue.retailerGroup,
+            shoppingCentre: queue.shoppingCentre
+          });
 
           analytics.logEvent("ticket_cancelled");
           analytics.logEvent("ticket_cancelled_by_email");

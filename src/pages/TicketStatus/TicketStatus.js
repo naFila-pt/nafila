@@ -86,9 +86,11 @@ const TicketStatus = ({ openSnackbar }) => {
       .doc(queueId)
       .onSnapshot(snapshot => {
         let queueData = snapshot.data();
-        if (!!queueData.accountGroup) {
-          analytics.setUserProperties({ accountGroup: queueData.accountGroup });
-        }
+        analytics.setUserProperties({
+          shop: queueData.shop,
+          retailerGroup: queueData.retailerGroup,
+          shoppingCentre: queueData.shoppingCentre
+        });
         setQueue(queueData);
       });
 

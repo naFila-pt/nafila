@@ -37,9 +37,11 @@ function QueuePoster({
       .get()
       .then(response => {
         let queueData = response.data();
-        if (!!queueData.accountGroup) {
-          analytics.setUserProperties({ accountGroup: queueData.accountGroup });
-        }
+        analytics.setUserProperties({
+          shop: queueData.shop,
+          retailerGroup: queueData.retailerGroup,
+          shoppingCentre: queueData.shoppingCentre
+        });
         setQueue(queueData);
         setLoading(false);
       });

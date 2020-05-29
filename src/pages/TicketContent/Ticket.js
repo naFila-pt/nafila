@@ -123,9 +123,11 @@ const HomeContent = ({ openSnackbar }) => {
 
       const queueData = queue.data();
 
-      if (!!queueData.accountGroup) {
-        analytics.setUserProperties({ accountGroup: queueData.accountGroup });
-      }
+      analytics.setUserProperties({
+        shop: queueData.shop,
+        retailerGroup: queueData.retailerGroup,
+        shoppingCentre: queueData.shoppingCentre
+      });
 
       setTicketsStoreInfo(prevState => {
         return {
