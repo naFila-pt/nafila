@@ -2,7 +2,7 @@
 
 ## Firestore collections
 
-There are 3 collections in the app:
+There are 4 collections in the app:
 
 ### Main users collection: `/users/<userId>`
 
@@ -59,6 +59,22 @@ A ticket can be created by:
 - a logged in user from the admin view
 - an anonymous user in the app (via email)
 - an anonymous user via phone SMS (backend loop)
+
+### Counters collections per queue: `/counters/<counterId>`
+
+A counter is identified by `counterId` and contains:
+
+- a `.maxCapacity` - the store maximum capacity defined by the queue owner
+- a `.current` - the counter used to store the number of clients simultaneously in the store
+
+A counter entry is created when the owner starts a new queue, and the counter object looks like
+
+```javascript
+{
+  maxCapacity: number, // store max capacity
+  current: number //store current clients
+}
+```
 
 ---
 

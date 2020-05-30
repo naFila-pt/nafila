@@ -278,6 +278,9 @@ i18n
           // Admin Queue Management
           "admin#queueManagement_letsStart": "Vamos iniciar a fila?",
           "admin#queueManagement_queueName": "Nome da Fila",
+          "admin#queueManagement_storeCapacity": "Lotação Máxima Simultânea",
+          "admin#queueManagement_storeCapacity_placeholder":
+            "Preencha com a lotação máxima",
           "admin#queueManagement_emailWithCode":
             "Depois de receber o <strong>código de fila</strong> no seu email, <strong>imprima-o e coloque-o num lugar visível ao público.</strong>",
           "admin#queueManagement_startQueue": "Começar",

@@ -142,6 +142,7 @@ function Manage({ queueId, openSnackbar }) {
           const data = snapshot.data();
 
           if (
+            data &&
             data.analyticsServerEvents &&
             data.analyticsServerEvents.length >= currentAnalyticsIndex
           ) {

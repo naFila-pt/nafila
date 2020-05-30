@@ -6,7 +6,7 @@ import { auth, firestore, analytics } from "../../../firebase";
 import Start from "./Start";
 import Manage from "./Manage";
 
-function Queue({ openSnackbar }) {
+function Queue({ openSnackbar, isDesktop }) {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState();
   const [queue, setQueue] = useState();
@@ -35,9 +35,24 @@ function Queue({ openSnackbar }) {
   }, [user]);
 
   if (loading) return <Loader />;
-  if (queue) return <Manage queueId={queue} openSnackbar={openSnackbar} />;
+  if (queue) {
+    return (
+      <Manage
+        queueId={queue}
+        openSnackbar={openSnackbar}
+        isDesktop={isDesktop}
+      />
+    );
+  }
 
-  return <Start user={user} setQueue={setQueue} openSnackbar={openSnackbar} />;
+  return (
+    <Start
+      user={user}
+      setQueue={setQueue}
+      openSnackbar={openSnackbar}
+      isDesktop={isDesktop}
+    />
+  );
 }
 
 export default Queue;
