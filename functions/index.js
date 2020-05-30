@@ -331,75 +331,87 @@ exports.removeMeFromQueue = functions.https.onCall(async (data, context) => {
 //---- REGULAR SCHEDULED JOB ----
 //ATTENTION - PROD ONLY!!
 if (config.smspro.getmessagesenabled === "true") {
-  exports.scheduledFunction = functions.pubsub
-    .schedule("every " + config.smspro.getmessagesinterval)
+  // exports.scheduledFunction = functions.pubsub
+  //   .schedule("every " + config.smspro.getmessagesinterval)
+  //   .onRun(async () => {
+  //     //schedule running next in 10s
+  //     let turns = parseInt(config.smspro.getmessagessubintervalturns);
+  //     if (!isNaN(turns) && turns > 0) {
+  //       await scheduleNextSMSRoutine(
+  //         config.smspro.getmessagessubintervalsecs,
+  //         1
+  //       );
+  //     }
+
+  //     //run now
+  //     return await getNewSMSRoutine();
+  //   });
+
+  exports.healthCheckSMS = functions.pubsub
+    .schedule("every " + config.smspro.healthcheckinterval)
     .onRun(async () => {
-      //schedule running next in 10s
-      let turns = parseInt(config.smspro.getmessagessubintervalturns);
-      if (!isNaN(turns) && turns > 0) {
-        await scheduleNextSMSRoutine(
-          config.smspro.getmessagessubintervalsecs,
-          1
+      const { CloudTasksClient } = require("@google-cloud/tasks");
+
+      const project = JSON.parse(process.env.FIREBASE_CONFIG).projectId;
+      const queue = "subscheduler";
+
+      const tasksClient = new CloudTasksClient();
+      const queuePath = tasksClient.queuePath(project, functionsRegion, queue);
+
+      let [tasks] = await tasksClient.listTasks({ parent: queuePath });
+      if (tasks.length === 0) {
+        await scheduleNextSMSPoll(project, tasksClient, queuePath);
+
+        console.error(
+          "health check detected a failure in SMSPoll routine, auto-restart attempted"
         );
       }
-
-      //run now
-      return await getNewSMSRoutine();
+      return true;
     });
+
+  exports.smsPoll = functions.https.onRequest(async (req, res) => {
+    const { CloudTasksClient } = require("@google-cloud/tasks");
+
+    const project = JSON.parse(process.env.FIREBASE_CONFIG).projectId;
+    const queue = "subscheduler";
+
+    const tasksClient = new CloudTasksClient();
+    const queuePath = tasksClient.queuePath(project, functionsRegion, queue);
+
+    let [tasks] = await tasksClient.listTasks({ parent: queuePath });
+
+    if (tasks.length > 1) {
+      throw "too many smsPoll tasks scheduled";
+    }
+
+    //schedule next call
+    await scheduleNextSMSPoll(project, tasksClient, queuePath);
+    res.send("ok"); //tell Cloud Tasks we are done here
+
+    //run the poll
+    let replies = await getNewSMSRoutine();
+
+    //scheduling done, lets process the messages
+    //run now
+    await processNewSMSs(replies);
+  });
 }
 
-exports.smsRoutine = functions.https.onRequest(async (req, res) => {
-  let runTurn = req.body.runTurn;
-
-  if (typeof runTurn !== "number") {
-    throw new functionsMain.https.HttpsError(
-      "invalid-argument",
-      "Invalid argument"
-    );
-  }
-
-  let nextRunTurn = req.body.runTurn + 1;
-
-  //if needed, schedule running next in 10s
-  let turns = parseInt(config.smspro.getmessagessubintervalturns);
-
-  console.log("Execution " + req.body.runTurn + " of " + turns);
-  if (!isNaN(turns) && turns >= nextRunTurn) {
-    await scheduleNextSMSRoutine(
-      config.smspro.getmessagessubintervalsecs,
-      nextRunTurn
-    );
-  }
-
-  //run now
-  await getNewSMSRoutine();
-  res.send("ok");
-});
-
 //---- HELPERS ----
-async function scheduleNextSMSRoutine(secs, runTurn) {
-  const intSecs = parseInt(secs);
+async function scheduleNextSMSPoll(project, tasksClient, queuePath) {
+  const intSecs = parseInt(config.smspro.getmessagessubintervalsecs);
   if (isNaN(intSecs)) {
     throw new functionsMain.https.HttpsError(
       "invalid-argument",
       "Invalid configuration"
     );
   }
-  const { CloudTasksClient } = require("@google-cloud/tasks");
-
-  const project = JSON.parse(process.env.FIREBASE_CONFIG).projectId;
-  const queue = "subscheduler";
-
-  const tasksClient = new CloudTasksClient();
-  const queuePath = tasksClient.queuePath(project, functionsRegion, queue);
-
-  const url = `https://${functionsRegion}-${project}.cloudfunctions.net/smsRoutine`;
-
+  const url = `https://${functionsRegion}-${project}.cloudfunctions.net/smsPoll`;
   const task = {
     httpRequest: {
       httpMethod: "POST",
       url,
-      body: Buffer.from(JSON.stringify({ runTurn })).toString("base64"),
+      body: Buffer.from(JSON.stringify({})).toString("base64"),
       headers: {
         "Content-Type": "application/json"
       }
@@ -408,11 +420,10 @@ async function scheduleNextSMSRoutine(secs, runTurn) {
       seconds: Date.now() / 1000 + intSecs
     }
   };
-
   try {
-    return await tasksClient.createTask({ parent: queuePath, task });
+    await tasksClient.createTask({ parent: queuePath, task });
   } catch (e) {
-    console.error("sub-scheduler error ", e);
+    console.error("executeSMSPoll.createTask error ", e);
   }
 }
 
@@ -427,6 +438,11 @@ async function getNewSMSRoutine() {
   let replies =
     (serviceReply.Replies && serviceReply.Replies.Reply_Record) || [];
   console.log("Found " + replies.length + " new messages");
+
+  return replies;
+}
+
+async function processNewSMSs(replies) {
   //sort our SMS according to when they were received
   try {
     replies = replies.sort((e1, e2) => {
@@ -435,7 +451,8 @@ async function getNewSMSRoutine() {
   } catch (e) {
     console.log("sorting error", e);
   }
-  replies.forEach(async m => {
+  for (let i = 0; i < replies.length; i++) {
+    let m = replies[i];
     try {
       //validate queueId
       let [queueId, leave] = m["Message"].trim().toUpperCase().split(" ");
@@ -498,7 +515,7 @@ async function getNewSMSRoutine() {
       await sendSMS([m["MSISDN"]], `\n${e.message}`);
       console.error(m, e);
     }
-  });
+  }
 }
 
 async function createTicketInQueue(
