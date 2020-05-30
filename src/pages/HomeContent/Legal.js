@@ -26,6 +26,7 @@ const Container = styled(Box)`
 
 const useStyles = makeStyles(theme => ({
   gridContainer: {
+    flex: 1,
     alignContent: "center",
     padding: "20px 32px 50px",
     [theme.breakpoints.up("md")]: {
@@ -40,7 +41,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const TermsConditions = props => {
+const Legal = ({
+  titleLabel,
+  textLabel,
+  pageId,
+  analyticsTitle,
+  isDesktop
+}) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -48,17 +55,19 @@ const TermsConditions = props => {
     <>
       <Container
         style={{
-          backgroundImage: `url(${props.isDesktop ? bgDesktop : bgMobile})`,
-          height: "100vh"
+          backgroundImage: `url(${isDesktop ? bgDesktop : bgMobile})`,
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column"
         }}
       >
-        <TitleComponent title="Termos e Condições" pageId="terms_conditions" />
+        <TitleComponent title={analyticsTitle} pageId={pageId} />
         <Grid container direction="column" className={classes.gridContainer}>
           <Grid item>
-            <Typography variant="h1">{t("terms#title")}</Typography>
+            <Typography variant="h1">{t(titleLabel)}</Typography>
           </Grid>
 
-          <div className="termosCondicoesText">
+          <div>
             <pre
               style={{
                 lineHeight: "150%",
@@ -66,7 +75,7 @@ const TermsConditions = props => {
                 textAlign: "justify",
                 color: "#484848"
               }}
-              dangerouslySetInnerHTML={{ __html: t("terms#text") }}
+              dangerouslySetInnerHTML={{ __html: t(textLabel) }}
             />
           </div>
         </Grid>
@@ -76,4 +85,4 @@ const TermsConditions = props => {
   );
 };
 
-export default withRouter(TermsConditions);
+export default withRouter(Legal);
