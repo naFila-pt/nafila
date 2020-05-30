@@ -216,6 +216,25 @@ function Manage({ queueId, openSnackbar }) {
     setAlertOpen(false);
   };
 
+  const handleSendingCounter = (action, counter) => {
+    if (queue) {
+      setSendingCounter(true);
+      firestore
+        .collection("counters")
+        .doc(queue.counterId)
+        .update({ current: counter })
+        .then(() => {
+          setSendingCounter(false);
+          action === "add" ? handleAddCounter() : handleRemoveCounter();
+        })
+        //send alert to user when is not being saved in firestore
+        .catch(err => {
+          setSendingCounter(false);
+          console.error(err);
+        });
+    }
+  };
+
   const ImagesWrapper = styled(Grid)`
     display: none;
 
@@ -311,22 +330,6 @@ function Manage({ queueId, openSnackbar }) {
     if (queue) setLoading(false);
   }, [queue]);
 
-  useEffect(() => {
-    if (queue) {
-      setSendingCounter(true);
-      firestore
-        .collection("counter")
-        .doc(queue.counterId)
-        .update({ current: counter })
-        .then(() => setSendingCounter(false))
-        //send alert to user when is not being saved in firestore
-        .catch(err => {
-          setSendingCounter(false);
-          console.error(err);
-        });
-    }
-  }, [counter, queue]);
-
   if (loading) return <Loader />;
 
   return (
@@ -409,7 +412,9 @@ function Manage({ queueId, openSnackbar }) {
                   <CounterWrapper>
                     <ButtonCircleUp
                       disabled={counter === 0 || isSendingCounter}
-                      onClick={handleRemoveCounter}
+                      onClick={() =>
+                        handleSendingCounter("remove", counter - 1)
+                      }
                     >
                       <RemoveIcon />
                     </ButtonCircleUp>
@@ -419,7 +424,7 @@ function Manage({ queueId, openSnackbar }) {
                     </Typography>
 
                     <ButtonCircleDown
-                      onClick={handleAddCounter}
+                      onClick={() => handleSendingCounter("add", counter + 1)}
                       disabled={isSendingCounter}
                     >
                       <AddIcon />
