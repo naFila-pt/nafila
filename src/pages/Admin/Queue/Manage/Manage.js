@@ -21,6 +21,10 @@ import {
 import IconGirl from "../../../../assets/icons/rapariga-queue.svg";
 import IconGirlTwo from "../../../../assets/icons/rapariga-gravida-queue.svg";
 
+import TitleComponent from "../../../../components/TitleComponent";
+
+import { ButtonsContainer } from "../../common";
+
 const pageMinHeight = 550;
 
 const ManageQueueContainer = styled.div`
@@ -229,6 +233,7 @@ function Manage({ queueId, openSnackbar }) {
           const data = snapshot.data();
 
           if (
+            data &&
             data.analyticsServerEvents &&
             data.analyticsServerEvents.length >= currentAnalyticsIndex
           ) {
@@ -268,6 +273,7 @@ function Manage({ queueId, openSnackbar }) {
         style={{ position: "relative", minHeight: pageMinHeight + 56 }}
         bg={Bg}
       >
+        <TitleComponent title="Gerir fila" pageId="manage_queue" />
         <Modal
           open={showModal}
           onClose={handleCloseModal}

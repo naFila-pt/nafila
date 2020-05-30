@@ -19,11 +19,13 @@ import storeIcon from "../../../assets/icons/store-icon.svg";
 import siteIcon from "../../../assets/icons/site_icon.svg";
 import chamadaIcon from "../../../assets/icons/icon_chamada_mobile.svg";
 import smsIcon from "../../../assets/icons/icon_sms_mobile.svg";
-import howToUseIcon from "../../../assets/icons/ilustração_utilização_mobile.svg";
+import howToUseIcon from "../../../assets/icons/ilustração_utilização_mobile_lojista.svg";
 import yellowLogo from "../../../assets/icons/logo_amarelo_naFila.svg";
 import logoSrc from "../../../assets/logo.svg";
 import leftPerson from "../../../assets/icons/human-onboarding-left.svg";
 import rightPerson from "../../../assets/icons/human-onboarding-right.svg";
+
+import TitleComponent from "../../TitleComponent";
 
 const useStyles = makeStyles({
   stepper: {
@@ -291,6 +293,10 @@ const Layout = ({ children, endOnBoarding }) => {
       className={"OnboardingWrapper"}
       style={{ backgroundImage: `url(${bgMainMobile})` }}
     >
+      <TitleComponent
+        title="Lojista - Como funciona"
+        pageId="operator_tutorial"
+      />
       <Grid direction="column" style={{ height: "100vh", display: "flex" }}>
         <Grid container direction="column" style={{ height: "56px" }}>
           <ToolbarWrapper>

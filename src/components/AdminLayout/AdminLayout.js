@@ -40,10 +40,7 @@ function Layout({ children, bg, hideLogo, style }) {
     flexDirection: "column",
     style: {
       ...style,
-      background: `url(${bg})`,
-      backgroundSize: "cover",
-      backgroundPosition: "0px",
-      backgroundRepeat: "no-repeat",
+      background: `url(${bg}) no-repeat scroll 0px center / cover`,
       textAlign: "center"
     }
   };

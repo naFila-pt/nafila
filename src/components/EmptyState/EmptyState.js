@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 
 import { Box, Typography } from "@material-ui/core";
 
+import TitleComponent from "../TitleComponent";
+
 class EmptyState extends Component {
   render() {
     // Properties
@@ -32,6 +34,7 @@ class EmptyState extends Component {
           left="50%"
           textAlign="center"
         >
+          <TitleComponent title="404 - Página inexistente" pageId="not_found" />
           {icon && (
             <Box clone color="text.secondary" fontSize={fontSize}>
               {icon}

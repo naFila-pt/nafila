@@ -3,9 +3,11 @@ import { useTranslation } from "react-i18next";
 import { Typography } from "@material-ui/core";
 
 import Loader from "../../components/Loader";
-import { ReactComponent as Logo } from "../../assets/images/logo.svg";
-import { ReactComponent as Group } from "../../assets/images/group.svg";
-import { firestore } from "../../firebase";
+
+import Logo from "../../assets/icons/naFilaOnlyLine.svg";
+import FooterRight from "../../assets/icons/footerNaFilaLink.svg";
+import FooterLeft from "../../assets/icons/footerTech4covidAndPartners.svg";
+import { firestore, analytics } from "../../firebase";
 
 import * as S from "./style";
 
@@ -34,7 +36,13 @@ function QueuePoster({
       .doc(queueId)
       .get()
       .then(response => {
-        setQueue(response.data());
+        let queueData = response.data();
+        analytics.setUserProperties({
+          shop: queueData.shop,
+          retailerGroup: queueData.retailerGroup,
+          shoppingCentre: queueData.shoppingCentre
+        });
+        setQueue(queueData);
         setLoading(false);
       });
   }, [queueId]);
@@ -43,37 +51,29 @@ function QueuePoster({
 
   return (
     <S.PosterContainer>
-      <div
-        className="brand-slogan"
+      <Typography className="queue-name">{queue.name}</Typography>
+      <Typography className="date">{getDate()}</Typography>
+      <Typography className="time-in-queue">
+        {t("admin#queuePoster_mark_your_time_in_queue")}
+      </Typography>
+      <p
+        className="send-sms-queue"
         dangerouslySetInnerHTML={{
-          __html: t("admin#queuePoster_brandSlogan")
+          __html: t("admin#send_free_sms_queue", { queueCode: queueId })
         }}
-      />
-
-      <Logo />
-
-      <div className="store-name">{queue.name}</div>
-
-      <Typography variant="h3">{t("admin#queuePoster_queueCode")}</Typography>
-
-      <div className="queue-date">{getDate()}</div>
-
-      <div className="queue-code">{queueId}</div>
-
-      <div
-        className="queue-enter-with"
-        dangerouslySetInnerHTML={{
-          __html: t("admin#queuePoster_enterQueueWith")
-        }}
-      />
-
-      <div className="queue-icon">
-        <div className="sms-explainer">
-          Envie <span>nafila {queueId}</span>
-          <br />
-          para o <span>4902</span>
+      ></p>
+      <div className="logo-container">
+        <img src={Logo} width="100%" height="100%" alt="logo" />
+        <div className="queue-info">
+          <div className="queue-code-label">
+            {t("admin#queuePoster_queueCode")}
+          </div>
+          <div className="queue-code-value">{queueId}</div>
         </div>
-        <Group />
+      </div>
+      <div className="footer">
+        <img src={FooterLeft} height="100%" alt="partners" />
+        <img src={FooterRight} height="100%" alt="naFila" />
       </div>
     </S.PosterContainer>
   );

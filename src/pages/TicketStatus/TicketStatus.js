@@ -10,6 +10,10 @@ import Button from "../../components/Button";
 import ConsumerTicket from "../../components/ConsumerTicket";
 import bgMain from "../../assets/bg/main.svg";
 
+import TitleComponent from "../../components/TitleComponent";
+
+import { analytics } from "../../firebase";
+
 const useStyles = makeStyles({
   gridContainer: {
     alignContent: "center",
@@ -50,6 +54,7 @@ const TicketStatus = ({ openSnackbar }) => {
   const [queue, setQueue] = useState();
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
+  const [ticketPassed, setTicketPassed] = useState(true);
 
   const urlParam = window.location.hash.substr(1);
 
@@ -80,7 +85,13 @@ const TicketStatus = ({ openSnackbar }) => {
       .collection("queues")
       .doc(queueId)
       .onSnapshot(snapshot => {
-        setQueue(snapshot.data());
+        let queueData = snapshot.data();
+        analytics.setUserProperties({
+          shop: queueData.shop,
+          retailerGroup: queueData.retailerGroup,
+          shoppingCentre: queueData.shoppingCentre
+        });
+        setQueue(queueData);
       });
 
     return () => {
@@ -89,11 +100,15 @@ const TicketStatus = ({ openSnackbar }) => {
   }, [queueId]);
 
   useEffect(() => {
-    if (queue) setLoading(false);
-  }, [queue]);
+    if (queue) {
+      setLoading(false);
+      setTicketPassed(ticketNumber <= queue.currentTicketNumber);
+    }
+  }, [queue, ticketNumber]);
 
   return (
     <HomeLayout bg={[bgMain]} forceLogoDisplay>
+      <TitleComponent title="Estado de senha" pageId="ticket_status" />
       <Grid container direction="column">
         <Grid item className={classes.gridItem} style={{ paddingTop: ".8em" }}>
           <div style={{ fontSize: "1.25em" }}>
@@ -115,7 +130,7 @@ const TicketStatus = ({ openSnackbar }) => {
                 {loading ? "" : queue.currentTicketNumber}
               </div>
             </Grid>
-            {!loading && ticketNumber > queue.currentTicketNumber ? (
+            {!loading && !ticketPassed ? (
               <Grid item>
                 <div style={{ fontSize: "1.25em" }}>
                   {t("home#ticket_length")}
@@ -139,6 +154,7 @@ const TicketStatus = ({ openSnackbar }) => {
             onClick={fakeUpdate}
             disabled={loading}
             variant={loading || updating ? "inactive" : ""}
+            refresh
           >
             {t(loading ? "global#wait_please" : "home#atualizar")}
           </Button>
@@ -146,14 +162,16 @@ const TicketStatus = ({ openSnackbar }) => {
         <div
           style={{ textAlign: "center", marginTop: "1em", marginBottom: "2em" }}
         >
-          <Button
-            onClick={leaveQueue}
-            disabled={loading}
-            variant={"gray"}
-            style
-          >
-            {t(loading ? "global#wait_please" : "home#sair_da_fila")}
-          </Button>
+          {!ticketPassed && (
+            <Button
+              onClick={leaveQueue}
+              disabled={loading || ticketPassed}
+              variant={"gray"}
+              forward
+            >
+              {t(loading ? "global#wait_please" : "home#sair_da_fila")}
+            </Button>
+          )}
         </div>
       </Grid>
     </HomeLayout>

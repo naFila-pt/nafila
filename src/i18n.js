@@ -14,9 +14,14 @@ i18n
           "global#wait_please": "Aguarde ...",
           "global#cookie_banner": "Ao utilizar este website, aceita a nossa",
           "global#cookie_bannerLink": " política de privacidade.",
+          "onboarding#justOneSMS": "Basta uma SMS!",
           "onboarding#intro_welcome": "Bem Vindo!",
           "onboarding#intro_pitch": "na<b>fila</b>. Sem filas.",
           "onboarding#store_title": "É simples!",
+          "onboarding#register_site_title": "Prefere registar-se no site?",
+          "onboarding#register_site_description":
+            "Visite <b>nafila.pt</b>, insira <b>o código da fila</b> e <b>o seu telemóvel</b>, para ser notificado.",
+          "onboarding#phone_number": "Número de Telemóvel",
           "onboarding#store_description":
             "A sua Loja Favorita afixa <b>um código por dia</b>, que deve utilizar para <b>entrar</b> na<b>fila</b>.",
           "onboarding#useCode_title": "Utilize o código",
@@ -28,7 +33,7 @@ i18n
             "Registe-se na<b>fila</b> enviando uma <b>SMS grátis</b> para o 4902 com: <b>nafila {código da Fila}",
           "onboarding#difficulties":
             "Se tiver alguma dificuldade, fale com o colaborador de loja.",
-          "onboarding#prefer_email": "Prefere receber Email?",
+          "onboarding#prefer_register_site": "Prefere registar-se no site?",
           "onboarding#insertCodeEmail":
             "Visite <b>nafila.pt</b>, insira o <b>código da fila</b> e <b>o seu email</b> para ser notificado.",
           "onboarding#prefer_name": "Prefere ser chamado pelo Nome?",
@@ -62,21 +67,21 @@ i18n
           "home#queue_store": "Loja",
           "home#queue_length": "À sua frente",
           "home#queue_people": "pessoas",
-          "home#queue_button": "Continuar",
+          "home#queue_button": "Tirar senha",
           "home#notification_description":
-            "Indique-nos o seu email para receber a <b>notificação</b>.",
-          "home#notification_inputPlaceholder": "Email",
+            "Indique-nos o seu telemóvel para receber a <b>notificação</b>.",
+          "home#notification_inputPlaceholder": "Número de telemóvel",
           "home#notification_terms":
-            '<b>Ao carregar em "Tirar Senha"</b>, confirma que leu e compreendeu os',
+            '<b>Ao carregar em "Continuar"</b>, confirma que leu e compreendeu os',
           "home#notification_termsLink":
             "termos e condições da proteção de dados",
-          "home#notification_button": "Tirar Senha",
+          "home#notification_button": "Continuar",
           "home#ticket_store": "Loja",
           "home#ticket_turn": "A sua vez",
           "home#ticket_currentQueue": "Agora",
           "home#ticket_length": "À sua frente",
           "home#ticket_notification":
-            "Receberá um email quando estiver a chegar a sua vez.",
+            "Acompanhe neste ecrã o progresso da fila.",
           "home#help_label": "Ver como funciona",
           "home#lojista_label": "É lojista ?",
           "home#consumidor_label": "É consumidor ?",
@@ -273,6 +278,9 @@ i18n
           // Admin Queue Management
           "admin#queueManagement_letsStart": "Vamos iniciar a fila?",
           "admin#queueManagement_queueName": "Nome da Fila",
+          "admin#queueManagement_storeCapacity": "Lotação Máxima Simultânea",
+          "admin#queueManagement_storeCapacity_placeholder":
+            "Preencha com a lotação máxima",
           "admin#queueManagement_emailWithCode":
             "Depois de receber o <strong>código de fila</strong> no seu email, <strong>imprima-o e coloque-o num lugar visível ao público.</strong>",
           "admin#queueManagement_startQueue": "Começar",
@@ -301,7 +309,11 @@ i18n
           "admin#queuePoster_queueCode": "Código da Fila",
           "admin#queuePoster_enterQueueWith":
             "Entre &nbsp <b>nafila</b> &nbsp com...",
-          "admin#queuePoster_brandSlogan": "<b>naFila</b>, sem filas."
+          "admin#queuePoster_brandSlogan": "<b>naFila</b>, sem filas.",
+          "admin#queuePoster_mark_your_time_in_queue":
+            "MARQUE A SUA VEZ NA FILA",
+          "admin#send_free_sms_queue":
+            "Envie <b>SMS GRÁTIS</b> com <b><span class='larger'> nafila {{queueCode}}</span></b> para o <b>4902</b>"
         }
       }
     },
