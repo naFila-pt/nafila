@@ -21,7 +21,7 @@ import storeIcon from "../../../assets/icons/store-icon.svg";
 import siteIcon from "../../../assets/icons/site_icon.svg";
 import chamadaIcon from "../../../assets/icons/icon_chamada_mobile.svg";
 import smsIcon from "../../../assets/icons/icon_sms_mobile.svg";
-import howToUseIcon from "../../../assets/icons/ilustração_utilização_mobile.svg";
+import howToUseIcon from "../../../assets/icons/ilustração_utilização_mobile_lojista.svg";
 import yellowLogo from "../../../assets/icons/logo_amarelo_naFila.svg";
 
 import { ReactComponent as LogoMini } from "../../../assets/logo-mini.svg";
