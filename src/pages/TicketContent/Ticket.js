@@ -58,7 +58,7 @@ const useStyles = makeStyles({
 
 const HomeContent = ({ openSnackbar }) => {
   const urlParam = window.location.search.substr(1);
-  const initialActiveStep = urlParam === "skipIntro" ? 1 : 0;
+  const initialActiveStep = urlParam === "skipIntro" ? 2 : 1; // 1 because title component should be ignored in homelayout.
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -177,7 +177,7 @@ const HomeContent = ({ openSnackbar }) => {
   };
 
   return (
-    <HomeLayout bg={[bgStore, bgMain]} activeStep={activeStep}>
+    <HomeLayout bg={[bgStore, bgStore, bgMain]} activeStep={activeStep}>
       <TitleComponent title="Nova senha" pageId="new_ticket" />
       <Grid container direction="column" className={classes.gridContainer}>
         <Grid item className={classes.gridItem}>
