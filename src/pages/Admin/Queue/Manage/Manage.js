@@ -506,7 +506,7 @@ function Manage({ queueId, openSnackbar }) {
           onClose={handleAlertClose}
         >
           <AlertWrapper onClose={handleAlertClose} severity="warning">
-            Está acima da lotação escolhida.
+            {t("admin#queueManagement_warning_message")}
           </AlertWrapper>
         </Snackbar>
       </Layout>

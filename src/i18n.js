@@ -293,6 +293,8 @@ i18n
           "admin#queueManagement_endQueue": `Terminar <span class="logo">na<b>fila</b></span>`,
           "admin#queueManagement_remaining": "Restantes",
           "admin#queueManagement_wait": "Aguarde ...",
+          "admin#queueManagement_warning_message":
+            "Está acima da lotação escolhida.",
 
           // End Queue
           "main#endQueue_title": "Pretende terminar a Fila actual?",
