@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Modal, Grid } from "@material-ui/core";
+import { Typography, Modal, Grid, Snackbar } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import AddIcon from "@material-ui/icons/Add";
 import MaterialButton from "@material-ui/core/Button";
 import RemoveIcon from "@material-ui/icons/Remove";
+import MuiAlert from "@material-ui/lab/Alert";
 
 import Layout from "../../../../components/AdminLayout";
 import Loader from "../../../../components/Loader";
@@ -23,7 +24,9 @@ import IconGirlTwo from "../../../../assets/icons/rapariga-gravida-queue.svg";
 
 import TitleComponent from "../../../../components/TitleComponent";
 
-import { ButtonsContainer } from "../../common";
+function AlertWrapper(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const pageMinHeight = 550;
 
@@ -42,6 +45,10 @@ const ManageQueueContainer = styled.div`
   .logo {
     text-transform: lowercase;
   }
+
+  @media (min-width: 768px) {
+    margin-top: 4vh;
+  }
 `;
 const TicketContainer = styled.div`
   width: 9.4em;
@@ -57,21 +64,14 @@ const TicketContainer = styled.div`
     font-weight: 900;
   }
 `;
-const TicketsRemaining = styled.div`
-  position: absolute;
-  left: 5%;
-  top: 20%;
 
+const TicketsRemaining = styled.div`
   > div {
     font-size: ${window.innerWidth <= 320 ? 18 : 20}px;
   }
 
   h4 {
     font-weight: 900;
-  }
-
-  @media (min-width: 768px) {
-    left: 25%;
   }
 `;
 
@@ -122,25 +122,37 @@ const IconGirlPregnant = styled.div`
   user-select: none;
 `;
 
-const ButtonCircle = styled(MaterialButton)`
-  width: 40px;
-  min-width: 40px;
-  height: 40px;
+const ButtonCircleUp = styled(MaterialButton)`
+  width: 50px;
+  min-width: 45px;
+  height: 50px;
   background-color: #ffc836 !important;
   box-shadow: 0px 11px 19px rgba(0, 0, 0, 0.248689);
   border-radius: 50%;
   margin-bottom: 25px;
+`;
+
+const ButtonCircleDown = styled(MaterialButton)`
+  width: 50px;
+  min-width: 45px;
+  height: 50px;
+  background-color: #ffc836 !important;
+  box-shadow: 0px 11px 19px rgba(0, 0, 0, 0.248689);
+  border-radius: 50%;
   margin-top: 25px;
 `;
 
 const CounterWrapper = styled.div`
-  position: absolute;
-  top: 9vh;
-  right: 6vh;
+  @media (min-width: 768px) {
+  }
+`;
+
+const TicketWrapper = styled(Grid)`
+  justify-content: space-around;
 
   @media (min-width: 768px) {
-    top: 6vh;
-    right: 30vh;
+    margin: 0 auto;
+    width: 60%;
   }
 `;
 
@@ -151,6 +163,9 @@ function Manage({ queueId, openSnackbar }) {
   const [queue, setQueue] = useState();
   const [showModal, setShowModal] = useState(false);
   const [counter, setCounter] = useState(0);
+  const [maxCapacity, setMaxCapacity] = useState(0);
+  const [isAlertOpen, setAlertOpen] = useState(false);
+  const [isSendingCounter, setSendingCounter] = useState(false);
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -166,7 +181,7 @@ function Manage({ queueId, openSnackbar }) {
     const callNextOnQueue = functions.httpsCallable("callNextOnQueue");
 
     callNextOnQueue({ queueId })
-      .then(function({ data: { queue } }) {
+      .then(function ({ data: { queue } }) {
         if (queue.currentTicketName) {
           handleOpenModal();
         }
@@ -183,13 +198,22 @@ function Manage({ queueId, openSnackbar }) {
 
   const handleAddCounter = () => {
     //TODO validate max capacity, if it capped, an error message should appear.
-    setCounter(prevState => prevState + 1);
+    if (counter >= maxCapacity) {
+      setAlertOpen(true);
+      setCounter(prevState => prevState + 1);
+    } else {
+      setCounter(prevState => prevState + 1);
+    }
   };
 
   const handleRemoveCounter = () => {
     if (counter > 0) {
       setCounter(prevState => prevState - 1);
     }
+  };
+
+  const handleAlertClose = () => {
+    setAlertOpen(false);
   };
 
   const ImagesWrapper = styled(Grid)`
@@ -206,6 +230,16 @@ function Manage({ queueId, openSnackbar }) {
 
     @media (min-width: 768px) {
       display: flex;
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+    }
+  `;
+
+  const RemainingTitle = styled.div`
+    @media (max-width: 320px) {
+      font-size: 16px !important;
+      margin-left: 8px;
     }
   `;
 
@@ -253,6 +287,18 @@ function Manage({ queueId, openSnackbar }) {
           }
 
           setQueue(data);
+
+          //get counter
+          firestore
+            .collection("counters")
+            .doc(data.counterId)
+            .get()
+            .then(response => {
+              console.log(response.data());
+              const counterData = response.data();
+              setMaxCapacity(counterData.maxCapacity);
+              setCounter(counterData.current);
+            });
         });
     });
 
@@ -264,6 +310,22 @@ function Manage({ queueId, openSnackbar }) {
   useEffect(() => {
     if (queue) setLoading(false);
   }, [queue]);
+
+  useEffect(() => {
+    if (queue) {
+      setSendingCounter(true);
+      firestore
+        .collection("counter")
+        .doc(queue.counterId)
+        .update({ current: counter })
+        .then(() => setSendingCounter(false))
+        //send alert to user when is not being saved in firestore
+        .catch(err => {
+          setSendingCounter(false);
+          console.error(err);
+        });
+    }
+  }, [counter, queue]);
 
   if (loading) return <Loader />;
 
@@ -302,41 +364,69 @@ function Manage({ queueId, openSnackbar }) {
           <Grid item xs={12} sm={5}>
             <ManageQueueContainer>
               <div>{t("admin#queueManagement_queueCode")}</div>
-              <Typography variant="h3">
+              <Typography variant="h3" style={{ marginBottom: "4vh" }}>
                 {queue && queue.name} ({queueId})
               </Typography>
 
-              <TicketContainer>
-                <div>
-                  <Typography variant="h2">
-                    {queue &&
-                      String(queue.currentTicketNumber).padStart(3, "0")}
-                  </Typography>
-                </div>
+              <TicketWrapper container>
+                <Grid
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    width: "15%",
+                    justifyContent: "center"
+                  }}
+                >
+                  <TicketsRemaining>
+                    <RemainingTitle>
+                      {t("admin#queueManagement_remaining")}
+                    </RemainingTitle>
+                    <Typography variant="h4">
+                      {maxCapacity - counter < 0
+                        ? `+${Math.abs(maxCapacity - counter)}`
+                        : maxCapacity - counter}
+                    </Typography>
+                  </TicketsRemaining>
+                </Grid>
 
-                <div>
-                  <Typography variant="h5">
-                    {t("admin#queueManagement_call")}
-                  </Typography>
-                </div>
-              </TicketContainer>
+                <Grid>
+                  <TicketContainer>
+                    <div>
+                      <Typography variant="h2">
+                        {queue &&
+                          String(queue.currentTicketNumber).padStart(3, "0")}
+                      </Typography>
+                    </div>
 
-              <TicketsRemaining>
-                <div>{t("admin#queueManagement_remaining")}</div>
-                <Typography variant="h4">
-                  {queue ? queue.remainingTicketsInQueue : 0}
-                </Typography>
-              </TicketsRemaining>
+                    <div>
+                      <Typography variant="h5">
+                        {t("admin#queueManagement_call")}
+                      </Typography>
+                    </div>
+                  </TicketContainer>
+                </Grid>
+                <Grid>
+                  <CounterWrapper>
+                    <ButtonCircleUp
+                      disabled={counter === 0 || isSendingCounter}
+                      onClick={handleRemoveCounter}
+                    >
+                      <RemoveIcon />
+                    </ButtonCircleUp>
 
-              <CounterWrapper>
-                <ButtonCircle onClick={handleAddCounter}>
-                  <AddIcon />
-                </ButtonCircle>
-                <Typography variant="h4">{counter}</Typography>
-                <ButtonCircle onClick={handleRemoveCounter}>
-                  <RemoveIcon />
-                </ButtonCircle>
-              </CounterWrapper>
+                    <Typography style={{ margin: "40px auto" }} variant="h4">
+                      {counter}
+                    </Typography>
+
+                    <ButtonCircleDown
+                      onClick={handleAddCounter}
+                      disabled={isSendingCounter}
+                    >
+                      <AddIcon />
+                    </ButtonCircleDown>
+                  </CounterWrapper>
+                </Grid>
+              </TicketWrapper>
 
               {queue && queue.currentTicketName && (
                 <>
@@ -394,10 +484,10 @@ function Manage({ queueId, openSnackbar }) {
           <ImagesWrapper item sm={7}>
             <div style={{ display: "flex" }}>
               <IconGirlWalking>
-                <img src={IconGirl} width="100%" />
+                <img src={IconGirl} alt={"bgIconGirl"} width="100%" />
               </IconGirlWalking>
               <IconGirlPregnant>
-                <img src={IconGirlTwo} width="100%" />
+                <img src={IconGirlTwo} alt={"bgIconGirlTwo"} width="100%" />
               </IconGirlPregnant>
             </div>
           </ImagesWrapper>
@@ -405,6 +495,15 @@ function Manage({ queueId, openSnackbar }) {
         <FooterWrapper>
           <Footer />
         </FooterWrapper>
+        <Snackbar
+          open={isAlertOpen}
+          autoHideDuration={6000}
+          onClose={handleAlertClose}
+        >
+          <AlertWrapper onClose={handleAlertClose} severity="warning">
+            Está acima da lotação escolhida.
+          </AlertWrapper>
+        </Snackbar>
       </Layout>
     </>
   );
