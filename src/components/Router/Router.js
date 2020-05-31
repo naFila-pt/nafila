@@ -5,8 +5,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import PrivateRoute from "../PrivateRoute";
 
 import OnBoardingContent from "../../pages/OnBoardingContent";
-import { Legal, Home } from "../../pages/HomeContent";
-import { TermsConditions, Home, AboutUs } from "../../pages/HomeContent";
+import { TermsConditions, Home, AboutUs, Legal } from "../../pages/HomeContent";
 import { Ticket, Leave } from "../../pages/TicketContent";
 import TicketStatus from "../../pages/TicketStatus";
 import QueuePoster from "../../pages/QueuePoster";
