@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Component } from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@material-ui/core/Box";
 import Swiper from "swiper";
 
@@ -159,12 +159,12 @@ const BigLabel = styled.div`
   }
 `;
 
-function QueueStatus({ openSnackbar }) {
+function QueueStatus() {
   const { t } = useTranslation();
   const [queuesData, setQueuesData] = useState({});
   const [requestQueues, setRequest] = useState(false);
 
-  const swiper = new Swiper(".swiper-container", {
+  new Swiper(".swiper-container", {
     slidesPerView: 1,
     spaceBetween: 30,
     pagination: {
