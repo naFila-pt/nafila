@@ -163,6 +163,42 @@ i18n
           
           Se, por algum motivo, considerar necessário, pode sempre preencher uma reclamação junto da Comissão Nacional de Protecção de Dados (CNPD).`,
 
+          // About Us
+          "about_us#title_about_us": "Sobre nós",
+          "about_us#title_what": "O que é?",
+          "about_us#text_what":
+            "O na<b>fila</b> é uma solução de senhas virtuais que visa ajudar comerciantes e consumidores a tornar as compras essenciais mais cómodas e seguras. Através de um sistema 100% gratuito, qualquer pessoa pode dirigir-se a uma loja aderente nafila e introduzir o código da fila com o telemóvel, recebendo de seguida uma senha virtual que irá permitir aguardar a sua vez em segurança e longe das outras pessoas.",
+          "about_us#title_why": "Porquê?",
+          "about_us#text_why":
+            "O na<b>fila</b> é um <b>projecto do #movimentotech4covid19</b>, um esforço voluntário de procura de soluções contra a recente epidemia. O projecto na<b>fila</b> foi pensado para reduzir o risco de contágio em filas à porta de comércio essencial como supermercados ou farmácias.",
+          "about_us#title_team": "A equipa",
+          "about_us#text_team": `
+          O ano de 2020 ficará para a história como o ano em que a Terra parou. Em que a humanidade necessitou de se adaptar e ajustar a uma escala sem precedentes. Apesar de todas as dificuldades vividas, esta também será uma época que ficará recordada pela resiliência humana, pela solidariedade e espírito de sacrifício.
+          <br><br>
+          O <b>Movimento Tech4Covid19</b> e, em particular, o projeto na<b>fila</b> é um exemplo disso. Em pouco mais que 2 semanas, formámos uma equipa que conta hoje com mais de 40 voluntários que, sem se conhecerem de lado algum, uniram-se com um tremendo sentido de missão e decidiram dedicar o seu tempo e recursos para desenvolver em tempo recorde esta solução. <b>O nafila procura mitigar o contágio do Covid-19, protegendo os consumidores através de um sistema de gestão de filas touchless</b> (sem toque), de livre acesso a todos os empresários e consumidores portugueses.
+          <br><br>
+          É ainda importante deixar <b>uma palavra de agradecimento às empresas que apoiam esta iniciativa</b>. A MyTurn e a MobiQueue que contribuíram com inputs valiosos, partilhando a sua experiência, enquanto empresas fornecedoras de sistemas de gestão de filas com anos de presença no mercado, e também a NOS, e a Google, <b>que permitiram tornar possível o ambicioso objetivo de oferecer uma solução totalmente livre de custos aos empresários e consumidores portugueses</b>.
+          <br><br>
+          A todos um enorme obrigado. Juntos conseguimos. 💪
+          <br><br>
+          <b>Nuno Góis</b> Coordenação do na<b>fila</b>`,
+          "about_us#title_collaboration": "Colaboração",
+          "about_us#title_partners": "Parceiros",
+          "about_us#title_contact": "Contacto",
+          "about_us#button_label_contact": "Enviar mensagem",
+          "about_us#text_tech4Covid":
+            "Este projeto faz parte do movimento #tech4COVID19, um grupo de voluntários que se juntou para encontrar soluções mais rápidas do que a disseminação do novo coronavírus, responsável pela doença COVID-19 nos seres humanos.",
+          "about_us#title_illustrations": "Ilustrações",
+          "about_us#text_illustrations":
+            "As ilustrações usadas foram adaptadas, com base no Projecto <b><a href='https://www.humaaans.com/' target='blank'>humaaans</a></b>, de Pablo Stanley, sob a <b>licença <a href='https://creativecommons.org/licenses/by/4.0/deed.pt' target='blank'>CC BY 4.0</a></b>.",
+          "about_us#title_support": "Suporte para lojistas",
+          "about_us#title_support_instructions": "Cartaz de instruções",
+          "about_us#text_support_instructions":
+            "Faça aqui o <b>download do cartaz de instruções</b> (<b><a href='{{filepathColorful}}' target='blank'>versão a cores</a></b> ou <b><a href='{{filepathBlackWhite}}' target='blank'>versão a preto e branco</a></b>) para colocar à porta do seu estabelecimento.",
+          "about_us#title_support_implementation_kit": "Kit de implementação",
+          "about_us#text_support_implementation_kit":
+            "Faça <b><a href='{{filepath}}' target='blank'>download do kit de implementação</a></b> do na<b>fila</b> onde poderá ver passo-a-passo como utilizar o nosso sistema de senhas.",
+
           "leave#title": "Saiu da Fila",
           "leave#title-failed": "Senha não encontrada",
           "leave#description":
