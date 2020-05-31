@@ -9,6 +9,7 @@ import { TermsConditions, Home } from "../../pages/HomeContent";
 import { Ticket, Leave } from "../../pages/TicketContent";
 import TicketStatus from "../../pages/TicketStatus";
 import QueuePoster from "../../pages/QueuePoster";
+import QueueStatus from "../../pages/QueueStatus";
 import Admin from "../../pages/Admin";
 import NotFoundContent from "../../pages/NotFoundContent";
 import * as Routes from "../../constants/RoutesConstants";
@@ -64,6 +65,9 @@ class Router extends Component {
           </Route>
           <Route path={Routes.ADMIN_RECOVER_PASSWORD_PATH} exact>
             <Admin.RecoverPassword {...this.props} />
+          </Route>
+          <Route path={Routes.QUEUE_STATUS} exact>
+            <QueueStatus {...this.props} />
           </Route>
 
           <PrivateRoute

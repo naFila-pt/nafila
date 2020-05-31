@@ -15,7 +15,7 @@ i18n
           "global#cookie_banner": "Ao utilizar este website, aceita a nossa",
           "global#cookie_bannerLink": " política de privacidade.",
           "onboarding#justOneSMS": "Basta uma SMS!",
-          "onboarding#intro_welcome": "Bem Vindo!",
+          "onboarding#intro_welcome": "Bem-Vindo!",
           "onboarding#intro_pitch": "na<b>fila</b>. Sem filas.",
           "onboarding#store_title": "É simples!",
           "onboarding#register_site_title": "Prefere registar-se no site?",
@@ -143,7 +143,7 @@ i18n
           "leave#goBack": "Voltar",
 
           // Admin translations
-          "admin#intro_welcome": "Bem vindo!",
+          "admin#intro_welcome": "Bem-vindo!",
           "admin#intro_pitch": "na<b>fila</b>. Sem filas.",
           "admin#intro_login": "Entrar",
           "admin#intro_signup": "Registo de Loja",
@@ -313,7 +313,15 @@ i18n
           "admin#queuePoster_mark_your_time_in_queue":
             "MARQUE A SUA VEZ NA FILA",
           "admin#send_free_sms_queue":
-            "Envie <b>SMS GRÁTIS</b> com <b><span class='larger'> nafila {{queueCode}}</span></b> para o <b>4902</b>"
+            "Envie <b>SMS GRÁTIS</b> com <b><span class='larger'> nafila {{queueCode}}</span></b> para o <b>4902</b>",
+
+          // Queue Status
+          "admin#queueStatus_securityLabel": "<b>Para sua segurança: </b>",
+          "admin#queueStatus_securityText": "Use o sistema de senhas virtuais.",
+          "admin#queueStatus_ticketLabel": "<b>Não consegue tirar senha?</b>",
+          "admin#queueStatus_ticketText": "Peça ajuda ao colaborador.",
+          "admin#queueStatus_naFilaLabel":
+            "<span> na<b>fila.</b> </span><span>Sem filas.</span><span>www.nafila.pt</span>"
         }
       }
     },

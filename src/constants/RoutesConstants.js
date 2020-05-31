@@ -18,3 +18,4 @@ export const ONBOARDING_PATH = "/como-funciona";
 export const TCS_PATH = "/termos-condicoes";
 export const QUEUE_POSTER_PATH = "/loja/cartaz-fila/:queueId";
 export const TICKET_STATUS_PATH = "/t";
+export const QUEUE_STATUS = "/queue-status";
