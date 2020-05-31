@@ -164,7 +164,7 @@ i18n
           Se, por algum motivo, considerar necessário, pode sempre preencher uma reclamação junto da Comissão Nacional de Protecção de Dados (CNPD).`,
 
           // About Us
-          "about_us#title_about_us": "Sobre nós",
+          "about_us#title_about_us": "Sobre",
           "about_us#title_what": "O que é?",
           "about_us#text_what":
             "O na<b>fila</b> é uma solução de senhas virtuais que visa ajudar comerciantes e consumidores a tornar as compras essenciais mais cómodas e seguras. Através de um sistema 100% gratuito, qualquer pessoa pode dirigir-se a uma loja aderente nafila e introduzir o código da fila com o telemóvel, recebendo de seguida uma senha virtual que irá permitir aguardar a sua vez em segurança e longe das outras pessoas.",
@@ -190,14 +190,14 @@ i18n
             "Este projeto faz parte do movimento #tech4COVID19, um grupo de voluntários que se juntou para encontrar soluções mais rápidas do que a disseminação do novo coronavírus, responsável pela doença COVID-19 nos seres humanos.",
           "about_us#title_illustrations": "Ilustrações",
           "about_us#text_illustrations":
-            "As ilustrações usadas foram adaptadas, com base no Projecto <b><a href='https://www.humaaans.com/' target='blank'>humaaans</a></b>, de Pablo Stanley, sob a <b>licença <a href='https://creativecommons.org/licenses/by/4.0/deed.pt' target='blank'>CC BY 4.0</a></b>.",
+            "As ilustrações usadas foram adaptadas, com base no Projecto <b><a href='https://www.humaaans.com/' target='_blank' rel='noopener noreferrer'>humaaans</a></b>, de Pablo Stanley, sob a <b>licença <a href='https://creativecommons.org/licenses/by/4.0/deed.pt' target='_blank' rel='noopener noreferrer'>CC BY 4.0</a></b>.",
           "about_us#title_support": "Suporte para lojistas",
           "about_us#title_support_instructions": "Cartaz de instruções",
           "about_us#text_support_instructions":
-            "Faça aqui o <b>download do cartaz de instruções</b> (<b><a href='{{filepathColorful}}' target='blank'>versão a cores</a></b> ou <b><a href='{{filepathBlackWhite}}' target='blank'>versão a preto e branco</a></b>) para colocar à porta do seu estabelecimento.",
+            "Faça aqui o <b>download do cartaz de instruções</b> (<b><a href='{{filepathColorful}}' target='_blank' rel='noopener noreferrer'>versão a cores</a></b> ou <b><a href='{{filepathBlackWhite}}' target='_blank' rel='noopener noreferrer'>versão a preto e branco</a></b>) para colocar à porta do seu estabelecimento.",
           "about_us#title_support_implementation_kit": "Kit de implementação",
           "about_us#text_support_implementation_kit":
-            "Faça <b><a href='{{filepath}}' target='blank'>download do kit de implementação</a></b> do na<b>fila</b> onde poderá ver passo-a-passo como utilizar o nosso sistema de senhas.",
+            "Faça <b><a href='{{filepath}}' target='_blank' rel='noopener noreferrer'>download do kit de implementação</a></b> do na<b>fila</b> onde poderá ver passo-a-passo como utilizar o nosso sistema de senhas.",
 
           "leave#title": "Saiu da Fila",
           "leave#title-failed": "Senha não encontrada",

@@ -9,6 +9,12 @@ import naFilaIcon from "@src/assets/icons/nafila-text.svg";
 import GoogleIcon from "@src/components/Icons/google";
 import NosIcon from "@src/components/Icons/nos";
 
+import {
+  ABOUT_US_PATH,
+  TCS_PATH,
+  PRIVACY_PATH
+} from "@src/constants/RoutesConstants";
+
 const FooterWrapper = styled(Grid)`
   width: 100%;
   display: flex;
@@ -142,7 +148,15 @@ const Footer = () => {
           <p style={{ margin: 0, color: "white", fontSize: "13px" }}>
             <Link
               style={{ color: "white" }}
-              href="/termos-condicoes"
+              href={ABOUT_US_PATH}
+              rel="noopener"
+            >
+              {t("about_us#title_about_us")}
+            </Link>
+            {" | "}
+            <Link
+              style={{ color: "white" }}
+              href={TCS_PATH}
               target="_blank"
               rel="noopener"
             >
@@ -152,7 +166,7 @@ const Footer = () => {
             <Link
               style={{ color: "white" }}
               target="_blank"
-              href="/privacidade"
+              href={PRIVACY_PATH}
               rel="noopener"
             >
               {t("terms#privacy")}
