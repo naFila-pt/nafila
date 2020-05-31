@@ -1,2 +1,2 @@
-export { default as TermsConditions } from "./TermsConditions";
+export { default as Legal } from "./Legal";
 export { default as Home } from "./Home";

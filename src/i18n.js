@@ -135,6 +135,34 @@ i18n
           Porto, 10 Abril 2020`,
           "terms#close_button": "Fechar",
 
+          "privacy#title": "Política de privacidade",
+          "privacy#text": `<b>Introdução</b>
+          Esta Política de Privacidade compreende todas as informações relevantes relativas ao tratamento de dados pessoais do website naFila (“Website e WebApp”) pelo Movimento Tech4Covid, na qualidade de responsável pelo tratamento. 
+           
+          <b>Que dados pessoais recolhemos?</b>
+          Quando usa a nossa WebApp, perguntamos o seu nome, número de telefone ou endereço de e-mail. Estes dados são necessários para usar  a aplicação, pois sem ele não seríamos capazes de prestar o serviço.  
+          
+          <b>O que fazemos com os seus dados?</b>
+          Desempenho do Serviço. Nós só tratamos os seus dados para prestar o serviço como descrito nos Termos e Condições da WebApp. 
+          
+          Ao dar-nos o seu e-mail e número de telefone, sabe que lhe vamos enviar uma mensagem (em formato email ou sms) para vir à loja / farmácia relevante, assim que a sua hora chegar. 
+          
+          Não guardaremos os seus dados pessoais para qualquer outro fim que não seja o de lhe prestar o serviço e prestar assistência na utilização da WebApp. Devido a limitações técnicas, guardaremos os seus dados por um período não superior a 24 horas, a partir do término do serviço. 
+          
+          <b>Como Pode Proteger a sua Privacidade</b>
+          Garantimos que todos os dados pessoais são apagados, o mais tardar, 24 horas após a realização destes serviços. Não partilhamos os seus dados com terceiros.   
+          
+          <b>Transferimos os seus dados para terceiros?</b>
+          Não. 
+          
+          <b>Alterações à Notificação de Privacidade</b>
+          Qualquer alteração à Política de Privacidade será publicada aqui e num banner no site nafila.pt.
+           
+          <b>Os seus direitos</b>
+          Tem o direito de aceder, rectificar ou apagar os dados que temos sobre si, limitar o processamento, ou opor-se ao seu processamento. 
+          
+          Se, por algum motivo, considerar necessário, pode sempre preencher uma reclamação junto da Comissão Nacional de Protecção de Dados (CNPD).`,
+
           "leave#title": "Saiu da Fila",
           "leave#title-failed": "Senha não encontrada",
           "leave#description":
