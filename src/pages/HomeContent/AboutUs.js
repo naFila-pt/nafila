@@ -172,10 +172,10 @@ const AboutUs = ({ isDesktop }) => {
           <Grid item xs={12} lg={6}>
             <h3>{t("about_us#title_collaboration")}</h3>
             <LogosContainer classNames="collaboration">
-              <a href="https://www.senhas.pt" target="blank">
+              <a href="https://www.senhas.pt" target="_blank">
                 <img src={senhasPtSrc} alt="Senhas.pt logo" />
               </a>
-              <a href="https://mobiqueueapp.com/" target="blank">
+              <a href="https://mobiqueueapp.com/" target="_blank">
                 <img src={mobiqueueSrc} alt="mobiqueue logo" />
               </a>
             </LogosContainer>
@@ -184,10 +184,10 @@ const AboutUs = ({ isDesktop }) => {
           <Grid className="partners" item xs={12} lg={6}>
             <h3>{t("about_us#title_partners")}</h3>
             <LogosContainer>
-              <a href="https://www.google.pt" target="blank">
+              <a href="https://www.google.pt" target="_blank">
                 <GoogleIcon color={BRIGHT_GRAY_COLOR} />
               </a>
-              <a href="https://www.nos.pt" target="blank">
+              <a href="https://www.nos.pt" target="_blank">
                 <NosIcon color={BRIGHT_GRAY_COLOR} />
               </a>
             </LogosContainer>
