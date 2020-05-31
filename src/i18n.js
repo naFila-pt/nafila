@@ -381,7 +381,15 @@ i18n
           "admin#queuePoster_mark_your_time_in_queue":
             "MARQUE A SUA VEZ NA FILA",
           "admin#send_free_sms_queue":
-            "Envie <b>SMS GRÁTIS</b> com <b><span class='larger'> nafila {{queueCode}}</span></b> para o <b>4902</b>"
+            "Envie <b>SMS GRÁTIS</b> com <b><span class='larger'> nafila {{queueCode}}</span></b> para o <b>4902</b>",
+
+          // Queue Status
+          "admin#queueStatus_securityLabel": "<b>Para sua segurança: </b>",
+          "admin#queueStatus_securityText": "Use o sistema de senhas virtuais.",
+          "admin#queueStatus_ticketLabel": "<b>Não consegue tirar senha?</b>",
+          "admin#queueStatus_ticketText": "Peça ajuda ao colaborador.",
+          "admin#queueStatus_naFilaLabel":
+            "<span> na<b>fila.</b> </span><span>Sem filas.</span><span>www.nafila.pt</span>"
         }
       }
     },
