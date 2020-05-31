@@ -81,9 +81,9 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
   if (!userData.queues) userData.queues = [];
   userData.queues.push(queueRef.id);
   userData.defaultQueueName = queue.name;
-  queue.shop = userData.shop;
-  queue.retailerGroup = userData.retailerGroup;
-  queue.shoppingCentre = userData.shoppingCentre;
+  queue.shop = userData.shop || "";
+  queue.retailerGroup = userData.retailerGroup || "";
+  queue.shoppingCentre = userData.shoppingCentre || "";
 
   //batch commit
   const batch = firestore.batch();
@@ -133,10 +133,13 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
     //get user
     let userData = userDoc.data();
 
-    //get counter ref
-    const counterRef = firestore
-      .collection("counters")
-      .doc(queueData.counterId);
+    //get counter ref - backwards compatible to queues without counter
+    if (queueData.counterId) {
+      const counterRef = firestore
+        .collection("counters")
+        .doc(queueData.counterId);
+      transaction.delete(counterRef);
+    }
 
     //remove queueId from queues
     userData.queues.splice(userData.queues.indexOf(queueRef.id), 1);
@@ -144,7 +147,6 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
 
     //delete queue entirely
     transaction.delete(queueRef);
-    transaction.delete(counterRef);
 
     return { tickets: queryRef.docs, queue: queueData };
   });

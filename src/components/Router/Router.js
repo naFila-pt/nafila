@@ -5,7 +5,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import PrivateRoute from "../PrivateRoute";
 
 import OnBoardingContent from "../../pages/OnBoardingContent";
-import { TermsConditions, Home } from "../../pages/HomeContent";
+import { Legal, Home, AboutUs } from "../../pages/HomeContent";
 import { Ticket, Leave } from "../../pages/TicketContent";
 import TicketStatus from "../../pages/TicketStatus";
 import QueuePoster from "../../pages/QueuePoster";
@@ -50,7 +50,27 @@ class Router extends Component {
           </Route>
 
           <Route path={Routes.TCS_PATH} exact>
-            <TermsConditions {...this.props} />
+            <Legal
+              {...this.props}
+              titleLabel="terms#title"
+              textLabel="terms#text"
+              pageId="terms_conditions"
+              analyticsTitle="Termos e Condições"
+            />
+          </Route>
+
+          <Route path={Routes.PRIVACY_PATH} exact>
+            <Legal
+              {...this.props}
+              titleLabel="privacy#title"
+              textLabel="privacy#text"
+              pageId="privacy"
+              analyticsTitle="Política de privacidade"
+            />
+          </Route>
+
+          <Route path={Routes.ABOUT_US_PATH} exact>
+            <AboutUs {...this.props} />
           </Route>
 
           <Route path={Routes.ADMIN_WELCOME_PATH} exact>
