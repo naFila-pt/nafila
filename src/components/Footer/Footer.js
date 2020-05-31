@@ -4,10 +4,10 @@ import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
 
-import Tech4CovidIcon from "../../assets/icons/Logo-Tech4COVID19-white.svg";
-import naFilaIcon from "../../assets/icons/nafila-text.svg";
+import Tech4CovidIcon from "@src/assets/icons/Logo-Tech4COVID19-white.svg";
+import naFilaIcon from "@src/assets/icons/nafila-text.svg";
 import GoogleIcon from "@src/components/Icons/google";
-import NosIcon from "../Icons/nos";
+import NosIcon from "@src/components/Icons/nos";
 
 const FooterWrapper = styled(Grid)`
   width: 100%;
