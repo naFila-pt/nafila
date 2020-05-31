@@ -4,10 +4,16 @@ import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
 
-import Tech4CovidIcon from "../../assets/icons/Logo-Tech4COVID19-white.svg";
-import naFilaIcon from "../../assets/icons/nafila-text.svg";
-import googleIcon from "../../assets/icons/google-icon.svg";
-import NOSIcon from "../../assets/icons/nos-icon.svg";
+import Tech4CovidIcon from "@src/assets/icons/Logo-Tech4COVID19-white.svg";
+import naFilaIcon from "@src/assets/icons/nafila-text.svg";
+import GoogleIcon from "@src/components/Icons/google";
+import NosIcon from "@src/components/Icons/nos";
+
+import {
+  ABOUT_US_PATH,
+  TCS_PATH,
+  PRIVACY_PATH
+} from "@src/constants/RoutesConstants";
 
 const FooterWrapper = styled(Grid)`
   width: 100%;
@@ -48,6 +54,15 @@ const FooterWrapper = styled(Grid)`
       font-size: 16px;
       text-transform: uppercase;
       margin: 0 30px 0 0;
+    }
+
+    svg {
+      width: auto;
+      height: 20px;
+
+      @media (min-width: 768px) {
+        height: 100%;
+      }
     }
   }
   .logo {
@@ -111,7 +126,7 @@ const Footer = () => {
               rel="noopener"
               href="https://google.pt"
             >
-              <Logo src={googleIcon} />
+              <GoogleIcon />
             </Link>
             <Link
               style={{ color: "white", marginLeft: "28px" }}
@@ -119,7 +134,7 @@ const Footer = () => {
               rel="noopener"
               href="https://nos.pt"
             >
-              <Logo src={NOSIcon} />
+              <NosIcon />
             </Link>
           </div>
         </div>
@@ -133,7 +148,15 @@ const Footer = () => {
           <p style={{ margin: 0, color: "white", fontSize: "13px" }}>
             <Link
               style={{ color: "white" }}
-              href="/termos-condicoes"
+              href={ABOUT_US_PATH}
+              rel="noopener"
+            >
+              {t("about_us#title_about_us")}
+            </Link>
+            {" | "}
+            <Link
+              style={{ color: "white" }}
+              href={TCS_PATH}
               target="_blank"
               rel="noopener"
             >
@@ -143,7 +166,7 @@ const Footer = () => {
             <Link
               style={{ color: "white" }}
               target="_blank"
-              href="/privacidade"
+              href={PRIVACY_PATH}
               rel="noopener"
             >
               {t("terms#privacy")}
