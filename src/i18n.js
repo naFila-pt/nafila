@@ -182,6 +182,22 @@ i18n
           A todos um enorme obrigado. Juntos conseguimos. 💪
           <br><br>
           <b>Nuno Góis</b> Coordenação do na<b>fila</b>`,
+          "about_us#title_collaboration": "Colaboração",
+          "about_us#title_partners": "Parceiros",
+          "about_us#title_contact": "Contacto",
+          "about_us#button_label_contact": "Enviar mensagem",
+          "about_us#text_tech4Covid":
+            "Este projeto faz parte do movimento #tech4COVID19, um grupo de voluntários que se juntou para encontrar soluções mais rápidas do que a disseminação do novo coronavírus, responsável pela doença COVID-19 nos seres humanos.",
+          "about_us#title_illustrations": "Ilustrações",
+          "about_us#text_illustrations":
+            "As ilustrações usadas foram adaptadas, com base no Projecto <b><a href='https://www.humaaans.com/' target='blank'>humaaans</a></b>, de Pablo Stanley, sob a <b>licença <a href='https://creativecommons.org/licenses/by/4.0/deed.pt' target='blank'>CC BY 4.0</a></b>.",
+          "about_us#title_support": "Suporte para lojistas",
+          "about_us#title_support_instructions": "Cartaz de instruções",
+          "about_us#text_support_instructions":
+            "Faça aqui o <b><a href='{{filepath}}' target='blank'>download do cartaz de instruções</a></b> para colocar à porta do seu estabelecimento.",
+          "about_us#title_support_implementation_kit": "Kit de implementação",
+          "about_us#text_support_implementation_kit":
+            "Faça <b><a href='{{filepath}}'>download do kit de implementação</a></b> do na<b>fila</b> onde poderá ver passo-a-passo como utilizar o nosso sistema de senhas.",
 
           "leave#title": "Saiu da Fila",
           "leave#title-failed": "Senha não encontrada",
