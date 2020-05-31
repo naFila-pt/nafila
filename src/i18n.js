@@ -15,7 +15,7 @@ i18n
           "global#cookie_banner": "Ao utilizar este website, aceita a nossa",
           "global#cookie_bannerLink": " política de privacidade.",
           "onboarding#justOneSMS": "Basta uma SMS!",
-          "onboarding#intro_welcome": "Bem-Vindo!",
+          "onboarding#intro_welcome": "Bem-vindo!",
           "onboarding#intro_pitch": "na<b>fila</b>. Sem filas.",
           "onboarding#store_title": "É simples!",
           "onboarding#register_site_title": "Prefere registar-se no site?",
@@ -134,6 +134,70 @@ i18n
            
           Porto, 10 Abril 2020`,
           "terms#close_button": "Fechar",
+
+          "privacy#title": "Política de privacidade",
+          "privacy#text": `<b>Introdução</b>
+          Esta Política de Privacidade compreende todas as informações relevantes relativas ao tratamento de dados pessoais do website naFila (“Website e WebApp”) pelo Movimento Tech4Covid, na qualidade de responsável pelo tratamento. 
+           
+          <b>Que dados pessoais recolhemos?</b>
+          Quando usa a nossa WebApp, perguntamos o seu nome, número de telefone ou endereço de e-mail. Estes dados são necessários para usar  a aplicação, pois sem ele não seríamos capazes de prestar o serviço.  
+          
+          <b>O que fazemos com os seus dados?</b>
+          Desempenho do Serviço. Nós só tratamos os seus dados para prestar o serviço como descrito nos Termos e Condições da WebApp. 
+          
+          Ao dar-nos o seu e-mail e número de telefone, sabe que lhe vamos enviar uma mensagem (em formato email ou sms) para vir à loja / farmácia relevante, assim que a sua hora chegar. 
+          
+          Não guardaremos os seus dados pessoais para qualquer outro fim que não seja o de lhe prestar o serviço e prestar assistência na utilização da WebApp. Devido a limitações técnicas, guardaremos os seus dados por um período não superior a 24 horas, a partir do término do serviço. 
+          
+          <b>Como Pode Proteger a sua Privacidade</b>
+          Garantimos que todos os dados pessoais são apagados, o mais tardar, 24 horas após a realização destes serviços. Não partilhamos os seus dados com terceiros.   
+          
+          <b>Transferimos os seus dados para terceiros?</b>
+          Não. 
+          
+          <b>Alterações à Notificação de Privacidade</b>
+          Qualquer alteração à Política de Privacidade será publicada aqui e num banner no site nafila.pt.
+           
+          <b>Os seus direitos</b>
+          Tem o direito de aceder, rectificar ou apagar os dados que temos sobre si, limitar o processamento, ou opor-se ao seu processamento. 
+          
+          Se, por algum motivo, considerar necessário, pode sempre preencher uma reclamação junto da Comissão Nacional de Protecção de Dados (CNPD).`,
+
+          // About Us
+          "about_us#title_about_us": "Sobre",
+          "about_us#title_what": "O que é?",
+          "about_us#text_what":
+            "O na<b>fila</b> é uma solução de senhas virtuais que visa ajudar comerciantes e consumidores a tornar as compras essenciais mais cómodas e seguras. Através de um sistema 100% gratuito, qualquer pessoa pode dirigir-se a uma loja aderente nafila e introduzir o código da fila com o telemóvel, recebendo de seguida uma senha virtual que irá permitir aguardar a sua vez em segurança e longe das outras pessoas.",
+          "about_us#title_why": "Porquê?",
+          "about_us#text_why":
+            "O na<b>fila</b> é um <b>projecto do #movimentotech4covid19</b>, um esforço voluntário de procura de soluções contra a recente epidemia. O projecto na<b>fila</b> foi pensado para reduzir o risco de contágio em filas à porta de comércio essencial como supermercados ou farmácias.",
+          "about_us#title_team": "A equipa",
+          "about_us#text_team": `
+          O ano de 2020 ficará para a história como o ano em que a Terra parou. Em que a humanidade necessitou de se adaptar e ajustar a uma escala sem precedentes. Apesar de todas as dificuldades vividas, esta também será uma época que ficará recordada pela resiliência humana, pela solidariedade e espírito de sacrifício.
+          <br><br>
+          O <b>Movimento Tech4Covid19</b> e, em particular, o projeto na<b>fila</b> é um exemplo disso. Em pouco mais que 2 semanas, formámos uma equipa que conta hoje com mais de 40 voluntários que, sem se conhecerem de lado algum, uniram-se com um tremendo sentido de missão e decidiram dedicar o seu tempo e recursos para desenvolver em tempo recorde esta solução. <b>O nafila procura mitigar o contágio do Covid-19, protegendo os consumidores através de um sistema de gestão de filas touchless</b> (sem toque), de livre acesso a todos os empresários e consumidores portugueses.
+          <br><br>
+          É ainda importante deixar <b>uma palavra de agradecimento às empresas que apoiam esta iniciativa</b>. A MyTurn e a MobiQueue que contribuíram com inputs valiosos, partilhando a sua experiência, enquanto empresas fornecedoras de sistemas de gestão de filas com anos de presença no mercado, e também a NOS, e a Google, <b>que permitiram tornar possível o ambicioso objetivo de oferecer uma solução totalmente livre de custos aos empresários e consumidores portugueses</b>.
+          <br><br>
+          A todos um enorme obrigado. Juntos conseguimos. 💪
+          <br><br>
+          <b>Nuno Góis</b> Coordenação do na<b>fila</b>`,
+          "about_us#title_collaboration": "Colaboração",
+          "about_us#title_partners": "Parceiros",
+          "about_us#title_contact": "Contacto",
+          "about_us#button_label_contact": "Enviar mensagem",
+          "about_us#text_tech4Covid":
+            "Este projeto faz parte do movimento #tech4COVID19, um grupo de voluntários que se juntou para encontrar soluções mais rápidas do que a disseminação do novo coronavírus, responsável pela doença COVID-19 nos seres humanos.",
+          "about_us#title_illustrations": "Ilustrações",
+          "about_us#text_illustrations":
+            "As ilustrações usadas foram adaptadas, com base no Projecto <b><a href='https://www.humaaans.com/' target='_blank' rel='noopener noreferrer'>humaaans</a></b>, de Pablo Stanley, sob a <b>licença <a href='https://creativecommons.org/licenses/by/4.0/deed.pt' target='_blank' rel='noopener noreferrer'>CC BY 4.0</a></b>.",
+          "about_us#title_support": "Suporte para lojistas",
+          "about_us#title_support_instructions": "Cartaz de instruções",
+          "about_us#text_support_instructions":
+            "Faça aqui o <b>download do cartaz de instruções</b> (<b><a href='{{filepathColorful}}' target='_blank' rel='noopener noreferrer'>versão a cores</a></b> ou <b><a href='{{filepathBlackWhite}}' target='_blank' rel='noopener noreferrer'>versão a preto e branco</a></b>) para colocar à porta do seu estabelecimento.",
+          "about_us#title_support_implementation_kit": "Kit de implementação",
+          "about_us#text_support_implementation_kit":
+            "Faça <b><a href='{{filepath}}' target='_blank' rel='noopener noreferrer'>download do kit de implementação</a></b> do na<b>fila</b> onde poderá ver passo-a-passo como utilizar o nosso sistema de senhas.",
 
           "leave#title": "Saiu da Fila",
           "leave#title-failed": "Senha não encontrada",
@@ -293,6 +357,8 @@ i18n
           "admin#queueManagement_endQueue": `Terminar <span class="logo">na<b>fila</b></span>`,
           "admin#queueManagement_remaining": "Restantes",
           "admin#queueManagement_wait": "Aguarde ...",
+          "admin#queueManagement_warning_message":
+            "Está acima da lotação escolhida.",
 
           // End Queue
           "main#endQueue_title": "Pretende terminar a Fila actual?",

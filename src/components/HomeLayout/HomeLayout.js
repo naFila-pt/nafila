@@ -31,7 +31,6 @@ const HomeLayout = props => {
   const { children, bg, activeStep = 0, forceLogoDisplay } = props;
   const classes = useStyles(props);
   const bgUrl = bg[activeStep] ? bg[activeStep] : bg[bg.length - 1];
-
   return (
     <Box
       className={`${classes.container} HomeLayout`}
@@ -40,7 +39,7 @@ const HomeLayout = props => {
       <Grid container>
         <Grid container direction="column">
           <Toolbar className={classes.toolbar}>
-            {(activeStep !== 0 || forceLogoDisplay) && (
+            {(activeStep !== 1 || forceLogoDisplay) && (
               <LogoMini style={{ flex: 1 }} />
             )}
           </Toolbar>

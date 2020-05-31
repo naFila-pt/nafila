@@ -1,6 +1,6 @@
 {
   "name": "naFila",
-  "description": "Sistema simplificado de gestão de filas via SMS e email, no âmbito do projecto tech4covid19",
+  "description": "Sistema simplificado de gestão de filas via SMS, no âmbito do projecto tech4covid19",
   "short_name": "naFila",
   "icons": [
     {
