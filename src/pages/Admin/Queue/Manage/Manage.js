@@ -207,9 +207,10 @@ function Manage({ queueId, openSnackbar }) {
   };
 
   const handleRemoveCounter = () => {
-    if (counter > 0) {
-      setCounter(prevState => prevState - 1);
-    }
+    if (counter <= 0) return:
+
+     setCounter(prevState => prevState - 1);
+    
   };
 
   const handleAlertClose = () => {
