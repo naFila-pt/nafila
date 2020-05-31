@@ -2,8 +2,8 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
-import bgMainMobile from "@src/assets/bg/home_mobile.svg";
-import bgMain from "@src/assets/bg/home_desktop.svg";
+import bgMainMobile from "@src/assets/bg/terms_mobile.svg";
+import bgMain from "@src/assets/bg/terms_desktop.svg";
 import logoBannerSrc from "@src/assets/icons/logo_nafila.svg";
 import twoPeopleSrc from "@src/assets/icons/two_people.svg";
 import senhasPtSrc from "@src/assets/icons/senhas_pt.svg";
@@ -22,17 +22,17 @@ import {
 
 const Header = styled.div`
   background-color: #fff;
-  width: "100%";
   align-items: center;
   justify-content: center;
   height: 50px;
   display: none;
-  @media (min-width: 768px) {
-    display: flex;
-  }
 
   img {
     width: 100px;
+  }
+
+  @media (min-width: 768px) {
+    display: flex;
   }
 `;
 
@@ -44,23 +44,80 @@ const MainContainer = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   background-image: url(${bgMainMobile});
+  padding: 28px;
 
   h1,
   h3 {
     text-transform: uppercase;
   }
 
+  h3 {
+    font-size: 22px;
+  }
+
   p {
     color: ${BRIGHT_GRAY_COLOR};
   }
-  g a {
+
+  a {
     color: ${PRIMARY_COLOR};
+  }
+
+  .contact {
+    button {
+      margin-top: 36px;
+    }
+  }
+
+  .partners {
+    a:nth-child(2) {
+      svg {
+        width: 100px;
+        height: 100%;
+      }
+    }
+  }
+
+  .tech4Covid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 56px;
+
+    & > img {
+      width: 60%;
+    }
   }
 
   @media (min-width: 768px) {
     background-image: url(${bgMain});
     height: unset;
     padding: 24px 166px;
+
+    .contact,
+    .tech4Covid,
+    .illustrations {
+      margin-top: 36px;
+    }
+
+    .contact {
+      button {
+        margin-top: 56px;
+      }
+    }
+
+    .tech4Covid {
+      align-items: start;
+
+      & > img {
+        width: auto;
+        margin-top: 28px;
+      }
+    }
+
+    .illustrations {
+      margin-left: auto;
+    }
   }
 `;
 
@@ -84,7 +141,7 @@ const LogosContainer = styled.div`
   }
 `;
 
-const AboutUs = () => {
+const AboutUs = ({ isDesktop }) => {
   const { t } = useTranslation();
 
   return (
@@ -105,9 +162,12 @@ const AboutUs = () => {
             <h1>{t("about_us#title_team")}</h1>
             <p dangerouslySetInnerHTML={{ __html: t("about_us#text_team") }} />
           </Grid>
-          <Grid item xs={0} lg={5}>
-            <img src={twoPeopleSrc} alt="Two people" />
-          </Grid>
+
+          {isDesktop && (
+            <Grid item lg={5}>
+              <img src={twoPeopleSrc} alt="Two people" />
+            </Grid>
+          )}
 
           <Grid item xs={12} lg={6}>
             <h3>{t("about_us#title_collaboration")}</h3>
@@ -121,7 +181,7 @@ const AboutUs = () => {
             </LogosContainer>
           </Grid>
 
-          <Grid item xs={12} lg={6}>
+          <Grid className="partners" item xs={12} lg={6}>
             <h3>{t("about_us#title_partners")}</h3>
             <LogosContainer>
               <a href="https://www.google.pt" target="blank">
@@ -133,24 +193,17 @@ const AboutUs = () => {
             </LogosContainer>
           </Grid>
 
-          <Grid item xs={12} lg={6} style={{ marginTop: "44px" }}>
+          <Grid className="contact" item xs={12} lg={6}>
             <h3>{t("about_us#title_contact")}</h3>
-            <Button forward={true} style={{ marginTop: "56px" }}>
-              {t("about_us#button_label_contact")}
-            </Button>
+            <Button forward={true}>{t("about_us#button_label_contact")}</Button>
           </Grid>
 
-          <Grid item xs={12} lg={6} style={{ marginTop: "44px" }}>
-            <img src={tech4CovidSrc} style={{ marginTop: "28px" }} />
+          <Grid className="tech4Covid" item xs={12} lg={6}>
+            <img src={tech4CovidSrc} />
             <p>{t("about_us#text_tech4Covid")}</p>
           </Grid>
 
-          <Grid
-            item
-            xs={12}
-            lg={6}
-            style={{ marginTop: "44px", marginLeft: "auto" }}
-          >
+          <Grid className="illustrations" item xs={12} lg={6}>
             <h3>{t("about_us#title_illustrations")}</h3>
             <p
               dangerouslySetInnerHTML={{
