@@ -173,10 +173,10 @@ const AboutUs = ({ isDesktop }) => {
             <h3>{t("about_us#title_collaboration")}</h3>
             <LogosContainer classNames="collaboration">
               <a href="https://www.senhas.pt" target="blank">
-                <img src={senhasPtSrc} />
+                <img src={senhasPtSrc} alt="Senhas.pt logo" />
               </a>
               <a href="https://mobiqueueapp.com/" target="blank">
-                <img src={mobiqueueSrc} />
+                <img src={mobiqueueSrc} alt="mobiqueue logo" />
               </a>
             </LogosContainer>
           </Grid>
@@ -203,7 +203,7 @@ const AboutUs = ({ isDesktop }) => {
           </Grid>
 
           <Grid className="tech4Covid" item xs={12} lg={6}>
-            <img src={tech4CovidSrc} />
+            <img src={tech4CovidSrc} alt="tech4Covid logo" />
             <p>{t("about_us#text_tech4Covid")}</p>
           </Grid>
 
