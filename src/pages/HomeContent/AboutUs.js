@@ -195,7 +195,11 @@ const AboutUs = ({ isDesktop }) => {
 
           <Grid className="contact" item xs={12} lg={6}>
             <h3>{t("about_us#title_contact")}</h3>
-            <Button forward={true}>{t("about_us#button_label_contact")}</Button>
+            <a href="mailto:suporte.nafila@gmail.com">
+              <Button forward={true}>
+                {t("about_us#button_label_contact")}
+              </Button>
+            </a>
           </Grid>
 
           <Grid className="tech4Covid" item xs={12} lg={6}>

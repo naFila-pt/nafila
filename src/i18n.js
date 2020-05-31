@@ -197,7 +197,7 @@ i18n
             "Faça aqui o <b><a href='{{filepath}}' target='blank'>download do cartaz de instruções</a></b> para colocar à porta do seu estabelecimento.",
           "about_us#title_support_implementation_kit": "Kit de implementação",
           "about_us#text_support_implementation_kit":
-            "Faça <b><a href='{{filepath}}'>download do kit de implementação</a></b> do na<b>fila</b> onde poderá ver passo-a-passo como utilizar o nosso sistema de senhas.",
+            "Faça <b><a href='{{filepath}}' target='blank'>download do kit de implementação</a></b> do na<b>fila</b> onde poderá ver passo-a-passo como utilizar o nosso sistema de senhas.",
 
           "leave#title": "Saiu da Fila",
           "leave#title-failed": "Senha não encontrada",
