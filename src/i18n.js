@@ -15,7 +15,7 @@ i18n
           "global#cookie_banner": "Ao utilizar este website, aceita a nossa",
           "global#cookie_bannerLink": " política de privacidade.",
           "onboarding#justOneSMS": "Basta uma SMS!",
-          "onboarding#intro_welcome": "Bem Vindo!",
+          "onboarding#intro_welcome": "Bem-vindo!",
           "onboarding#intro_pitch": "na<b>fila</b>. Sem filas.",
           "onboarding#store_title": "É simples!",
           "onboarding#register_site_title": "Prefere registar-se no site?",
@@ -171,7 +171,7 @@ i18n
           "leave#goBack": "Voltar",
 
           // Admin translations
-          "admin#intro_welcome": "Bem vindo!",
+          "admin#intro_welcome": "Bem-vindo!",
           "admin#intro_pitch": "na<b>fila</b>. Sem filas.",
           "admin#intro_login": "Entrar",
           "admin#intro_signup": "Registo de Loja",
