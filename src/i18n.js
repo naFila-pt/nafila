@@ -194,7 +194,7 @@ i18n
           "about_us#title_support": "Suporte para lojistas",
           "about_us#title_support_instructions": "Cartaz de instruções",
           "about_us#text_support_instructions":
-            "Faça aqui o <b><a href='{{filepath}}' target='blank'>download do cartaz de instruções</a></b> para colocar à porta do seu estabelecimento.",
+            "Faça aqui o <b>download do cartaz de instruções</b> (<b><a href='{{filepathColorful}}' target='blank'>versão a cores</a></b> ou <b><a href='{{filepathBlackWhite}}' target='blank'>versão a preto e branco</a></b>) para colocar à porta do seu estabelecimento.",
           "about_us#title_support_implementation_kit": "Kit de implementação",
           "about_us#text_support_implementation_kit":
             "Faça <b><a href='{{filepath}}' target='blank'>download do kit de implementação</a></b> do na<b>fila</b> onde poderá ver passo-a-passo como utilizar o nosso sistema de senhas.",

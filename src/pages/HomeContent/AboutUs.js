@@ -223,7 +223,8 @@ const AboutUs = ({ isDesktop }) => {
             <p
               dangerouslySetInnerHTML={{
                 __html: t("about_us#text_support_instructions", {
-                  filepath: `${process.env.PUBLIC_URL}/instructions.pdf`
+                  filepathColorful: `${process.env.PUBLIC_URL}/naFila_Cartaz_Instrucoes_SMS_COR.pdf`,
+                  filepathBlackWhite: `${process.env.PUBLIC_URL}/naFila_Cartaz_Instrucoes_SMS_PB.pdf`
                 })
               }}
             />
@@ -232,7 +233,7 @@ const AboutUs = ({ isDesktop }) => {
             <p
               dangerouslySetInnerHTML={{
                 __html: t("about_us#text_support_implementation_kit", {
-                  filepath: `${process.env.PUBLIC_URL}/implementation-kit.pdf`
+                  filepath: `${process.env.PUBLIC_URL}/naFila_Kit_Implementacao.pdf`
                 })
               }}
             />
