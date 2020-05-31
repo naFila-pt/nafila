@@ -200,9 +200,8 @@ function Manage({ queueId, openSnackbar }) {
     //TODO validate max capacity, if it capped, an error message should appear.
     if (counter >= maxCapacity) {
       setAlertOpen(true);
-      setCounter(prevState => prevState + 1);
-    } else {
-      setCounter(prevState => prevState + 1);
+    }
+     setCounter(prevState => prevState + 1);
     }
   };
 
