@@ -170,7 +170,7 @@ const useStyles = makeStyles(theme => ({
     right: "-20px",
     height: "235px",
     "@media (min-width:374px)": {
-      height: "unset",
+      height: "300px",
       right: 0
     },
     "@media (min-height:666px)": {
