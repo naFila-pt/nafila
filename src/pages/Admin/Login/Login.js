@@ -14,7 +14,8 @@ import { PRIMARY_COLOR } from "../../../constants/ColorConstants";
 import {
   ADMIN_RECOVER_PASSWORD_PATH,
   ADMIN_QUEUE_MANAGEMENT_PATH,
-  ADMIN_PRE_QUEUE_PATH
+  ADMIN_PRE_QUEUE_PATH,
+  ADMIN_SIGNUP_PATH
 } from "../../../constants/RoutesConstants";
 import * as S from "./style";
 import { HeadlineContainer, ButtonsContainer } from "../common";
@@ -30,6 +31,7 @@ function Login({ openSnackbar }) {
   const { t } = useTranslation();
   const [fields, setFields] = useState();
   const [loading, setLoading] = useState(false);
+  const [invalidError, setInvalidError] = useState(false);
   const mappedMessages = {
     "auth/wrong-password": t("admin#login_wrongPassword"),
     "auth/email-not-verified": t("admin#signup_checkYourEmail")
@@ -40,6 +42,13 @@ function Login({ openSnackbar }) {
       ...fields,
       [name]: value
     });
+  };
+
+  const validateEmail = email => {
+    const validEmailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    if (!email || !validEmailRegex.test(email)) {
+      setInvalidError(true);
+    }
   };
 
   const checkUserState = () => {
@@ -76,13 +85,23 @@ function Login({ openSnackbar }) {
       .then(checkUserState)
       .catch(error => {
         setLoading(false);
-        openSnackbar(mappedMessages[error.code] || t("admin#login_failed"));
+        openSnackbar(
+          mappedMessages[error.code] || t("admin#login_failed"),
+          undefined,
+          undefined,
+          "warning"
+        );
       });
   };
 
   useEffect(() => {
     checkUserState().catch(error => {
-      openSnackbar(mappedMessages[error.code] || t("admin#login_failed"));
+      openSnackbar(
+        mappedMessages[error.code] || t("admin#login_failed"),
+        undefined,
+        undefined,
+        "warning"
+      );
     });
   }, [t, openSnackbar, mappedMessages]);
 
@@ -99,7 +118,13 @@ function Login({ openSnackbar }) {
         <TextField
           label={t("admin#login_email")}
           name="email"
-          onChange={e => handleChange(e)}
+          onChange={e => {
+            setInvalidError(false);
+            handleChange(e);
+          }}
+          onBlur={e => validateEmail(e.target.value)}
+          error={invalidError}
+          helperText={invalidError && t("admin#login_invalidEmail")}
           {...inputProps}
         />
 
@@ -117,9 +142,22 @@ function Login({ openSnackbar }) {
         </Link>
 
         <ButtonsContainer>
-          <Button type="submit" forward>
+          <Button
+            type="submit"
+            forward
+            style={{ backgroundColor: "unset", marginBottom: 0 }}
+          >
             {t("admin#intro_login")}
           </Button>
+          <Link to={ADMIN_SIGNUP_PATH}>
+            <Button
+              variant="secondary"
+              forward
+              style={{ backgroundColor: "unset" }}
+            >
+              {t("admin#intro_signup")}
+            </Button>
+          </Link>
         </ButtonsContainer>
       </S.Form>
     </Layout>

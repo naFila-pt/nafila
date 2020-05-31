@@ -12,16 +12,13 @@ export const RecoverLink = styled.a`
 export const Form = styled.form`
   padding: 50px 30px;
 
-  .MuiInput-root {
-    margin-bottom: 2em;
-  }
-
   button {
     margin-top: 2em;
   }
 
   .MuiTextField-root {
     border-color: ${PRIMARY_COLOR} !important;
+    margin-bottom: 2em;
 
     label {
       width: 100%;

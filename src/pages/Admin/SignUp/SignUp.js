@@ -149,7 +149,7 @@ function SignUp({ openSnackbar }) {
         />
 
         <ButtonsContainer>
-          <Button type="submit" forward>
+          <Button type="submit" forward style={{ backgroundColor: "unset" }}>
             {t("admin#signup_register")}
           </Button>
         </ButtonsContainer>
