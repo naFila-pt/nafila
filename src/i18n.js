@@ -268,7 +268,9 @@ i18n
           "admin#login_password": "Password",
           "admin#login_recover_password": "Recuperar Password",
           "admin#login_failed": "Login falhou",
-          "admin#login_wrongPassword": "Password incorrecta",
+          "admin#login_wrongPassword":
+            "Dados de autenticação incorrectos. Tente novamente.",
+          "admin#login_invalidEmail": "Email inválido",
           "admin#signout_button": "Terminar sessão",
 
           // Recover Password
@@ -287,7 +289,7 @@ i18n
           "admin#recoverPasswordSuccess_title": "Email enviado com sucesso!",
           "admin#recoverPasswordSuccess_text1": "Foi enviado um email para ",
           "admin#recoverPasswordSuccess_text2":
-            ". Siga as instruções para recuperar a sua password.",
+            " Siga as instruções para recuperar a sua password.",
           "admin#recoverPasswordSuccess_return": "Voltar",
 
           // Recover Password Change

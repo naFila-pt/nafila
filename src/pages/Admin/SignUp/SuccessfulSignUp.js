@@ -45,8 +45,8 @@ function SuccessfulSignUp() {
         />
 
         <ButtonsContainer>
-          <Button href={ADMIN_LOGIN_PATH} variant="secondary" backward>
-            {t("global#return_button")}
+          <Button href={ADMIN_LOGIN_PATH} variant="primary">
+            {t("admin#intro_login")}
           </Button>
         </ButtonsContainer>
       </Container>

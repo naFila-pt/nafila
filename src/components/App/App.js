@@ -6,6 +6,8 @@ import { MuiThemeProvider } from "@material-ui/core/styles";
 
 import { CssBaseline, Grid, Snackbar } from "@material-ui/core";
 
+import MuiAlert from "@material-ui/lab/Alert";
+
 import * as firebase from "firebase/app";
 import { auth, firestore, analytics } from "../../firebase";
 import authentication from "../../services/authentication";
@@ -21,6 +23,10 @@ function detectIsDesktop() {
   return window.innerWidth >= 768;
 }
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 const initialState = {
   ready: false,
   performingAction: false,
@@ -31,7 +37,8 @@ const initialState = {
   snackbar: {
     autoHideDuration: 0,
     message: "",
-    open: false
+    open: false,
+    severity: null
   },
 
   isDesktop: detectIsDesktop(),
@@ -120,13 +127,14 @@ class App extends Component {
     );
   };
 
-  openSnackbar = (message, autoHideDuration = 2, callback) => {
+  openSnackbar = (message, autoHideDuration = 2, callback, severity = null) => {
     this.setState(
       {
         snackbar: {
           autoHideDuration: readingTime(message).time * autoHideDuration,
           message,
-          open: true
+          open: true,
+          severity
         }
       },
       () => {
@@ -143,7 +151,8 @@ class App extends Component {
     this.setState({
       snackbar: {
         message: clearMessage ? "" : snackbar.message,
-        open: false
+        open: false,
+        severity: null
       }
     });
   };
@@ -192,12 +201,22 @@ class App extends Component {
                 </Grid>
               </Grid>
 
-              <Snackbar
-                autoHideDuration={snackbar.autoHideDuration}
-                message={snackbar.message}
-                open={snackbar.open}
-                onClose={this.closeSnackbar}
-              />
+              {snackbar.severity ? (
+                <Snackbar
+                  open={snackbar.open}
+                  autoHideDuration={snackbar.autoHideDuration}
+                  onClose={this.closeSnackbar}
+                >
+                  <Alert severity={snackbar.severity}>{snackbar.message}</Alert>
+                </Snackbar>
+              ) : (
+                <Snackbar
+                  autoHideDuration={snackbar.autoHideDuration}
+                  message={snackbar.message}
+                  open={snackbar.open}
+                  onClose={this.closeSnackbar}
+                />
+              )}
             </>
           )}
         </ErrorBoundary>
