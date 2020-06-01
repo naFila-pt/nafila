@@ -55,6 +55,14 @@ const FormContainer = styled.div`
   .buttons-wrapper {
     position: initial;
     margin-top: 56px;
+
+    button {
+      margin: 0;
+    }
+
+    & > div:first-child {
+      margin-bottom: 20px !important;
+    }
   }
 
   @media (min-width: 768px) {
