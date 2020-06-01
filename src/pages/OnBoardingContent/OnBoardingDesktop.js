@@ -32,7 +32,7 @@ const endOnBoarding = () => {
   try {
     localStorage.setItem("skipOnBoarding", true);
   } catch (error) {}
-  window.location.href = Routes.TICKET_PATH;
+  window.location.href = Routes.ROOT_PATH;
 };
 
 const PhoneNumber = () => {
