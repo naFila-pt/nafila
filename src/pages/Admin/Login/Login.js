@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Typography, TextField } from "@material-ui/core";
+import { Typography, TextField, Grid } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 import Button from "../../../components/Button";
 import LoginBg from "../../../assets/bg/main.svg";
@@ -9,6 +10,8 @@ import Layout from "../../../components/AdminLayout";
 import authentication from "../../../services/authentication";
 import { auth, firestore } from "../../../firebase";
 import Loader from "../../../components/Loader";
+import Footer from "@src/components/Footer";
+import { ReactComponent as Store } from "@src/assets/images/ilust_loja.svg";
 
 import { PRIMARY_COLOR } from "../../../constants/ColorConstants";
 import {
@@ -27,7 +30,44 @@ const inputProps = {
   required: true
 };
 
-function Login({ openSnackbar }) {
+const MainContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+
+  @media (min-width: 768px) {
+    padding: 0 15% 0 15%;
+    text-align: left;
+
+    .store-illustration {
+      margin-top: auto;
+    }
+  }
+`;
+
+const FormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 100%;
+
+  .buttons-wrapper {
+    display: inline-block;
+    position: initial;
+    margin-top: 56px;
+  }
+
+  @media (min-width: 768px) {
+    width: 50%;
+
+    form {
+      padding: 0;
+    }
+  }
+`;
+
+function Login({ openSnackbar, isDesktop }) {
   const { t } = useTranslation();
   const [fields, setFields] = useState();
   const [loading, setLoading] = useState(false);
@@ -110,56 +150,68 @@ function Login({ openSnackbar }) {
   return (
     <Layout bg={LoginBg}>
       <TitleComponent title="Login" pageId="login" />
-      <HeadlineContainer>
-        <Typography variant="h3">{t("admin#login_title")}</Typography>
-      </HeadlineContainer>
 
-      <S.Form onSubmit={handleSubmit}>
-        <TextField
-          label={t("admin#login_email")}
-          name="email"
-          onChange={e => {
-            setInvalidError(false);
-            handleChange(e);
-          }}
-          onBlur={e => validateEmail(e.target.value)}
-          error={invalidError}
-          helperText={invalidError && t("admin#login_invalidEmail")}
-          {...inputProps}
-        />
+      <MainContainer>
+        <FormContainer>
+          <HeadlineContainer>
+            <Typography variant="h3">{t("admin#login_title")}</Typography>
+          </HeadlineContainer>
 
-        <TextField
-          label={t("admin#login_password")}
-          type="password"
-          name="password"
-          onChange={e => handleChange(e)}
-          min="6"
-          {...inputProps}
-        />
+          <S.Form onSubmit={handleSubmit}>
+            <TextField
+              label={t("admin#login_email")}
+              name="email"
+              onChange={e => {
+                setInvalidError(false);
+                handleChange(e);
+              }}
+              onBlur={e => validateEmail(e.target.value)}
+              error={invalidError}
+              helperText={invalidError && t("admin#login_invalidEmail")}
+              {...inputProps}
+            />
 
-        <Link to={ADMIN_RECOVER_PASSWORD_PATH} style={{ color: PRIMARY_COLOR }}>
-          {t("admin#login_recover_password")}
-        </Link>
+            <TextField
+              label={t("admin#login_password")}
+              type="password"
+              name="password"
+              onChange={e => handleChange(e)}
+              min="6"
+              {...inputProps}
+            />
 
-        <ButtonsContainer>
-          <Button
-            type="submit"
-            forward
-            style={{ backgroundColor: "unset", marginBottom: 0 }}
-          >
-            {t("admin#intro_login")}
-          </Button>
-          <Link to={ADMIN_SIGNUP_PATH}>
-            <Button
-              variant="secondary"
-              forward
-              style={{ backgroundColor: "unset" }}
+            <Link
+              to={ADMIN_RECOVER_PASSWORD_PATH}
+              style={{ color: PRIMARY_COLOR }}
             >
-              {t("admin#intro_signup")}
-            </Button>
-          </Link>
-        </ButtonsContainer>
-      </S.Form>
+              {t("admin#login_recover_password")}
+            </Link>
+
+            <ButtonsContainer className="buttons-wrapper">
+              <Button
+                type="submit"
+                forward
+                style={{ backgroundColor: "unset", marginBottom: 0 }}
+              >
+                {t("admin#intro_login")}
+              </Button>
+              <Link to={ADMIN_SIGNUP_PATH}>
+                <Button
+                  variant="secondary"
+                  forward
+                  style={{ backgroundColor: "unset" }}
+                >
+                  {t("admin#intro_signup")}
+                </Button>
+              </Link>
+            </ButtonsContainer>
+          </S.Form>
+        </FormContainer>
+
+        {isDesktop && <Store className="store-illustration" />}
+      </MainContainer>
+
+      {isDesktop && <Footer />}
     </Layout>
   );
 }
