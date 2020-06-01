@@ -183,7 +183,7 @@ const HomeContent = ({ openSnackbar }) => {
         <Grid item className={classes.gridItem}>
           <Typography
             variant="h1"
-            style={{ marginBottom: "2em", padding: "0 2em" }}
+            style={{ marginBottom: "10vh", padding: "0 15vw" }}
           >
             {t("home#insertCode_title")}
           </Typography>
