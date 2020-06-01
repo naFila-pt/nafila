@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Typography, TextField, Grid } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import Button from "../../../components/Button";
@@ -53,7 +53,6 @@ const FormContainer = styled.div`
   height: 100%;
 
   .buttons-wrapper {
-    display: inline-block;
     position: initial;
     margin-top: 56px;
   }
@@ -72,6 +71,8 @@ function Login({ openSnackbar, isDesktop }) {
   const [fields, setFields] = useState();
   const [loading, setLoading] = useState(false);
   const [invalidError, setInvalidError] = useState(false);
+  const history = useHistory();
+
   const mappedMessages = {
     "auth/wrong-password": t("admin#login_wrongPassword"),
     "auth/email-not-verified": t("admin#signup_checkYourEmail")
@@ -195,15 +196,14 @@ function Login({ openSnackbar, isDesktop }) {
               >
                 {t("admin#intro_login")}
               </Button>
-              <Link to={ADMIN_SIGNUP_PATH}>
-                <Button
-                  variant="secondary"
-                  forward
-                  style={{ backgroundColor: "unset" }}
-                >
-                  {t("admin#intro_signup")}
-                </Button>
-              </Link>
+              <Button
+                variant="secondary"
+                forward
+                style={{ backgroundColor: "unset" }}
+                onClick={() => history.push(ADMIN_SIGNUP_PATH)}
+              >
+                {t("admin#intro_signup")}
+              </Button>
             </ButtonsContainer>
           </S.Form>
         </FormContainer>
