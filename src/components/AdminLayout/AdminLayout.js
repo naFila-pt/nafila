@@ -42,8 +42,7 @@ function Layout({ children, bg, hideLogo, style }) {
       ...style,
       background: `url(${bg}) no-repeat scroll 0px center / cover`,
       textAlign: "center"
-    },
-    justifyContent: "space-between"
+    }
   };
 
   let logout = () => {

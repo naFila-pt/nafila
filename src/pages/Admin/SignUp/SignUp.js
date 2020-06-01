@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Typography, TextField } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import SignUpBg from "../../../assets/bg/main.svg";
 import Layout from "../../../components/AdminLayout";
@@ -18,8 +19,49 @@ import { HeadlineContainer, ButtonsContainer } from "../common";
 import SuccessfulSignUp from "./SuccessfulSignUp";
 
 import TitleComponent from "../../../components/TitleComponent";
+import { ReactComponent as Store } from "@src/assets/images/ilust_loja.svg";
+import Footer from "@src/components/Footer";
+import { ADMIN_LOGIN_PATH } from "@src/constants/RoutesConstants";
+
+const MainContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+
+  @media (min-width: 768px) {
+    padding: 0 15% 0 15%;
+    text-align: left;
+
+    .store-illustration {
+      margin-top: auto;
+    }
+  }
+`;
+
+const FormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 100%;
+
+  .buttons-wrapper {
+    position: initial;
+    margin-top: 56px;
+  }
+
+  @media (min-width: 768px) {
+    width: 50%;
+
+    form {
+      padding: 0;
+    }
+  }
+`;
 
 const Form = styled.form`
+  display: flex;
+  flex-direction: column;
   padding: 0 30px;
 
   button {
@@ -66,16 +108,19 @@ const Form = styled.form`
     width: 100%;
   }
 `;
+
 const inputProps = {
   fullWidth: true,
   required: true
 };
 
-function SignUp({ openSnackbar }) {
+function SignUp({ openSnackbar, isDesktop }) {
   const { t } = useTranslation();
   const [fields, setFields] = useState();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const history = useHistory();
+
   const mappedMessages = {
     "auth/weak-password": t("admin#signup_weakPassword"),
     "auth/email-already-in-use": t("admin#signup_emailInUse"),
@@ -117,43 +162,64 @@ function SignUp({ openSnackbar }) {
   if (success) return <SuccessfulSignUp />;
 
   return (
-    <Layout bg={SignUpBg}>
+    <Layout bg={SignUpBg} style={{ justifyContent: "space-between" }}>
       <TitleComponent title="Novo registo" pageId="signup" />
-      <HeadlineContainer>
-        <Typography variant="h3">{t("admin#signup_title")}</Typography>
-      </HeadlineContainer>
 
-      <Form onSubmit={handleSubmit}>
-        <TextField
-          label={t("admin#signup_nameLabel")}
-          name="defaultQueueName"
-          onChange={e => handleChange(e)}
-          helperText="ex: PDoceCartaxo"
-          inputProps={{ maxLength: 30 }}
-          {...inputProps}
-        />
+      <MainContainer>
+        <FormContainer>
+          <HeadlineContainer>
+            <Typography variant="h3">{t("admin#signup_title")}</Typography>
+          </HeadlineContainer>
 
-        <TextField
-          label={t("admin#signup_emailLabel")}
-          name="email"
-          onChange={e => handleChange(e)}
-          {...inputProps}
-        />
+          <Form onSubmit={handleSubmit}>
+            <TextField
+              label={t("admin#signup_nameLabel")}
+              name="defaultQueueName"
+              onChange={e => handleChange(e)}
+              helperText="ex: PDoceCartaxo"
+              inputProps={{ maxLength: 30 }}
+              {...inputProps}
+            />
 
-        <PasswordInput
-          label={t("admin#signup_passwordLabel")}
-          name="password"
-          onChange={e => handleChange(e)}
-          min="6"
-          {...inputProps}
-        />
+            <TextField
+              label={t("admin#signup_emailLabel")}
+              name="email"
+              onChange={e => handleChange(e)}
+              {...inputProps}
+            />
 
-        <ButtonsContainer>
-          <Button type="submit" forward style={{ backgroundColor: "unset" }}>
-            {t("admin#signup_register")}
-          </Button>
-        </ButtonsContainer>
-      </Form>
+            <PasswordInput
+              label={t("admin#signup_passwordLabel")}
+              name="password"
+              onChange={e => handleChange(e)}
+              min="6"
+              {...inputProps}
+            />
+
+            <ButtonsContainer className="buttons-wrapper">
+              <Button
+                type="submit"
+                forward
+                style={{ backgroundColor: "unset" }}
+              >
+                {t("admin#signup_register")}
+              </Button>
+              <Button
+                variant="secondary"
+                forward
+                style={{ backgroundColor: "unset" }}
+                onClick={() => history.push(ADMIN_LOGIN_PATH)}
+              >
+                {t("admin#intro_login")}
+              </Button>
+            </ButtonsContainer>
+          </Form>
+        </FormContainer>
+
+        {isDesktop && <Store className="store-illustration" />}
+      </MainContainer>
+
+      {isDesktop && <Footer />}
     </Layout>
   );
 }

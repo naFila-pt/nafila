@@ -149,7 +149,7 @@ function Login({ openSnackbar, isDesktop }) {
   if (loading) return <Loader />;
 
   return (
-    <Layout bg={LoginBg}>
+    <Layout bg={LoginBg} style={{ justifyContent: "space-between" }}>
       <TitleComponent title="Login" pageId="login" />
 
       <MainContainer>
@@ -202,7 +202,7 @@ function Login({ openSnackbar, isDesktop }) {
                 style={{ backgroundColor: "unset" }}
                 onClick={() => history.push(ADMIN_SIGNUP_PATH)}
               >
-                {t("admin#intro_signup")}
+                {t("admin#register")}
               </Button>
             </ButtonsContainer>
           </S.Form>
