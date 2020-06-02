@@ -1,6 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
 import Toolbar from "@material-ui/core/Toolbar";
 import Grid from "@material-ui/core/Grid";
 
@@ -8,9 +7,9 @@ import { ReactComponent as LogoMini } from "../../assets/logo-mini.svg";
 
 const useStyles = makeStyles({
   container: {
-    height: "100vh",
+    height: "100%",
     position: "relative",
-    minWidth: "375px",
+    minWidth: "320px",
     padding: 0,
     backgroundRepeat: "no-repeat",
     backgroundPosition: props => props.bgPosition || "center",
@@ -28,15 +27,18 @@ const useStyles = makeStyles({
 });
 
 const HomeLayout = props => {
-  const { children, bg, activeStep = 0, forceLogoDisplay } = props;
+  const { children, bg, activeStep = 1, forceLogoDisplay } = props;
   const classes = useStyles(props);
   const bgUrl = bg[activeStep] ? bg[activeStep] : bg[bg.length - 1];
   return (
-    <Box
+    <Grid
+      container
+      alignContent="center"
+      alignItems="center"
       className={`${classes.container} HomeLayout`}
       style={{ backgroundImage: `url(${bgUrl})` }}
     >
-      <Grid container>
+      <Grid container style={{ height: "100%" }}>
         <Grid container direction="column">
           <Toolbar className={classes.toolbar}>
             {(activeStep !== 1 || forceLogoDisplay) && (
@@ -46,7 +48,7 @@ const HomeLayout = props => {
         </Grid>
         {children[activeStep] || children}
       </Grid>
-    </Box>
+    </Grid>
   );
 };
 

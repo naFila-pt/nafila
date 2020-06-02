@@ -72,7 +72,7 @@ i18n
             "Indique-nos o seu telemóvel para receber a <b>notificação</b>.",
           "home#notification_inputPlaceholder": "Número de telemóvel",
           "home#notification_terms":
-            '<b>Ao carregar em "Continuar"</b>, confirma que leu e compreendeu os',
+            '<b>Ao carregar em "Continuar"</b>, confirma que leu e compreendeu os ',
           "home#notification_termsLink":
             "termos e condições da proteção de dados",
           "home#notification_button": "Continuar",
