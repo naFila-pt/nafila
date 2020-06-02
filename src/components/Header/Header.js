@@ -3,7 +3,7 @@ import styled from "styled-components";
 import logoBannerSrc from "../../assets/icons/logo_nafila.svg";
 
 const Container = styled.div`
-  background-color: #fff;
+  background-color: ${props => props.bg};
   width: 100%;
   align-items: center;
   justify-content: center;
@@ -18,10 +18,14 @@ const Container = styled.div`
   }
 `;
 
-const Header = () => (
+const Header = ({ bg }) => (
   <Container>
     <img src={logoBannerSrc} alt="logo" />
   </Container>
 );
+
+Header.defaultProps = {
+  bg: "#fff"
+};
 
 export default Header;

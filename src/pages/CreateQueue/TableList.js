@@ -7,6 +7,8 @@ import IconButton from "@material-ui/core/IconButton";
 import styled from "styled-components";
 
 const ListWrapper = styled.div`
+  margin-top: 4rem;
+
   .MuiListItem-root {
     padding: 10px 62px;
     background-color: #fff;
@@ -45,17 +47,21 @@ const subheader = () => (
   </SubHeaderWrapper>
 );
 
-const TableList = () => {
+const TableList = ({ items, onDelete }) => {
   return (
     <ListWrapper>
       {subheader()}
       <List>
-        {[0, 1, 2, 3, 4, 5].map(el => {
+        {items.map(el => {
           return (
             <ListItem>
               <RagStatus bg={randomColor()} />
               <ListItemText primary="Single-line item" />
-              <IconButton edge="end" aria-label="delete">
+              <IconButton
+                edge="end"
+                aria-label="delete"
+                onClick={() => onDelete(el.id)}
+              >
                 <DeleteIcon />
               </IconButton>
             </ListItem>
