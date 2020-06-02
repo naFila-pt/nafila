@@ -113,6 +113,7 @@ authentication.signUpStore = (emailAddress, password, defaultQueueName) => {
           .set(
             {
               defaultQueueName,
+              email: emailAddress,
               queues: []
             },
             { merge: true }
@@ -130,6 +131,7 @@ authentication.signUpStore = (emailAddress, password, defaultQueueName) => {
           });
       })
       .catch(reason => {
+        console.log("authentication.signUpStore -> reason", reason);
         reject(reason);
       });
   });
