@@ -330,6 +330,14 @@ exports.removeMeFromQueue = functions.https.onCall(async (data, context) => {
   return result;
 });
 
+exports.getUserByEmail = functions.https.onCall(async (data, context) => {
+  const user = await firestore
+    .collection("users")
+    .where("email", "==", data.email)
+    .get();
+  return user;
+});
+
 //---- REGULAR SCHEDULED JOB ----
 //ATTENTION - PROD ONLY!!
 if (config.smspro.getmessagesenabled === "true") {
