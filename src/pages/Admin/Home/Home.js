@@ -179,10 +179,9 @@ const Home = () => {
               <Button
                 forward
                 fullWidth
-                target="_blank"
-                href="https://geralnafilapt.typeform.com/to/VtDUdM"
+                href={Routes.ADMIN_LOGIN_PATH}
                 dangerouslySetInnerHTML={{
-                  __html: t("admin#register")
+                  __html: t("admin#intro_login")
                 }}
                 style={{ marginBottom: "10px" }}
               />

@@ -210,8 +210,7 @@ i18n
           "admin#intro_welcome": "Bem-vindo!",
           "admin#intro_pitch": "na<b>fila</b>. Sem filas.",
           "admin#intro_login": "Entrar",
-          "admin#intro_signup": "Registo de Loja",
-          "admin#register": "Pré-registo",
+          "admin#register": "Registo de Loja",
 
           // Admin onboarding
           "admin#onboarding_firstText":
@@ -256,7 +255,7 @@ i18n
           "admin#signup_nameLabel": "Nome/Local da Loja",
           "admin#signup_emailLabel": "Email do Lojista",
           "admin#signup_passwordLabel": "Password",
-          "admin#signup_register": "Registar",
+          "admin#signup_register": "Novo registo",
           "admin#signup_successTitle":
             "O seu registo foi efetuado com sucesso!",
           "admin#signup_successHeroText":
