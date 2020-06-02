@@ -131,6 +131,7 @@ authentication.signUpStore = (emailAddress, password, defaultQueueName) => {
           });
       })
       .catch(reason => {
+        console.log("authentication.signUpStore -> reason", reason);
         reject(reason);
       });
   });
