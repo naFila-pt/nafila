@@ -1,7 +1,6 @@
 import React from "react";
 
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -150,7 +149,6 @@ const HiddenColumn = styled(Grid)`
 
 const Home = () => {
   const { t } = useTranslation();
-  const history = useHistory();
 
   return (
     <HomeContent>
@@ -181,8 +179,7 @@ const Home = () => {
               <Button
                 forward
                 fullWidth
-                target="_blank"
-                onClick={() => history.push(Routes.ADMIN_LOGIN_PATH)}
+                href={Routes.ADMIN_LOGIN_PATH}
                 dangerouslySetInnerHTML={{
                   __html: t("admin#intro_login")
                 }}

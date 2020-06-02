@@ -260,8 +260,7 @@ const MainContentDesktop = props => (
         >
           <StyledButton
             forward
-            onClick={() => (window.location.href = ADMIN_SIGNUP_PATH)}
-            target="_blank"
+            href={ADMIN_SIGNUP_PATH}
             dangerouslySetInnerHTML={{
               __html: props.t("admin#register")
             }}

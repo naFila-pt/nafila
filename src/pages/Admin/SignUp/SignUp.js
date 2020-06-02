@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Typography, TextField } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import SignUpBg from "../../../assets/bg/main.svg";
 import Layout from "../../../components/AdminLayout";
@@ -48,6 +47,10 @@ const FormContainer = styled.div`
   .buttons-wrapper {
     position: initial;
     margin-top: 56px;
+
+    a {
+      text-align: center;
+    }
 
     button {
       margin: 0;
@@ -127,7 +130,6 @@ function SignUp({ openSnackbar, isDesktop }) {
   const [fields, setFields] = useState();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const history = useHistory();
 
   const mappedMessages = {
     "auth/weak-password": t("admin#signup_weakPassword"),
@@ -215,8 +217,8 @@ function SignUp({ openSnackbar, isDesktop }) {
               <Button
                 variant="secondary"
                 forward
+                href={ADMIN_LOGIN_PATH}
                 style={{ backgroundColor: "unset" }}
-                onClick={() => history.push(ADMIN_LOGIN_PATH)}
               >
                 {t("admin#intro_login")}
               </Button>

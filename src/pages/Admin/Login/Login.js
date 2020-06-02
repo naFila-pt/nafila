@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Typography, TextField } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import Button from "../../../components/Button";
@@ -56,6 +56,10 @@ const FormContainer = styled.div`
     position: initial;
     margin-top: 56px;
 
+    a {
+      text-align: center;
+    }
+
     button {
       margin: 0;
     }
@@ -79,7 +83,6 @@ function Login({ openSnackbar, isDesktop }) {
   const [fields, setFields] = useState();
   const [loading, setLoading] = useState(false);
   const [invalidError, setInvalidError] = useState(false);
-  const history = useHistory();
 
   const mappedMessages = {
     "auth/wrong-password": t("admin#login_wrongPassword"),
@@ -184,7 +187,7 @@ function Login({ openSnackbar, isDesktop }) {
               label={t("admin#login_password")}
               type="password"
               name="password"
-              onChange={e => handleChange(e)}
+              onChange={handleChange}
               min="6"
               {...inputProps}
             />
@@ -208,7 +211,7 @@ function Login({ openSnackbar, isDesktop }) {
                 variant="secondary"
                 forward
                 style={{ backgroundColor: "unset" }}
-                onClick={() => history.push(ADMIN_SIGNUP_PATH)}
+                href={ADMIN_SIGNUP_PATH}
               >
                 {t("admin#register")}
               </Button>
