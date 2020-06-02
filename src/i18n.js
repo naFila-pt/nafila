@@ -389,7 +389,15 @@ i18n
           "admin#queueStatus_ticketLabel": "<b>Não consegue tirar senha?</b>",
           "admin#queueStatus_ticketText": "Peça ajuda ao colaborador.",
           "admin#queueStatus_naFilaLabel":
-            "<span> na<b>fila.</b> </span><span>Sem filas.</span><span>www.nafila.pt</span>"
+            "<span> na<b>fila.</b> </span><span>Sem filas.</span><span>www.nafila.pt</span>",
+
+          //Create Queue
+          "admin#createQueue_title": "Painel de Gestão do Ecrã Público",
+          "admin#createQueue_description":
+            "O painel de tralala é para fazer as acções xpto e ABC. Adicione fila para visualizar o estado das filas no seu espaço multiloja.",
+          "admin#add_queue_button": "ADICIONAR FILA",
+          "admin#add_queue_button_placeholder":
+            "Inserir identificador de lojista"
         }
       }
     },

@@ -10,6 +10,7 @@ import { Ticket, Leave } from "../../pages/TicketContent";
 import TicketStatus from "../../pages/TicketStatus";
 import QueuePoster from "../../pages/QueuePoster";
 import QueueStatus from "../../pages/QueueStatus";
+import CreateQueue from "../../pages/CreateQueue";
 import Admin from "../../pages/Admin";
 import NotFoundContent from "../../pages/NotFoundContent";
 import * as Routes from "../../constants/RoutesConstants";
@@ -88,6 +89,9 @@ class Router extends Component {
           </Route>
           <Route path={Routes.QUEUE_STATUS} exact>
             <QueueStatus {...this.props} />
+          </Route>
+          <Route path={Routes.CREATE_QUEUE} exact>
+            <CreateQueue {...this.props} />
           </Route>
 
           <PrivateRoute

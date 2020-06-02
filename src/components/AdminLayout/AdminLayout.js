@@ -30,7 +30,7 @@ const useStyles = makeStyles({
   }
 });
 
-function Layout({ children, bg, hideLogo, style }) {
+function Layout({ children, bg, hideLogo, style, textAlign }) {
   const classes = useStyles();
   const { t } = useTranslation();
   const boxProps = {
@@ -41,7 +41,7 @@ function Layout({ children, bg, hideLogo, style }) {
     style: {
       ...style,
       background: `url(${bg}) no-repeat scroll 0px center / cover`,
-      textAlign: "center"
+      textAlign: textAlign
     }
   };
 
@@ -87,5 +87,8 @@ function Layout({ children, bg, hideLogo, style }) {
     </Box>
   );
 }
+Layout.defaultProps = {
+  textAlign: "center"
+};
 
 export default Layout;
