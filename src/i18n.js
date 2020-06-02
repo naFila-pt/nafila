@@ -92,46 +92,26 @@ i18n
           "terms#contact": "Contatos",
           "terms#subtitle": "Texto de exemplo/not compliant",
           "terms#text": `
-          Os presentes Termos e Condições estabelecem as regras que regulam o acesso e utilização do website e aplicação naFila (“naFila”). NaFila resultou do esforço de voluntários associados ao Movimento Tech4Covid19.
-
-          Estes Termos e Condições são complementados e integrados, em tudo o que não estiver previsto neste documento, pela Notificação de Privacidade que pode também ser consultada no website.
-          
-          A aplicação reside em ambiente de website, não sendo necessário instalar qualquer ficheiro no smartphone. naFila destina-se a pessoas singulares, residentes em Portugal e maiores de idade (“Utilizador” ou “Utilizadores”), sendo a sua utilização regulada pelos Termos e Condições, disponíveis à data de cada acesso ao naFila pelos Utilizadores, implicando a sua utilização uma aceitação pelo Utilizador.
-          
-          Para utilizar naFila, o Utilizador:
-          
-          <b>Se possuir smartphone e plano de dados</b>
-          Dirige-se à loja, consulta o código da fila na vitrine e vai a nafila.pt e regista o código e email. Posteriormente, recebe 2 emails: o primeiro com a senha e o segundo quando for a sua vez para entrar na loja.
-          
-          <b>Se possuir telemóvel, mas sem plano de dados (ou existir impedimento técnico)</b>
-          Dirige-se ao gestor da fila, dá o número de telemóvel. Posteriormente, recebe 2 sms: a primeira com a senha e a segunda, quando for a sua vez, para entrar na loja.
-          
-          
-          Dirige-se ao Lojista e fornece o seu nome. Ser-lhe-á atribuído um número de senha, sendo chamado posteriormente pelo gestor da fila pelo nome providenciado.
-          
-          Caso não concorde com o disposto nos Termos e Condições, pedimos-lhe que não utilize naFila, uma vez que qualquer utilização que faça da mesma ou dos conteúdos nela disponibilizados implicará a sua aceitação.
-          
-          naFila pode, a qualquer momento, modificar os estes Termos e Condições, notificando sempre o Utilizador através de um banner. Caso o Utilizador continue a utilizar naFila, considera-se que aceita os termos e condições alterados.
-          
-          naFila tem o direito exclusivo de, a todo o tempo, suspender, bloquear, interromper ou fazer cessar parcial ou totalmente, o acesso a naFila, em especial nas operações de gestão, manutenção, reparação, alteração ou modernização ou encerrar, definitiva ou temporariamente, parcial ou totalmente, a qualquer momento, de acordo com a sua vontade, naFila, sem aviso prévio.
-          
-          O Utilizador reconhece e aceita que o conteúdo apresentado no naFila (textos, imagens, gráficos, som e animação e todas as outras informações disponibilizadas) está protegido por direitos de propriedade intelectual.
-          
-          naFila concede ao Utilizador uma licença pessoal, intransferível, mundial, não passível de sub-
-          -licenciamento, não exclusiva, livre, revogável de acesso e utilização do naFila, conforme necessário para aceder e utilizar a mesma, desde que o Utilizador cumpra os presentes Termos e Condições.
-          
-          A informação disponibilizada no website naFila não pretende substituir qualquer serviço, recomendação, conselho ou dado emitido ou disponibilizado por uma entidade governamental, administrativa ou estadual, assim como entidades privadas do setor da saúde ou profissionais de saúde, familiarizados com o historial clínico e situação concreta do Utilizador.
-          
-          naFila irá empregar os seus melhores esforços para que exista a menor possibilidade de qualquer tipo de malwarevírus ou outro código malicioso. No entanto, uma vez que naFila não controla integralmente a circulação de informação através da Internet, não consegue garantir que na Fila não contém qualquer tipo de vírus ou outros elementos que possam danificar o seu equipamento.
-
-          naFila tem ainda o direito exclusivo de, a todo o tempo, encerrar, definitiva ou temporariamente, parcial ou totalmente, a qualquer momento, de acordo com a sua vontade, o naFila ou qualquer uma das suas funcionalidades sem aviso prévio.
-          
-          Se alguma parte ou disposição dos presentes Termos e Condições não for executável ou estiver em conflito com a lei aplicável, a validade das restantes partes ou disposições não será afetada.
-          
+          Os presentes Termos e Condições estabelecem as regras que regulam o acesso e utilização do website e aplicação naFila (“naFila”). NaFila resultou do esforço de voluntários associados ao Movimento Tech4Covid19.<br/>
+          Estes Termos e Condições são complementados e integrados, em tudo o que não estiver previsto neste documento, pela Notificação de Privacidade que pode também ser consultada no website.<br/>
+          A aplicação reside em ambiente de website, não sendo necessário instalar qualquer ficheiro no smartphone. naFila destina-se a pessoas singulares, residentes em Portugal e maiores de idade (“Utilizador” ou “Utilizadores”), sendo a sua utilização regulada pelos Termos e Condições, disponíveis à data de cada acesso ao naFila pelos Utilizadores, implicando a sua utilização uma aceitação pelo Utilizador.<br/>
+          Para utilizar naFila, o Utilizador:<br/>
+          <b>Se possuir smartphone e plano de dados</b><br/>
+          Dirige-se à loja, consulta o código da fila na vitrine e vai a nafila.pt e regista o código e email. Posteriormente, recebe 2 emails: o primeiro com a senha e o segundo quando for a sua vez para entrar na loja.<br/>
+          <b>Se possuir telemóvel, mas sem plano de dados (ou existir impedimento técnico)</b><br/>
+          Dirige-se ao gestor da fila, dá o número de telemóvel. Posteriormente, recebe 2 sms: a primeira com a senha e a segunda, quando for a sua vez, para entrar na loja.<br/><br/>
+          Dirige-se ao Lojista e fornece o seu nome. Ser-lhe-á atribuído um número de senha, sendo chamado posteriormente pelo gestor da fila pelo nome providenciado.<br/>
+          Caso não concorde com o disposto nos Termos e Condições, pedimos-lhe que não utilize naFila, uma vez que qualquer utilização que faça da mesma ou dos conteúdos nela disponibilizados implicará a sua aceitação.<br/>
+          naFila pode, a qualquer momento, modificar os estes Termos e Condições, notificando sempre o Utilizador através de um banner. Caso o Utilizador continue a utilizar naFila, considera-se que aceita os termos e condições alterados.<br/>
+          naFila tem o direito exclusivo de, a todo o tempo, suspender, bloquear, interromper ou fazer cessar parcial ou totalmente, o acesso a naFila, em especial nas operações de gestão, manutenção, reparação, alteração ou modernização ou encerrar, definitiva ou temporariamente, parcial ou totalmente, a qualquer momento, de acordo com a sua vontade, naFila, sem aviso prévio.<br/>
+          O Utilizador reconhece e aceita que o conteúdo apresentado no naFila (textos, imagens, gráficos, som e animação e todas as outras informações disponibilizadas) está protegido por direitos de propriedade intelectual.</br>
+          naFila concede ao Utilizador uma licença pessoal, intransferível, mundial, não passível de sub-licenciamento, não exclusiva, livre, revogável de acesso e utilização do naFila, conforme necessário para aceder e utilizar a mesma, desde que o Utilizador cumpra os presentes Termos e Condições.<br/>
+          A informação disponibilizada no website naFila não pretende substituir qualquer serviço, recomendação, conselho ou dado emitido ou disponibilizado por uma entidade governamental, administrativa ou estadual, assim como entidades privadas do setor da saúde ou profissionais de saúde, familiarizados com o historial clínico e situação concreta do Utilizador.<br/>
+          naFila irá empregar os seus melhores esforços para que exista a menor possibilidade de qualquer tipo de malwarevírus ou outro código malicioso. No entanto, uma vez que naFila não controla integralmente a circulação de informação através da Internet, não consegue garantir que na Fila não contém qualquer tipo de vírus ou outros elementos que possam danificar o seu equipamento.<br/>
+          naFila tem ainda o direito exclusivo de, a todo o tempo, encerrar, definitiva ou temporariamente, parcial ou totalmente, a qualquer momento, de acordo com a sua vontade, o naFila ou qualquer uma das suas funcionalidades sem aviso prévio.<br/>
+          Se alguma parte ou disposição dos presentes Termos e Condições não for executável ou estiver em conflito com a lei aplicável, a validade das restantes partes ou disposições não será afetada.<br/>
           Caso tenha alguma questão sobre os presentes Termos e Condições, por favor envie-nos o seu pedido de esclarecimento através do e-mail geral.nafila.pt@gmail.com.
-          Estes Termos e Condições são regidos pela lei portuguesa e, em caso de litígio na interpretação ou aplicação dos presentes Termos e Condições, será competente em exclusivo o foro da Comarca do Porto(ou Lisboa? - a definir), com expressa renúncia a qualquer outro.
-           
-           
+          Estes Termos e Condições são regidos pela lei portuguesa e, em caso de litígio na interpretação ou aplicação dos presentes Termos e Condições, será competente em exclusivo o foro da Comarca do Porto(ou Lisboa? - a definir), com expressa renúncia a qualquer outro.<br/><br/>       
           Porto, 10 Abril 2020`,
           "terms#close_button": "Fechar",
 
