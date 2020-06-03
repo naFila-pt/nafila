@@ -15,7 +15,7 @@ import NOSIcon from "../../assets/icons/nos-icon.svg";
 
 import Tech4CovidIcon from "../../assets/icons/Logo-Tech4COVID19-white.svg";
 import "./swiper.css";
-import videoSrc from "../../assets/video.mp4";
+import videoSrc from "../../assets/nafila_onboarding.mp4";
 
 const Container = styled.div`
   display: flex;

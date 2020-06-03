@@ -136,7 +136,7 @@ function CreateQueue({ isDesktop, openSnackbar }) {
               position: "fixed",
               right: isDesktop && "165px",
               bottom: 0,
-              margin: isDesktop ? "0 76px 2rem 0" : "0 0 10px 0"
+              marginBottom: isDesktop ? "2rem" : "10px"
             }}
           >
             {t("admin#create_status_screen")}
