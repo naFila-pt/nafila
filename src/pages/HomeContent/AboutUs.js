@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 import bgMainMobile from "@src/assets/bg/terms_mobile.svg";
 import bgMain from "@src/assets/bg/terms_desktop.svg";
-import logoBannerSrc from "@src/assets/icons/logo_nafila.svg";
 import twoPeopleSrc from "@src/assets/icons/two_people.svg";
 import senhasPtSrc from "@src/assets/icons/senhas_pt.svg";
 import mobiqueueSrc from "@src/assets/icons/mobiqueue.svg";
@@ -13,28 +12,13 @@ import tech4CovidSrc from "@src/assets/icons/Logo-Tech4COVID19.svg";
 import Grid from "@material-ui/core/Grid";
 import GoogleIcon from "@src/components/Icons/google";
 import NosIcon from "@src/components/Icons/nos";
+import Header from "@src/components/Header";
 import Footer from "@src/components/Footer";
 import Button from "@src/components/Button";
 import {
   PRIMARY_COLOR,
   BRIGHT_GRAY_COLOR
 } from "@src/constants/ColorConstants";
-
-const Header = styled.div`
-  background-color: #fff;
-  align-items: center;
-  justify-content: center;
-  height: 50px;
-  display: none;
-
-  img {
-    width: 100px;
-  }
-
-  @media (min-width: 768px) {
-    display: flex;
-  }
-`;
 
 const MainContainer = styled.div`
   display: flex;
@@ -148,15 +132,9 @@ const LogosContainer = styled.div`
 const AboutUs = ({ isDesktop }) => {
   const { t } = useTranslation();
 
-  const handleLogoOnClick = e => {
-    window.location.href = "/";
-  };
-
   return (
     <Grid style={{ display: "flex", flexDirection: "column" }}>
-      <Header>
-        <img src={logoBannerSrc} alt="logo" onClick={handleLogoOnClick} />
-      </Header>
+      <Header />
       <MainContainer>
         <Grid container>
           <Grid item xs={12} lg={7}>

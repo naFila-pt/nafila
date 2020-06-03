@@ -7,34 +7,18 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
 import Button from "../../components/Button";
+import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import bgMainMobile from "../../assets/bg/home_mobile.svg";
 import bgMain from "../../assets/bg/home_desktop.svg";
 
 import logoSrc from "../../assets/logo.svg";
-import logoBannerSrc from "../../assets/icons/logo_nafila.svg";
 import storeSrc from "../../assets/icons/store_mobile.svg";
 import personSrc from "../../assets/icons/pessoa_homepage_desktop.svg";
 
 import * as Routes from "../../constants/RoutesConstants";
 
 import TitleComponent from "../../components/TitleComponent";
-
-const Header = styled.div`
-  background-color: #fff;
-  width: "100%";
-  align-items: center;
-  justify-content: center;
-  height: 50px;
-  display: none;
-  @media (min-width: 768px) {
-    display: flex;
-  }
-
-  img {
-    width: 100px;
-  }
-`;
 
 const GridIntro = styled(Grid)`
   text-align: center;
@@ -181,18 +165,12 @@ const Home = props => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const handleLogoOnClick = e => {
-    window.location.href = "/";
-  };
-
   return (
     <Grid
       style={{ display: "flex", minHeight: "100vh", flexDirection: "column" }}
     >
       <TitleComponent pageId="home" />
-      <Header>
-        <img src={logoBannerSrc} alt="logo" onClick={handleLogoOnClick} />
-      </Header>
+      <Header />
       <MainContainer>
         <div className={classes.container}>
           <LeftColumn>

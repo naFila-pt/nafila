@@ -6,11 +6,11 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
 import Button from "../../../components/Button";
+import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
 
 import bgMainMobile from "../../../assets/bg/home_mobile.svg";
 import bgMain from "../../../assets/bg/home_desktop.svg";
-import logoBannerSrc from "../../../assets/icons/logo_nafila.svg";
 import logoSrc from "../../../assets/logo.svg";
 import personSrc from "../../../assets/icons/pessoa_homepage_desktop.svg";
 import personManSrc from "../../../assets/icons/person_man.svg";
@@ -25,22 +25,6 @@ const HomeContent = styled(Grid)`
   flex-direction: column;
   @media (min-width: 768px) {
     height: 100vh;
-  }
-`;
-
-const Header = styled.div`
-  background-color: #fff;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  height: 50px;
-  display: none;
-  @media (min-width: 768px) {
-    display: flex;
-  }
-
-  img {
-    width: 100px;
   }
 `;
 
@@ -157,9 +141,7 @@ const Home = () => {
   return (
     <HomeContent>
       <TitleComponent title="Lojista" pageId="operator_home" />
-      <Header>
-        <img src={logoBannerSrc} alt="logo" />
-      </Header>
+      <Header />
       <Container>
         <div className="content">
           <Column>

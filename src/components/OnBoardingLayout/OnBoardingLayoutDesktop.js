@@ -1,28 +1,12 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import styled from "styled-components";
-import logoBannerSrc from "../../assets/icons/logo_nafila.svg";
 import bgMainDesktop from "../../assets/bg/home_desktop.svg";
 
+import Header from "../Header";
 import Footer from "../Footer";
 
 import TitleComponent from "../TitleComponent";
-
-const Header = styled.div`
-  background-color: #fff;
-  width: "100%";
-  align-items: center;
-  justify-content: center;
-  height: 50px;
-  display: none;
-  @media (min-width: 768px) {
-    display: flex;
-  }
-
-  img {
-    width: 100px;
-  }
-`;
 
 const MainContainer = styled.div`
   display: flex;
@@ -36,19 +20,13 @@ const MainContainer = styled.div`
   background-image: url(${bgMainDesktop});
 `;
 
-const handleLogoOnClick = e => {
-  window.location.href = "/";
-};
-
 const OnBoardingLayoutDesktop = ({ children }) => {
   return (
     <Grid
       style={{ display: "flex", minHeight: "100vh", flexDirection: "column" }}
     >
       <TitleComponent title="Como funciona" pageId="tutorial" />
-      <Header>
-        <img src={logoBannerSrc} alt="logo" onClick={handleLogoOnClick} />
-      </Header>
+      <Header />
       <MainContainer>{children}</MainContainer>
       <Footer />
     </Grid>

@@ -368,7 +368,18 @@ i18n
           "admin#queueStatus_ticketLabel": "<b>Não consegue tirar senha?</b>",
           "admin#queueStatus_ticketText": "Peça ajuda ao colaborador.",
           "admin#queueStatus_naFilaLabel":
-            "<span> na<b>fila.</b> </span><span>Sem filas.</span><span>www.nafila.pt</span>"
+            "<span> na<b>fila.</b> </span><span>Sem filas.</span><span>www.nafila.pt</span>",
+
+          //Create Queue
+          "admin#createQueue_title": "Painel de Gestão do Ecrã Público",
+          "admin#createQueue_description":
+            "Adicione emails das lojas para obter o espaço multiloja com o estado das suas filas.",
+          "admin#add_queue_button": "ADICIONAR FILA",
+          "admin#add_queue_button_placeholder":
+            "Inserir email ou código de lojista",
+          "admin#table_column_1_name": "Nome da Loja",
+          "admin#table_column_2_name": "Apagar",
+          "admin#create_status_screen": "Criar novo ecrã"
         }
       }
     },
