@@ -11,6 +11,8 @@ import Ticket from "../../../assets/icons/ticket.svg";
 
 import { HeadlineContainer, ButtonsContainer } from "../common";
 
+import TitleComponent from "../../../components/TitleComponent";
+
 const TicketContainer = styled.div`
   width: 150px;
   background: url(${Ticket}) no-repeat center;
@@ -31,6 +33,10 @@ function AddConsumerSuccess({ ticket, type }) {
 
   return (
     <Layout bg={LoginBg}>
+      <TitleComponent
+        title="Senha manual adicionada"
+        pageId="manual_ticket_success"
+      />
       <HeadlineContainer>
         <Typography variant="h3">
           {t("main#addConsumerSuccess_title")}

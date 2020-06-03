@@ -11,6 +11,8 @@ import { functions, analytics } from "../../../firebase";
 
 import { HeadlineContainer, ButtonsContainer } from "../common";
 
+import TitleComponent from "../../../components/TitleComponent";
+
 function AddConsumerName({ user, returnFunction, openSnackbar }) {
   const { t } = useTranslation();
   const [name, setName] = useState("");
@@ -29,7 +31,7 @@ function AddConsumerName({ user, returnFunction, openSnackbar }) {
     const manuallyAddToQueue = functions.httpsCallable("manuallyAddToQueue");
 
     manuallyAddToQueue({ queueId: user.queues[0], name })
-      .then(async function({ data: { ticket } }) {
+      .then(async function ({ data: { ticket } }) {
         analytics.logEvent("ticket");
         analytics.logEvent("ticket_manual");
         analytics.logEvent("ticket_by_name");
@@ -46,6 +48,10 @@ function AddConsumerName({ user, returnFunction, openSnackbar }) {
 
   return (
     <Layout bg={LoginBg}>
+      <TitleComponent
+        title="Senha manual por nome"
+        pageId="manual_ticket_name"
+      />
       <HeadlineContainer>
         <Typography variant="h3">{t("main#addConsumerName_title")}</Typography>
       </HeadlineContainer>

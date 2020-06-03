@@ -5,18 +5,20 @@ import { makeStyles } from "@material-ui/core/styles";
 import { firestore, functions, analytics } from "../../firebase";
 import HomeLayout from "../../components/HomeLayout";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import Input from "@material-ui/core/Input";
 import Link from "@material-ui/core/Link";
 import Button from "../../components/Button";
+import ConsumerTicket from "../../components/ConsumerTicket";
 
 import bgStore from "../../assets/bg/user_store.svg";
 import bgMain from "../../assets/bg/main.svg";
 
-import { ReactComponent as Logo } from "../../assets/logo.svg";
-import { ReactComponent as EmailNotification } from "../../assets/icons/email_notification.svg";
+import TelephoneNotification from "../../assets/icons/icon_tlm_big.svg";
+import StoreIlust from "../../assets/images/ilustracao.svg";
 
 import { TICKET_STATUS_PATH } from "../../constants/RoutesConstants";
+
+import TitleComponent from "../../components/TitleComponent";
 
 const useStyles = makeStyles({
   gridContainer: {
@@ -45,7 +47,8 @@ const useStyles = makeStyles({
     margin: "0 2em"
   },
   inputElement: {
-    textAlign: "center"
+    textAlign: "center",
+    fontSize: "16px"
   },
   inputUnderline: {
     "&:after": {
@@ -56,13 +59,13 @@ const useStyles = makeStyles({
 
 const HomeContent = ({ openSnackbar }) => {
   const urlParam = window.location.search.substr(1);
-  const initialActiveStep = urlParam === "skipIntro" ? 1 : 0;
+  const initialActiveStep = urlParam === "skipIntro" ? 2 : 1; // 1 because title component should be ignored in homelayout.
   const classes = useStyles();
   const { t } = useTranslation();
 
   const [activeStep, setActiveStep] = useState(initialActiveStep);
   const [queueId, setQueueId] = useState("");
-  const [userEmail, setUserEmail] = useState("");
+  const [userMobilePhone, setUserMobilePhone] = useState("");
   const [loading, setLoading] = useState(false);
   const [ticketsStoreInfo, setTicketsStoreInfo] = useState({
     name: null,
@@ -73,6 +76,10 @@ const HomeContent = ({ openSnackbar }) => {
 
   const handleNextButton = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
+  };
+
+  const handlePrevButton = () => {
+    setActiveStep(prevActiveStep => prevActiveStep - 1);
   };
 
   useEffect(() => {
@@ -87,8 +94,8 @@ const HomeContent = ({ openSnackbar }) => {
     setQueueId(event.target.value);
   };
 
-  const handleUserEmailChange = event => {
-    setUserEmail(event.target.value);
+  const handleUserMobilePhoneChange = event => {
+    setUserMobilePhone(event.target.value);
   };
 
   const handleTermsOnClick = e => {
@@ -117,10 +124,18 @@ const HomeContent = ({ openSnackbar }) => {
 
       const queueData = queue.data();
 
+      analytics.setUserProperties({
+        shop: queueData.owner_id,
+        retailerGroup: queueData.retailerGroup,
+        shoppingCentre: queueData.shoppingCentre
+      });
+
       setTicketsStoreInfo(prevState => {
         return {
           ...prevState,
           name: queueData.name,
+          currentTicket: queueData.currentTicketNumber,
+          nextTicketNumber: queueData.ticketTopNumber + 1,
           remainingInQueue: queueData.remainingTicketsInQueue
         };
       });
@@ -139,7 +154,7 @@ const HomeContent = ({ openSnackbar }) => {
 
       const queueInfo = await addMeToQueue({
         queueId: queueId.toUpperCase(),
-        email: userEmail
+        phone: userMobilePhone
       });
       const queueData = queueInfo.data;
 
@@ -163,115 +178,201 @@ const HomeContent = ({ openSnackbar }) => {
   };
 
   return (
-    <HomeLayout bg={[bgStore, bgMain]} activeStep={activeStep}>
-      <Grid container direction="column" className={classes.gridContainer}>
-        <Grid item className={classes.gridItem}>
-          <Typography
-            variant="h1"
-            style={{ marginBottom: "2em", padding: "0 2em" }}
-          >
-            {t("home#insertCode_title")}
-          </Typography>
-          <Input
-            placeholder={t("home#insertCode_inputPlaceholder")}
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputElement,
-              underline: classes.inputUnderline
-            }}
-            value={queueId}
-            onChange={handleStoreCodeChange}
+    <HomeLayout
+      forceLogoDisplay
+      bg={[bgStore, bgMain, bgMain, bgMain]}
+      activeStep={activeStep}
+    >
+      <TitleComponent title="Nova senha" pageId="new_ticket" />
+      <Grid
+        container
+        direction="column"
+        alignContent="center"
+        alignItems="center"
+        justify="space-evenly"
+        style={{ minHeight: "90%" }}
+      >
+        <p
+          style={{
+            fontWeight: "800",
+            fontSize: "32px",
+            lineHeight: "38px",
+            textAlign: "center",
+            padding: "0 20px"
+          }}
+        >
+          {t("home#insertCode_title")}
+        </p>
+        <Input
+          placeholder={t("home#insertCode_inputPlaceholder")}
+          classes={{
+            root: classes.inputRoot,
+            input: classes.inputElement,
+            underline: classes.inputUnderline
+          }}
+          value={queueId}
+          onChange={handleStoreCodeChange}
+        />
+        <div style={{ width: "238px", marginTop: "10px" }}>
+          <img src={StoreIlust} width="100%" alt="store ilustration"></img>
+        </div>
+        <div style={{ marginTop: "20px" }}>
+          <Button
+            forward
+            onClick={handleGetStoreInfo}
+            dangerouslySetInnerHTML={{ __html: t("home#insertCode_button") }}
           />
-          <div className={classes.bottomButton}>
-            <Button
-              forward
-              onClick={handleGetStoreInfo}
-              dangerouslySetInnerHTML={{ __html: t("home#insertCode_button") }}
-            />
-          </div>
-        </Grid>
+        </div>
       </Grid>
-      <Grid container direction="column">
-        <Grid item className={classes.gridItem}>
-          <Logo className="logo-icon logo-icon-queue" />
-          <div style={{ fontSize: "1.25em" }}>
-            <div>{t("home#queue_store")}</div>
-            <Typography variant="h3">{ticketsStoreInfo.name}</Typography>
-          </div>
-          <div className={classes.bottomButton}>
-            <Grid
-              container
+      <Grid
+        container
+        direction="column"
+        alignContent="center"
+        alignItems="center"
+        justify="space-evenly"
+        style={{ height: "90%" }}
+      >
+        <div style={{ textAlign: "center" }}>
+          <p
+            style={{
+              fontSize: "20px",
+              lineHeight: "24px",
+              fontWeight: "500",
+              margin: 0,
+              letterSpacing: "0.15px"
+            }}
+          >
+            {t("home#queue_store")}
+          </p>
+          <p
+            style={{
+              margin: "10px 0",
+              fontSize: "32px",
+              lineHeight: "38px",
+              fontWeight: "900"
+            }}
+          >
+            {ticketsStoreInfo.name}
+          </p>
+        </div>
+        <ConsumerTicket number={ticketsStoreInfo.nextTicketNumber} showText />
+        <Grid container justify="center" style={{ textAlign: "center" }}>
+          <Grid container direction="column" xs="6">
+            <div
               style={{
-                marginBottom: "2.2em",
-                padding: "0 3em",
-                justifyContent: "center"
+                fontSize: "20px",
+                lineHeight: "24px",
+                letterSpacing: "0.15px"
               }}
             >
-              <Grid item>
-                <div style={{ fontSize: "2em", lineHeight: "1em" }}>
-                  {t("home#queue_length")}
-                </div>
-                <div
-                  style={{
-                    color: "#401D7F",
-                    fontSize: "2.5em",
-                    lineHeight: "1em",
-                    fontWeight: 900
-                  }}
-                >
-                  {ticketsStoreInfo.remainingInQueue} {t("home#queue_people")}
-                </div>
-              </Grid>
-            </Grid>
-            <Button forward onClick={handleNextButton}>
-              {t("home#queue_button")}
-            </Button>
-          </div>
+              {t("home#ticket_currentQueue")}
+            </div>
+            <div
+              style={{
+                fontSize: "45px",
+                lineHeight: "54px",
+                letterSpacing: "0.15px",
+                fontWeight: "900"
+              }}
+            >
+              {loading ? "" : ticketsStoreInfo.currentTicket}
+            </div>
+          </Grid>
+          <Grid container direction="column" xs="6">
+            <div
+              style={{
+                fontSize: "20px",
+                lineHeight: "24px",
+                letterSpacing: "0.15px",
+                fontWeight: "500"
+              }}
+            >
+              {t("home#ticket_length")}
+            </div>
+            <div
+              style={{
+                fontSize: "45px",
+                lineHeight: "54px",
+                letterSpacing: "0.15px",
+                fontWeight: "900"
+              }}
+            >
+              {ticketsStoreInfo.remainingInQueue}
+            </div>
+          </Grid>
+        </Grid>
+        <Grid container direction="column" style={{ textAlign: "center" }}>
+          <Button
+            forward
+            onClick={handleNextButton}
+            style={{ paddingBottom: "1.25em" }}
+          >
+            {t("home#queue_button")}
+          </Button>
+          <Button variant="gray" backward onClick={handlePrevButton}>
+            {t("global#return_button")}
+          </Button>
         </Grid>
       </Grid>
-      <Grid container direction="column">
-        <Grid item className={classes.gridItem} style={{ paddingTop: ".8em" }}>
-          <EmailNotification className="email-icon email-icon-notification" />
-          <Typography
-            variant="h4"
-            style={{ padding: "0 2em" }}
+      <Grid
+        container
+        direction="column"
+        alignContent="center"
+        alignItems="center"
+        justify="space-evenly"
+        style={{ height: "90%" }}
+      >
+        <div style={{ width: "125px" }}>
+          <img src={TelephoneNotification} alt="telephone" width="100%" />
+        </div>
+        <p
+          style={{
+            fontSize: "22px",
+            lineHeight: "26px",
+            textAlign: "center",
+            margin: 0,
+            padding: "0 2em"
+          }}
+          dangerouslySetInnerHTML={{
+            __html: t("home#notification_description")
+          }}
+        />
+        <Input
+          placeholder={t("home#notification_inputPlaceholder")}
+          classes={{ root: classes.inputRoot, input: classes.inputElement }}
+          style={{
+            marginTop: "2.5em"
+          }}
+          value={userMobilePhone}
+          onChange={handleUserMobilePhoneChange}
+        />
+        <div
+          style={{ marginTop: "1.75em", textAlign: "center", padding: "0 2em" }}
+        >
+          <span
             dangerouslySetInnerHTML={{
-              __html: t("home#notification_description")
+              __html: t("home#notification_terms")
             }}
           />
-          <Input
-            placeholder={t("home#notification_inputPlaceholder")}
-            classes={{ root: classes.inputRoot, input: classes.inputElement }}
-            style={{
-              marginTop: "2.5em"
-            }}
-            value={userEmail}
-            onChange={handleUserEmailChange}
-          />
-          <div className={classes.bottomButton}>
-            <div style={{ marginBottom: "1.75em", padding: "0 2em" }}>
-              <span
-                dangerouslySetInnerHTML={{
-                  __html: t("home#notification_terms")
-                }}
-              />
-              {` `}
-              <Link
-                style={{ color: "#4C0788", textDecoration: "underline" }}
-                onClick={handleTermsOnClick}
-              >
-                {t("home#notification_termsLink")}
-              </Link>
-            </div>
-            <Button
-              onClick={handleAddToQueue}
-              disabled={loading}
-              variant={loading ? "inactive" : ""}
-              forward
-            >
-              {t(loading ? "global#wait_please" : "home#notification_button")}
-            </Button>
-          </div>
+          <Link
+            style={{ color: "#4C0788", textDecoration: "underline" }}
+            onClick={handleTermsOnClick}
+          >
+            {t("home#notification_termsLink")}
+          </Link>
+        </div>
+        <Grid container direction="column" style={{ textAlign: "center" }}>
+          <Button
+            onClick={handleAddToQueue}
+            disabled={loading}
+            variant={loading ? "inactive" : ""}
+            style={{ paddingBottom: "1.25em" }}
+          >
+            {t(loading ? "global#wait_please" : "home#notification_button")}
+          </Button>
+          <Button variant="gray" backward onClick={handlePrevButton}>
+            {t("global#return_button")}
+          </Button>
         </Grid>
       </Grid>
     </HomeLayout>

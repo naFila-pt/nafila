@@ -11,6 +11,8 @@ import { functions, analytics } from "../../../firebase";
 
 import { HeadlineContainer, ButtonsContainer } from "../common";
 
+import TitleComponent from "../../../components/TitleComponent";
+
 function AddConsumerPhone({ user, returnFunction, openSnackbar }) {
   const { t } = useTranslation();
   const [phone, setPhone] = useState("");
@@ -29,7 +31,7 @@ function AddConsumerPhone({ user, returnFunction, openSnackbar }) {
     const manuallyAddToQueue = functions.httpsCallable("manuallyAddToQueue");
 
     manuallyAddToQueue({ queueId: user.queues[0], phone })
-      .then(async function({ data: { ticket } }) {
+      .then(async function ({ data: { ticket } }) {
         analytics.logEvent("ticket");
         analytics.logEvent("ticket_manual");
         analytics.logEvent("ticket_by_sms");
@@ -46,6 +48,10 @@ function AddConsumerPhone({ user, returnFunction, openSnackbar }) {
 
   return (
     <Layout bg={LoginBg}>
+      <TitleComponent
+        title="Senha manual por telefone"
+        pageId="manual_ticket_phone"
+      />
       <HeadlineContainer>
         <Typography variant="h3">{t("main#addConsumerPhone_title")}</Typography>
       </HeadlineContainer>

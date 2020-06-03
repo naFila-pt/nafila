@@ -4,6 +4,8 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import RefreshArrowsIcon from "@material-ui/icons/Cached";
+import AddIcon from "@material-ui/icons/Add";
 
 const Button = ({
   children,
@@ -11,6 +13,8 @@ const Button = ({
   variant,
   forward,
   backward,
+  refresh,
+  add,
   onClick,
   dangerouslySetInnerHTML,
   mobile,
@@ -96,10 +100,15 @@ const Button = ({
               {children}
             </Typography>
           </Grid>
-          <ArrowForwardIcon
-            fontSize={mobile ? "small" : "default"}
-            style={{ visibility: forward ? "visible" : "hidden" }}
-          />
+          {refresh ? (
+            <RefreshArrowsIcon fontSize={mobile ? "small" : "default"} />
+          ) : (
+            <ArrowForwardIcon
+              fontSize={mobile ? "small" : "default"}
+              style={{ visibility: forward ? "visible" : "hidden" }}
+            />
+          )}
+          {add && <AddIcon />}
         </Grid>
       </MuiButton>
     </div>

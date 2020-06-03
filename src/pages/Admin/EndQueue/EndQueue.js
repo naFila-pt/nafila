@@ -14,6 +14,8 @@ import { HeadlineContainer, ButtonsContainer } from "../common";
 
 import EndQueueSuccess from "./EndQueueSuccess";
 
+import TitleComponent from "../../../components/TitleComponent";
+
 function EndQueue({ openSnackbar }) {
   const { t } = useTranslation();
   const [success, setSuccess] = useState(false);
@@ -27,7 +29,7 @@ function EndQueue({ openSnackbar }) {
     const deleteQueue = functions.httpsCallable("deleteQueue");
 
     deleteQueue({ queueId: user.queues[0] })
-      .then(async function({ data: { deletedCount, totalTickets } }) {
+      .then(async function ({ data: { deletedCount, totalTickets } }) {
         analytics.logEvent("queue_closed");
         analytics.logEvent("queue_tickets", { value: totalTickets });
         analytics.logEvent("queue_tickets_force_closed", {
@@ -65,6 +67,7 @@ function EndQueue({ openSnackbar }) {
 
   return (
     <Layout bg={Bg}>
+      <TitleComponent title="Encerrar fila" pageId="close_queue" />
       <HeadlineContainer>
         <Typography variant="h3">{t("main#endQueue_title")}</Typography>
       </HeadlineContainer>

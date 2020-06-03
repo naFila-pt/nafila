@@ -7,32 +7,18 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
 import Button from "../../components/Button";
+import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import bgMainMobile from "../../assets/bg/home_mobile.svg";
 import bgMain from "../../assets/bg/home_desktop.svg";
 
 import logoSrc from "../../assets/logo.svg";
-import logoBannerSrc from "../../assets/icons/logo_nafila.svg";
 import storeSrc from "../../assets/icons/store_mobile.svg";
 import personSrc from "../../assets/icons/pessoa_homepage_desktop.svg";
 
 import * as Routes from "../../constants/RoutesConstants";
 
-const Header = styled.div`
-  background-color: #fff;
-  width: "100%";
-  align-items: center;
-  justify-content: center;
-  height: 50px;
-  display: none;
-  @media (min-width: 768px) {
-    display: flex;
-  }
-
-  img {
-    width: 100px;
-  }
-`;
+import TitleComponent from "../../components/TitleComponent";
 
 const GridIntro = styled(Grid)`
   text-align: center;
@@ -116,7 +102,8 @@ const useStyles = makeStyles(theme => ({
   linkLabel: {
     marginTop: "10px",
     fontSize: "20px",
-    color: "#4C0788"
+    color: "#4C0788",
+    textTransform: "uppercase"
   },
   column: {
     display: "flex",
@@ -182,9 +169,8 @@ const Home = props => {
     <Grid
       style={{ display: "flex", minHeight: "100vh", flexDirection: "column" }}
     >
-      <Header>
-        <img src={logoBannerSrc} alt="logo" />
-      </Header>
+      <TitleComponent pageId="home" />
+      <Header />
       <MainContainer>
         <div className={classes.container}>
           <LeftColumn>

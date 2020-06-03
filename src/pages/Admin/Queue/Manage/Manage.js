@@ -1,25 +1,40 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Modal } from "@material-ui/core";
+import { Typography, Modal, Grid, Snackbar, Box } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import AddIcon from "@material-ui/icons/Add";
+import MaterialButton from "@material-ui/core/Button";
+import RemoveIcon from "@material-ui/icons/Remove";
+import MuiAlert from "@material-ui/lab/Alert";
 
 import Layout from "../../../../components/AdminLayout";
 import Loader from "../../../../components/Loader";
 import Button from "../../../../components/Button";
-import Bg from "../../../../assets/bg/main.svg";
+import Footer from "../../../../components/Footer/Footer";
+import Bg from "../../../../assets/bg/home_desktop.svg";
 import Ticket from "../../../../assets/icons/ticket.svg";
 import { firestore, functions, analytics, auth } from "../../../../firebase";
 import {
   ADMIN_ADD_CUSTOMER_PATH,
   ADMIN_END_QUEUE_PATH
 } from "../../../../constants/RoutesConstants";
+import IconGirl from "../../../../assets/icons/rapariga-queue.svg";
+import IconGirlTwo from "../../../../assets/icons/rapariga-gravida-queue.svg";
 
-import { ButtonsContainer } from "../../common";
+import TitleComponent from "../../../../components/TitleComponent";
+
+function AlertWrapper(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const pageMinHeight = 550;
 
 const ManageQueueContainer = styled.div`
+  margin-top: 10vh;
+
+  position: relative;
+
   min-height: ${pageMinHeight}px;
 
   h3 {
@@ -29,6 +44,10 @@ const ManageQueueContainer = styled.div`
 
   .logo {
     text-transform: lowercase;
+  }
+
+  @media (min-width: 768px) {
+    margin-top: 4vh;
   }
 `;
 const TicketContainer = styled.div`
@@ -45,11 +64,8 @@ const TicketContainer = styled.div`
     font-weight: 900;
   }
 `;
-const TicketsRemaining = styled.div`
-  position: absolute;
-  right: ${window.innerWidth <= 320 ? 4 : 10}px;
-  top: 38vh;
 
+const TicketsRemaining = styled.div`
   > div {
     font-size: ${window.innerWidth <= 320 ? 18 : 20}px;
   }
@@ -80,12 +96,76 @@ const Alert = styled.div`
   }
 `;
 
+const ButtonGroupWrapper = styled.div`
+  margin-top: 10vh;
+
+  .MuiButtonWrapper {
+    margin-bottom: 20px;
+  }
+`;
+
+const IconGirlWalking = styled.div`
+  align-items: flex-end;
+  display: flex;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+`;
+
+const IconGirlPregnant = styled.div`
+  align-items: flex-start;
+  display: flex;
+  margin-bottom: 15vh;
+  margin-left: 5vh;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+`;
+
+const ButtonCircleUp = styled(MaterialButton)`
+  width: 50px;
+  min-width: 45px;
+  height: 50px;
+  background-color: #ffc836 !important;
+  box-shadow: 0px 11px 19px rgba(0, 0, 0, 0.248689);
+  border-radius: 50%;
+  margin-bottom: 25px;
+`;
+
+const ButtonCircleDown = styled(MaterialButton)`
+  width: 50px;
+  min-width: 45px;
+  height: 50px;
+  background-color: #ffc836 !important;
+  box-shadow: 0px 11px 19px rgba(0, 0, 0, 0.248689);
+  border-radius: 50%;
+  margin-top: 25px;
+`;
+
+const CounterWrapper = styled.div`
+  @media (min-width: 768px) {
+  }
+`;
+
+const TicketWrapper = styled(Grid)`
+  justify-content: space-around;
+
+  @media (min-width: 768px) {
+    margin: 0 auto;
+    width: 60%;
+  }
+`;
+
 function Manage({ queueId, openSnackbar }) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [requestingNext, setRequestingNext] = useState(false);
   const [queue, setQueue] = useState();
   const [showModal, setShowModal] = useState(false);
+  const [counter, setCounter] = useState(0);
+  const [maxCapacity, setMaxCapacity] = useState(0);
+  const [isAlertOpen, setAlertOpen] = useState(false);
+  const [isSendingCounter, setSendingCounter] = useState(false);
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -101,7 +181,7 @@ function Manage({ queueId, openSnackbar }) {
     const callNextOnQueue = functions.httpsCallable("callNextOnQueue");
 
     callNextOnQueue({ queueId })
-      .then(function({ data: { queue } }) {
+      .then(function ({ data: { queue } }) {
         if (queue.currentTicketName) {
           handleOpenModal();
         }
@@ -115,6 +195,69 @@ function Manage({ queueId, openSnackbar }) {
         openSnackbar(e.message);
       });
   };
+
+  const handleAddCounter = () => {
+    //TODO validate max capacity, if it capped, an error message should appear.
+    if (counter >= maxCapacity) {
+      setAlertOpen(true);
+    }
+    setCounter(prevState => prevState + 1);
+  };
+
+  const handleRemoveCounter = () => {
+    if (counter <= 0) {
+      return;
+    }
+
+    setCounter(prevState => prevState - 1);
+  };
+
+  const handleAlertClose = () => {
+    setAlertOpen(false);
+  };
+
+  const handleSendingCounter = (action, counter) => {
+    if (queue) {
+      setSendingCounter(true);
+      firestore
+        .collection("counters")
+        .doc(queue.counterId)
+        .update({ current: counter })
+        .then(() => {
+          setSendingCounter(false);
+          action === "add" ? handleAddCounter() : handleRemoveCounter();
+        })
+        //send alert to user when is not being saved in firestore
+        .catch(err => {
+          setSendingCounter(false);
+          console.error(err);
+        });
+    }
+  };
+
+  const ImagesWrapper = styled(Grid)`
+    display: none;
+
+    @media (min-width: 768px) {
+      display: flex;
+      align-items: flex-end;
+    }
+  `;
+
+  const FooterWrapper = styled.div`
+    display: none;
+
+    @media (min-width: 768px) {
+      display: flex;
+    }
+  `;
+
+  const RemainingTitle = styled.div`
+    @media (max-width: 320px) {
+      font-size: 16px !important;
+      margin-left: 8px;
+    }
+  `;
 
   useEffect(() => {
     //FIXME: this piece of code avoids analyticsServerEvents to be processed over and over
@@ -140,6 +283,7 @@ function Manage({ queueId, openSnackbar }) {
           const data = snapshot.data();
 
           if (
+            data &&
             data.analyticsServerEvents &&
             data.analyticsServerEvents.length >= currentAnalyticsIndex
           ) {
@@ -159,6 +303,18 @@ function Manage({ queueId, openSnackbar }) {
           }
 
           setQueue(data);
+
+          //get counter
+          firestore
+            .collection("counters")
+            .doc(data.counterId)
+            .get()
+            .then(response => {
+              console.log(response.data());
+              const counterData = response.data();
+              setMaxCapacity(counterData.maxCapacity);
+              setCounter(counterData.current);
+            });
         });
     });
 
@@ -174,108 +330,182 @@ function Manage({ queueId, openSnackbar }) {
   if (loading) return <Loader />;
 
   return (
-    <Layout
-      style={{ position: "relative", minHeight: pageMinHeight + 56 }}
-      bg={Bg}
-    >
-      <Modal
-        open={showModal}
-        onClose={handleCloseModal}
-        aria-labelledby={t("admin#queueManagement_call")}
-        aria-describedby={t("admin#queueManagement_callByName")}
+    <>
+      <Layout
+        style={{ position: "relative", minHeight: pageMinHeight + 56 }}
+        bg={Bg}
       >
-        {
-          <Alert>
-            <CloseIcon
-              style={{
-                position: "absolute",
-                right: "8px",
-                top: "8px",
-                color: "white",
-                cursor: "pointer"
-              }}
-              onClick={handleCloseModal}
-            />
-            <Typography variant="h3">
-              {t("admin#queueManagement_callByName")}
-            </Typography>
-          </Alert>
-        }
-      </Modal>
-      <ManageQueueContainer>
-        <div>{t("admin#queueManagement_queueCode")}</div>
-        <Typography variant="h3">
-          {queue && queue.name} ({queueId})
-        </Typography>
-
-        <TicketContainer>
-          <div>
-            <Typography variant="h2">
-              {queue && String(queue.currentTicketNumber).padStart(3, "0")}
-            </Typography>
-          </div>
-
-          <div>
-            <Typography variant="h5">
-              {t("admin#queueManagement_call")}
-            </Typography>
-          </div>
-        </TicketContainer>
-
-        <TicketsRemaining>
-          <div>{t("admin#queueManagement_remaining")}</div>
-          <Typography variant="h4">
-            {queue ? queue.remainingTicketsInQueue : 0}
-          </Typography>
-        </TicketsRemaining>
-
-        {queue && queue.currentTicketName && (
-          <>
-            <Typography variant="h4" style={{ fontWeight: 600 }}>
-              {queue.currentTicketName}
-            </Typography>
-
-            <br />
-          </>
-        )}
-
-        <ButtonsContainer>
-          <div>
-            <Button
-              onClick={() => callNext()}
-              variant={requestingNext ? "inactive" : ""}
-              disabled={requestingNext}
-            >
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: t(
-                    requestingNext
-                      ? "admin#queueManagement_wait"
-                      : "admin#queueManagement_nextInQueue"
-                  )
+        <TitleComponent title="Gerir fila" pageId="manage_queue" />
+        <Modal
+          open={showModal}
+          onClose={handleCloseModal}
+          aria-labelledby={t("admin#queueManagement_call")}
+          aria-describedby={t("admin#queueManagement_callByName")}
+        >
+          {
+            <Alert>
+              <CloseIcon
+                style={{
+                  position: "absolute",
+                  right: "8px",
+                  top: "8px",
+                  color: "white",
+                  cursor: "pointer"
                 }}
+                onClick={handleCloseModal}
               />
-            </Button>
-          </div>
+              <Typography variant="h3">
+                {t("admin#queueManagement_callByName")}
+              </Typography>
+            </Alert>
+          }
+        </Modal>
+        <Box display="flex" flex="1">
+          <Grid item xs={12} sm={5}>
+            <ManageQueueContainer>
+              <div>{t("admin#queueManagement_queueCode")}</div>
+              <Typography variant="h3" style={{ marginBottom: "4vh" }}>
+                {queue && queue.name} ({queueId})
+              </Typography>
 
-          <div>
-            <Button variant="secondary" href={ADMIN_ADD_CUSTOMER_PATH} forward>
-              {t("admin#queueManagement_createTicket")}
-            </Button>
-          </div>
+              <TicketWrapper container>
+                <Grid
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    width: "15%",
+                    justifyContent: "center"
+                  }}
+                >
+                  <TicketsRemaining>
+                    <RemainingTitle>
+                      {t("admin#queueManagement_remaining")}
+                    </RemainingTitle>
+                    <Typography variant="h4">
+                      {queue ? queue.remainingTicketsInQueue : 0}
+                    </Typography>
+                  </TicketsRemaining>
+                </Grid>
 
-          <div>
-            <Button variant="gray" href={ADMIN_END_QUEUE_PATH}>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: t("admin#queueManagement_endQueue")
-                }}
-              />
-            </Button>
-          </div>
-        </ButtonsContainer>
-      </ManageQueueContainer>
-    </Layout>
+                <Grid>
+                  <TicketContainer>
+                    <div>
+                      <Typography variant="h2">
+                        {queue &&
+                          String(queue.currentTicketNumber).padStart(3, "0")}
+                      </Typography>
+                    </div>
+
+                    <div>
+                      <Typography variant="h5">
+                        {t("admin#queueManagement_call")}
+                      </Typography>
+                    </div>
+                  </TicketContainer>
+                </Grid>
+                <Grid>
+                  <CounterWrapper>
+                    <ButtonCircleUp
+                      disabled={counter === 0 || isSendingCounter}
+                      onClick={() =>
+                        handleSendingCounter("remove", counter - 1)
+                      }
+                    >
+                      <RemoveIcon />
+                    </ButtonCircleUp>
+
+                    <Typography style={{ margin: "40px auto" }} variant="h4">
+                      {counter}
+                    </Typography>
+
+                    <ButtonCircleDown
+                      onClick={() => handleSendingCounter("add", counter + 1)}
+                      disabled={isSendingCounter}
+                    >
+                      <AddIcon />
+                    </ButtonCircleDown>
+                  </CounterWrapper>
+                </Grid>
+              </TicketWrapper>
+
+              {queue && queue.currentTicketName && (
+                <>
+                  <Typography variant="h4" style={{ fontWeight: 600 }}>
+                    {queue.currentTicketName}
+                  </Typography>
+
+                  <br />
+                </>
+              )}
+
+              <ButtonGroupWrapper>
+                <div>
+                  <Button
+                    onClick={() => callNext()}
+                    variant={requestingNext ? "inactive" : ""}
+                    disabled={requestingNext}
+                    mobile
+                  >
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: t(
+                          requestingNext
+                            ? "admin#queueManagement_wait"
+                            : "admin#queueManagement_nextInQueue"
+                        )
+                      }}
+                    />
+                  </Button>
+                </div>
+
+                <div>
+                  <Button
+                    variant="secondary"
+                    href={ADMIN_ADD_CUSTOMER_PATH}
+                    forward
+                    mobile
+                  >
+                    {t("admin#queueManagement_createTicket")}
+                  </Button>
+                </div>
+
+                <div>
+                  <Button variant="gray" href={ADMIN_END_QUEUE_PATH} mobile>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: t("admin#queueManagement_endQueue")
+                      }}
+                    />
+                  </Button>
+                </div>
+              </ButtonGroupWrapper>
+            </ManageQueueContainer>
+          </Grid>
+          <ImagesWrapper item sm={7}>
+            <div style={{ display: "flex" }}>
+              <IconGirlWalking>
+                <img src={IconGirl} alt={"bgIconGirl"} width="100%" />
+              </IconGirlWalking>
+              <IconGirlPregnant>
+                <img src={IconGirlTwo} alt={"bgIconGirlTwo"} width="100%" />
+              </IconGirlPregnant>
+            </div>
+          </ImagesWrapper>
+        </Box>
+        <FooterWrapper>
+          <Footer />
+        </FooterWrapper>
+        <Snackbar
+          open={isAlertOpen}
+          autoHideDuration={6000}
+          onClose={handleAlertClose}
+        >
+          <AlertWrapper onClose={handleAlertClose} severity="warning">
+            {t("admin#queueManagement_warning_message")}
+          </AlertWrapper>
+        </Snackbar>
+      </Layout>
+    </>
   );
 }
 

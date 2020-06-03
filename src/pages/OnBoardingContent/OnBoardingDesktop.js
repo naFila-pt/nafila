@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { ReactComponent as EmailIcon } from "../../assets/icons/icon_email.svg";
-import { ReactComponent as PhoneIcon } from "../../assets/icons/icon_tlm.svg";
-import { ReactComponent as NameIcon } from "../../assets/icons/icon_nome.svg";
+import { useTranslation } from "react-i18next";
+
 import { ReactComponent as PhoneHand } from "../../assets/icons/Group_636.svg";
 import { ReactComponent as PosterCode } from "../../assets/icons/Group_666.svg";
-import { ReactComponent as MobileHand } from "../../assets/icons/mobile_hand.svg";
-import { ReactComponent as Logista } from "../../assets/icons/Logista.svg";
+import MobileHandSMS from "../../assets/icons/mobileHandSms.svg";
+
 import { ReactComponent as Person } from "../../assets/icons/pessoa_homepage_desktop.svg";
 import { ReactComponent as StoreMobile } from "../../assets/icons/store_mobile.svg";
 import { ReactComponent as Store } from "../../assets/images/ilust_loja.svg";
@@ -15,6 +14,7 @@ import { OnBoardingLayoutDesktop } from "../../components/OnBoardingLayout";
 import { ArrowBack, ArrowForward } from "@material-ui/icons";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 
 import * as Routes from "../../constants/RoutesConstants";
 
@@ -32,7 +32,30 @@ const endOnBoarding = () => {
   try {
     localStorage.setItem("skipOnBoarding", true);
   } catch (error) {}
-  window.location.href = Routes.TICKET_PATH;
+  window.location.href = Routes.ROOT_PATH;
+};
+
+const PhoneNumber = () => {
+  const [t] = useTranslation();
+  return (
+    <Grid item style={{ textAlign: "center" }}>
+      <Typography
+        variant="h3"
+        gutterBottom
+        style={{ marginTop: "1em" }}
+        dangerouslySetInnerHTML={{
+          __html: t("onboarding#phone_number")
+        }}
+      />
+      <div
+        style={{
+          border: "1px solid rgba(132, 100, 172, 0.9)",
+          opacity: "0.65",
+          mixBlendMode: "normal"
+        }}
+      ></div>
+    </Grid>
+  );
 };
 
 const getSteppers = () => {
@@ -51,62 +74,6 @@ const getSteppers = () => {
           }}
         >
           <Store />
-        </Grid>
-      </StepperContent>
-
-      <StepperContent
-        titleLabel="onboarding#three_ways"
-        descriptionLabel="onboarding#signup_ways"
-      >
-        <Grid item style={{ width: "50%" }}>
-          <Grid container justify="space-evenly">
-            <Grid item>
-              <Grid container direction="column" alignItems="center">
-                <PhoneIcon fontSize="large" />
-                <div
-                  style={{
-                    fontSize: "36px",
-                    lineHeight: "43px",
-                    fontWeight: "bold"
-                  }}
-                >
-                  SMS
-                </div>
-              </Grid>
-            </Grid>
-            <Grid item>
-              <Grid container direction="column" alignItems="center">
-                <EmailIcon fontSize="large" />
-                <div
-                  style={{
-                    fontSize: "36px",
-                    lineHeight: "43px",
-                    fontWeight: "bold"
-                  }}
-                >
-                  Email
-                </div>
-              </Grid>
-            </Grid>
-          </Grid>
-
-          <Grid
-            container
-            justify="center"
-            direction="column"
-            alignItems="center"
-          >
-            <NameIcon fontSize="large" />
-            <div
-              style={{
-                fontSize: "36px",
-                lineHeight: "43px",
-                fontWeight: "bold"
-              }}
-            >
-              Nome
-            </div>
-          </Grid>
         </Grid>
       </StepperContent>
 
@@ -131,8 +98,9 @@ const getSteppers = () => {
       </StepperContent>
 
       <StepperContent
-        titleLabel="onboarding#prefer_email"
+        titleLabel="onboarding#prefer_register_site"
         descriptionLabel="onboarding#insertCodeEmail"
+        extraContent={<PhoneNumber />}
       >
         <Grid
           item
@@ -140,35 +108,16 @@ const getSteppers = () => {
             display: "flex",
             maxWidth: "50%",
             position: "absolute",
-            bottom: "-100px",
-            left: "55%"
+            bottom: "50px",
+            left: "65%",
+            transform: "scale(1.5)"
           }}
         >
-          <MobileHand style={{ height: "600px" }} />
-        </Grid>
-      </StepperContent>
-
-      <StepperContent
-        titleLabel="onboarding#prefer_name"
-        descriptionLabel="onboarding#ask_colaborator_register"
-        infoLabel="onboarding#name_register_extra_info"
-      >
-        <Grid
-          item
-          style={{
-            display: "flex",
-            maxWidth: "50%",
-            position: "absolute",
-            bottom: "40px",
-            left: "55%"
-          }}
-        >
-          <Logista
-            style={{
-              width: "320px",
-              height: "auto",
-              transform: "scale(1.3)"
-            }}
+          <img
+            src={MobileHandSMS}
+            alt="mobile hand sms"
+            width="100%"
+            height="100%"
           />
         </Grid>
       </StepperContent>

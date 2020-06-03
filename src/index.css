@@ -1,12 +1,25 @@
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
   min-height: 680px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", "Lucida Grande", Tahoma, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -15,28 +28,27 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-.MuiInput-input{
-  background:rgba(255,255,255,0.8) !important;
+.MuiInput-input {
+  background: rgba(255, 255, 255, 0.8) !important;
 }
 
-
-.MuiInput-input::placeholder {  
-  text-align: center; 
+.MuiInput-input::placeholder {
+  text-align: center;
 }
-.MuiInput-input::-webkit-input-placeholder {  
-  text-align: center; 
+.MuiInput-input::-webkit-input-placeholder {
+  text-align: center;
 }
-.MuiInput-input::-moz-placeholder {  
-  text-align: center; 
+.MuiInput-input::-moz-placeholder {
+  text-align: center;
 }
-.MuiInput-input::-ms-input-placeholder {  
-  text-align: center; 
+.MuiInput-input::-ms-input-placeholder {
+  text-align: center;
 }
-.MuiInput-input:-moz-placeholder {  
-  text-align: center; 
+.MuiInput-input:-moz-placeholder {
+  text-align: center;
 }
-.MuiInput-input:-ms-input-placeholder {  
-  text-align: center; 
+.MuiInput-input:-ms-input-placeholder {
+  text-align: center;
 }
 
 @media screen and (max-width: 420px) {

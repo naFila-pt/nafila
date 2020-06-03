@@ -6,16 +6,18 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
 import Button from "../../../components/Button";
+import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
 
 import bgMainMobile from "../../../assets/bg/home_mobile.svg";
 import bgMain from "../../../assets/bg/home_desktop.svg";
-import logoBannerSrc from "../../../assets/icons/logo_nafila.svg";
 import logoSrc from "../../../assets/logo.svg";
 import personSrc from "../../../assets/icons/pessoa_homepage_desktop.svg";
 import personManSrc from "../../../assets/icons/person_man.svg";
 
 import * as Routes from "../../../constants/RoutesConstants";
+
+import TitleComponent from "../../../components/TitleComponent";
 
 const HomeContent = styled(Grid)`
   display: flex;
@@ -23,22 +25,6 @@ const HomeContent = styled(Grid)`
   flex-direction: column;
   @media (min-width: 768px) {
     height: 100vh;
-  }
-`;
-
-const Header = styled.div`
-  background-color: #fff;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  height: 50px;
-  display: none;
-  @media (min-width: 768px) {
-    display: flex;
-  }
-
-  img {
-    width: 100px;
   }
 `;
 
@@ -145,19 +131,22 @@ const HiddenColumn = styled(Grid)`
   }
 `;
 
+const handleLogoOnClick = e => {
+  window.location.href = "/";
+};
+
 const Home = () => {
   const { t } = useTranslation();
 
   return (
     <HomeContent>
-      <Header>
-        <img src={logoBannerSrc} alt="logo" />
-      </Header>
+      <TitleComponent title="Lojista" pageId="operator_home" />
+      <Header />
       <Container>
         <div className="content">
           <Column>
             <MobileLogo>
-              <img src={logoSrc} alt="logo" />
+              <img src={logoSrc} alt="logo" onClick={handleLogoOnClick} />
             </MobileLogo>
             <GridIntro>
               <Typography variant="h1">
@@ -170,16 +159,15 @@ const Home = () => {
               />
             </GridIntro>
             <DektopLogo>
-              <img src={logoSrc} alt="logo" />
+              <img src={logoSrc} alt="logo" onClick={handleLogoOnClick} />
             </DektopLogo>
             <ButtonsWrapper>
               <Button
                 forward
                 fullWidth
-                target="_blank"
-                href="https://geralnafilapt.typeform.com/to/VtDUdM"
+                href={Routes.ADMIN_LOGIN_PATH}
                 dangerouslySetInnerHTML={{
-                  __html: t("admin#register")
+                  __html: t("admin#intro_login")
                 }}
                 style={{ marginBottom: "10px" }}
               />

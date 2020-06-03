@@ -1,10 +1,10 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import Input from "@material-ui/core/Input";
+
 import { useTranslation } from "react-i18next";
 import { OnBoardingLayoutMobile } from "../../components/OnBoardingLayout";
-import Button from "../../components/Button";
+
 import { makeStyles } from "@material-ui/core/styles";
 
 import bgIntro from "../../assets/bg/user_intro.svg";
@@ -13,7 +13,11 @@ import bgMain from "../../assets/bg/user_onboard_main.svg";
 
 import { ReactComponent as Logo } from "../../assets/logo.svg";
 
-import { ReactComponent as EmailNotification } from "../../assets/icons/onboarding_email_notification.svg";
+import MobileHand from "../../assets/icons/Group_636.svg";
+import MobileHandSms from "../../assets/icons/mobileHandSms.svg";
+import StoreCodeInfo from "../../assets/icons/Group_666.svg";
+import StoreMobile from "../../assets/icons/store_mobile.svg";
+import Person from "../../assets/icons/pessoa_homepage_desktop.svg";
 
 import * as Routes from "../../constants/RoutesConstants";
 
@@ -30,7 +34,9 @@ const useStyles = makeStyles(theme => ({
   },
   gridItem: {
     textAlign: "center",
-    paddingTop: "1.8em"
+    paddingTop: "1.8em",
+    paddingLeft: "1.5em",
+    paddingRight: "1.5em"
   },
   inputRoot: {
     width: "calc(100% - 4em)",
@@ -133,6 +139,55 @@ const useStyles = makeStyles(theme => ({
     minHeight: "10vh",
     backgroundColor: "#8464AC",
     padding: "10px 15% 10px 15%"
+  },
+  storeImg: {
+    position: "absolute",
+    bottom: "100px",
+    left: "20px",
+    maxWidth: "150px",
+    "@media (min-width:374px)": {
+      maxWidth: "212px",
+      bottom: "130px"
+    },
+    "@media (max-height:667px)": {
+      bottom: "100px"
+    }
+  },
+  mobileHand: {
+    marginTop: "60px",
+    position: "absolute",
+    bottom: "60px",
+    right: "20px",
+    maxWidth: "140px",
+    "@media (min-width:374px)": {
+      maxWidth: "180px",
+      right: 0
+    }
+  },
+  mobileHandSms: {
+    position: "absolute",
+    bottom: "55px",
+    right: "-20px",
+    height: "235px",
+    "@media (min-width:374px)": {
+      height: "300px",
+      right: 0
+    },
+    "@media (min-height:666px)": {
+      height: "unset",
+      bottom: 0
+    }
+  },
+  store: {
+    position: "absolute",
+    bottom: "200px",
+    right: "-80px"
+  },
+  person: {
+    position: "absolute",
+    bottom: "80px",
+    left: 0,
+    height: "235px"
   }
 }));
 
@@ -191,71 +246,122 @@ const OnboardingMobile = () => {
         <Grid item className={classes.gridItem}>
           <Typography
             variant="h1"
-            style={{ marginBottom: "0.95em" }}
-            gutterBottom
+            style={{ color: "#FFC836", padding: "0 1em" }}
           >
-            {t("onboarding#useCode_title")}
+            {t("onboarding#justOneSMS")}
           </Typography>
           <Typography
             variant="h4"
-            style={{ padding: "0 1.5em" }}
+            gutterBottom
+            style={{ padding: "0 1em", marginTop: "30px" }}
             dangerouslySetInnerHTML={{
-              __html: t("onboarding#useCode_description")
+              __html: t("onboarding#register_nafila")
             }}
           />
-          <Input
-            value={t("onboarding#useCode_inputPlaceholder")}
-            classes={{ root: classes.inputRoot, input: classes.inputElement }}
-            style={{
-              fontSize: "1.625em",
-              margin: "0.9em 0 0.385em"
+          <Typography
+            variant="body2"
+            gutterBottom
+            style={{ marginTop: "2em" }}
+            dangerouslySetInnerHTML={{
+              __html: t("onboarding#difficulties")
             }}
-            disabled
           />
-          <div>{t("onboarding#useCode_instruction")}</div>
-          <Button
-            size={window.innerWidth < 350 ? "small" : ""}
-            variant="onboarding"
-            forward
-            style={{ marginTop: "2em", color: "#4C0788" }}
-            disabled
-          >
-            {t("onboarding#useCode_button")}
-          </Button>
+          <>
+            <div className={classes.storeImg}>
+              <img
+                width="100%"
+                height="100%"
+                src={StoreCodeInfo}
+                alt="store code"
+              />
+            </div>
+            <div className={classes.mobileHand}>
+              <img
+                src={MobileHand}
+                height="100%"
+                width="100%"
+                alt="mobile hand"
+              />
+            </div>
+          </>
         </Grid>
       </Grid>
       <Grid container direction="column" className={classes.gridContainer}>
         <Grid item className={classes.gridItem}>
           <Typography
             variant="h1"
-            style={{ color: "#FFC836", padding: "0 1em" }}
+            style={{ color: "#FFC836", padding: "0 0.5em" }}
           >
-            {t("onboarding#insertEmail_title")}
+            {t("onboarding#register_site_title")}
           </Typography>
           <Typography
             variant="h4"
             gutterBottom
-            style={{ padding: "0 1em" }}
+            style={{ padding: "0 0.5em", marginTop: "30px" }}
             dangerouslySetInnerHTML={{
-              __html: t("onboarding#insertEmail_description")
+              __html: t("onboarding#register_site_description")
             }}
           />
-          <EmailNotification className="email-icon" />
+          <Typography
+            variant="body2"
+            gutterBottom
+            style={{ marginTop: "1em" }}
+            dangerouslySetInnerHTML={{
+              __html: t("onboarding#phone_number")
+            }}
+          />
+          <div
+            style={{
+              border: "1px solid rgba(132, 100, 172, 0.9)",
+              opacity: "0.65",
+              mixBlendMode: "normal"
+            }}
+          ></div>
+          <>
+            <div className={classes.mobileHandSms}>
+              <img
+                src={MobileHandSms}
+                alt="mobile hand sms"
+                width="100%"
+                height="100%"
+              />
+            </div>
+          </>
+        </Grid>
+      </Grid>
+      <Grid container direction="column" className={classes.gridContainer}>
+        <Grid item className={classes.gridItem}>
+          <Typography
+            variant="h1"
+            style={{ color: "#FFC836", padding: "0 0.5em" }}
+          >
+            {t("onboarding#its_done")}
+          </Typography>
           <Typography
             variant="h4"
             gutterBottom
-            style={{ marginBottom: "2em" }}
+            style={{ padding: "0 0.5em", marginTop: "30px" }}
             dangerouslySetInnerHTML={{
-              __html: t("onboarding#insertEmail_notification")
+              __html: t("onboarding#your_turn_notification")
             }}
           />
-          <Button
-            onClick={endOnBoarding}
-            forward
-            dangerouslySetInnerHTML={{
-              __html: t("onboarding#insertEmail_button")
-            }}
-          />
+
+          <div className={classes.store}>
+            <img
+              src={StoreMobile}
+              alt="mobile hand sms"
+              width="100%"
+              height="100%"
+            />
+          </div>
+          <div className={classes.person}>
+            <img
+              src={Person}
+              alt="mobile hand sms"
+              width="100%"
+              height="100%"
+            />
+          </div>
         </Grid>
       </Grid>
     </OnBoardingLayoutMobile>

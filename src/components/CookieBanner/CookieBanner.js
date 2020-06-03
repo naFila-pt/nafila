@@ -35,9 +35,6 @@ const CookieBanner = ({ handleBannerCloseClick }) => {
     cookieBannerSeen = false;
   }
 
-  //disable temporarily until we have privacy policy online
-  cookieBannerSeen = true;
-
   const [shouldShowCookieBanner, setShouldShowCookieBanner] = useState(
     !cookieBannerSeen
   );
@@ -57,7 +54,7 @@ const CookieBanner = ({ handleBannerCloseClick }) => {
       container
       alignItems="center"
       justify="center"
-      style={{ position: "sticky", top: 0, zIndex: 999 }}
+      style={{ position: "absolute", top: 0, zIndex: 999 }}
     >
       <CookieBannerContainer>
         <Grid item style={{ padding: 16 }}>

@@ -15,6 +15,8 @@ import { HeadlineContainer, ButtonsContainer } from "../common";
 import AddConsumerName from "./AddConsumerName";
 import AddConsumerPhone from "./AddConsumerPhone";
 
+import TitleComponent from "../../../components/TitleComponent";
+
 function AddConsumer({ openSnackbar }) {
   const { t } = useTranslation();
 
@@ -54,14 +56,23 @@ function AddConsumer({ openSnackbar }) {
 
   if (viewType) return availableViews[viewType];
 
+  const handleLogoOnClick = e => {
+    window.location.href = "/";
+  };
+
   return (
     <Layout bg={LoginBg}>
+      <TitleComponent title="Senha manual" pageId="manual_ticket" />
       <HeadlineContainer style={{ marginBottom: 0 }}>
         <Typography variant="h3">{t("main#addConsumer_title")}</Typography>
       </HeadlineContainer>
 
       <div style={{ textAlign: "center", marginTop: "10px" }}>
-        <Logo className="logo-icon hide-on-small" style={{ height: "200px" }} />
+        <Logo
+          className="logo-icon hide-on-small"
+          style={{ height: "200px" }}
+          onClick={handleLogoOnClick}
+        />
       </div>
 
       <ButtonsContainer>

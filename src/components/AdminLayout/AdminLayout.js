@@ -30,7 +30,7 @@ const useStyles = makeStyles({
   }
 });
 
-function Layout({ children, bg, hideLogo, style }) {
+function Layout({ children, bg, hideLogo, style, textAlign }) {
   const classes = useStyles();
   const { t } = useTranslation();
   const boxProps = {
@@ -40,11 +40,8 @@ function Layout({ children, bg, hideLogo, style }) {
     flexDirection: "column",
     style: {
       ...style,
-      background: `url(${bg})`,
-      backgroundSize: "cover",
-      backgroundPosition: "0px",
-      backgroundRepeat: "no-repeat",
-      textAlign: "center"
+      background: `url(${bg}) no-repeat scroll 0px center / cover`,
+      textAlign: textAlign
     }
   };
 
@@ -52,6 +49,10 @@ function Layout({ children, bg, hideLogo, style }) {
     auth.signOut().then(() => {
       window.location.href = "/admin";
     });
+  };
+
+  const handleLogoOnClick = e => {
+    window.location.href = "/";
   };
 
   return (
@@ -74,6 +75,7 @@ function Layout({ children, bg, hideLogo, style }) {
                     ? { flex: 0.4 }
                     : { flex: 1 }
                 }
+                onClick={handleLogoOnClick}
               />
             )}
             {auth.currentUser && auth.currentUser.emailVerified && (
@@ -90,5 +92,8 @@ function Layout({ children, bg, hideLogo, style }) {
     </Box>
   );
 }
+Layout.defaultProps = {
+  textAlign: "center"
+};
 
 export default Layout;

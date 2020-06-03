@@ -13,6 +13,8 @@ import { ReactComponent as Logo } from "../../assets/logo.svg";
 
 import { functions, analytics } from "../../firebase";
 
+import TitleComponent from "../../components/TitleComponent";
+
 const useStyles = makeStyles({
   gridContainer: {
     alignContent: "center",
@@ -48,9 +50,16 @@ const Leave = ({
       const removeMeFromQueue = functions.httpsCallable("removeMeFromQueue");
 
       removeMeFromQueue({ queueId, ticketId })
-        .then(async function() {
+        .then(function ({ queue }) {
+          analytics.setUserProperties({
+            shop: queue.owner_id,
+            retailerGroup: queue.retailerGroup,
+            shoppingCentre: queue.shoppingCentre
+          });
+
           analytics.logEvent("ticket_cancelled");
           analytics.logEvent("ticket_cancelled_by_email");
+
           setSuccess(true);
         })
         .catch(error => {
@@ -64,6 +73,7 @@ const Leave = ({
 
   return (
     <HomeLayout bg={[bgMain]} forceLogoDisplay>
+      <TitleComponent title="Saida da fila" pageId="exit_queue" />
       <Grid container direction="column" className={classes.gridContainer}>
         <Grid item className={classes.gridItem}>
           <Typography

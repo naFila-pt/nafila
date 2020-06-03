@@ -16,11 +16,16 @@ import StyledButton from "../../../components/Button";
 
 import bgMainMobile from "../../../assets/bg/user_onboard_main.svg";
 import storeIcon from "../../../assets/icons/store-icon.svg";
-import emailIcon from "../../../assets/icons/email_notification.svg";
+import siteIcon from "../../../assets/icons/site_icon.svg";
 import chamadaIcon from "../../../assets/icons/icon_chamada_mobile.svg";
 import smsIcon from "../../../assets/icons/icon_sms_mobile.svg";
-import howToUseIcon from "../../../assets/icons/ilustração_utilização_mobile.svg";
+import howToUseIcon from "../../../assets/icons/ilustração_utilização_mobile_lojista.svg";
 import yellowLogo from "../../../assets/icons/logo_amarelo_naFila.svg";
+import logoSrc from "../../../assets/logo.svg";
+import leftPerson from "../../../assets/icons/human-onboarding-left.svg";
+import rightPerson from "../../../assets/icons/human-onboarding-right.svg";
+
+import TitleComponent from "../../TitleComponent";
 
 const useStyles = makeStyles({
   stepper: {
@@ -48,6 +53,36 @@ const Container = styled(Box)`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 0px;
+`;
+
+const FirstPage = styled(Grid)`
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 20px;
+
+  .logo-label {
+    margin: 0;
+    font-size: 5vw;
+  }
+
+  .body {
+    text-align: center;
+    margin-top: 20px;
+    & h1 {
+      margin: 0;
+    }
+    & p {
+      margin: 0;
+      font-size: 6vw;
+    }
+    & div {
+      font-size: 6vw;
+      padding: 0 35px;
+    }
+  }
 `;
 
 const ToolbarWrapper = styled(Toolbar)`
@@ -105,25 +140,66 @@ const TicketContainer = styled.div`
     font-size: 35px;
   }
 
+  & .name {
+    width: 100%;
+    font-size: 6vw;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  & .nextInQueue {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+    font-size: 6vw;
+    & span {
+      margin-right: 20px;
+    }
+  }
+
   & .ticket {
     display: flex;
+    width: 100%;
     height: 100%;
-    justify-content: center;
-    & div {
+    justify-content: space-around;
+    align-items: center;
+    & .remaining-container {
       display: flex;
       flex-direction: column;
-      margin-left: 30px;
+      align-items: center;
       justify-content: center;
-      & .remaining {
-        font-size: 20px;
+      width: 25%;
+      & .remaining-text {
+        font-size: 5vw;
         font-weight: bold;
         margin: 0;
       }
-
-      & .name {
-        font-size: 25px;
+    }
+    & .counter {
+      display: flex;
+      width: 25%;
+      height: 80%;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      & p {
+        margin: 0;
+        font-size: 20px;
         font-weight: bold;
-        margin: 70% 0 0 0;
+      }
+      & .roundButton {
+        text-align: center;
+        vertical-align: middle;
+        background-color: #ffc836;
+        color: #4c0788;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        line-height: 1.5;
+        font-size: 35px;
+        font-weight: bold;
       }
     }
   }
@@ -150,7 +226,6 @@ const MainContentMobile = props => (
             variant="h3"
             style={{
               fontSize: "20px",
-              color: "#FFC836",
               marginBottom: "10px",
               textAlign: "center"
             }}
@@ -213,15 +288,22 @@ const Layout = ({ children, endOnBoarding }) => {
     </Button>
   );
 
+  const handleLogoOnClick = e => {
+    window.location.href = "/";
+  };
   return (
     <Container
       className={"OnboardingWrapper"}
       style={{ backgroundImage: `url(${bgMainMobile})` }}
     >
+      <TitleComponent
+        title="Lojista - Como funciona"
+        pageId="operator_tutorial"
+      />
       <Grid direction="column" style={{ height: "100vh", display: "flex" }}>
         <Grid container direction="column" style={{ height: "56px" }}>
           <ToolbarWrapper>
-            <LogoMini style={{ flex: 1 }} />
+            <LogoMini style={{ flex: 1 }} onClick={handleLogoOnClick} />
           </ToolbarWrapper>
         </Grid>
         {children[activeStep]}
@@ -269,19 +351,40 @@ const OnBoardingLayout = props => {
     <Layout endOnBoarding={endOnBoarding}>
       <MainContentMobile
         t={t}
-        text="admin#onboarding_firstText"
         rightColumn={
           <Grid
             style={{
               display: "flex",
-              alignItems: "flex-end",
+              flexDirection: "column",
               justifyContent: "center",
               width: "100%",
-              height: "70%",
+              height: "100%",
               marginTop: "10px"
             }}
           >
-            <img src={storeIcon} alt="asset" width="100%" height="100%" />
+            <FirstPage>
+              <div style={{ position: "absolute", left: 0, bottom: 0 }}>
+                <img src={leftPerson} alt="person" />
+              </div>
+              <div style={{ position: "absolute", right: 0, bottom: 0 }}>
+                <img src={rightPerson} alt="person" />
+              </div>
+              <img src={logoSrc} height="50%" alt="naFilaLogo" />
+              <div style={{ width: "100%", textAlign: "center" }}>
+                <p
+                  className="logo-label"
+                  dangerouslySetInnerHTML={{
+                    __html: t("onboarding#intro_pitch")
+                  }}
+                />
+              </div>
+              <div
+                className="body"
+                dangerouslySetInnerHTML={{
+                  __html: t("admin#onboarding_firstText_mobile")
+                }}
+              />
+            </FirstPage>
           </Grid>
         }
       />
@@ -313,21 +416,19 @@ const OnBoardingLayout = props => {
             <BigText>{t("admin#onboarding_autonomous")}</BigText>
             <div className="row">
               <div className="column">
-                <img src={emailIcon} alt="iconEmail" />
-                <TextDesc>{t("admin#onboarding_email")}</TextDesc>
-              </div>
-              <div className="column">
                 <img src={smsIcon} alt="smsIcon" height="70%" />
                 <TextDesc>{t("admin#onboarding_sms")}</TextDesc>
+              </div>
+              <div className="column">
+                <img src={siteIcon} alt="siteIcon" height="70%" />
+                <TextDesc>{t("admin#onboarding_site")}</TextDesc>
               </div>
             </div>
             <BigText>{t("admin#onboarding_shopkeeper")}</BigText>
             <div className="row">
               <div className="column">
                 <img src={chamadaIcon} alt="chamada" height="70%" />
-                <TextDesc style={{ gridArea: "chamadaDesc" }}>
-                  {t("admin#onboarding_call")}
-                </TextDesc>
+                <TextDesc>{t("admin#onboarding_call")}</TextDesc>
               </div>
               <div className="column">
                 <img src={smsIcon} alt="smsIcon" height="70%" />
@@ -354,18 +455,12 @@ const OnBoardingLayout = props => {
           >
             <TicketContainer style={{ width: "100%", height: "100%" }}>
               <div className="ticket" style={{ height: "100%" }}>
-                <img src={yellowLogo} alt="asset" height="100%" />
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    marginLeft: "30px",
-                    justifyContent: "center"
-                  }}
-                >
-                  <p className="remaining">{t("admin#onboarding_remaining")}</p>
+                <div className="remaining-container">
+                  <p className="remaining-text">
+                    {t("admin#onboarding_remaining")}
+                  </p>
                   <p
-                    className="remaining"
+                    className="remaining-text"
                     style={{
                       fontSize: "30px"
                     }}
@@ -373,6 +468,21 @@ const OnBoardingLayout = props => {
                     10
                   </p>
                 </div>
+                <img src={yellowLogo} alt="asset" height="80%" />
+                <div className="counter">
+                  <div class="roundButton">{"-"}</div>
+                  <p>10</p>
+                  <div class="roundButton">{"+"}</div>
+                </div>
+              </div>
+              <div className="name">{"Ana Maria"}</div>
+              <div className="nextInQueue">
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: t("admin#queueManagement_nextInQueue")
+                  }}
+                />
+                <ArrowForwardIcon fontSize="small" />
               </div>
             </TicketContainer>
           </Grid>

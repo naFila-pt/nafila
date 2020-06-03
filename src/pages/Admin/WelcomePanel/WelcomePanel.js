@@ -16,6 +16,8 @@ import {
 import * as S from "./style";
 import { ButtonsContainer } from "../common";
 
+import TitleComponent from "../../../components/TitleComponent";
+
 const typographyStyles = {
   MAIN: {
     color: PRIMARY_COLOR,
@@ -31,6 +33,7 @@ function WelcomePanel() {
 
   return (
     <Layout bg={Background} hideLogo>
+      <TitleComponent title="Lojista - Bem-vindo" pageId="operator_welcome" />
       <S.LogoContainer>
         <img className="logo-icon" src={Logo} alt="nafila logo" />
       </S.LogoContainer>
@@ -58,7 +61,7 @@ function WelcomePanel() {
           style={{ color: PRIMARY_COLOR, textDecoration: "none" }}
         >
           <Button variant="secondary" forward>
-            {t("admin#intro_signup")}
+            {t("admin#register")}
           </Button>
         </Link>
       </ButtonsContainer>

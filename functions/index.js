@@ -4,6 +4,13 @@ const functionsMain = require("firebase-functions");
 const config = functionsMain.config();
 const admin = require("firebase-admin");
 admin.initializeApp();
+
+// **** Emulate firebase functions **** //
+
+// admin.initializeApp({
+//   credential: admin.credential.cert(require("../serviceAccountKey.json"))
+// });
+
 const firestore = admin.firestore();
 const urlSMSPro = "https://smspro.nos.pt/smspro/smsprows.asmx?WSDL";
 const urlSMSProService = "https://smspro.nos.pt/SmsPro/smsprows.asmx";
@@ -11,7 +18,7 @@ const functionsRegion = "europe-west1";
 
 const runtimeOpts = {
   timeoutSeconds: 15,
-  memory: "256MB", //lowest cost possible
+  memory: "256MB" //lowest cost possible
 };
 
 //low cost / high perf settings
@@ -39,6 +46,15 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
     );
   }
 
+  if (isNaN(data.maxCapacity)) {
+    throw new functionsMain.https.HttpsError(
+      "invalid-argument",
+      "Tem de inserir uma lotação máxima válida para a fila"
+    );
+  }
+
+  const countersRef = firestore.collection("counters").doc();
+
   //inserts queue
   const queue = {
     owner_id: context.auth.uid,
@@ -47,7 +63,15 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
     ticketTopNumber: 0,
     currentTicketNumber: 0,
     currentTicketName: null,
+    counterId: countersRef.id
   };
+
+  // inserts counter with store max capacity
+  const counter = {
+    maxCapacity: data.maxCapacity,
+    current: 0
+  };
+
   const queueRef = firestore.collection("queues").doc(queueId);
 
   //updates user
@@ -58,10 +82,13 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
   if (!userData.queues) userData.queues = [];
   userData.queues.push(queueRef.id);
   userData.defaultQueueName = queue.name;
+  queue.retailerGroup = userData.retailerGroup || "";
+  queue.shoppingCentre = userData.shoppingCentre || "";
 
   //batch commit
   const batch = firestore.batch();
   batch.set(queueRef, queue);
+  batch.set(countersRef, counter);
   batch.update(userRef, userData);
   batch.commit();
 
@@ -69,7 +96,7 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
   await sendMail([data.email], "d-6ac28f40006c4d178be4e00adae2bcb4", {
     queueId: queueRef.id,
     queueName: queue.name,
-    queuePosterUrl: `https://nafila.pt/loja/cartaz-fila/${queueRef.id}`,
+    queuePosterUrl: `https://nafila.pt/loja/cartaz-fila/${queueRef.id}`
   });
 
   //returns queue object
@@ -106,6 +133,14 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
     //get user
     let userData = userDoc.data();
 
+    //get counter ref - backwards compatible to queues without counter
+    if (queueData.counterId) {
+      const counterRef = firestore
+        .collection("counters")
+        .doc(queueData.counterId);
+      transaction.delete(counterRef);
+    }
+
     //remove queueId from queues
     userData.queues.splice(userData.queues.indexOf(queueRef.id), 1);
     transaction.update(userRef, userData);
@@ -119,7 +154,7 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
   //notify every remaining person in queue of queue deletion
   let emailsToNotify = [];
   let phonesToNotify = [];
-  result.tickets.forEach((t) => {
+  result.tickets.forEach(t => {
     let ticketData = t.data();
     if (!!ticketData.email) {
       emailsToNotify.push(ticketData.email);
@@ -133,7 +168,7 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
     //{{queueName}} {{queueId}}
     await sendMail(emailsToNotify, "d-b28224dd3dac48388f8e469ed82448a8", {
       queueId: queueRef.id,
-      queueName: result.queue.name,
+      queueName: result.queue.name
     });
   }
 
@@ -147,7 +182,7 @@ exports.deleteQueue = functions.https.onCall(async (data, context) => {
 
   return {
     deletedCount: result.tickets.length,
-    totalTickets: result.queue.ticketTopNumber,
+    totalTickets: result.queue.ticketTopNumber
   };
 });
 
@@ -195,7 +230,7 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
           queueData,
           true
         ),
-        notifyTicketData: querySnap.size > 3 ? querySnap.docs[3].data() : null,
+        notifyTicketData: querySnap.size > 3 ? querySnap.docs[3].data() : null
       };
     }
   );
@@ -211,7 +246,7 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
       {
         ticketNumber: result.ticket.number,
         queueId: queueRef.id,
-        queueName: result.queue.name,
+        queueName: result.queue.name
       }
     );
   } else if (!!result.ticket.phone) {
@@ -236,7 +271,7 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
           ticketNumber: notifyTicketData.number,
           queueId: queueRef.id,
           queueName: result.queue.name,
-          remainingTicketsInQueue: 3,
+          remainingTicketsInQueue: 3
         }
       );
     } else if (!!notifyTicketData.phone) {
@@ -258,7 +293,7 @@ exports.manuallyAddToQueue = functions.https.onCall(async (data, context) => {
       queueId: data.queueId,
       email: data.email,
       phone: data.phone,
-      name: data.name,
+      name: data.name
     },
     context
   );
@@ -295,9 +330,39 @@ exports.removeMeFromQueue = functions.https.onCall(async (data, context) => {
   return result;
 });
 
+exports.getUserByEmailOrId = functions.https.onCall(async (data, context) => {
+  console.log("data", data);
+  let user;
+
+  if (!!data.email) {
+    user = await firestore
+      .collection("users")
+      .where("email", "==", data.email)
+      .get();
+
+    if (!user.empty)
+      return {
+        id: user.docs[0].ref.id,
+        user: user.docs[0].data()
+      };
+
+    throw new functionsMain.https.HttpsError("not-found", "User not found");
+  } else {
+    user = await firestore.collection("users").doc(data.userId).get();
+
+    if (user.exists)
+      return {
+        id: user.ref.id,
+        user: user.data()
+      };
+
+    throw new functionsMain.https.HttpsError("not-found", "User not found");
+  }
+});
+
 //---- REGULAR SCHEDULED JOB ----
 //ATTENTION - PROD ONLY!!
-if (config.smspro.getmessagesenabled === "true") {
+if (config.smspro && config.smspro.getmessagesenabled === "true") {
   // exports.scheduledFunction = functions.pubsub
   //   .schedule("every " + config.smspro.getmessagesinterval)
   //   .onRun(async () => {
@@ -380,12 +445,12 @@ async function scheduleNextSMSPoll(project, tasksClient, queuePath) {
       url,
       body: Buffer.from(JSON.stringify({})).toString("base64"),
       headers: {
-        "Content-Type": "application/json",
-      },
+        "Content-Type": "application/json"
+      }
     },
     scheduleTime: {
-      seconds: Date.now() / 1000 + intSecs,
-    },
+      seconds: Date.now() / 1000 + intSecs
+    }
   };
   try {
     await tasksClient.createTask({ parent: queuePath, task });
@@ -399,7 +464,7 @@ async function getNewSMSRoutine() {
     TenantName: config.smspro.tenant,
     strUsername: config.smspro.username,
     strPassword: config.smspro.password,
-    intCampaignId: parseInt(config.smspro.campaignid),
+    intCampaignId: parseInt(config.smspro.campaignid)
   };
   let serviceReply = await callSMSPro("GetCampaignUnreadReplies", args);
   let replies =
@@ -570,7 +635,7 @@ async function createTicketInQueue(
       ticketNumber: result.ticket.number,
       queueId: queueRef.id,
       queueName: result.queue.name,
-      exitQueueUrl: `https://nafila.pt/sair/${queueRef.id}/${ticketRef.id}`,
+      exitQueueUrl: `https://nafila.pt/sair/${queueRef.id}/${ticketRef.id}`
     });
   } else if (!!ticketData.phone) {
     //send notification SMS
@@ -683,7 +748,7 @@ async function sendMail(to, templateId, dynamic_template_data) {
     to,
     from: "no-reply@nafila.pt",
     templateId,
-    dynamic_template_data,
+    dynamic_template_data
   };
 
   sgMail.sendMultiple(msg);
@@ -695,7 +760,7 @@ async function sendSMS(MsisdnList, strMessage) {
     strUsername: config.smspro.username,
     strPassword: config.smspro.password,
     MsisdnList,
-    strMessage,
+    strMessage
   };
 
   return await callSMSPro("SendSMS", args);
