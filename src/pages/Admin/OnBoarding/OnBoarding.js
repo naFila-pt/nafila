@@ -4,12 +4,13 @@ import { useTranslation } from "react-i18next";
 
 import DesktopLayout from "../../../components/OnBoardingLayout/Admin/DesktopLayout";
 import MobileLayout from "../../../components/OnBoardingLayout/Admin/MobileLayout";
+import { ADMIN_SIGNUP_PATH } from "@src/constants/RoutesConstants";
 
 const OnBoarding = props => {
   const { t } = useTranslation();
 
   const endOnBoarding = () => {
-    window.open("https://geralnafilapt.typeform.com/to/VtDUdM", "_blank");
+    window.location.href = ADMIN_SIGNUP_PATH;
   };
 
   if (props.isDesktop) {

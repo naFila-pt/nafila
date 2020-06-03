@@ -27,7 +27,6 @@ import yellowLogo from "../../../assets/icons/logo_amarelo_naFila.svg";
 import { ReactComponent as LogoMini } from "../../../assets/logo-mini.svg";
 
 import TitleComponent from "../../TitleComponent";
-import { ADMIN_SIGNUP_PATH } from "@src/constants/RoutesConstants";
 
 const useStyles = makeStyles({
   stepper: {
@@ -260,7 +259,7 @@ const MainContentDesktop = props => (
         >
           <StyledButton
             forward
-            href={ADMIN_SIGNUP_PATH}
+            onClick={props.endOnBoarding}
             dangerouslySetInnerHTML={{
               __html: props.t("admin#register")
             }}
@@ -520,6 +519,7 @@ const OnBoardingLayout = props => {
       <MainContentDesktop
         t={t}
         isLastPage
+        endOnBoarding={endOnBoarding}
         title="admin#onboarding_sixthTitle"
         text="admin#onboarding_sixthText"
         rightColumn={
