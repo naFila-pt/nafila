@@ -65,6 +65,10 @@ const OnBoardingLayoutMobile = ({ children, bg, endOnBoarding }) => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   };
 
+  const handleLogoOnClick = e => {
+    window.location.href = "/";
+  };
+
   return (
     <Box
       className={`${classes.container} OnboardingWrapper`}
@@ -74,7 +78,9 @@ const OnBoardingLayoutMobile = ({ children, bg, endOnBoarding }) => {
       <Grid container>
         <Grid container direction="column">
           <Toolbar className={classes.toolbar}>
-            {activeStep !== 0 && <LogoMini style={{ flex: 1 }} />}
+            {activeStep !== 0 && (
+              <LogoMini style={{ flex: 1 }} onClick={handleLogoOnClick} />
+            )}
           </Toolbar>
         </Grid>
         {children[activeStep]}

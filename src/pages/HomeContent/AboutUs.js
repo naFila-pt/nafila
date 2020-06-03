@@ -148,10 +148,14 @@ const LogosContainer = styled.div`
 const AboutUs = ({ isDesktop }) => {
   const { t } = useTranslation();
 
+  const handleLogoOnClick = e => {
+    window.location.href = "/";
+  };
+
   return (
     <Grid style={{ display: "flex", flexDirection: "column" }}>
       <Header>
-        <img src={logoBannerSrc} alt="logo" />
+        <img src={logoBannerSrc} alt="logo" onClick={handleLogoOnClick} />
       </Header>
       <MainContainer>
         <Grid container>

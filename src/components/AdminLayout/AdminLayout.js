@@ -51,6 +51,10 @@ function Layout({ children, bg, hideLogo, style }) {
     });
   };
 
+  const handleLogoOnClick = e => {
+    window.location.href = "/";
+  };
+
   return (
     <Box className="AdminLayout" {...boxProps}>
       <Grid container>
@@ -71,6 +75,7 @@ function Layout({ children, bg, hideLogo, style }) {
                     ? { flex: 0.4 }
                     : { flex: 1 }
                 }
+                onClick={handleLogoOnClick}
               />
             )}
             {auth.currentUser && auth.currentUser.emailVerified && (
