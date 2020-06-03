@@ -125,7 +125,7 @@ const HomeContent = ({ openSnackbar }) => {
       const queueData = queue.data();
 
       analytics.setUserProperties({
-        shop: queueData.shop,
+        shop: queueData.owner_id,
         retailerGroup: queueData.retailerGroup,
         shoppingCentre: queueData.shoppingCentre
       });

@@ -20,7 +20,7 @@ function Queue({ openSnackbar, isDesktop }) {
         const user = response.data();
 
         analytics.setUserProperties({
-          shop: user.shop,
+          shop: auth.currentUser.uid,
           retailerGroup: user.retailerGroup,
           shoppingCentre: user.shoppingCentre
         });
