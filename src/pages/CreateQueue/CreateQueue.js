@@ -49,14 +49,14 @@ function CreateQueue({ isDesktop, openSnackbar }) {
 
   const handleFechtUserByEmail = e => {
     e.preventDefault();
-    const getUserByEmail = functions.httpsCallable("getUserByEmail");
+    const getUserByEmail = functions.httpsCallable("getUserByEmailOrId");
     setLoading(true);
 
     let requestBody = {};
     if (emailIsValid(inputData)) {
       requestBody = { email: inputData };
     } else {
-      requestBody = { queueId: inputData };
+      requestBody = { userId: inputData };
     }
 
     getUserByEmail(requestBody)

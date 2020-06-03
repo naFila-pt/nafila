@@ -330,23 +330,17 @@ exports.removeMeFromQueue = functions.https.onCall(async (data, context) => {
   return result;
 });
 
-exports.getUserByEmail = functions.https.onCall(async (data, context) => {
-  let what, compareTo, operator;
+exports.getUserByEmailOrId = functions.https.onCall(async (data, context) => {
+  let user;
 
   if (!!data.email) {
-    what = "email";
-    operator = "==";
-    compareTo = data.email;
+    user = await firestore
+      .collection("users")
+      .where("email", "==", data.email)
+      .get();
   } else {
-    what = "queues";
-    operator = "array-contains";
-    compareTo = data.queueId;
+    user = await firestore.collection("users").doc(data.userId).get();
   }
-
-  const user = await firestore
-    .collection("users")
-    .where(what, operator, compareTo)
-    .get();
 
   if (!user.empty)
     return {
