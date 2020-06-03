@@ -18,7 +18,7 @@ i18n
           "onboarding#intro_welcome": "Bem-vindo!",
           "onboarding#intro_pitch": "na<b>fila</b>. Sem filas.",
           "onboarding#store_title": "É simples!",
-          "onboarding#register_site_title": "Prefere registar-se no site?",
+          "onboarding#register_site_title": "Prefere tirar senha no site?",
           "onboarding#register_site_description":
             "Visite <b>nafila.pt</b>, insira <b>o código da fila</b> e <b>o seu telemóvel</b>, para ser notificado.",
           "onboarding#phone_number": "Número de Telemóvel",
@@ -33,7 +33,7 @@ i18n
             "Registe-se na<b>fila</b> enviando uma <b>SMS grátis</b> para o 4902 com: <b>nafila {código da Fila}",
           "onboarding#difficulties":
             "Se tiver alguma dificuldade, fale com o colaborador de loja.",
-          "onboarding#prefer_register_site": "Prefere registar-se no site?",
+          "onboarding#prefer_register_site": "Prefere tirar senha no site?",
           "onboarding#insertCodeEmail":
             "Visite <b>nafila.pt</b>, insira o <b>código da fila</b> e <b>o seu email</b> para ser notificado.",
           "onboarding#prefer_name": "Prefere ser chamado pelo Nome?",
