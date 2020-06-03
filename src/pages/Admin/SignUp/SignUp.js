@@ -186,7 +186,7 @@ function SignUp({ openSnackbar, isDesktop }) {
               label={t("admin#signup_nameLabel")}
               name="defaultQueueName"
               onChange={e => handleChange(e)}
-              helperText="ex: Farmácia Central Cartaxo"
+              helperText="ex: Farmácia Rita Falcão"
               inputProps={{ maxLength: 30 }}
               {...inputProps}
             />
