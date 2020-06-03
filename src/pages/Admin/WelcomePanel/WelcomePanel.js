@@ -61,7 +61,7 @@ function WelcomePanel() {
           style={{ color: PRIMARY_COLOR, textDecoration: "none" }}
         >
           <Button variant="secondary" forward>
-            {t("admin#intro_signup")}
+            {t("admin#register")}
           </Button>
         </Link>
       </ButtonsContainer>

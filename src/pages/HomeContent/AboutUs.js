@@ -49,6 +49,7 @@ const MainContainer = styled.div`
   h1,
   h3 {
     text-transform: uppercase;
+    font-weight: 900;
   }
 
   h3 {
@@ -89,14 +90,17 @@ const MainContainer = styled.div`
     }
   }
 
+  .about_us_text {
+    margin-bottom: 0;
+  }
+
   @media (min-width: 768px) {
     background-image: url(${bgMain});
     height: unset;
     padding: 24px 166px;
 
     .contact,
-    .tech4Covid,
-    .illustrations {
+    .tech4Covid {
       margin-top: 36px;
     }
 
@@ -136,7 +140,7 @@ const LogosContainer = styled.div`
 
     & > a:first-child {
       margin-bottom: initial;
-      margin-right: 120px;
+      margin-right: 70px;
     }
   }
 `;
@@ -177,14 +181,14 @@ const AboutUs = ({ isDesktop }) => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img src={senhasPtSrc} alt="Senhas.pt logo" />
+                <img src={senhasPtSrc} alt="Senhas.pt logo" height="50px" />
               </a>
               <a
                 href="https://mobiqueueapp.com/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img src={mobiqueueSrc} alt="mobiqueue logo" />
+                <img src={mobiqueueSrc} alt="mobiqueue logo" height="70px" />
               </a>
             </LogosContainer>
           </Grid>
@@ -220,7 +224,7 @@ const AboutUs = ({ isDesktop }) => {
 
           <Grid className="tech4Covid" item xs={12} lg={6}>
             <img src={tech4CovidSrc} alt="tech4Covid logo" />
-            <p>{t("about_us#text_tech4Covid")}</p>
+            <p className="about_us_text">{t("about_us#text_tech4Covid")}</p>
           </Grid>
 
           <Grid className="illustrations" item xs={12} lg={6}>

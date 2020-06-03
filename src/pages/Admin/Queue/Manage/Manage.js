@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Modal, Grid, Snackbar } from "@material-ui/core";
+import { Typography, Modal, Grid, Snackbar, Box } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
@@ -249,9 +249,6 @@ function Manage({ queueId, openSnackbar }) {
 
     @media (min-width: 768px) {
       display: flex;
-      width: 100%;
-      position: absolute;
-      bottom: 0;
     }
   `;
 
@@ -363,7 +360,7 @@ function Manage({ queueId, openSnackbar }) {
             </Alert>
           }
         </Modal>
-        <Grid container>
+        <Box display="flex" flex="1">
           <Grid item xs={12} sm={5}>
             <ManageQueueContainer>
               <div>{t("admin#queueManagement_queueCode")}</div>
@@ -385,9 +382,7 @@ function Manage({ queueId, openSnackbar }) {
                       {t("admin#queueManagement_remaining")}
                     </RemainingTitle>
                     <Typography variant="h4">
-                      {maxCapacity - counter < 0
-                        ? `+${Math.abs(maxCapacity - counter)}`
-                        : maxCapacity - counter}
+                      {queue ? queue.remainingTicketsInQueue : 0}
                     </Typography>
                   </TicketsRemaining>
                 </Grid>
@@ -496,7 +491,7 @@ function Manage({ queueId, openSnackbar }) {
               </IconGirlPregnant>
             </div>
           </ImagesWrapper>
-        </Grid>
+        </Box>
         <FooterWrapper>
           <Footer />
         </FooterWrapper>

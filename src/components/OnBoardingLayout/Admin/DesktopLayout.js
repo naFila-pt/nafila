@@ -27,6 +27,7 @@ import yellowLogo from "../../../assets/icons/logo_amarelo_naFila.svg";
 import { ReactComponent as LogoMini } from "../../../assets/logo-mini.svg";
 
 import TitleComponent from "../../TitleComponent";
+import { ADMIN_SIGNUP_PATH } from "@src/constants/RoutesConstants";
 
 const useStyles = makeStyles({
   stepper: {
@@ -259,8 +260,7 @@ const MainContentDesktop = props => (
         >
           <StyledButton
             forward
-            href="https://geralnafilapt.typeform.com/to/VtDUdM"
-            target="_blank"
+            href={ADMIN_SIGNUP_PATH}
             dangerouslySetInnerHTML={{
               __html: props.t("admin#register")
             }}
