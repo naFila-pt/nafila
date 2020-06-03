@@ -181,13 +181,17 @@ const Home = props => {
   const classes = useStyles();
   const { t } = useTranslation();
 
+  const handleLogoOnClick = e => {
+    window.location.href = "/";
+  };
+
   return (
     <Grid
       style={{ display: "flex", minHeight: "100vh", flexDirection: "column" }}
     >
       <TitleComponent pageId="home" />
       <Header>
-        <img src={logoBannerSrc} alt="logo" />
+        <img src={logoBannerSrc} alt="logo" onClick={handleLogoOnClick} />
       </Header>
       <MainContainer>
         <div className={classes.container}>

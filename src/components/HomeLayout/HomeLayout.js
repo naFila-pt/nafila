@@ -30,6 +30,11 @@ const HomeLayout = props => {
   const { children, bg, activeStep = 1, forceLogoDisplay } = props;
   const classes = useStyles(props);
   const bgUrl = bg[activeStep] ? bg[activeStep] : bg[bg.length - 1];
+
+  const handleLogoOnClick = e => {
+    window.location.href = "/";
+  };
+
   return (
     <Grid
       container
@@ -42,7 +47,7 @@ const HomeLayout = props => {
         <Grid container direction="column">
           <Toolbar className={classes.toolbar}>
             {(activeStep !== 1 || forceLogoDisplay) && (
-              <LogoMini style={{ flex: 1 }} />
+              <LogoMini style={{ flex: 1 }} onClick={handleLogoOnClick} />
             )}
           </Toolbar>
         </Grid>

@@ -36,6 +36,10 @@ const MainContainer = styled.div`
   background-image: url(${bgMainDesktop});
 `;
 
+const handleLogoOnClick = e => {
+  window.location.href = "/";
+};
+
 const OnBoardingLayoutDesktop = ({ children }) => {
   return (
     <Grid
@@ -43,7 +47,7 @@ const OnBoardingLayoutDesktop = ({ children }) => {
     >
       <TitleComponent title="Como funciona" pageId="tutorial" />
       <Header>
-        <img src={logoBannerSrc} alt="logo" />
+        <img src={logoBannerSrc} alt="logo" onClick={handleLogoOnClick} />
       </Header>
       <MainContainer>{children}</MainContainer>
       <Footer />

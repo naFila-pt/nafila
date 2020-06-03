@@ -56,6 +56,10 @@ function AddConsumer({ openSnackbar }) {
 
   if (viewType) return availableViews[viewType];
 
+  const handleLogoOnClick = e => {
+    window.location.href = "/";
+  };
+
   return (
     <Layout bg={LoginBg}>
       <TitleComponent title="Senha manual" pageId="manual_ticket" />
