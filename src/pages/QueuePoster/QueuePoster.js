@@ -38,7 +38,7 @@ function QueuePoster({
       .then(response => {
         let queueData = response.data();
         analytics.setUserProperties({
-          shop: queueData.shop,
+          shop: queueData.owner_id,
           retailerGroup: queueData.retailerGroup,
           shoppingCentre: queueData.shoppingCentre
         });
