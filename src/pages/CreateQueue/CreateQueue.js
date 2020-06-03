@@ -49,7 +49,7 @@ function CreateQueue({ isDesktop, openSnackbar }) {
 
   const handleFechtUserByEmail = e => {
     e.preventDefault();
-    const getUserByEmail = functions.httpsCallable("getUserByEmailOrId");
+    const getUserByEmailOrId = functions.httpsCallable("getUserByEmailOrId");
     setLoading(true);
 
     let requestBody = {};
@@ -59,7 +59,7 @@ function CreateQueue({ isDesktop, openSnackbar }) {
       requestBody = { userId: inputData };
     }
 
-    getUserByEmail(requestBody)
+    getUserByEmailOrId(requestBody)
       .then(async function ({ data: { id, user } }) {
         if (queues.some(el => el.id === id))
           throw new Error("User already selected");

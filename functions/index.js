@@ -331,6 +331,7 @@ exports.removeMeFromQueue = functions.https.onCall(async (data, context) => {
 });
 
 exports.getUserByEmailOrId = functions.https.onCall(async (data, context) => {
+  console.log("data", data);
   let user;
 
   if (!!data.email) {
@@ -338,16 +339,25 @@ exports.getUserByEmailOrId = functions.https.onCall(async (data, context) => {
       .collection("users")
       .where("email", "==", data.email)
       .get();
+
+    if (!user.empty)
+      return {
+        id: user.docs[0].ref.id,
+        user: user.docs[0].data()
+      };
+
+    throw new functionsMain.https.HttpsError("not-found", "User not found");
   } else {
     user = await firestore.collection("users").doc(data.userId).get();
-  }
 
-  if (!user.empty)
-    return {
-      id: user.docs[0].ref.id,
-      user: user.docs[0].data()
-    };
-  throw new functionsMain.https.HttpsError("not-found", "User not found");
+    if (user.exists)
+      return {
+        id: user.ref.id,
+        user: user.data()
+      };
+
+    throw new functionsMain.https.HttpsError("not-found", "User not found");
+  }
 });
 
 //---- REGULAR SCHEDULED JOB ----
