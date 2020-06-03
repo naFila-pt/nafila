@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 
 import Footer from "../../components/Footer";
-
+import Toolbar from "../../components/Toolbar";
 import bgMobile from "../../assets/bg/terms_mobile.svg";
 import bgDesktop from "../../assets/bg/terms_desktop.svg";
 
@@ -68,6 +68,7 @@ const Legal = ({
         }}
       >
         <TitleComponent title={analyticsTitle} pageId={pageId} />
+        <Toolbar />
         <Grid className="grid-container">
           <Grid item>
             <Typography variant="h1">{t(titleLabel)}</Typography>
