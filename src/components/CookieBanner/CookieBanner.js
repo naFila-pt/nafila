@@ -54,7 +54,7 @@ const CookieBanner = ({ handleBannerCloseClick }) => {
       container
       alignItems="center"
       justify="center"
-      style={{ position: "sticky", top: 0, zIndex: 999 }}
+      style={{ position: "absolute", top: 0, zIndex: 999 }}
     >
       <CookieBannerContainer>
         <Grid item style={{ padding: 16 }}>

@@ -18,9 +18,13 @@ const Container = styled.div`
   }
 `;
 
+const handleLogoOnClick = e => {
+  window.location.href = "/";
+};
+
 const Header = ({ bg }) => (
   <Container>
-    <img src={logoBannerSrc} alt="logo" />
+    <img src={logoBannerSrc} alt="logo" onClick={handleLogoOnClick} />
   </Container>
 );
 

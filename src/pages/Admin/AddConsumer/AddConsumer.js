@@ -56,6 +56,10 @@ function AddConsumer({ openSnackbar }) {
 
   if (viewType) return availableViews[viewType];
 
+  const handleLogoOnClick = e => {
+    window.location.href = "/";
+  };
+
   return (
     <Layout bg={LoginBg}>
       <TitleComponent title="Senha manual" pageId="manual_ticket" />
@@ -64,7 +68,11 @@ function AddConsumer({ openSnackbar }) {
       </HeadlineContainer>
 
       <div style={{ textAlign: "center", marginTop: "10px" }}>
-        <Logo className="logo-icon hide-on-small" style={{ height: "200px" }} />
+        <Logo
+          className="logo-icon hide-on-small"
+          style={{ height: "200px" }}
+          onClick={handleLogoOnClick}
+        />
       </div>
 
       <ButtonsContainer>

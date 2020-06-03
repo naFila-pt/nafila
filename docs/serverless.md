@@ -16,7 +16,8 @@ A user entry is create directly from the client-side per logged-in user, and the
 ```javascript
 {
   queues:[], //list of users queueIds (Note: only 1 queue pert user for current app flows)
-  defaultQueueName:null //store name - used as default for queue.name input
+  defaultQueueName:null, //store name - used as default for queue.name input
+  email:null //store email
 }
 ```
 

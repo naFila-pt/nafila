@@ -82,7 +82,6 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
   if (!userData.queues) userData.queues = [];
   userData.queues.push(queueRef.id);
   userData.defaultQueueName = queue.name;
-  queue.shop = userData.shop || "";
   queue.retailerGroup = userData.retailerGroup || "";
   queue.shoppingCentre = userData.shoppingCentre || "";
 

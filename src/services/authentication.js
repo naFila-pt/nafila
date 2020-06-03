@@ -113,6 +113,7 @@ authentication.signUpStore = (emailAddress, password, defaultQueueName) => {
           .set(
             {
               defaultQueueName,
+              email: emailAddress,
               queues: []
             },
             { merge: true }

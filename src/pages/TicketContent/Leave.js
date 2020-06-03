@@ -52,7 +52,7 @@ const Leave = ({
       removeMeFromQueue({ queueId, ticketId })
         .then(function ({ queue }) {
           analytics.setUserProperties({
-            shop: queue.shop,
+            shop: queue.owner_id,
             retailerGroup: queue.retailerGroup,
             shoppingCentre: queue.shoppingCentre
           });

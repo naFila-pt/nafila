@@ -288,6 +288,9 @@ const Layout = ({ children, endOnBoarding }) => {
     </Button>
   );
 
+  const handleLogoOnClick = e => {
+    window.location.href = "/";
+  };
   return (
     <Container
       className={"OnboardingWrapper"}
@@ -300,7 +303,7 @@ const Layout = ({ children, endOnBoarding }) => {
       <Grid direction="column" style={{ height: "100vh", display: "flex" }}>
         <Grid container direction="column" style={{ height: "56px" }}>
           <ToolbarWrapper>
-            <LogoMini style={{ flex: 1 }} />
+            <LogoMini style={{ flex: 1 }} onClick={handleLogoOnClick} />
           </ToolbarWrapper>
         </Grid>
         {children[activeStep]}

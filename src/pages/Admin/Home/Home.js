@@ -131,6 +131,10 @@ const HiddenColumn = styled(Grid)`
   }
 `;
 
+const handleLogoOnClick = e => {
+  window.location.href = "/";
+};
+
 const Home = () => {
   const { t } = useTranslation();
 
@@ -142,7 +146,7 @@ const Home = () => {
         <div className="content">
           <Column>
             <MobileLogo>
-              <img src={logoSrc} alt="logo" />
+              <img src={logoSrc} alt="logo" onClick={handleLogoOnClick} />
             </MobileLogo>
             <GridIntro>
               <Typography variant="h1">
@@ -155,16 +159,15 @@ const Home = () => {
               />
             </GridIntro>
             <DektopLogo>
-              <img src={logoSrc} alt="logo" />
+              <img src={logoSrc} alt="logo" onClick={handleLogoOnClick} />
             </DektopLogo>
             <ButtonsWrapper>
               <Button
                 forward
                 fullWidth
-                target="_blank"
-                href="https://geralnafilapt.typeform.com/to/VtDUdM"
+                href={Routes.ADMIN_LOGIN_PATH}
                 dangerouslySetInnerHTML={{
-                  __html: t("admin#register")
+                  __html: t("admin#intro_login")
                 }}
                 style={{ marginBottom: "10px" }}
               />
