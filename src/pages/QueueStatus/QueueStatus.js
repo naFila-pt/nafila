@@ -171,7 +171,7 @@ function QueueStatus() {
       el: ".swiper-pagination"
     },
     autoplay: {
-      delay: 2500,
+      delay: 7500,
       disableOnInteraction: false
     }
   });
@@ -188,6 +188,7 @@ function QueueStatus() {
       const urlParams = new URLSearchParams(window.location.search);
       const userParams = urlParams.get("users");
       const users = userParams.split(",");
+      console.log("QueueStatus -> users", users);
       const chunks = getChunks(users, 10);
       chunks.forEach((c, i) => {
         firestore

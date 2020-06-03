@@ -394,10 +394,13 @@ i18n
           //Create Queue
           "admin#createQueue_title": "Painel de Gestão do Ecrã Público",
           "admin#createQueue_description":
-            "O painel de tralala é para fazer as acções xpto e ABC. Adicione fila para visualizar o estado das filas no seu espaço multiloja.",
+            "Adicione emails das lojas para obter o espaço multiloja com o estado das suas filas.",
           "admin#add_queue_button": "ADICIONAR FILA",
           "admin#add_queue_button_placeholder":
-            "Inserir identificador de lojista"
+            "Inserir email ou código de lojista",
+          "admin#table_column_1_name": "Nome da Loja",
+          "admin#table_column_2_name": "Apagar",
+          "admin#create_status_screen": "Criar novo ecrã"
         }
       }
     },

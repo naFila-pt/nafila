@@ -6,9 +6,10 @@ const admin = require("firebase-admin");
 admin.initializeApp();
 
 // **** Emulate firebase functions **** //
-/* admin.initializeApp({
-  credential: admin.credential.cert(require("../serviceAccountKey.json"))
-}); */
+
+// admin.initializeApp({
+//   credential: admin.credential.cert(require("../serviceAccountKey.json"))
+// });
 
 const firestore = admin.firestore();
 const urlSMSPro = "https://smspro.nos.pt/smspro/smsprows.asmx?WSDL";
@@ -331,16 +332,34 @@ exports.removeMeFromQueue = functions.https.onCall(async (data, context) => {
 });
 
 exports.getUserByEmail = functions.https.onCall(async (data, context) => {
+  let what, compareTo, operator;
+
+  if (!!data.email) {
+    what = "email";
+    operator = "==";
+    compareTo = data.email;
+  } else {
+    what = "queues";
+    operator = "array-contains";
+    compareTo = data.queueId;
+  }
+
   const user = await firestore
     .collection("users")
-    .where("email", "==", data.email)
+    .where(what, operator, compareTo)
     .get();
-  return user;
+
+  if (!user.empty)
+    return {
+      id: user.docs[0].ref.id,
+      user: user.docs[0].data()
+    };
+  throw new functionsMain.https.HttpsError("not-found", "User not found");
 });
 
 //---- REGULAR SCHEDULED JOB ----
 //ATTENTION - PROD ONLY!!
-if (config.smspro.getmessagesenabled === "true") {
+if (config.smspro && config.smspro.getmessagesenabled === "true") {
   // exports.scheduledFunction = functions.pubsub
   //   .schedule("every " + config.smspro.getmessagesinterval)
   //   .onRun(async () => {

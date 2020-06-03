@@ -1,28 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Typography, Input } from "@material-ui/core";
 import styled from "styled-components";
 import bg_desktop from "../../assets/bg/home_desktop.svg";
-import bg_mobile from "../../assets/bg/store_queue_start.svg";
-import Loader from "../../components/Loader";
 import Button from "../../components/Button";
 import Header from "../../components/Header";
 import Layout from "../../components/AdminLayout";
 import TableList from "./TableList";
-// import { firestore, functions, analytics, auth } from "../../../../firebase";
-import { firestore, functions, analytics, auth } from "../../firebase";
-
-import Logo from "../../assets/icons/naFilaOnlyLine.svg";
-import FooterRight from "../../assets/icons/footerNaFilaLink.svg";
-import FooterLeft from "../../assets/icons/footerTech4covidAndPartners.svg";
-import TitleComponent from "../../components/TitleComponent";
-// import { firestore, analytics } from "../../firebase";
+import { functions } from "../../firebase";
 
 export const Form = styled.form`
   text-align: center;
   flex: 1;
   display: flex;
   margin-top: 7vh;
+  flex-direction: ${props => (props.isDesktop ? "row" : "column")};
+  width: 100%;
 
   .MuiInput-input {
     text-align: center;
@@ -30,86 +23,98 @@ export const Form = styled.form`
   .MuiInput-root {
     margin-right: 74px;
   }
+  .MuiButtonWrapper {
+    margin-top: ${props => (props.isDesktop ? 0 : "2rem")};
+  }
 `;
 
 const ContentWrapper = styled.div`
-  padding: 0 76px 105px 38px;
+  padding: ${props => props.isDesktop && "0 76px 0 38px"};
+  display: ${props => !props.isDesktop && "flex"};
+  flex-direction: ${props => !props.isDesktop && "column"};
+  align-items: ${props => !props.isDesktop && "center"};
 `;
 
-function CreateQueue({ isDesktop }) {
+const emailIsValid = email => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+function CreateQueue({ isDesktop, openSnackbar }) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
-  const [queues, setQueues] = useState([
-    { id: 1 },
-    { id: 2 },
-    { id: 3 },
-    { id: 4 },
-    { id: 5 }
-  ]);
-  const [storeId, setStoreId] = useState("");
+  const [queues, setQueues] = useState([]);
+  const [inputData, setInputData] = useState("");
 
   const handleChange = event => {
-    setStoreId(event.target.value);
+    setInputData(event.target.value);
   };
 
-  const handleFechtUserByEmail = () => {
+  const handleFechtUserByEmail = e => {
+    e.preventDefault();
     const getUserByEmail = functions.httpsCallable("getUserByEmail");
+    setLoading(true);
 
-    getUserByEmail({
-      email: storeId
-    }).then(data => console.log(data));
+    let requestBody = {};
+    if (emailIsValid(inputData)) {
+      requestBody = { email: inputData };
+    } else {
+      requestBody = { queueId: inputData };
+    }
+
+    getUserByEmail(requestBody)
+      .then(async function ({ data: { id, user } }) {
+        if (queues.some(el => el.id === id))
+          throw new Error("User already selected");
+        setQueues(prevState => [
+          ...prevState,
+          { id, name: user.defaultQueueName }
+        ]);
+        setInputData("");
+        setLoading(false);
+      })
+      .catch(error => {
+        setLoading(false);
+        openSnackbar(error.message);
+      });
   };
-
-  // useEffect(() => {
-  //   firestore
-  //     .collection("queues")
-  //     .get()
-  //     .then(({ docs }) => {
-  //       // analytics.setUserProperties({
-  //       //   shop: queueData.shop,
-  //       //   retailerGroup: queueData.retailerGroup,
-  //       //   shoppingCentre: queueData.shoppingCentre
-  //       // });
-  //       const allQueues = docs.map(doc => doc.data());
-  //       setLoading(false);
-  //       setQueues(allQueues);
-  //     })
-  //     .catch(e => console.error(e));
-  // }, []);
-
-  if (loading) return <Loader />;
+  const handleCreateStatusScreen = e => {
+    const users = queues.map(q => q.id);
+    if (!users.length) return openSnackbar("Please select a user");
+    e.preventDefault();
+    window.location.href = `queue-status?users=${users.toString()}`;
+  };
   const handleOnDelete = id => {
     setQueues(prevState => prevState.filter(el => el.id !== id));
+    setInputData("");
   };
   return (
-    <Layout bg={isDesktop ? bg_desktop : bg_mobile} textAlign="left" hideLogo>
+    <Layout bg={bg_desktop} textAlign="left" hideLogo>
       <Header bg="transparent" />
-      <div style={{ padding: "6rem" }}>
+      <div style={{ padding: isDesktop ? "93px 165px 21px" : "0 2rem" }}>
         <Typography
-          variant="h1"
+          variant={isDesktop ? "h1" : "h2"}
           style={{ padding: "1rem 0" }}
           dangerouslySetInnerHTML={{
             __html: t("admin#createQueue_title")
           }}
         />
         <Typography
-          variant="h4"
+          variant={isDesktop ? "h4" : "h5"}
           style={{ fontWeight: "normal" }}
           dangerouslySetInnerHTML={{
             __html: t("admin#createQueue_description")
           }}
         />
         <ContentWrapper>
-          <Form onSubmit={() => alert("test")}>
+          <Form onSubmit={handleFechtUserByEmail} isDesktop={isDesktop}>
             <Input
               placeholder={t("admin#add_queue_button_placeholder")}
-              value={storeId}
+              value={inputData}
               onChange={handleChange}
               fullWidth
               required
             />
             <Button
-              // variant={requesting ? "inactiveGray" : "gray"}
+              size={isDesktop ? "medium" : "small"}
+              variant={loading && "inactiveGray"}
               onClick={handleFechtUserByEmail}
               add
             >
@@ -117,8 +122,25 @@ function CreateQueue({ isDesktop }) {
             </Button>
           </Form>
           {queues.length > 0 && (
-            <TableList items={queues} onDelete={handleOnDelete} />
+            <TableList
+              items={queues}
+              onDelete={handleOnDelete}
+              isDesktop={isDesktop}
+            />
           )}
+          <Button
+            size={isDesktop ? "medium" : "small"}
+            onClick={handleCreateStatusScreen}
+            forward
+            style={{
+              position: "fixed",
+              right: isDesktop && "165px",
+              bottom: 0,
+              margin: isDesktop ? "0 76px 2rem 0" : "0 0 10px 0"
+            }}
+          >
+            {t("admin#create_status_screen")}
+          </Button>
         </ContentWrapper>
       </div>
     </Layout>
