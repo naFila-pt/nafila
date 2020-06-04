@@ -5,13 +5,14 @@ import styled from "styled-components";
 import bgMainMobile from "@src/assets/bg/terms_mobile.svg";
 import bgMain from "@src/assets/bg/terms_desktop.svg";
 import twoPeopleSrc from "@src/assets/icons/two_people.svg";
-import senhasPtSrc from "@src/assets/icons/senhas_pt.svg";
 import mobiqueueSrc from "@src/assets/icons/mobiqueue.svg";
 import tech4CovidSrc from "@src/assets/icons/Logo-Tech4COVID19.svg";
 
 import Grid from "@material-ui/core/Grid";
 import GoogleIcon from "@src/components/Icons/google";
 import NosIcon from "@src/components/Icons/nos";
+import { ReactComponent as FJCIcon } from "@src/assets/icons/logo_FJC.svg";
+import { ReactComponent as SenhasPTIcon } from "@src/assets/icons/senhas_pt.svg";
 import Toolbar from "@src/components/Toolbar";
 import Footer from "@src/components/Footer";
 import Button from "@src/components/Button";
@@ -114,17 +115,17 @@ const LogosContainer = styled.div`
   flex-direction: column;
   align-items: center;
 
-  & > a:first-child {
-    margin-bottom: 40px;
+  & > a:not(:first-child) {
+    margin-top: 40px;
   }
 
   @media (min-width: 768px) {
     flex-direction: row;
     height: 104px;
 
-    & > a:first-child {
-      margin-bottom: initial;
-      margin-right: 70px;
+    & > a:not(:first-child) {
+      margin-top: initial;
+      margin-left: 48px;
     }
   }
 `;
@@ -159,18 +160,25 @@ const AboutUs = ({ isDesktop }) => {
             <h3>{t("about_us#title_collaboration")}</h3>
             <LogosContainer classNames="collaboration">
               <a
+                href="https://fjc.pt"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FJCIcon />
+              </a>
+              <a
                 href="https://www.senhas.pt"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img src={senhasPtSrc} alt="Senhas.pt logo" height="50px" />
+                <SenhasPTIcon style={{ width: "187px", height: "auto" }} />
               </a>
               <a
                 href="https://mobiqueueapp.com/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img src={mobiqueueSrc} alt="mobiqueue logo" height="70px" />
+                <img src={mobiqueueSrc} alt="mobiqueue logo" />
               </a>
             </LogosContainer>
           </Grid>
