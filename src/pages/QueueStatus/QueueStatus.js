@@ -121,6 +121,53 @@ const QueueWrapper = styled.div`
       margin: 0;
     }
   }
+  & .circle-blink {
+    @keyframes blink {
+      0% {
+        background-color: #4c0788;
+        color: #ffc836;
+      }
+      50% {
+        background-color: #ffc836;
+        color: #4c0788;
+      }
+      100% {
+        background-color: #4c0788;
+        color: #ffc836;
+      }
+    }
+    @-webkit-keyframes blink {
+      0% {
+        background-color: #4c0788;
+        color: #ffc836;
+      }
+      50% {
+        background-color: #ffc836;
+        color: #4c0788;
+      }
+      100% {
+        background-color: #4c0788;
+        color: #ffc836;
+      }
+    }
+    animation-duration: 400ms;
+    animation-name: "blink";
+    animation-direction: normal;
+    -webkit-animation: blink 400ms;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    background-color: #4c0788;
+    & p {
+      font-size: 33px;
+      font-weight: 900;
+      color: white;
+      margin: 0;
+    }
+  }
   & .name {
     display: flex;
     margin-left: -30px;
@@ -163,6 +210,7 @@ function QueueStatus() {
   const { t } = useTranslation();
   const [queuesData, setQueuesData] = useState({});
   const [requestQueues, setRequest] = useState(false);
+  const [updatedQueue, setUpdatedQueue] = useState("");
 
   new Swiper(".swiper-container", {
     slidesPerView: 1,
@@ -175,7 +223,13 @@ function QueueStatus() {
       disableOnInteraction: false
     }
   });
-
+  const handleClassUpdate = queueId => {
+    setTimeout(() => {
+      setUpdatedQueue("");
+    }, 500);
+    // eslint-disable-next-line
+    return updatedQueue == queueId ? "circle circle-blink" : "circle";
+  };
   const getChunks = (arr, chunkSize) => {
     var c = [];
     for (var i = 0, len = arr.length; i < len; i += chunkSize)
@@ -185,6 +239,7 @@ function QueueStatus() {
 
   useEffect(() => {
     if (!requestQueues) {
+      setUpdatedQueue("");
       const urlParams = new URLSearchParams(window.location.search);
       const userParams = urlParams.get("users");
       const users = userParams.split(",");
@@ -198,9 +253,17 @@ function QueueStatus() {
             queueDocs.forEach(qd => {
               queuesData[qd.ref.id] = qd.data();
             });
+            // const updated
             const queuesClone = Object.assign({}, queuesData);
             setQueuesData(queuesClone);
             if (i === chunks.length - 1) setRequest(true);
+
+            //Check for updates
+            snapshot.docChanges().forEach(function (change) {
+              if (change.type === "modified") {
+                setUpdatedQueue(change.doc.data().owner_id);
+              }
+            });
           });
       });
     }
@@ -232,7 +295,11 @@ function QueueStatus() {
                   <GridArea>
                     {c.map(key => (
                       <QueueWrapper>
-                        <div className="circle">
+                        <div
+                          className={handleClassUpdate(
+                            queuesData[key].owner_id
+                          )}
+                        >
                           <p>{queuesData[key].currentTicketNumber}</p>
                         </div>
                         <div className="name">
