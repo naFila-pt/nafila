@@ -33,6 +33,7 @@ const initialState = {
   theme: appearance.defaultTheme,
   user: null,
   userData: null,
+  showCookieBanner: true,
 
   snackbar: {
     autoHideDuration: 0,
@@ -62,6 +63,16 @@ class App extends Component {
       });
     };
   }
+
+  onRouteChanged = () => {
+    switch (window.location.pathname) {
+      case "/queue-status":
+        this.setState({ showCookieBanner: false });
+        break;
+      default:
+        break;
+    }
+  };
 
   resetState = callback => {
     this.setState(
@@ -166,7 +177,8 @@ class App extends Component {
       userData,
       snackbar,
       isDesktop,
-      shouldSkipOnBoarding
+      shouldSkipOnBoarding,
+      showCookieBanner
     } = this.state;
 
     return (
@@ -178,9 +190,11 @@ class App extends Component {
 
           {ready && (
             <>
-              <CookieBanner
-                handleBannerCloseClick={this.handleBannerCloseClick}
-              />
+              {showCookieBanner && (
+                <CookieBanner
+                  handleBannerCloseClick={this.handleBannerCloseClick}
+                />
+              )}
               <Grid container justify="center" style={{ height: "100%" }}>
                 <Grid
                   item
@@ -225,6 +239,8 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.onRouteChanged();
+
     this.onAuthStateChangedObserver = auth
       .setPersistence(firebase.auth.Auth.Persistence.SESSION)
       .then(() => {
