@@ -82,7 +82,6 @@ const MainContainer = styled.div`
   @media (min-width: 768px) {
     background-image: url(${bgMain});
     height: unset;
-    padding: 24px 166px;
 
     .contact,
     .tech4Covid {
@@ -108,20 +107,38 @@ const MainContainer = styled.div`
       margin-left: auto;
     }
   }
+
+  @media (min-width: 1200px) {
+    padding: 24px 166px;
+  }
 `;
 
 const LogosContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex-wrap: wrap;
 
-  & > a:not(:first-child) {
-    margin-top: 40px;
+  & > a {
+    display: flex;
+    height: 108px;
+
+    svg {
+      height: auto;
+    }
   }
 
   @media (min-width: 768px) {
     flex-direction: row;
-    height: 104px;
+
+    & > a:not(:first-child) {
+      margin-top: initial;
+      margin-left: 48px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    flex-direction: row;
 
     & > a:not(:first-child) {
       margin-top: initial;
@@ -137,7 +154,7 @@ const AboutUs = ({ isDesktop }) => {
     <Grid style={{ display: "flex", flexDirection: "column" }}>
       <Toolbar />
       <MainContainer>
-        <Grid container>
+        <Grid container spacing={4}>
           <Grid item xs={12} lg={7}>
             <h1>{t("about_us#title_about_us")}</h1>
             <h3>{t("about_us#title_what")}</h3>
@@ -156,7 +173,7 @@ const AboutUs = ({ isDesktop }) => {
             </Grid>
           )}
 
-          <Grid item xs={12} lg={6}>
+          <Grid item xs={12} md={6}>
             <h3>{t("about_us#title_collaboration")}</h3>
             <LogosContainer classNames="collaboration">
               <a
@@ -183,7 +200,7 @@ const AboutUs = ({ isDesktop }) => {
             </LogosContainer>
           </Grid>
 
-          <Grid className="partners" item xs={12} lg={6}>
+          <Grid className="partners" item xs={12} md={6}>
             <h3>{t("about_us#title_partners")}</h3>
             <LogosContainer>
               <a
@@ -203,7 +220,7 @@ const AboutUs = ({ isDesktop }) => {
             </LogosContainer>
           </Grid>
 
-          <Grid className="contact" item xs={12} lg={6}>
+          <Grid className="contact" item xs={12} sm={6}>
             <h3>{t("about_us#title_contact")}</h3>
             <a href="mailto:suporte.nafila@gmail.com">
               <Button forward={true}>
@@ -212,12 +229,12 @@ const AboutUs = ({ isDesktop }) => {
             </a>
           </Grid>
 
-          <Grid className="tech4Covid" item xs={12} lg={6}>
+          <Grid className="tech4Covid" item xs={12} sm={6}>
             <img src={tech4CovidSrc} alt="tech4Covid logo" />
             <p className="about_us_text">{t("about_us#text_tech4Covid")}</p>
           </Grid>
 
-          <Grid className="illustrations" item xs={12} lg={6}>
+          <Grid className="illustrations" item xs={12} sm={6}>
             <h3>{t("about_us#title_illustrations")}</h3>
             <p
               dangerouslySetInnerHTML={{
@@ -226,7 +243,7 @@ const AboutUs = ({ isDesktop }) => {
             />
           </Grid>
 
-          <Grid item xs={12} lg={7}>
+          <Grid item xs={12} sm={9} md={7}>
             <h1>{t("about_us#title_support")}</h1>
 
             <h3>{t("about_us#title_support_instructions")}</h3>
