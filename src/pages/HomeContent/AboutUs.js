@@ -12,7 +12,7 @@ import tech4CovidSrc from "@src/assets/icons/Logo-Tech4COVID19.svg";
 import Grid from "@material-ui/core/Grid";
 import GoogleIcon from "@src/components/Icons/google";
 import NosIcon from "@src/components/Icons/nos";
-import Header from "@src/components/Header";
+import Toolbar from "@src/components/Toolbar";
 import Footer from "@src/components/Footer";
 import Button from "@src/components/Button";
 import {
@@ -134,7 +134,7 @@ const AboutUs = ({ isDesktop }) => {
 
   return (
     <Grid style={{ display: "flex", flexDirection: "column" }}>
-      <Header />
+      <Toolbar />
       <MainContainer>
         <Grid container>
           <Grid item xs={12} lg={7}>
