@@ -3,22 +3,24 @@ import { withRouter } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
 import { firestore, functions, analytics } from "../../firebase";
-import HomeLayout from "../../components/HomeLayout";
+import HomeLayout from "@src/components/HomeLayout";
 import Grid from "@material-ui/core/Grid";
 import Input from "@material-ui/core/Input";
 import Link from "@material-ui/core/Link";
-import Button from "../../components/Button";
-import ConsumerTicket from "../../components/ConsumerTicket";
+import Button from "@src/components/Button";
+import Loader from "@src/components/Loader";
 
-import bgStore from "../../assets/bg/user_store.svg";
-import bgMain from "../../assets/bg/main.svg";
+import ConsumerTicket from "@src/components/ConsumerTicket";
 
-import TelephoneNotification from "../../assets/icons/icon_tlm_big.svg";
-import StoreIlust from "../../assets/images/ilustracao.svg";
+import bgStore from "@src/assets/bg/user_store.svg";
+import bgMain from "@src/assets/bg/main.svg";
 
-import { TICKET_STATUS_PATH } from "../../constants/RoutesConstants";
+import TelephoneNotification from "@src/assets/icons/icon_tlm_big.svg";
+import StoreIlust from "@src/assets/images/ilustracao.svg";
 
-import TitleComponent from "../../components/TitleComponent";
+import { TICKET_STATUS_PATH } from "@src/constants/RoutesConstants";
+
+import TitleComponent from "@src/components/TitleComponent";
 
 const useStyles = makeStyles({
   gridContainer: {
@@ -59,6 +61,7 @@ const useStyles = makeStyles({
 
 const HomeContent = ({ openSnackbar }) => {
   const urlParam = window.location.search.substr(1);
+  const urlQueueId = window.location.hash.replace(/^#/, "");
   const initialActiveStep = urlParam === "skipIntro" ? 2 : 1; // 1 because title component should be ignored in homelayout.
   const classes = useStyles();
   const { t } = useTranslation();
@@ -66,7 +69,8 @@ const HomeContent = ({ openSnackbar }) => {
   const [activeStep, setActiveStep] = useState(initialActiveStep);
   const [queueId, setQueueId] = useState("");
   const [userMobilePhone, setUserMobilePhone] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   const [ticketsStoreInfo, setTicketsStoreInfo] = useState({
     name: null,
     currentTicket: null,
@@ -90,29 +94,24 @@ const HomeContent = ({ openSnackbar }) => {
     }
   }, [ticketsStoreInfo, queueId]);
 
-  const handleStoreCodeChange = event => {
-    setQueueId(event.target.value);
-  };
+  useEffect(() => {
+    if (urlQueueId && !ticketsStoreInfo.ticketId) {
+      handleGetStoreInfo(urlQueueId, 2);
+    }
+  });
 
-  const handleUserMobilePhoneChange = event => {
-    setUserMobilePhone(event.target.value);
-  };
+  const handleGetStoreInfo = async (urlQueueId, step) => {
+    let reqQueueId = queueId;
+    if (urlQueueId.length) reqQueueId = urlQueueId;
 
-  const handleTermsOnClick = e => {
-    e.preventDefault();
-    window.open("/termos-condicoes", "_blank");
-  };
-
-  const handleGetStoreInfo = async () => {
-    if (!queueId) {
+    if (!reqQueueId) {
       openSnackbar(`Por favor insira o código da fila`);
       return;
     }
-
     try {
       const queue = await firestore
         .collection("queues")
-        .doc(queueId.toUpperCase())
+        .doc(reqQueueId.toUpperCase())
         .get();
 
       if (!queue.exists) {
@@ -140,10 +139,23 @@ const HomeContent = ({ openSnackbar }) => {
         };
       });
 
-      handleNextButton();
+      step ? setActiveStep(step) : handleNextButton();
     } catch (e) {
       openSnackbar(e.message || `Error: ${e}`);
     }
+  };
+
+  const handleStoreCodeChange = event => {
+    setQueueId(event.target.value);
+  };
+
+  const handleUserMobilePhoneChange = event => {
+    setUserMobilePhone(event.target.value);
+  };
+
+  const handleTermsOnClick = e => {
+    e.preventDefault();
+    window.open("/termos-condicoes", "_blank");
   };
 
   const handleAddToQueue = async () => {
@@ -176,6 +188,8 @@ const HomeContent = ({ openSnackbar }) => {
       openSnackbar(e.message || `Error: ${e}`);
     }
   };
+
+  if (urlQueueId && activeStep === 1) return <Loader />; // If user access trough QR code, queue ID is sent via URL and thus we want to skip step 1
 
   return (
     <HomeLayout
@@ -309,9 +323,11 @@ const HomeContent = ({ openSnackbar }) => {
           >
             {t("home#queue_button")}
           </Button>
-          <Button variant="gray" backward onClick={handlePrevButton}>
-            {t("global#return_button")}
-          </Button>
+          {!urlQueueId && (
+            <Button variant="gray" backward onClick={handlePrevButton}>
+              {t("global#return_button")}
+            </Button>
+          )}
         </Grid>
       </Grid>
       <Grid
