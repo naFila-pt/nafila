@@ -1,20 +1,55 @@
 import React, { useState, useEffect } from "react";
-import { Typography } from "@material-ui/core";
+import { Typography, Grid, Box } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
+import styled from "styled-components";
 
 import Button from "../../../components/Button";
 import Loader from "../../../components/Loader";
-import Bg from "../../../assets/bg/store_queue_end.svg";
+import Hd from "../../../assets/bg/home_desktop.svg";
 import Layout from "../../../components/AdminLayout";
+import Footer from "../../../components/Footer";
 import { ADMIN_QUEUE_MANAGEMENT_PATH } from "../../../constants/RoutesConstants";
 import Logo from "../../../assets/logo.svg";
 import { firestore, auth, functions, analytics } from "../../../firebase";
 
-import { HeadlineContainer, ButtonsContainer } from "../common";
+import { HeadlineContainer } from "../common";
 
 import EndQueueSuccess from "./EndQueueSuccess";
 
 import TitleComponent from "../../../components/TitleComponent";
+
+const EndQueueGrid = styled(Grid)`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ButtonGroupWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+
+  .MuiButtonWrapper {
+    margin-bottom: 20px;
+  }
+`;
+
+const FooterWrapper = styled.div`
+  display: none;
+
+  @media (min-width: 768px) {
+    display: flex;
+  }
+`;
+
+const ImagesWrapper = styled(Grid)`
+  display: none;
+
+  @media (min-width: 768px) {
+    display: flex;
+  }
+`;
 
 function EndQueue({ openSnackbar }) {
   const { t } = useTranslation();
@@ -66,38 +101,48 @@ function EndQueue({ openSnackbar }) {
   if (success) return <EndQueueSuccess />;
 
   return (
-    <Layout bg={Bg}>
+    <Layout bg={Hd}>
       <TitleComponent title="Encerrar fila" pageId="close_queue" />
-      <HeadlineContainer>
-        <Typography variant="h3">{t("main#endQueue_title")}</Typography>
-      </HeadlineContainer>
+      <Box display="flex" flex="1">
+        <EndQueueGrid item xs={12} sm={5}>
+          <HeadlineContainer>
+            <Typography variant="h3">{t("main#endQueue_title")}</Typography>
+          </HeadlineContainer>
 
-      <img
-        src={Logo}
-        className="logo-icon logo-icon-end-queue"
-        alt="nafila logo"
-      />
+          <img
+            src={Logo}
+            className="logo-icon logo-icon-end-queue"
+            alt="nafila logo"
+          />
 
-      <ButtonsContainer>
-        <div>
-          <Button
-            onClick={confirmEndQueueButton}
-            disabled={requesting}
-            variant={requesting ? "inactive" : ""}
-          >
-            {t("main#endQueue_yes")}
-          </Button>
-        </div>
+          <ButtonGroupWrapper>
+            <div>
+              <Button
+                onClick={confirmEndQueueButton}
+                disabled={requesting}
+                variant={requesting ? "inactive" : ""}
+              >
+                {t("main#endQueue_yes")}
+              </Button>
+            </div>
 
-        <div>
-          <Button
-            variant={requesting ? "inactiveGray" : "gray"}
-            href={ADMIN_QUEUE_MANAGEMENT_PATH}
-          >
-            {t("main#endQueue_no")}
-          </Button>
-        </div>
-      </ButtonsContainer>
+            <div>
+              <Button
+                variant={requesting ? "inactiveGray" : "gray"}
+                href={ADMIN_QUEUE_MANAGEMENT_PATH}
+              >
+                {t("main#endQueue_no")}
+              </Button>
+            </div>
+          </ButtonGroupWrapper>
+        </EndQueueGrid>
+        <ImagesWrapper item item xs={12} sm={7}>
+          Hello World
+        </ImagesWrapper>
+      </Box>
+      <FooterWrapper>
+        <Footer />
+      </FooterWrapper>
     </Layout>
   );
 }
