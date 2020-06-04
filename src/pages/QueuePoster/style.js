@@ -74,3 +74,10 @@ export const PosterContainer = styled.div`
     font-weight: 900;
   }
 `;
+
+export const QRCodeWrapper = styled.div`
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+`;

@@ -9,6 +9,8 @@ import FooterRight from "../../assets/icons/footerNaFilaLink.svg";
 import FooterLeft from "../../assets/icons/footerTech4covidAndPartners.svg";
 import { firestore, analytics } from "../../firebase";
 
+import QRCode from "qrcode.react";
+
 import * as S from "./style";
 
 const getDate = () => {
@@ -63,6 +65,12 @@ function QueuePoster({
         }}
       ></p>
       <div className="logo-container">
+        <S.QRCodeWrapper>
+          <QRCode
+            value={`${window.location.hostname}/tirar-senha/${queueId}`}
+            size="95"
+          />
+        </S.QRCodeWrapper>
         <img src={Logo} width="100%" height="100%" alt="logo" />
         <div className="queue-info">
           <div className="queue-code-label">
