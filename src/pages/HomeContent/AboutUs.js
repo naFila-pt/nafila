@@ -177,7 +177,7 @@ const AboutUs = ({ isDesktop }) => {
             <h3>{t("about_us#title_collaboration")}</h3>
             <LogosContainer classNames="collaboration">
               <a
-                href="https://fjc.pt"
+                href="https://www.fjc.pt"
                 target="_blank"
                 rel="noopener noreferrer"
               >
