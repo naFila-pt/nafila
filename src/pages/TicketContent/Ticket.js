@@ -86,28 +86,17 @@ const HomeContent = ({ openSnackbar }) => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   };
 
-  useEffect(() => {
-    if (ticketsStoreInfo.ticketId) {
-      window.location.href =
-        TICKET_STATUS_PATH +
-        `#${queueId}-${ticketsStoreInfo.ownTicketNumber}-${ticketsStoreInfo.ticketId}`;
-    }
-  }, [ticketsStoreInfo, queueId]);
-
-  useEffect(() => {
-    if (urlQueueId && !ticketsStoreInfo.ticketId) {
-      handleGetStoreInfo(urlQueueId, 2);
-    }
-  });
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleGetStoreInfo = async (urlQueueId, step) => {
     let reqQueueId = queueId;
+
     if (urlQueueId.length) reqQueueId = urlQueueId;
 
     if (!reqQueueId) {
       openSnackbar(`Por favor insira o código da fila`);
       return;
     }
+
     try {
       const queue = await firestore
         .collection("queues")
@@ -144,6 +133,21 @@ const HomeContent = ({ openSnackbar }) => {
       openSnackbar(e.message || `Error: ${e}`);
     }
   };
+
+  useEffect(() => {
+    if (ticketsStoreInfo.ticketId) {
+      window.location.href =
+        TICKET_STATUS_PATH +
+        `#${queueId}-${ticketsStoreInfo.ownTicketNumber}-${ticketsStoreInfo.ticketId}`;
+    }
+  }, [ticketsStoreInfo, queueId]);
+
+  useEffect(() => {
+    if (urlQueueId && !ticketsStoreInfo.ticketId) {
+      handleGetStoreInfo(urlQueueId, 2);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlQueueId]);
 
   const handleStoreCodeChange = event => {
     setQueueId(event.target.value);
