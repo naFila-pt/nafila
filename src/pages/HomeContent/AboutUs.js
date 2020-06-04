@@ -5,13 +5,14 @@ import styled from "styled-components";
 import bgMainMobile from "@src/assets/bg/terms_mobile.svg";
 import bgMain from "@src/assets/bg/terms_desktop.svg";
 import twoPeopleSrc from "@src/assets/icons/two_people.svg";
-import senhasPtSrc from "@src/assets/icons/senhas_pt.svg";
 import mobiqueueSrc from "@src/assets/icons/mobiqueue.svg";
 import tech4CovidSrc from "@src/assets/icons/Logo-Tech4COVID19.svg";
 
 import Grid from "@material-ui/core/Grid";
 import GoogleIcon from "@src/components/Icons/google";
 import NosIcon from "@src/components/Icons/nos";
+import { ReactComponent as FJCIcon } from "@src/assets/icons/logo_FJC.svg";
+import { ReactComponent as SenhasPTIcon } from "@src/assets/icons/senhas_pt.svg";
 import Toolbar from "@src/components/Toolbar";
 import Footer from "@src/components/Footer";
 import Button from "@src/components/Button";
@@ -81,7 +82,6 @@ const MainContainer = styled.div`
   @media (min-width: 768px) {
     background-image: url(${bgMain});
     height: unset;
-    padding: 24px 166px;
 
     .contact,
     .tech4Covid {
@@ -107,24 +107,42 @@ const MainContainer = styled.div`
       margin-left: auto;
     }
   }
+
+  @media (min-width: 1200px) {
+    padding: 24px 166px;
+  }
 `;
 
 const LogosContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex-wrap: wrap;
 
-  & > a:first-child {
-    margin-bottom: 40px;
+  & > a {
+    display: flex;
+    height: 108px;
+
+    svg {
+      height: auto;
+    }
   }
 
   @media (min-width: 768px) {
     flex-direction: row;
-    height: 104px;
 
-    & > a:first-child {
-      margin-bottom: initial;
-      margin-right: 70px;
+    & > a:not(:first-child) {
+      margin-top: initial;
+      margin-left: 48px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    flex-direction: row;
+
+    & > a:not(:first-child) {
+      margin-top: initial;
+      margin-left: 48px;
     }
   }
 `;
@@ -136,7 +154,7 @@ const AboutUs = ({ isDesktop }) => {
     <Grid style={{ display: "flex", flexDirection: "column" }}>
       <Toolbar />
       <MainContainer>
-        <Grid container>
+        <Grid container spacing={4}>
           <Grid item xs={12} lg={7}>
             <h1>{t("about_us#title_about_us")}</h1>
             <h3>{t("about_us#title_what")}</h3>
@@ -155,27 +173,34 @@ const AboutUs = ({ isDesktop }) => {
             </Grid>
           )}
 
-          <Grid item xs={12} lg={6}>
+          <Grid item xs={12} md={6}>
             <h3>{t("about_us#title_collaboration")}</h3>
             <LogosContainer classNames="collaboration">
+              <a
+                href="https://www.fjc.pt"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FJCIcon />
+              </a>
               <a
                 href="https://www.senhas.pt"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img src={senhasPtSrc} alt="Senhas.pt logo" height="50px" />
+                <SenhasPTIcon style={{ width: "187px", height: "auto" }} />
               </a>
               <a
                 href="https://mobiqueueapp.com/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img src={mobiqueueSrc} alt="mobiqueue logo" height="70px" />
+                <img src={mobiqueueSrc} alt="mobiqueue logo" />
               </a>
             </LogosContainer>
           </Grid>
 
-          <Grid className="partners" item xs={12} lg={6}>
+          <Grid className="partners" item xs={12} md={6}>
             <h3>{t("about_us#title_partners")}</h3>
             <LogosContainer>
               <a
@@ -195,7 +220,7 @@ const AboutUs = ({ isDesktop }) => {
             </LogosContainer>
           </Grid>
 
-          <Grid className="contact" item xs={12} lg={6}>
+          <Grid className="contact" item xs={12} sm={6}>
             <h3>{t("about_us#title_contact")}</h3>
             <a href="mailto:suporte.nafila@gmail.com">
               <Button forward={true}>
@@ -204,12 +229,12 @@ const AboutUs = ({ isDesktop }) => {
             </a>
           </Grid>
 
-          <Grid className="tech4Covid" item xs={12} lg={6}>
+          <Grid className="tech4Covid" item xs={12} sm={6}>
             <img src={tech4CovidSrc} alt="tech4Covid logo" />
             <p className="about_us_text">{t("about_us#text_tech4Covid")}</p>
           </Grid>
 
-          <Grid className="illustrations" item xs={12} lg={6}>
+          <Grid className="illustrations" item xs={12} sm={6}>
             <h3>{t("about_us#title_illustrations")}</h3>
             <p
               dangerouslySetInnerHTML={{
@@ -218,7 +243,7 @@ const AboutUs = ({ isDesktop }) => {
             />
           </Grid>
 
-          <Grid item xs={12} lg={7}>
+          <Grid item xs={12} sm={9} md={7}>
             <h1>{t("about_us#title_support")}</h1>
 
             <h3>{t("about_us#title_support_instructions")}</h3>
