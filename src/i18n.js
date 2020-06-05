@@ -225,7 +225,7 @@ i18n
           // Admin SignUp
           "admin#signup_title": "Introduza os dados de Registo",
           "admin#signup_weakPassword":
-            "A password tem que ter mais de 6 caracteres",
+            "A sua password deve ter pelo menos 6 caracteres.",
           "admin#signup_emailInUse": "Email já se encontra registrado",
           "admin#signup_invalidEmail": "O email que inseriu não é válido",
           "admin#signup_operationNotAllowed": "Operação não permitida",
@@ -240,6 +240,7 @@ i18n
             "O seu registo foi efetuado com sucesso!",
           "admin#signup_successHeroText":
             "Verifique a sua caixa de email e confirme o registo, para poder começar a usar o na<b>fila</b>.",
+          "admin#signup_helperPassword": "Mínimo 6 caracteres",
 
           // Admin Login
           "admin#login_title": "Introduza os dados da Loja",
