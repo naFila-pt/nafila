@@ -123,50 +123,25 @@ const QueueWrapper = styled.div`
   }
   & .circle-blink {
     @keyframes blink {
-      0% {
-        background-color: #4c0788;
-        color: #ffc836;
-      }
       50% {
         background-color: #ffc836;
-        color: #4c0788;
-      }
-      100% {
-        background-color: #4c0788;
-        color: #ffc836;
+        & p {
+          color: #4c0788;
+        }
       }
     }
     @-webkit-keyframes blink {
-      0% {
-        background-color: #4c0788;
-        color: #ffc836;
-      }
       50% {
         background-color: #ffc836;
-        color: #4c0788;
-      }
-      100% {
-        background-color: #4c0788;
-        color: #ffc836;
+        & p {
+          color: #4c0788;
+        }
       }
     }
-    animation-duration: 400ms;
+    animation-duration: 600ms;
     animation-name: "blink";
     animation-direction: normal;
-    -webkit-animation: blink 400ms;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    background-color: #4c0788;
-    & p {
-      font-size: 33px;
-      font-weight: 900;
-      color: white;
-      margin: 0;
-    }
+    -webkit-animation: blink 600ms;
   }
   & .name {
     display: flex;
@@ -226,7 +201,7 @@ function QueueStatus() {
   const handleClassUpdate = queueId => {
     setTimeout(() => {
       setUpdatedQueue("");
-    }, 500);
+    }, 610);
     // eslint-disable-next-line
     return updatedQueue == queueId ? "circle circle-blink" : "circle";
   };
