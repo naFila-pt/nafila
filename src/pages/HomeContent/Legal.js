@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 
 import Footer from "../../components/Footer";
-import Toolbar from "../../components/Toolbar";
+import Header from "@src/components/Header";
 import bgMobile from "../../assets/bg/terms_mobile.svg";
 import bgDesktop from "../../assets/bg/terms_desktop.svg";
 
@@ -17,7 +17,7 @@ import TitleComponent from "../../components/TitleComponent";
 const Container = styled(Box)`
   position: relative;
   height: 100%;
-  padding: 0;
+  padding: 10px 0 0 0;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 0px;
@@ -68,7 +68,7 @@ const Legal = ({
         }}
       >
         <TitleComponent title={analyticsTitle} pageId={pageId} />
-        <Toolbar />
+        <Header />
         <Grid className="grid-container">
           <Grid item>
             <Typography variant="h1">{t(titleLabel)}</Typography>
