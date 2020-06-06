@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { ReactComponent as PhoneHand } from "../../assets/icons/Group_636.svg";
-import { ReactComponent as PosterCode } from "../../assets/icons/Group_666.svg";
+import { ReactComponent as PosterCode } from "../../assets/icons/QR_Code.svg";
+import MobileHand from "../../assets/icons/Group_636.svg";
 import MobileHandSMS from "../../assets/icons/mobileHandSms.svg";
 
 import { ReactComponent as Person } from "../../assets/icons/pessoa_homepage_desktop.svg";
@@ -88,12 +88,18 @@ const getSteppers = () => {
             display: "flex",
             maxWidth: "50%",
             position: "absolute",
-            bottom: "-100px",
+            bottom: "-50px",
             left: "55%"
           }}
         >
           <PosterCode style={{ width: "280px" }} />
-          <PhoneHand style={{ marginTop: "60px", width: "320px" }} />
+          <img
+            src={MobileHand}
+            width="320px"
+            height="80%"
+            alt="mobileHand"
+            style={{ marginTop: "150px" }}
+          />
         </Grid>
       </StepperContent>
 
@@ -108,16 +114,17 @@ const getSteppers = () => {
             display: "flex",
             maxWidth: "50%",
             position: "absolute",
-            bottom: "50px",
-            left: "65%",
-            transform: "scale(1.5)"
+            bottom: "-50px",
+            left: "55%"
           }}
         >
+          <PosterCode style={{ width: "280px" }} />
           <img
             src={MobileHandSMS}
-            alt="mobile hand sms"
-            width="100%"
-            height="100%"
+            width="320px"
+            height="80%"
+            alt="mobileHand"
+            style={{ marginTop: "150px" }}
           />
         </Grid>
       </StepperContent>
