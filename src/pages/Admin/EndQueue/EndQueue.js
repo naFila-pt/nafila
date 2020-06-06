@@ -125,6 +125,7 @@ function EndQueue({ openSnackbar }) {
                 onClick={confirmEndQueueButton}
                 disabled={requesting}
                 variant={requesting ? "inactive" : ""}
+                forward
               >
                 {t("main#endQueue_yes")}
               </Button>
@@ -134,6 +135,7 @@ function EndQueue({ openSnackbar }) {
               <Button
                 variant={requesting ? "inactiveGray" : "gray"}
                 href={ADMIN_QUEUE_MANAGEMENT_PATH}
+                forward
               >
                 {t("main#endQueue_no")}
               </Button>
