@@ -380,7 +380,17 @@ i18n
             "Inserir email ou código de lojista",
           "admin#table_column_1_name": "Nome da Loja",
           "admin#table_column_2_name": "Apagar",
-          "admin#create_status_screen": "Criar novo ecrã"
+          "admin#create_status_screen": "Criar novo ecrã",
+
+          //burger menu
+          "burger#your_store": "A sua Loja",
+          "burger#poster": "Cartaz da Fila",
+          "burger#end_queue": "Terminar Fila",
+          "burger#logout": "Sair",
+          "burger#how_it_works": "Como funciona?",
+          "burger#about_us": "Sobre",
+          "burger#login": "Entrar",
+          "burger#lojista": "É Lojista?"
         }
       }
     },

@@ -310,7 +310,6 @@ function Manage({ queueId, openSnackbar }) {
             .doc(data.counterId)
             .get()
             .then(response => {
-              console.log(response.data());
               const counterData = response.data();
               setMaxCapacity(counterData.maxCapacity);
               setCounter(counterData.current);
