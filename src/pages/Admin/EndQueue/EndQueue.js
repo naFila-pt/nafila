@@ -47,12 +47,19 @@ const FooterWrapper = styled.div`
   }
 `;
 
-const ImagesWrapper = styled(Grid)`
+const ImagesGrid = styled(Grid)`
   display: none;
 
   @media (min-width: 768px) {
     display: flex;
   }
+`;
+
+const ImagesWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  margin-left: -15em;
 `;
 
 function EndQueue({ openSnackbar }) {
@@ -142,20 +149,13 @@ function EndQueue({ openSnackbar }) {
             </div>
           </ButtonGroupWrapper>
         </EndQueueGrid>
-        <ImagesWrapper item xs={12} sm={7}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "flex-end",
-              marginLeft: "-15em"
-            }}
-          >
+        <ImagesGrid item xs={12} sm={7}>
+          <ImagesWrapper>
             <img style={{ marginBottom: "-7em" }} src={Girl2} alt="girl2" />
             <img src={Girl} alt="girl" />
             <img src={Store} alt="store" />
-          </div>
-        </ImagesWrapper>
+          </ImagesWrapper>
+        </ImagesGrid>
       </Box>
       <FooterWrapper>
         <Footer />

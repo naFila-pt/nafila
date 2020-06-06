@@ -1,46 +1,127 @@
 import React from "react";
-import { Typography } from "@material-ui/core";
+import { Typography, Box, Grid } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
+import styled from "styled-components";
 
 import Button from "../../../components/Button";
-import Bg from "../../../assets/bg/store_queue_end.svg";
+import Hd from "../../../assets/bg/home_desktop.svg";
 import Layout from "../../../components/AdminLayout";
+import Footer from "../../../components/Footer";
 import { ADMIN_QUEUE_MANAGEMENT_PATH } from "../../../constants/RoutesConstants";
-import Logo from "../../../assets/logo.svg";
+import Girl from "../../../assets/icons/rapariga.svg";
+import Store from "../../../assets/images/ilust_loja.svg";
 
-import { HeadlineContainer, ButtonsContainer } from "../common";
+import { HeadlineContainer } from "../common";
 
 import TitleComponent from "../../../components/TitleComponent";
+
+const EndQueueGrid = styled(Grid)`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ButtonGroupWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+
+  .MuiButtonWrapper {
+    margin-bottom: 20px;
+    background: none !important;
+  }
+
+  @media (min-width: 768px) {
+    justify-content: flex-end;
+
+    .MuiButtonWrapper {
+      margin-bottom: 50px;
+      background: none !important;
+    }
+  }
+`;
+
+const TextWrapper = styled.div`
+  @media (min-width: 768px) {
+    text-align: left;
+    align-self: center;
+  }
+`;
+
+const ImagesGrid = styled(Grid)`
+  display: none;
+
+  @media (min-width: 768px) {
+    display: flex;
+  }
+`;
+
+const ImagesWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+`;
+
+const FooterWrapper = styled.div`
+  display: none;
+
+  @media (min-width: 768px) {
+    display: flex;
+  }
+`;
 
 function EndQueueSuccess() {
   const { t } = useTranslation();
 
   return (
-    <Layout bg={Bg}>
+    <Layout bg={Hd}>
       <TitleComponent title="Fila encerrada" pageId="close_queue_success" />
-      <HeadlineContainer style={{ marginBottom: 0 }}>
-        <Typography variant="h3">{t("main#endQueueSuccess_title")}</Typography>
-      </HeadlineContainer>
+      <Box display="flex" flex="1">
+        <EndQueueGrid item xs={12} sm={5}>
+          <TextWrapper>
+            <HeadlineContainer style={{ marginBottom: 0 }}>
+              <Typography variant="h3">
+                {t("main#endQueueSuccess_title")}
+              </Typography>
+            </HeadlineContainer>
 
-      <p
-        style={{ fontSize: "20px" }}
-        dangerouslySetInnerHTML={{
-          __html: t("main#endQueueSuccess_text")
-        }}
-      />
-
-      <img src={Logo} alt="nafila logo" />
-
-      <ButtonsContainer>
-        <Button
-          variant="gray"
-          href={ADMIN_QUEUE_MANAGEMENT_PATH}
-          style={{ marginTop: 30 }}
-          backward
-        >
-          {t("main#endQueueSuccess_back")}
-        </Button>
-      </ButtonsContainer>
+            <p
+              style={{ fontSize: "20px" }}
+              dangerouslySetInnerHTML={{
+                __html: t("main#endQueueSuccess_text")
+              }}
+            />
+            <br />
+            <p style={{ fontSize: "20px" }}>
+              <strong
+                dangerouslySetInnerHTML={{
+                  __html: t("main#endQueueSuccess_second_text")
+                }}
+              ></strong>
+            </p>
+          </TextWrapper>
+          <ButtonGroupWrapper>
+            <Button
+              variant="gray"
+              href={ADMIN_QUEUE_MANAGEMENT_PATH}
+              style={{ marginTop: 30 }}
+              backward
+            >
+              {t("main#endQueueSuccess_back")}
+            </Button>
+          </ButtonGroupWrapper>
+        </EndQueueGrid>
+        <ImagesGrid item xs={12} sm={7}>
+          <ImagesWrapper>
+            <img src={Girl} alt="girl" />
+            <img src={Store} alt="store" />
+          </ImagesWrapper>
+        </ImagesGrid>
+      </Box>
+      <FooterWrapper>
+        <Footer />
+      </FooterWrapper>
     </Layout>
   );
 }
