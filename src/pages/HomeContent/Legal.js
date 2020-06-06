@@ -35,12 +35,16 @@ const Container = styled(Box)`
   & .textLabel {
     line-height: 150%;
     white-space: pre-line;
-    text-align: justify;
+    text-align: left;
     font-size: 16px;
     color: #484848;
     @media (min-width: 768px) {
       font-size: 22px;
     }
+  }
+
+  & h1 {
+    text-transform: uppercase;
   }
 `;
 
