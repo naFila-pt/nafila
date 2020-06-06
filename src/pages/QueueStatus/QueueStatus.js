@@ -121,6 +121,28 @@ const QueueWrapper = styled.div`
       margin: 0;
     }
   }
+  & .circle-blink {
+    @keyframes blink {
+      50% {
+        background-color: #ffc836;
+        & p {
+          color: #4c0788;
+        }
+      }
+    }
+    @-webkit-keyframes blink {
+      50% {
+        background-color: #ffc836;
+        & p {
+          color: #4c0788;
+        }
+      }
+    }
+    animation-duration: 600ms;
+    animation-name: "blink";
+    animation-direction: normal;
+    -webkit-animation: blink 600ms;
+  }
   & .name {
     display: flex;
     margin-left: -30px;
@@ -163,6 +185,7 @@ function QueueStatus() {
   const { t } = useTranslation();
   const [queuesData, setQueuesData] = useState({});
   const [requestQueues, setRequest] = useState(false);
+  const [updatedQueue, setUpdatedQueue] = useState("");
 
   new Swiper(".swiper-container", {
     slidesPerView: 1,
@@ -175,7 +198,13 @@ function QueueStatus() {
       disableOnInteraction: false
     }
   });
-
+  const handleClassUpdate = queueId => {
+    setTimeout(() => {
+      setUpdatedQueue("");
+    }, 610);
+    // eslint-disable-next-line
+    return updatedQueue == queueId ? "circle circle-blink" : "circle";
+  };
   const getChunks = (arr, chunkSize) => {
     var c = [];
     for (var i = 0, len = arr.length; i < len; i += chunkSize)
@@ -185,6 +214,7 @@ function QueueStatus() {
 
   useEffect(() => {
     if (!requestQueues) {
+      setUpdatedQueue("");
       const urlParams = new URLSearchParams(window.location.search);
       const userParams = urlParams.get("users");
       const users = userParams.split(",");
@@ -198,9 +228,17 @@ function QueueStatus() {
             queueDocs.forEach(qd => {
               queuesData[qd.ref.id] = qd.data();
             });
+            // const updated
             const queuesClone = Object.assign({}, queuesData);
             setQueuesData(queuesClone);
             if (i === chunks.length - 1) setRequest(true);
+
+            //Check for updates
+            snapshot.docChanges().forEach(function (change) {
+              if (change.type === "modified") {
+                setUpdatedQueue(change.doc.data().owner_id);
+              }
+            });
           });
       });
     }
@@ -232,7 +270,11 @@ function QueueStatus() {
                   <GridArea>
                     {c.map(key => (
                       <QueueWrapper>
-                        <div className="circle">
+                        <div
+                          className={handleClassUpdate(
+                            queuesData[key].owner_id
+                          )}
+                        >
                           <p>{queuesData[key].currentTicketNumber}</p>
                         </div>
                         <div className="name">
