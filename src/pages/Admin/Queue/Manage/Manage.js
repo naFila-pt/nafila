@@ -336,7 +336,7 @@ function Manage({ queueId, openSnackbar }) {
         bg={Bg}
       >
         <TitleComponent
-          title={`Gerir Fila - ${queueId}`}
+          title={queue ? `Gerir Fila - ${queue.name}` : "Gerir Fila"}
           pageId="manage_queue"
         />
         <Modal
