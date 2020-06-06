@@ -302,7 +302,7 @@ i18n
           "main#addConsumerPhone_placeholder": "Número de Telemóvel",
 
           // AfterLogin Add Consumer Name
-          "main#addConsumerName_title": "Insira o Nome\ndo cliente",
+          "main#addConsumerName_title": "Insira o Nome\ndo Cliente",
           "main#addConsumerName_placeholder": "Nome",
 
           // AfterLogin Add Consumer Success
