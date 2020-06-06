@@ -18,6 +18,10 @@ import EndQueueSuccess from "./EndQueueSuccess";
 
 import TitleComponent from "../../../components/TitleComponent";
 
+import Girl from "../../../assets/icons/rapariga.svg";
+import Girl2 from "../../../assets/icons/rapariga2.svg";
+import Store from "../../../assets/images/ilust_loja.svg";
+
 const EndQueueGrid = styled(Grid)`
   display: flex;
   flex-direction: column;
@@ -136,8 +140,19 @@ function EndQueue({ openSnackbar }) {
             </div>
           </ButtonGroupWrapper>
         </EndQueueGrid>
-        <ImagesWrapper item item xs={12} sm={7}>
-          Hello World
+        <ImagesWrapper item xs={12} sm={7}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "flex-end",
+              marginLeft: "-15em"
+            }}
+          >
+            <img style={{ marginBottom: "-7em" }} src={Girl2} alt="girl2" />
+            <img src={Girl} alt="girl" />
+            <img src={Store} alt="store" />
+          </div>
         </ImagesWrapper>
       </Box>
       <FooterWrapper>
