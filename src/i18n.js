@@ -340,7 +340,7 @@ i18n
           "admin#queueManagement_remaining": "Restantes",
           "admin#queueManagement_wait": "Aguarde ...",
           "admin#queueManagement_warning_message":
-            "Está acima da lotação escolhida.",
+            "Atingiu a lotação máxima definida.",
 
           // End Queue
           "main#endQueue_title": "Pretende terminar a Fila actual?",
