@@ -32,13 +32,13 @@ export const PosterContainer = styled.div`
 
   .logo-container {
     position: relative;
-    height: 358px;
+    height: 450px;
     margin-top: 57px;
   }
 
   .queue-info {
     position: absolute;
-    top: 50%;
+    top: 45%;
     left: 50%;
     transform: translate3d(-50%, -50%, 0);
   }
@@ -77,7 +77,10 @@ export const PosterContainer = styled.div`
 
 export const QRCodeWrapper = styled.div`
   position: absolute;
-  top: 80%;
+  top: 75%;
   left: 50%;
   transform: translate3d(-50%, -50%, 0);
+  border: solid 4px #000;
+  border-image: url("http://i.stack.imgur.com/wLdVc.png") 1 stretch;
+  padding: 10px;
 `;

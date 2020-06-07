@@ -158,7 +158,7 @@ function SignUp({ openSnackbar, isDesktop }) {
       })
       .catch(error => {
         setLoading(false);
-        openSnackbar(mappedMessages[error.code] || t("admin#signup_failed"));
+        openSnackbar(mappedMessages[error.code] || t("admin#signup_failed"), 5);
         if (error.code === "auth/weak-password") {
           setFields({ ...fields, password: "" });
         }
