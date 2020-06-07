@@ -13,7 +13,7 @@ import GoogleIcon from "@src/components/Icons/google";
 import NosIcon from "@src/components/Icons/nos";
 import { ReactComponent as FJCIcon } from "@src/assets/icons/logo_FJC.svg";
 import { ReactComponent as SenhasPTIcon } from "@src/assets/icons/senhas_pt.svg";
-import Toolbar from "@src/components/Toolbar";
+import Header from "@src/components/Header";
 import Footer from "@src/components/Footer";
 import Button from "@src/components/Button";
 import {
@@ -152,7 +152,7 @@ const AboutUs = ({ isDesktop }) => {
 
   return (
     <Grid style={{ display: "flex", flexDirection: "column" }}>
-      <Toolbar />
+      <Header />
       <MainContainer>
         <Grid container spacing={4}>
           <Grid item xs={12} lg={7}>
