@@ -350,7 +350,7 @@ i18n
           //End Queue Success
           "main#endQueueSuccess_title": "Fila terminada.",
           "main#endQueueSuccess_text": "A sua fila foi terminada.",
-          "main#endQueueSuccess_second_text": "Até Amanhã.",
+          "main#endQueueSuccess_second_text": "Até Amanhã!",
           "main#endQueueSuccess_back": "Voltar ao Início",
 
           // Queue Poster

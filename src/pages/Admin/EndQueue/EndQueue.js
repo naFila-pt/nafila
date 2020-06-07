@@ -6,6 +6,7 @@ import styled from "styled-components";
 import Button from "../../../components/Button";
 import Loader from "../../../components/Loader";
 import Hd from "../../../assets/bg/home_desktop.svg";
+import Mn from "../../../assets/bg/endqueue_mobile_bg.svg";
 import Layout from "../../../components/AdminLayout";
 import Footer from "../../../components/Footer";
 import { ADMIN_QUEUE_MANAGEMENT_PATH } from "../../../constants/RoutesConstants";
@@ -68,6 +69,13 @@ function EndQueue({ openSnackbar }) {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(false);
   const [requesting, setRequesting] = useState(false);
+  const [background, setBackground] = useState(
+    window.innerWidth >= 768 ? Hd : Mn
+  );
+
+  window.addEventListener("resize", () => {
+    window.innerWidth >= 768 ? setBackground(Hd) : setBackground(Mn);
+  });
 
   const confirmEndQueueButton = () => {
     setRequesting(true);
@@ -112,7 +120,7 @@ function EndQueue({ openSnackbar }) {
   if (success) return <EndQueueSuccess />;
 
   return (
-    <Layout bg={Hd}>
+    <Layout bg={background}>
       <TitleComponent title="Encerrar fila" pageId="close_queue" />
       <Box display="flex" flex="1">
         <EndQueueGrid item xs={12} sm={5}>

@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Typography, Box, Grid } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 import Button from "../../../components/Button";
 import Hd from "../../../assets/bg/home_desktop.svg";
+import Mn from "../../../assets/bg/endqueue_mobile_bg.svg";
+import Logo from "../../../assets/logo.svg";
 import Layout from "../../../components/AdminLayout";
 import Footer from "../../../components/Footer";
 import { ADMIN_QUEUE_MANAGEMENT_PATH } from "../../../constants/RoutesConstants";
@@ -71,11 +73,31 @@ const FooterWrapper = styled.div`
   }
 `;
 
+const LayoutWrapper = styled(Layout)`
+  background-image: url(${Hd});
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+`;
+
+const LogoImg = styled.img`
+  @media (min-width: 768px) {
+    display: none;
+  }
+`;
+
 function EndQueueSuccess() {
   const { t } = useTranslation();
+  const [background, setBackground] = useState(
+    window.innerWidth >= 768 ? Hd : Mn
+  );
+
+  window.addEventListener("resize", () => {
+    window.innerWidth >= 768 ? setBackground(Hd) : setBackground(Mn);
+  });
 
   return (
-    <Layout bg={Hd}>
+    <LayoutWrapper bg={background}>
       <TitleComponent title="Fila encerrada" pageId="close_queue_success" />
       <Box display="flex" flex="1">
         <EndQueueGrid item xs={12} sm={5}>
@@ -87,19 +109,24 @@ function EndQueueSuccess() {
             </HeadlineContainer>
 
             <p
-              style={{ fontSize: "20px" }}
+              style={{ fontSize: "20px", fontWeight: "bold" }}
               dangerouslySetInnerHTML={{
                 __html: t("main#endQueueSuccess_text")
               }}
             />
-            <br />
-            <p style={{ fontSize: "20px" }}>
-              <strong
-                dangerouslySetInnerHTML={{
-                  __html: t("main#endQueueSuccess_second_text")
-                }}
-              ></strong>
-            </p>
+
+            <p
+              style={{ fontSize: "20px", fontWeight: "bold" }}
+              dangerouslySetInnerHTML={{
+                __html: t("main#endQueueSuccess_second_text")
+              }}
+            />
+
+            <LogoImg
+              src={Logo}
+              className="logo-icon logo-icon-end-queue"
+              alt="nafila logo"
+            />
           </TextWrapper>
           <ButtonGroupWrapper>
             <Button
@@ -122,7 +149,7 @@ function EndQueueSuccess() {
       <FooterWrapper>
         <Footer />
       </FooterWrapper>
-    </Layout>
+    </LayoutWrapper>
   );
 }
 
