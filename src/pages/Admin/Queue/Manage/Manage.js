@@ -333,7 +333,10 @@ function Manage({ queueId, openSnackbar }) {
         style={{ position: "relative", minHeight: pageMinHeight + 56 }}
         bg={Bg}
       >
-        <TitleComponent title="Gerir fila" pageId="manage_queue" />
+        <TitleComponent
+          title={queue ? `Gerir Fila - ${queue.name}` : "Gerir Fila"}
+          pageId="manage_queue"
+        />
         <Modal
           open={showModal}
           onClose={handleCloseModal}

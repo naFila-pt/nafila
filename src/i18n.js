@@ -23,19 +23,19 @@ i18n
             "Visite <b>nafila.pt</b>, insira <b>o código da fila</b> e <b>o seu telemóvel</b>, para ser notificado.",
           "onboarding#phone_number": "Número de Telemóvel",
           "onboarding#store_description":
-            "A sua Loja Favorita afixa <b>um código por dia</b>, que deve utilizar para <b>entrar</b> na<b>fila</b>.",
+            "Verifique o <b>Código da Fila</b> para esse dia, que estará <b>afixado à entrada da loja.</b>",
           "onboarding#useCode_title": "Utilize o código",
           "onboarding#three_ways": "3 maneiras",
           "onboarding#signup_ways":
             "Pode inscrever-se na<b>fila</b> através de <b>SMS</b>, <b>Email</b> ou com o <b>seu Nome</b>.",
           "onboarding#one_sms": "Basta uma SMS!",
           "onboarding#register_nafila":
-            "Registe-se na<b>fila</b> enviando uma <b>SMS grátis</b> para o 4902 com: <b>nafila {código da Fila}",
+            "Para tirar uma senha, envie uma <b>SMS grátis</b> para o 4902 com <b>nafila</b> (espaço) <b>Código da Fila</b>.",
           "onboarding#difficulties":
             "Se tiver alguma dificuldade, fale com o colaborador de loja.",
           "onboarding#prefer_register_site": "Prefere tirar senha no site?",
           "onboarding#insertCodeEmail":
-            "Visite <b>nafila.pt</b>, insira o <b>código da fila</b> e <b>o seu email</b> para ser notificado.",
+            "<b>Use o QR Code</b> ou visite <b>nafila.pt</b>, insira o <b>Código da Fila</b> e o <b>seu telemóvel</b> para ser notificado.",
           "onboarding#prefer_name": "Prefere ser chamado pelo Nome?",
           "onboarding#ask_colaborator_register":
             "Peça ao colaborador de loja para registar <b>o seu Nome.</b>",
@@ -349,8 +349,8 @@ i18n
 
           //End Queue Success
           "main#endQueueSuccess_title": "Fila terminada.",
-          "main#endQueueSuccess_text":
-            "A sua fila foi terminada.<br/>Até Amanhã!",
+          "main#endQueueSuccess_text": "A sua fila foi terminada.",
+          "main#endQueueSuccess_second_text": "Até Amanhã!",
           "main#endQueueSuccess_back": "Voltar ao Início",
 
           // Queue Poster

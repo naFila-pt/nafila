@@ -9,6 +9,7 @@ const Container = styled.div`
   justify-content: center;
   height: 50px;
   display: none;
+  background-color: white;
   @media (min-width: 768px) {
     display: flex;
   }
@@ -24,7 +25,12 @@ const handleLogoOnClick = e => {
 
 const Header = ({ bg }) => (
   <Container>
-    <img src={logoBannerSrc} alt="logo" onClick={handleLogoOnClick} />
+    <img
+      src={logoBannerSrc}
+      alt="logo"
+      onClick={handleLogoOnClick}
+      style={{ cursor: "pointer" }}
+    />
   </Container>
 );
 
