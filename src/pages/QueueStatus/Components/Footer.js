@@ -45,61 +45,59 @@ export const Footer = ({ isDesktop, renderInstructionsLabels }) => {
   const { t } = useTranslation();
 
   return (
-    <div>
-      <CustomizedFooter isDesktop={isDesktop}>
-        {!isDesktop && renderInstructionsLabels(isDesktop)}
-        <Label
-          isDesktop={isDesktop}
-          style={{
-            marginTop: "50px",
-            fontSize: isDesktop ? "24px" : "12px",
-            paddingLeft: isDesktop && "3rem",
-            margin: isDesktop && "0 0 15px 20px",
-            display: !isDesktop && "flex",
-            flexDirection: !isDesktop && "column",
-            width: !isDesktop && "33%"
-          }}
-          dangerouslySetInnerHTML={{
-            __html: t("admin#queueStatus_naFilaLabel")
-          }}
-        />
-        <Box
-          position="relative"
-          display="flex"
-          alignItems="flex-end"
-          width={"100%"}
-        >
-          <div className="footer-text">
+    <CustomizedFooter isDesktop={isDesktop}>
+      {!isDesktop && renderInstructionsLabels(isDesktop)}
+      <Label
+        isDesktop={isDesktop}
+        style={{
+          marginTop: "50px",
+          fontSize: isDesktop ? "24px" : "12px",
+          paddingLeft: isDesktop && "3rem",
+          margin: isDesktop && "0 0 15px 20px",
+          display: !isDesktop && "flex",
+          flexDirection: !isDesktop && "column",
+          width: !isDesktop && "33%"
+        }}
+        dangerouslySetInnerHTML={{
+          __html: t("admin#queueStatus_naFilaLabel")
+        }}
+      />
+      <Box
+        position="relative"
+        display="flex"
+        alignItems="flex-end"
+        width={"100%"}
+      >
+        <div className="footer-text">
+          <Box>
+            <p className="title">Projecto no âmbito do</p>
+            <img
+              src={Tech4CovidIcon}
+              height={isDesktop ? "30px" : "15px"}
+              alt="Tech4Covid"
+            />
+          </Box>
+          <div style={{ marginLeft: isDesktop ? "50px" : "20px" }}>
+            <p className="title">Parceiros</p>
             <Box>
-              <p className="title">Projecto no âmbito do</p>
               <img
-                src={Tech4CovidIcon}
-                height={isDesktop ? "30px" : "15px"}
-                alt="Tech4Covid"
+                src={googleIcon}
+                style={{ height: isDesktop ? "30px" : "15px" }}
+                alt="google"
+              />
+              <img
+                src={NOSIcon}
+                style={{
+                  height: isDesktop ? "30px" : "15px",
+                  marginLeft: isDesktop ? "30px" : "7.5px"
+                }}
+                alt="nos"
               />
             </Box>
-            <div style={{ marginLeft: isDesktop ? "50px" : "20px" }}>
-              <p className="title">Parceiros</p>
-              <Box>
-                <img
-                  src={googleIcon}
-                  style={{ height: isDesktop ? "30px" : "15px" }}
-                  alt="google"
-                />
-                <img
-                  src={NOSIcon}
-                  style={{
-                    height: isDesktop ? "30px" : "15px",
-                    marginLeft: isDesktop ? "30px" : "7.5px"
-                  }}
-                  alt="nos"
-                />
-              </Box>
-            </div>
           </div>
-          <img src={FooterIcon} alt="footer" width="100%" height="100%" />
-        </Box>
-      </CustomizedFooter>
-    </div>
+        </div>
+        <img src={FooterIcon} alt="footer" width="100%" height="100%" />
+      </Box>
+    </CustomizedFooter>
   );
 };

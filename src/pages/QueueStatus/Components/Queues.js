@@ -117,8 +117,8 @@ const BigCircle = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-width: ${props => (props.isDesktop ? "320px" : "100px")};
-height: ${props => (props.isDesktop ? "320px" : "100px")};
+  width: ${props => (props.isDesktop ? "320px" : "100px")};
+  height: ${props => (props.isDesktop ? "320px" : "100px")};
   border-radius: 100%;
   background-color: #ffc836;
   & p {
@@ -136,6 +136,7 @@ const handleClassUpdate = (queueId, updatedQueue, setUpdatedQueue) => {
   // eslint-disable-next-line
     return updatedQueue == queueId ? "circle circle-blink" : "circle";
 };
+
 const getChunks = (arr, chunkSize) => {
   var c = [];
   for (var i = 0, len = arr.length; i < len; i += chunkSize)
@@ -150,7 +151,6 @@ const renderQueues = (
   updatedQueue,
   setUpdatedQueue
 ) => {
-  console.log("setUpdatedQueue", setUpdatedQueue);
   if (requestQueues) {
     if (Object.keys(queuesData).length === 1) {
       const queueKey = Object.keys(queuesData)[0];
