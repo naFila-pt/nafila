@@ -12,15 +12,30 @@ import Logo from "../../assets/icons/naFila_logo.svg";
 import Footer from "../../assets/icons/footer.svg";
 import googleIcon from "../../assets/icons/google-icon.svg";
 import NOSIcon from "../../assets/icons/nos-icon.svg";
-
 import Tech4CovidIcon from "../../assets/icons/Logo-Tech4COVID19-white.svg";
+
 import "./swiper.css";
-import videoSrc from "../../assets/nafila_onboarding.mp4";
+import videoSrc from "../../assets/nafila_onboarding_audiooff.mp4";
 
 const Container = styled.div`
   display: flex;
   width: 100%;
   height: 100vh;
+  position: relative;~
+  font-size: ${props => props.isDesktop && "12px"};
+  & .left-container {
+  width: ${props => (props.isDesktop ? "50%" : "100%")};
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  & .left-content-wrapper {
+    padding: ${props => (props.isDesktop ? "1rem 0 0 3rem" : "1rem 0 0 0")};
+    position: relative;
+    height: 100%;
+    display: ${props => !props.isDesktop && "flex"};
+    flex-direction: ${props => !props.isDesktop && "column"};
+  }
 `;
 
 const Queues = styled.div`
@@ -28,15 +43,16 @@ const Queues = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 55%;
-  height: 100%;
-  padding: 40px 0;
+  width: ${props => (props.isDesktop ? "50%" : "100%")};
+  height: ${props => !props.isDesktop && "100%"};
+  margin-top: ${props => !props.isDesktop && "-60px"};
+  padding: ${props => props.isDesktop && "40px 0"};
 `;
 
 const Label = styled.p`
   margin: 2px 0;
   line-height: 1.1;
-  font-size: 30px;
+  font-size: ${props => (props.isDesktop ? "30px" : "12px")};
   & span {
     margin-right: 4px;
   }
@@ -50,7 +66,8 @@ const CustomizedFooter = styled.div`
   display: flex;
   flex-direction: column;
   align-content: flex-end;
-
+  flex-direction: ${props => !props.isDesktop && "row-reverse"};
+  flex-direction: ${props => props.isDesktop && "flex-end"};
   & .footer-text {
     display: flex;
     height: 100%;
@@ -61,32 +78,37 @@ const CustomizedFooter = styled.div`
 
     & .title {
       color: white;
-      margin: 0 0 5px 0;
-      font-size: 12px;
-      font-weight: bold;
+      margin: ${props => props.isDesktop && "0 0 5px 0"};
+      font-size: ${props => (props.isDesktop ? "12px" : "9px")};
+      font-weight: ${props => props.isDesktop && "bold"};
       text-transform: uppercase;
+      margin: ${props => !props.isDesktop && "3px 0"};
+      font-weight: ${props => !props.isDesktop && "lighter"};
     }
   }
 `;
 
 const Header = styled.div`
   display: flex;
-  height: 15%;
+  height: ${props => (props.isDesktop ? "15%" : "8%")};
   align-items: center;
   padding: 10px 0 0 20px;
+  width: ${props => props.isDesktop && "100%"};
+  margin-bottom: ${props => props.isDesktop && "2px"};
 `;
 
 const BigCircle = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 300px;
-  height: 300px;
+width: ${props => (props.isDesktop ? "320px" : "100px")};
+height: ${props => (props.isDesktop ? "320px" : "100px")};
   border-radius: 100%;
   background-color: #ffc836;
   & p {
     color: white;
-    font-size: 60px;
+  font-size: ${props => (props.isDesktop ? "95px" : "35px")};
+    font-weight: 900;
     margin 0;
 }
 `;
@@ -96,7 +118,10 @@ const GridArea = styled.div`
   width: 100%;
   height: 100%;
   grid-template-columns: repeat(2, minmax(100px, 1fr));
-  grid-template-rows: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-rows: ${props =>
+    props.isDesktop
+      ? "repeat(auto-fill, minmax(140px, 1fr))"
+      : "repeat(auto-fill, minmax(70px, 1fr))"};
   column-gap: 10px;
 `;
 
@@ -105,17 +130,17 @@ const QueueWrapper = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-
   & .circle {
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    width: 100px;
-    height: 100px;
+    width: ${props => (props.isDesktop ? "100px" : "35px")};
+    height: ${props => (props.isDesktop ? "100px" : "35px")};
     background-color: #4c0788;
+    }
     & p {
-      font-size: 33px;
+      font-size: ${props => (props.isDesktop ? "33px" : "12px")};
       font-weight: 900;
       color: white;
       margin: 0;
@@ -151,13 +176,14 @@ const QueueWrapper = styled.div`
     align-items: center;
     line-height: 1.2;
     width: 60%;
-    height: 90px;
+    height: ${props => (props.isDesktop ? "90px" : "35px")};
     background-color: #e8e8e8;
     z-index: -1;
+    border-radius:${props => !props.isDesktop && "40px"};
     border-top-right-radius: 40px;
     border-bottom-right-radius: 40px;
     & p {
-      font-size: 3vh;
+      font-size: ${props => (props.isDesktop ? "3vh" : "10px")} ;
       font-weight: 900;
       color: #4c0788;
       margin: 0;
@@ -172,16 +198,20 @@ const BigLabel = styled.div`
   justify-content: center;
   margin-top: 40px;
   border-radius: 55px;
-  width: 300px;
-  height: 100px;
+  max-width: 500px;
+  width:  ${props => (props.isDesktop ? "100%" : "90%")};
+  height: ${props => (props.isDesktop ? "100px" : "60px")} ;
+  padding:1rem;
+  margin-bottom: 100px;
   background-color: #e4e4e4;
   & p {
-      font-size: 50px;
+  font-size:${props => (props.isDesktop ? "50px" : "20px")};
       margin 0;
+      font-weight: 900;
   }
 `;
 
-function QueueStatus() {
+function QueueStatus({ isDesktop }) {
   const { t } = useTranslation();
   const [queuesData, setQueuesData] = useState({});
   const [requestQueues, setRequest] = useState(false);
@@ -194,7 +224,7 @@ function QueueStatus() {
       el: ".swiper-pagination"
     },
     autoplay: {
-      delay: 7500,
+      delay: 12500,
       disableOnInteraction: false
     }
   });
@@ -259,17 +289,16 @@ function QueueStatus() {
           </>
         );
       } else if (Object.keys(queuesData).length) {
-        const chunks = getChunks(Object.keys(queuesData), 12);
-        console.log(chunks);
-        console.log(Object.keys(queuesData));
+        const chuncksSize = isDesktop ? 12 : 10;
+        const chunks = getChunks(Object.keys(queuesData), chuncksSize);
         return (
           <div class="swiper-container">
             <div class="swiper-wrapper">
               {chunks.map(c => (
                 <div class="swiper-slide">
-                  <GridArea>
+                  <GridArea isDesktop={isDesktop}>
                     {c.map(key => (
-                      <QueueWrapper>
+                      <QueueWrapper isDesktop={isDesktop}>
                         <div
                           className={handleClassUpdate(
                             queuesData[key].owner_id
@@ -293,81 +322,130 @@ function QueueStatus() {
     }
   };
 
-  return (
-    <Container>
-      <div
-        style={{
-          width: "45%",
-          height: "100%",
-          position: "relative",
-          overflow: "hidden"
-        }}
+  const renderInstructionsLabels = () => {
+    return (
+      <Box
+        width="100%"
+        ml="20px"
+        position={!isDesktop && "absolute"}
+        bottom={!isDesktop && "0"}
+        mb={!isDesktop && "50px"}
       >
-        <Header>
-          <img src={Logo} alt="logo" height="100%" />
-          <Typography
-            variant="h3"
-            style={{ fontSize: "30px", marginLeft: "5%" }}
-          >
-            {t("admin#intro_welcome")}
-          </Typography>
-        </Header>
-        <Box width="90%" height="40%" m="10px 0 10px 20px">
-          <video width="100%" height="100%" muted autoPlay loop>
-            <source src={videoSrc} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        </Box>
-        <Box width="100%" ml="20px">
-          <Box mt="20px" mb="20px">
-            <Label
-              dangerouslySetInnerHTML={{
-                __html: t("admin#queueStatus_securityLabel")
-              }}
-            />
-            <Label
-              style={{ color: "#3D434D" }}
-              dangerouslySetInnerHTML={{
-                __html: t("admin#queueStatus_securityText")
-              }}
-            />
-          </Box>
+        <Box m={isDesktop && "20px 0"} display={!isDesktop && "flex"}>
           <Label
+            isDesktop={isDesktop}
+            dangerouslySetInnerHTML={{
+              __html: t("admin#queueStatus_securityLabel")
+            }}
+          />
+          <Label
+            isDesktop={isDesktop}
+            style={{ color: "#3D434D" }}
+            dangerouslySetInnerHTML={{
+              __html: t("admin#queueStatus_securityText")
+            }}
+          />
+        </Box>
+        <Box display={!isDesktop && "flex"}>
+          <Label
+            isDesktop={isDesktop}
             dangerouslySetInnerHTML={{
               __html: t("admin#queueStatus_ticketLabel")
             }}
           />
           <Label
+            isDesktop={isDesktop}
             style={{ color: "#3D434D" }}
             dangerouslySetInnerHTML={{
               __html: t("admin#queueStatus_ticketText")
             }}
           />
+        </Box>
+      </Box>
+    );
+  };
+
+  return (
+    <Container isDesktop={isDesktop}>
+      <div className="left-container">
+        <div className="left-content-wrapper" style={{}}>
+          <Header isDesktop={isDesktop}>
+            <img src={Logo} alt="logo" height="100%" />
+            <Typography
+              variant="h3"
+              style={{
+                fontSize: isDesktop ? "30px" : "20px",
+                marginLeft: "5%"
+              }}
+            >
+              {t("admin#intro_welcome")}
+            </Typography>
+          </Header>
+          <Box
+            width="auto"
+            height="40%"
+            m={isDesktop ? "10px 0 10px 20px" : "0"}
+          >
+            <video
+              width="auto"
+              height={isDesktop ? "100%" : "70%"}
+              muted
+              autoPlay
+              loop
+            >
+              <source src={videoSrc} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </Box>
+          {!isDesktop && <Queues>{renderQueues()}</Queues>}
+          {isDesktop && renderInstructionsLabels()}
+        </div>
+        <CustomizedFooter isDesktop={isDesktop}>
+          {!isDesktop && renderInstructionsLabels()}
           <Label
-            style={{ marginTop: "20px", fontSize: "24px" }}
+            isDesktop={isDesktop}
+            style={{
+              marginTop: "50px",
+              fontSize: isDesktop ? "24px" : "12px",
+              paddingLeft: isDesktop && "3rem",
+              margin: isDesktop && "0 0 15px 20px",
+              display: !isDesktop && "flex",
+              flexDirection: !isDesktop && "column",
+              width: !isDesktop && "33%"
+            }}
             dangerouslySetInnerHTML={{
               __html: t("admin#queueStatus_naFilaLabel")
             }}
           />
-        </Box>
-        <CustomizedFooter>
-          <Box position="relative" display="flex" alignItems="flex-end">
+          <Box
+            position="relative"
+            display="flex"
+            alignItems="flex-end"
+            width={"100%"}
+          >
             <div className="footer-text">
               <Box>
                 <p className="title">Projecto no âmbito do</p>
-                <img src={Tech4CovidIcon} height="30px" alt="Tech4Covid" />
+                <img
+                  src={Tech4CovidIcon}
+                  height={isDesktop ? "30px" : "15px"}
+                  alt="Tech4Covid"
+                />
               </Box>
-              <div style={{ marginLeft: "50px" }}>
+              <div style={{ marginLeft: isDesktop ? "50px" : "20px" }}>
                 <p className="title">Parceiros</p>
                 <Box>
                   <img
                     src={googleIcon}
-                    style={{ height: "30px" }}
+                    style={{ height: isDesktop ? "30px" : "15px" }}
                     alt="google"
                   />
                   <img
                     src={NOSIcon}
-                    style={{ height: "30px", marginLeft: "30px" }}
+                    style={{
+                      height: isDesktop ? "30px" : "15px",
+                      marginLeft: isDesktop ? "30px" : "7.5px"
+                    }}
                     alt="nos"
                   />
                 </Box>
@@ -377,7 +455,7 @@ function QueueStatus() {
           </Box>
         </CustomizedFooter>
       </div>
-      <Queues>{renderQueues()}</Queues>
+      {isDesktop && <Queues isDesktop={isDesktop}>{renderQueues()}</Queues>}
     </Container>
   );
 }
