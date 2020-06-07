@@ -73,13 +73,6 @@ const FooterWrapper = styled.div`
   }
 `;
 
-const LayoutWrapper = styled(Layout)`
-  background-image: url(${Hd});
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-`;
-
 const LogoImg = styled.img`
   @media (min-width: 768px) {
     display: none;
@@ -97,7 +90,7 @@ function EndQueueSuccess() {
   });
 
   return (
-    <LayoutWrapper bg={background}>
+    <Layout bg={background}>
       <TitleComponent title="Fila encerrada" pageId="close_queue_success" />
       <Box display="flex" flex="1">
         <EndQueueGrid item xs={12} sm={5}>
@@ -149,7 +142,7 @@ function EndQueueSuccess() {
       <FooterWrapper>
         <Footer />
       </FooterWrapper>
-    </LayoutWrapper>
+    </Layout>
   );
 }
 
