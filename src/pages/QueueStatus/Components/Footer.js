@@ -11,7 +11,7 @@ import Tech4CovidIcon from "@src/assets/icons/Logo-Tech4COVID19-white.svg";
 
 import { useTranslation } from "react-i18next";
 
-const CustomizedFooter = styled.div`
+const SFooter = styled.div`
   position: absolute;
   bottom: 0;
   left: 0;
@@ -19,8 +19,7 @@ const CustomizedFooter = styled.div`
   display: flex;
   flex-direction: column;
   align-content: flex-end;
-  flex-direction: ${props => !props.isDesktop && "row-reverse"};
-  flex-direction: ${props => props.isDesktop && "flex-end"};
+  flex-direction: ${props => (props.isDesktop ? "flex-end" : "row-reverse")};
   & .footer-text {
     display: flex;
     height: 100%;
@@ -45,7 +44,7 @@ export const Footer = ({ isDesktop, renderInstructionsLabels }) => {
   const { t } = useTranslation();
 
   return (
-    <CustomizedFooter isDesktop={isDesktop}>
+    <SFooter isDesktop={isDesktop}>
       {!isDesktop && renderInstructionsLabels(isDesktop)}
       <Label
         isDesktop={isDesktop}
@@ -98,6 +97,6 @@ export const Footer = ({ isDesktop, renderInstructionsLabels }) => {
         </div>
         <img src={FooterIcon} alt="footer" width="100%" height="100%" />
       </Box>
-    </CustomizedFooter>
+    </SFooter>
   );
 };

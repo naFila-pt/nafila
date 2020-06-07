@@ -53,10 +53,10 @@ const QueueWrapper = styled.div`
         }
       }
     }
-    animation-duration: 600ms;
+    animation-duration: 650ms;
     animation-name: "blink";
     animation-direction: normal;
-    -webkit-animation: blink 600ms;
+    -webkit-animation: blink 650ms;
   }
   & .name {
     display: flex;
@@ -114,25 +114,49 @@ const BigLabel = styled.div`
 `;
 
 const BigCircle = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: ${props => (props.isDesktop ? "320px" : "100px")};
-  height: ${props => (props.isDesktop ? "320px" : "100px")};
-  border-radius: 100%;
-  background-color: #ffc836;
-  & p {
-    color: white;
-  font-size: ${props => (props.isDesktop ? "95px" : "35px")};
-    font-weight: 900;
-    margin 0;
-}
+  & .circle{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: ${props => (props.isDesktop ? "320px" : "100px")};
+    height: ${props => (props.isDesktop ? "320px" : "100px")};
+    border-radius: 100%;
+    background-color: #ffc836;
+    & p {
+      color: white;
+      font-size: ${props => (props.isDesktop ? "95px" : "35px")};
+      font-weight: 900;
+      margin 0;
+    }
+  }
+  & .circle-blink {
+      @keyframes blink {
+        50% {
+          background-color: #4c0788;
+          & p {
+            color: #ffc836;
+          }
+        }
+      }
+      @-webkit-keyframes blink {
+        50% {
+          background-color: #4c0788; 
+          & p {
+            color: #ffc836;
+          }
+        }
+      }
+      animation-duration: 650ms;
+      animation-name: "blink";
+      animation-direction: normal;
+      -webkit-animation: blink 650ms;
+    }
 `;
 
 const handleClassUpdate = (queueId, updatedQueue, setUpdatedQueue) => {
   setTimeout(() => {
     setUpdatedQueue("");
-  }, 610);
+  }, 650);
   // eslint-disable-next-line
     return updatedQueue == queueId ? "circle circle-blink" : "circle";
 };
@@ -157,7 +181,15 @@ const renderQueues = (
       return (
         <>
           <BigCircle>
-            <p>{queuesData[queueKey].currentTicketNumber}</p>
+            <div
+              className={handleClassUpdate(
+                queuesData[queueKey].owner_id,
+                updatedQueue,
+                setUpdatedQueue
+              )}
+            >
+              <p>{queuesData[queueKey].currentTicketNumber}</p>
+            </div>
           </BigCircle>
           <BigLabel>
             <p>{queuesData[queueKey].name}</p>
