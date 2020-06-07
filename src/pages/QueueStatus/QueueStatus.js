@@ -5,11 +5,11 @@ import { useTranslation } from "react-i18next";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 
-import videoSrc from "@src/assets/nafila_onboarding_audiooff.mp4";
-
 import { Header } from "./Components/Header";
+import { Video } from "./Components/Video";
 import { Queues } from "./Components/Queues";
 import { Footer } from "./Components/Footer";
+
 import { Label } from "./Components/Label";
 
 const Container = styled.div`
@@ -84,22 +84,7 @@ function QueueStatus({ isDesktop }) {
       <div className="left-container">
         <div className="left-content-wrapper">
           <Header isDesktop={isDesktop} />
-          <Box
-            width="auto"
-            height="40%"
-            m={isDesktop ? "10px 0 10px 20px" : "0"}
-          >
-            <video
-              width="auto"
-              height={isDesktop ? "100%" : "70%"}
-              muted
-              autoPlay
-              loop
-            >
-              <source src={videoSrc} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </Box>
+          <Video isDesktop={isDesktop} />
           {!isDesktop && <Queues isDesktop={isDesktop} />}
           {isDesktop && renderInstructionsLabels()}
         </div>

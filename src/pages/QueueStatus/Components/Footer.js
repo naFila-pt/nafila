@@ -47,7 +47,7 @@ export const Footer = ({ isDesktop, renderInstructionsLabels }) => {
   return (
     <div>
       <CustomizedFooter isDesktop={isDesktop}>
-        {!isDesktop && renderInstructionsLabels()}
+        {!isDesktop && renderInstructionsLabels(isDesktop)}
         <Label
           isDesktop={isDesktop}
           style={{

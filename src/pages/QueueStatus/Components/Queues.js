@@ -165,7 +165,7 @@ const renderQueues = (
         </>
       );
     } else if (Object.keys(queuesData).length) {
-      const chuncksSize = isDesktop ? 12 : 10;
+      const chuncksSize = isDesktop ? 12 : 8;
       const chunks = getChunks(Object.keys(queuesData), chuncksSize);
       return (
         <div class="swiper-container">
