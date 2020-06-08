@@ -140,28 +140,27 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: "#8464AC",
     padding: "10px 15% 10px 15%"
   },
-  storeImg: {
+  handContainer: {
+    display: "flex",
     position: "absolute",
-    bottom: "100px",
-    left: "20px",
-    maxWidth: "150px",
+    bottom: 0,
+    left: 0,
+    width: "100%",
+    height: "40%",
     "@media (min-width:374px)": {
-      maxWidth: "212px",
-      bottom: "130px"
-    },
-    "@media (max-height:667px)": {
-      bottom: "100px"
+      height: "50%"
     }
   },
+  storeImg: {
+    width: "50%",
+    height: "60%"
+  },
   mobileHand: {
-    marginTop: "60px",
-    position: "absolute",
-    bottom: "60px",
-    right: "20px",
-    maxWidth: "140px",
+    width: "50%",
+    height: "70%",
+    marginTop: "10%",
     "@media (min-width:374px)": {
-      maxWidth: "180px",
-      right: 0
+      height: "80%"
     }
   },
   store: {
@@ -248,29 +247,23 @@ const OnboardingMobile = () => {
           <Typography
             variant="body2"
             gutterBottom
-            style={{ marginTop: "2em" }}
+            style={{ marginTop: "1em", marginBottom: "1em" }}
             dangerouslySetInnerHTML={{
               __html: t("onboarding#difficulties")
             }}
           />
-          <>
-            <div className={classes.storeImg}>
-              <img
-                width="100%"
-                height="100%"
-                src={StoreCodeInfo}
-                alt="store code"
-              />
-            </div>
-            <div className={classes.mobileHand}>
-              <img
-                src={MobileHand}
-                height="100%"
-                width="100%"
-                alt="mobile hand"
-              />
-            </div>
-          </>
+          <div className={classes.handContainer}>
+            <img
+              src={StoreCodeInfo}
+              alt="store code"
+              className={classes.storeImg}
+            />
+            <img
+              src={MobileHand}
+              alt="mobile hand"
+              className={classes.mobileHand}
+            />
+          </div>
         </Grid>
       </Grid>
       <Grid container direction="column" className={classes.gridContainer}>
@@ -304,24 +297,18 @@ const OnboardingMobile = () => {
               mixBlendMode: "normal"
             }}
           ></div>
-          <>
-            <div className={classes.storeImg}>
-              <img
-                width="100%"
-                height="100%"
-                src={StoreCodeInfo}
-                alt="store code"
-              />
-            </div>
-            <div className={classes.mobileHand}>
-              <img
-                src={MobileHandSms}
-                alt="mobile hand sms"
-                width="100%"
-                height="100%"
-              />
-            </div>
-          </>
+          <div className={classes.handContainer}>
+            <img
+              src={StoreCodeInfo}
+              alt="store code"
+              className={classes.storeImg}
+            />
+            <img
+              src={MobileHandSms}
+              alt="mobile hand"
+              className={classes.mobileHand}
+            />
+          </div>
         </Grid>
       </Grid>
       <Grid container direction="column" className={classes.gridContainer}>
