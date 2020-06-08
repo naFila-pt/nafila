@@ -369,7 +369,7 @@ i18n
           "admin#queueStatus_ticketLabel": "<b>Não consegue tirar senha?</b>",
           "admin#queueStatus_ticketText": "Peça ajuda ao colaborador.",
           "admin#queueStatus_naFilaLabel":
-            "<span> na<b>fila.</b> </span><span>Sem filas.</span><span>www.nafila.pt</span>",
+            "<span> na<b>fila.</b> Sem filas.</span><span>www.nafila.pt</span>",
 
           //Create Queue
           "admin#createQueue_title": "Painel de Gestão do Ecrã Público",
