@@ -197,7 +197,7 @@ function Manage({ queueId, openSnackbar }) {
   };
 
   const handleAddCounter = () => {
-    if (maxCapacity >= counter + 1 && counter + 1 === maxCapacity) {
+    if (counter + 1 === maxCapacity) {
       setAlertOpen(true);
     }
     setCounter(prevState => prevState + 1);
