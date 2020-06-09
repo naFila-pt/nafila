@@ -249,13 +249,22 @@ export const Queues = ({ isDesktop }) => {
             return { id: ref.id, ...data };
           });
 
-          setQueuesData([...queuesData, ...queues]);
+          const removedQueuesIds = [];
+          snapshot.docChanges().forEach(({ type, doc }) => {
+            if (type === "modified") {
+              setUpdatedQueue(doc.data().owner_id);
+            }
 
-          snapshot.docChanges().forEach(function (change) {
-            if (change.type === "modified") {
-              setUpdatedQueue(change.doc.data().owner_id);
+            if (type === "removed") {
+              removedQueuesIds.push(doc.id);
             }
           });
+
+          const newQueues = removedQueuesIds.length
+            ? queues.filter(({ id }) => !removedQueuesIds.includes(id))
+            : queues;
+
+          setQueuesData([...queuesData, ...queues]);
         });
     });
   }, [queuesData]);
