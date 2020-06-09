@@ -198,7 +198,7 @@ i18n
           "admin#onboarding_firstText_mobile":
             "<h1>Tem uma loja</h1> <p>ou trabalha num serviço de atendimento ao público? <br/>  <div>Gostava de utilizar o nafila na sua loja?</div> </p>",
           "admin#onboarding_secondText":
-            "Faça o <b>pré-registo</b> e será contactado pela nossa equipa de suporte. Assim que receber o contacto do Suporte, <b>poderá começar a usar o nafila.</b>",
+            "Registe <b>a sua Loja para começar a usar o nafila</b> imediatamente.",
           "admin#onboarding_secondTitle": "É simples!",
           "admin#onboarding_thirdTitle": "Tirar uma Senha",
           "admin#onboarding_thirdText":

@@ -239,7 +239,8 @@ const MainContentMobile = props => (
               fontSize: "5vw",
               lineHeight: 1.4,
               wordWrap: "break-word",
-              textAlign: "center"
+              textAlign: "center",
+              fontWeight: "normal"
             }}
             dangerouslySetInnerHTML={{ __html: props.t(props.text) }}
           />

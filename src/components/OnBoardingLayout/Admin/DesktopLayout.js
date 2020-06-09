@@ -245,7 +245,11 @@ const MainContentDesktop = props => (
         </Typography>
         <Typography
           variant="h2"
-          style={{ fontSize: "25px", wordWrap: "break-word" }}
+          style={{
+            fontSize: "25px",
+            wordWrap: "break-word",
+            fontWeight: "normal"
+          }}
           dangerouslySetInnerHTML={{ __html: props.t(props.text) }}
         />
       </Grid>
