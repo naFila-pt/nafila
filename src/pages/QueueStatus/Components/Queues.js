@@ -158,7 +158,7 @@ const handleClassUpdate = (queueId, updatedQueue, setUpdatedQueue) => {
     setUpdatedQueue("");
   }, 650);
   // eslint-disable-next-line
-    return updatedQueue == queueId ? "circle circle-blink" : "circle";
+  return updatedQueue === queueId ? "circle circle-blink" : "circle";
 };
 
 const getChunks = (arr, chunkSize) => {
@@ -238,8 +238,10 @@ export const Queues = ({ isDesktop }) => {
     const userParams = urlParams.get("users");
     const users = userParams.split(",");
     const chunks = getChunks(users, 10);
+    const firebaseUnsubscribeFns = [];
+
     chunks.forEach((c, i) => {
-      firestore
+      const unsubscribe = firestore
         .collection("queues")
         .where("owner_id", "in", c)
         .onSnapshot(snapshot => {
@@ -266,7 +268,11 @@ export const Queues = ({ isDesktop }) => {
 
           setQueuesData([...queuesData, ...queues]);
         });
+
+      firebaseUnsubscribeFns.push(unsubscribe);
     });
+
+    return () => firebaseUnsubscribeFns.forEach(fn => fn());
   }, [queuesData]);
 
   new Swiper(".swiper-container", {
