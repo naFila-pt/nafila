@@ -1,6 +1,6 @@
 import React from "react";
 import Box from "@material-ui/core/Box";
-import videoSrc from "@src/assets/nafila_onboarding_audiooff.mp4";
+import videoSrc from "@src/assets/nafila_audiooff_QRCODE.mp4";
 
 export const Video = ({ isDesktop }) => {
   return (

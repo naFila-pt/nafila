@@ -242,6 +242,7 @@ export const Queues = ({ isDesktop }) => {
       setUpdatedQueue("");
       const urlParams = new URLSearchParams(window.location.search);
       const userParams = urlParams.get("users");
+      if (!userParams) return null;
       const users = userParams.split(",");
       const chunks = getChunks(users, 10);
       chunks.forEach((c, i) => {
