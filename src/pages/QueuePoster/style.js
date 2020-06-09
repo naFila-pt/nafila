@@ -82,5 +82,9 @@ export const QRCodeWrapper = styled.div`
   transform: translate3d(-50%, -50%, 0);
   border: solid 4px #000;
   border-image: url("http://i.stack.imgur.com/wLdVc.png") 1 stretch;
-  padding: 10px;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

@@ -198,7 +198,7 @@ i18n
           "admin#onboarding_firstText_mobile":
             "<h1>Tem uma loja</h1> <p>ou trabalha num serviço de atendimento ao público? <br/>  <div>Gostava de utilizar o nafila na sua loja?</div> </p>",
           "admin#onboarding_secondText":
-            "Faça o <b>pré-registo</b> e será contactado pela nossa equipa de suporte. Assim que receber o contacto do Suporte, <b>poderá começar a usar o nafila.</b>",
+            "Registe <b>a sua Loja para começar a usar o nafila</b> imediatamente.",
           "admin#onboarding_secondTitle": "É simples!",
           "admin#onboarding_thirdTitle": "Tirar uma Senha",
           "admin#onboarding_thirdText":
@@ -369,7 +369,7 @@ i18n
           "admin#queueStatus_ticketLabel": "<b>Não consegue tirar senha?</b>",
           "admin#queueStatus_ticketText": "Peça ajuda ao colaborador.",
           "admin#queueStatus_naFilaLabel":
-            "<span> na<b>fila.</b> </span><span>Sem filas.</span><span>www.nafila.pt</span>",
+            "<span> na<b>fila.</b> Sem filas.</span><span>www.nafila.pt</span>",
 
           //Create Queue
           "admin#createQueue_title": "Painel de Gestão do Ecrã Público",
@@ -380,7 +380,17 @@ i18n
             "Inserir email ou código de lojista",
           "admin#table_column_1_name": "Nome da Loja",
           "admin#table_column_2_name": "Apagar",
-          "admin#create_status_screen": "Criar novo ecrã"
+          "admin#create_status_screen": "Criar novo ecrã",
+
+          //burger menu
+          "burger#your_store": "A sua Loja",
+          "burger#poster": "Cartaz da Fila",
+          "burger#end_queue": "Terminar Fila",
+          "burger#logout": "Sair",
+          "burger#how_it_works": "Como funciona?",
+          "burger#about_us": "Sobre",
+          "burger#login": "Entrar",
+          "burger#lojista": "É Lojista?"
         }
       }
     },

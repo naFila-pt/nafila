@@ -48,7 +48,7 @@ const useStyles = makeStyles({
 
 const Container = styled(Box)`
   position: relative;
-  height: 100vh;
+  height: 100%;
   padding: 0;
   background-size: cover;
   background-repeat: no-repeat;
@@ -61,6 +61,7 @@ const FirstPage = styled(Grid)`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   padding: 0 20px;
 
   .logo-label {
@@ -80,7 +81,7 @@ const FirstPage = styled(Grid)`
     }
     & div {
       font-size: 6vw;
-      padding: 0 35px;
+      padding: 0 55px;
     }
   }
 `;
@@ -91,18 +92,16 @@ const ToolbarWrapper = styled(Toolbar)`
 `;
 
 const GridArea = styled(Grid)`
-  height: 80%;
+  height: 60%;
   width: 100%;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 80%;
   margin-top: 10px;
 
   & .row {
     display: flex;
     width: 100%;
-    margin: 5px 0;
+    height: 100px;
     & .column {
       width: 50%;
       text-align: center;
@@ -116,7 +115,7 @@ const GridArea = styled(Grid)`
 const BigText = styled.p`
   justify-self: center;
   font-weight: bold;
-  font-size: 7vw;
+  font-size: 6vw;
   align-self: center;
   margin: 5px 0;
 `;
@@ -225,7 +224,7 @@ const MainContentMobile = props => (
           <Typography
             variant="h3"
             style={{
-              fontSize: "20px",
+              fontSize: "22px",
               marginBottom: "10px",
               textAlign: "center"
             }}
@@ -237,9 +236,11 @@ const MainContentMobile = props => (
           <Typography
             variant="h2"
             style={{
-              fontSize: "6vw",
+              fontSize: "5vw",
+              lineHeight: 1.4,
               wordWrap: "break-word",
-              textAlign: "center"
+              textAlign: "center",
+              fontWeight: "normal"
             }}
             dangerouslySetInnerHTML={{ __html: props.t(props.text) }}
           />
@@ -300,8 +301,8 @@ const Layout = ({ children, endOnBoarding }) => {
         title="Lojista - Como funciona"
         pageId="operator_tutorial"
       />
-      <Grid direction="column" style={{ height: "100vh", display: "flex" }}>
-        <Grid container direction="column" style={{ height: "56px" }}>
+      <Grid direction="column" style={{ height: "100%", display: "flex" }}>
+        <Grid container direction="column" style={{ height: "60px" }}>
           <ToolbarWrapper>
             <LogoMini style={{ flex: 1 }} onClick={handleLogoOnClick} />
           </ToolbarWrapper>
@@ -325,7 +326,7 @@ const Layout = ({ children, endOnBoarding }) => {
               <b>Saltar</b>
             </Button>
           </Grid>
-          <Grid item style={{ width: "100%", height: "70%" }}>
+          <Grid item style={{ width: "100%", height: "60%" }}>
             <MobileStepper
               variant="dots"
               steps={children.length}
@@ -369,7 +370,7 @@ const OnBoardingLayout = props => {
               <div style={{ position: "absolute", right: 0, bottom: 0 }}>
                 <img src={rightPerson} alt="person" />
               </div>
-              <img src={logoSrc} height="50%" alt="naFilaLogo" />
+              <img src={logoSrc} width="50%" height="50%" alt="naFilaLogo" />
               <div style={{ width: "100%", textAlign: "center" }}>
                 <p
                   className="logo-label"
@@ -403,7 +404,7 @@ const OnBoardingLayout = props => {
               marginTop: "10px"
             }}
           >
-            <img src={storeIcon} alt="asset" width="100%" height="100%" />
+            <img src={storeIcon} alt="asset" width="80%" height="100%" />
           </Grid>
         }
       />
@@ -416,22 +417,22 @@ const OnBoardingLayout = props => {
             <BigText>{t("admin#onboarding_autonomous")}</BigText>
             <div className="row">
               <div className="column">
-                <img src={smsIcon} alt="smsIcon" height="70%" />
+                <img src={smsIcon} alt="smsIcon" height="50%" />
                 <TextDesc>{t("admin#onboarding_sms")}</TextDesc>
               </div>
               <div className="column">
-                <img src={siteIcon} alt="siteIcon" height="70%" />
+                <img src={siteIcon} alt="siteIcon" height="50%" />
                 <TextDesc>{t("admin#onboarding_site")}</TextDesc>
               </div>
             </div>
             <BigText>{t("admin#onboarding_shopkeeper")}</BigText>
             <div className="row">
               <div className="column">
-                <img src={chamadaIcon} alt="chamada" height="70%" />
+                <img src={chamadaIcon} alt="chamada" height="50%" />
                 <TextDesc>{t("admin#onboarding_call")}</TextDesc>
               </div>
               <div className="column">
-                <img src={smsIcon} alt="smsIcon" height="70%" />
+                <img src={smsIcon} alt="smsIcon" height="50%" />
                 <TextDesc>{t("admin#onboarding_phone")}</TextDesc>
               </div>
             </div>

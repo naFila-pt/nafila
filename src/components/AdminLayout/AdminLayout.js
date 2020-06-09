@@ -1,6 +1,5 @@
 import React from "react";
-import { Typography, Box } from "@material-ui/core";
-import { useTranslation } from "react-i18next";
+import { Box } from "@material-ui/core";
 import Toolbar from "@material-ui/core/Toolbar";
 import Grid from "@material-ui/core/Grid";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -32,7 +31,6 @@ const useStyles = makeStyles({
 
 function Layout({ children, bg, hideLogo, style, textAlign }) {
   const classes = useStyles();
-  const { t } = useTranslation();
   const boxProps = {
     width: 1,
     height: 1,
@@ -45,12 +43,6 @@ function Layout({ children, bg, hideLogo, style, textAlign }) {
     }
   };
 
-  let logout = () => {
-    auth.signOut().then(() => {
-      window.location.href = "/admin";
-    });
-  };
-
   const handleLogoOnClick = e => {
     window.location.href = "/";
   };
@@ -61,11 +53,7 @@ function Layout({ children, bg, hideLogo, style, textAlign }) {
         <Grid container direction="column">
           <Toolbar
             className={classes.toolbar}
-            style={
-              auth.currentUser && auth.currentUser.emailVerified
-                ? { justifyContent: "space-between" }
-                : {}
-            }
+            style={{ justifyContent: "center" }}
           >
             <MenuIcon className={classes.menuIcon} />
             {!hideLogo && (
@@ -77,13 +65,6 @@ function Layout({ children, bg, hideLogo, style, textAlign }) {
                 }
                 onClick={handleLogoOnClick}
               />
-            )}
-            {auth.currentUser && auth.currentUser.emailVerified && (
-              <div onClick={logout}>
-                <Typography variant="button">
-                  {t("admin#signout_button")}
-                </Typography>
-              </div>
             )}
           </Toolbar>
         </Grid>

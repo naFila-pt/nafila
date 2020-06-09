@@ -20,6 +20,7 @@ const ContainerWrapper = styled(Grid)`
   height: calc(100vh - 64px);
   justify-content: center;
   align-items: center;
+  height: 90%;
 `;
 
 const AssetsContainer = styled(Grid)`
