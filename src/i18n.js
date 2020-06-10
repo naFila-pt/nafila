@@ -220,7 +220,7 @@ i18n
             "O seu Cliente <b>recebe a notificação,</b> enquanto aguarda em segurança.",
           "admin#onboarding_sixthTitle": "O Cliente entra na Loja na sua vez.",
           "admin#onboarding_sixthText":
-            "<b>E já está!</b> O seu Cliente é atendido em segurança.",
+            "<b>E já está!</b> <br/> O seu Cliente é atendido em segurança.",
 
           // Admin SignUp
           "admin#signup_title": "Introduza os dados de Registo",

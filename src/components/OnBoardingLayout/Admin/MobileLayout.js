@@ -74,13 +74,14 @@ const FirstPage = styled(Grid)`
     margin-top: 20px;
     & h1 {
       margin: 0;
+      font-weight: bold;
     }
     & p {
       margin: 0;
-      font-size: 6vw;
+      font-size: 22px;
     }
     & div {
-      font-size: 6vw;
+      font-size: 22px;
       padding: 0 55px;
     }
   }
@@ -97,6 +98,9 @@ const GridArea = styled(Grid)`
   display: flex;
   flex-direction: column;
   margin-top: 10px;
+  position: absolute;
+  justify-content: flex-end;
+  bottom: 0;
 
   & .row {
     display: flex;
@@ -204,14 +208,36 @@ const TicketContainer = styled.div`
   }
 `;
 
+const MainContentWrapper = styled(Grid)`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  & h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    text-align: center;
+    @media (min-width: 340px) {
+      font-size: 28px;
+    }
+  }
+
+  & h3 {
+    font-size: 20px;
+    line-height: 1.4;
+    word-wrap: break-word;
+    text-align: center;
+    font-weight: normal;
+    margin: 0 20px;
+    @media (min-width: 340px) {
+      font-size: 22px;
+    }
+  }
+`;
+
 const MainContentMobile = props => (
-  <Grid
-    style={{
-      flex: 1,
-      display: "flex",
-      flexDirection: "column"
-    }}
-  >
+  <MainContentWrapper>
     <Grid
       style={{
         display: "flex",
@@ -221,34 +247,18 @@ const MainContentMobile = props => (
     >
       <Grid item style={{ width: "100%" }}>
         {props.title && (
-          <Typography
-            variant="h3"
-            style={{
-              fontSize: "22px",
-              marginBottom: "10px",
-              textAlign: "center"
-            }}
-          >
-            {props.t(props.title)}
-          </Typography>
+          <Typography variant="h2">{props.t(props.title)}</Typography>
         )}
         {props.text && (
           <Typography
-            variant="h2"
-            style={{
-              fontSize: "5vw",
-              lineHeight: 1.4,
-              wordWrap: "break-word",
-              textAlign: "center",
-              fontWeight: "normal"
-            }}
+            variant="h3"
             dangerouslySetInnerHTML={{ __html: props.t(props.text) }}
           />
         )}
       </Grid>
     </Grid>
     {props.rightColumn}
-  </Grid>
+  </MainContentWrapper>
 );
 
 const Layout = ({ children, endOnBoarding }) => {
@@ -360,7 +370,9 @@ const OnBoardingLayout = props => {
               justifyContent: "center",
               width: "100%",
               height: "100%",
-              marginTop: "10px"
+              marginTop: "10px",
+              position: "absolute",
+              bottom: 0
             }}
           >
             <FirstPage>
@@ -401,7 +413,9 @@ const OnBoardingLayout = props => {
               justifyContent: "center",
               width: "100%",
               height: "60%",
-              marginTop: "10px"
+              marginTop: "10px",
+              position: "absolute",
+              bottom: 0
             }}
           >
             <img src={storeIcon} alt="asset" width="80%" height="100%" />
@@ -500,8 +514,10 @@ const OnBoardingLayout = props => {
               alignItems: "flex-end",
               justifyContent: "center",
               width: "100%",
-              height: "80%",
-              marginTop: "10px"
+              height: "70%",
+              marginTop: "10px",
+              position: "absolute",
+              bottom: 0
             }}
           >
             <img src={howToUseIcon} alt="asset" width="100%" height="100%" />
@@ -516,27 +532,28 @@ const OnBoardingLayout = props => {
             style={{
               display: "flex",
               flexDirection: "column",
-              alignItems: "flex-end",
-              justifyContent: "center",
+              alignItems: "center",
+              justifyContent: "flex-end",
               width: "100%",
-              height: "100%"
+              position: "absolute",
+              bottom: 0
             }}
           >
-            <img src={storeIcon} alt="asset" width="100%" height="60%" />
+            <img
+              src={storeIcon}
+              alt="asset"
+              width="70%"
+              style={{ margin: "20px 0" }}
+            />
             <Typography
-              variant="h2"
-              style={{
-                fontSize: "6vw",
-                wordWrap: "break-word",
-                textAlign: "center",
-                margin: "10px"
-              }}
+              variant="h3"
               dangerouslySetInnerHTML={{
                 __html: t("admin#onboarding_sixthText")
               }}
             />
             <div style={{ width: "100%", textAlign: "center" }}>
               <StyledButton
+                variant="secondary"
                 forward
                 onClick={endOnBoarding}
                 dangerouslySetInnerHTML={{
