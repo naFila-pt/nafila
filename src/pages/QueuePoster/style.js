@@ -80,11 +80,36 @@ export const QRCodeWrapper = styled.div`
   top: 75%;
   left: 50%;
   transform: translate3d(-50%, -50%, 0);
-  border: solid 4px #000;
-  border-image: url("http://i.stack.imgur.com/wLdVc.png") 1 stretch;
-  width: 120px;
-  height: 120px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 10px 10px 7px 10px;
+  border: 2px solid black;
+
+  &.cross {
+    width: 100px;
+    height: 100px;
+    position: relative;
+  }
+
+  & .cross:before,
+  .cross:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    background: #fafafa;
+  }
+
+  & .cross:before {
+    left: 45%;
+    width: 40%;
+    margin-left: -15%;
+    height: 110%;
+    bottom: -6px;
+  }
+
+  & .cross:after {
+    top: 45%;
+    height: 40%;
+    margin-top: -15%;
+    width: 110%;
+    left: -6px;
+  }
 `;

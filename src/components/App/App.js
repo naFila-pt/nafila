@@ -207,18 +207,22 @@ class App extends Component {
                   />
                 )}
                 <Grid container justify="center" style={{ height: "100%" }}>
-                  <div
-                    style={{ position: "absolute", left: "20px", zIndex: 1 }}
-                  >
-                    <IconButton
-                      color="inherit"
-                      aria-label="open drawer"
-                      onClick={this.toggleMenuOpen}
-                      edge="start"
+                  {!window.location.pathname.startsWith(
+                    `${QUEUE_POSTER_PATH.replace("/:queueId", "")}`
+                  ) && (
+                    <div
+                      style={{ position: "absolute", left: "20px", zIndex: 1 }}
                     >
-                      <MenuIcon />
-                    </IconButton>
-                  </div>
+                      <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={this.toggleMenuOpen}
+                        edge="start"
+                      >
+                        <MenuIcon />
+                      </IconButton>
+                    </div>
+                  )}
                   <Grid
                     item
                     style={{
@@ -256,15 +260,12 @@ class App extends Component {
                     onClose={this.closeSnackbar}
                   />
                 )}
-                {!window.location.pathname.startsWith(
-                  `${QUEUE_POSTER_PATH.replace("/:queueId", "")}`
-                ) && (
-                  <BurgerMenu
-                    userInfo={{ user, userData }}
-                    isOpen={this.state.isMenuOpen}
-                    toggleMenu={this.toggleMenuOpen}
-                  />
-                )}
+
+                <BurgerMenu
+                  userInfo={{ user, userData }}
+                  isOpen={this.state.isMenuOpen}
+                  toggleMenu={this.toggleMenuOpen}
+                />
               </>
             )}
           </ErrorBoundary>

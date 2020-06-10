@@ -66,6 +66,7 @@ function QueuePoster({
       ></p>
       <div className="logo-container">
         <S.QRCodeWrapper>
+          <div className="cross" />
           <QRCode
             value={`${window.location.hostname}/tirar-senha#${queueId}`}
             size={100}
