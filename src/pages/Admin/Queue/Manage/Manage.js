@@ -197,8 +197,7 @@ function Manage({ queueId, openSnackbar }) {
   };
 
   const handleAddCounter = () => {
-    //TODO validate max capacity, if it capped, an error message should appear.
-    if (counter >= maxCapacity) {
+    if (counter + 1 === maxCapacity) {
       setAlertOpen(true);
     }
     setCounter(prevState => prevState + 1);
@@ -311,7 +310,7 @@ function Manage({ queueId, openSnackbar }) {
             .get()
             .then(response => {
               const counterData = response.data();
-              setMaxCapacity(counterData.maxCapacity);
+              setMaxCapacity(Number(counterData.maxCapacity));
               setCounter(counterData.current);
             });
         });
