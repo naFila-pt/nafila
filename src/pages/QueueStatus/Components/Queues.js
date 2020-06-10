@@ -202,26 +202,28 @@ const renderQueues = (isDesktop, queuesData, updatedQueue, setUpdatedQueue) => {
   return (
     <div className="swiper-container">
       <div className="swiper-wrapper">
-        <div className="swiper-slide">
-          <GridArea isDesktop={isDesktop}>
-            {queuesData.map(({ id, owner_id, currentTicketNumber, name }) => (
-              <QueueWrapper key={id} isDesktop={isDesktop}>
-                <div
-                  className={handleClassUpdate(
-                    owner_id,
-                    updatedQueue,
-                    setUpdatedQueue
-                  )}
-                >
-                  <p>{currentTicketNumber}</p>
-                </div>
-                <div className="name">
-                  <p>{name}</p>
-                </div>
-              </QueueWrapper>
-            ))}
-          </GridArea>
-        </div>
+        {chunks.map(chunk => (
+          <div className="swiper-slide">
+            <GridArea isDesktop={isDesktop}>
+              {chunk.map(({ id, owner_id, currentTicketNumber, name }) => (
+                <QueueWrapper key={id} isDesktop={isDesktop}>
+                  <div
+                    className={handleClassUpdate(
+                      owner_id,
+                      updatedQueue,
+                      setUpdatedQueue
+                    )}
+                  >
+                    <p>{currentTicketNumber}</p>
+                  </div>
+                  <div className="name">
+                    <p>{name}</p>
+                  </div>
+                </QueueWrapper>
+              ))}
+            </GridArea>
+          </div>
+        ))}
       </div>
       <div className="swiper-pagination"></div>
     </div>
@@ -233,47 +235,39 @@ export const Queues = ({ isDesktop }) => {
   const [queuesData, setQueuesData] = useState([]);
 
   useEffect(() => {
-    setUpdatedQueue("");
     const urlParams = new URLSearchParams(window.location.search);
     const userParams = urlParams.get("users");
     const users = userParams.split(",");
     const chunks = getChunks(users, 10);
     const firebaseUnsubscribeFns = [];
+    let queues = [];
 
-    chunks.forEach((c, i) => {
+    chunks.forEach(chunk => {
       const unsubscribe = firestore
         .collection("queues")
-        .where("owner_id", "in", c)
+        .where("owner_id", "in", chunk)
         .onSnapshot(snapshot => {
-          const queues = snapshot.docs.map(ref => {
+          const chunkQueues = snapshot.docs.map(ref => {
             const data = ref.data();
 
             return { id: ref.id, ...data };
           });
+          queues = [...queues, ...chunkQueues];
+          setQueuesData(queues);
 
-          const removedQueuesIds = [];
           snapshot.docChanges().forEach(({ type, doc }) => {
             if (type === "modified") {
               setUpdatedQueue(doc.data().owner_id);
             }
-
-            if (type === "removed") {
-              removedQueuesIds.push(doc.id);
-            }
           });
-
-          const newQueues = removedQueuesIds.length
-            ? queues.filter(({ id }) => !removedQueuesIds.includes(id))
-            : queues;
-
-          setQueuesData([...queuesData, ...queues]);
         });
 
       firebaseUnsubscribeFns.push(unsubscribe);
     });
 
-    return () => firebaseUnsubscribeFns.forEach(fn => fn());
-  }, [queuesData]);
+    return () =>
+      firebaseUnsubscribeFns.forEach(unsubscribeFn => unsubscribeFn());
+  }, []);
 
   new Swiper(".swiper-container", {
     slidesPerView: 1,
