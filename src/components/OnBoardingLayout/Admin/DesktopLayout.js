@@ -15,6 +15,7 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import bgMain from "../../../assets/bg/home_desktop.svg";
 
 import Footer from "../../../components/Footer";
+import Header from "../../../components/Header";
 import StyledButton from "../../../components/Button";
 import logoSrc from "../../../assets/logo.svg";
 import storeIcon from "../../../assets/icons/store-icon.svg";
@@ -306,11 +307,7 @@ const Layout = ({ children, endOnBoarding }) => {
       style={{ backgroundImage: `url(${bgMain})`, height: "100vh" }}
     >
       <Grid container direction="column" style={{ height: "100%" }}>
-        <Grid container direction="column" style={{ height: "70px" }}>
-          <ToolbarWrapper>
-            <LogoMini style={{ flex: 1 }} />
-          </ToolbarWrapper>
-        </Grid>
+        <Header />
         <Grid container direction="column" style={{ flex: 1 }}>
           <Grid container style={{ height: "100%" }}>
             <Grid className={classes.arrowContainer}>
