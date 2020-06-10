@@ -5,7 +5,6 @@ import styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import Toolbar from "@material-ui/core/Toolbar";
 import Grid from "@material-ui/core/Grid";
 import MobileStepper from "@material-ui/core/MobileStepper";
 import Button from "@material-ui/core/Button";
@@ -24,8 +23,6 @@ import chamadaIcon from "../../../assets/icons/icon_chamada_mobile.svg";
 import smsIcon from "../../../assets/icons/icon_sms_mobile.svg";
 import howToUseIcon from "../../../assets/icons/ilustração_utilização_mobile_lojista.svg";
 import yellowLogo from "../../../assets/icons/logo_amarelo_naFila.svg";
-
-import { ReactComponent as LogoMini } from "../../../assets/logo-mini.svg";
 
 import TitleComponent from "../../TitleComponent";
 
@@ -61,11 +58,6 @@ const Container = styled(Box)`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 0px;
-`;
-
-const ToolbarWrapper = styled(Toolbar)`
-  position: static;
-  top: 0;
 `;
 
 const GridArea = styled(Grid)`
