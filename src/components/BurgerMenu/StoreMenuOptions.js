@@ -78,7 +78,7 @@ const StoreMenuOptions = ({ toggleMenu, queueId, user }) => {
           <ListItem
             disableGutters
             button
-            onClick={() => handleOptionClick(queuePosterUrl)}
+            onClick={() => window.open(queuePosterUrl, "_blank")}
           >
             <ListItemText
               classes={{
