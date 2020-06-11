@@ -202,8 +202,8 @@ const renderQueues = (isDesktop, queuesData, updatedQueue, setUpdatedQueue) => {
   return (
     <div className="swiper-container">
       <div className="swiper-wrapper">
-        {chunks.map(chunk => (
-          <div className="swiper-slide">
+        {chunks.map((chunk, index) => (
+          <div key={index} className="swiper-slide">
             <GridArea isDesktop={isDesktop}>
               {chunk.map(({ id, owner_id, currentTicketNumber, name }) => (
                 <QueueWrapper key={id} isDesktop={isDesktop}>
@@ -247,19 +247,26 @@ export const Queues = ({ isDesktop }) => {
         .collection("queues")
         .where("owner_id", "in", chunk)
         .onSnapshot(snapshot => {
-          const chunkQueues = snapshot.docs.map(ref => {
-            const data = ref.data();
-
-            return { id: ref.id, ...data };
-          });
-          queues = [...queues, ...chunkQueues];
-          setQueuesData(queues);
-
           snapshot.docChanges().forEach(({ type, doc }) => {
+            const data = Object.assign({ id: doc.id }, doc.data());
+
+            if (type === "added") {
+              queues.push(data);
+            }
+
             if (type === "modified") {
-              setUpdatedQueue(doc.data().owner_id);
+              queues = queues.map(queue =>
+                queue.id === doc.id ? data : queue
+              );
+              setUpdatedQueue(data.owner_id);
+            }
+
+            if (type === "removed") {
+              queues = queues.filter(({ id }) => id !== doc.id);
             }
           });
+
+          setQueuesData([...queues]);
         });
 
       firebaseUnsubscribeFns.push(unsubscribe);
