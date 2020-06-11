@@ -48,7 +48,7 @@ const useStyles = makeStyles({
 
 const Container = styled(Box)`
   position: relative;
-  height: 100vh;
+  height: 100%;
   padding: 0;
   background-size: cover;
   background-repeat: no-repeat;
@@ -61,6 +61,7 @@ const FirstPage = styled(Grid)`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   padding: 0 20px;
 
   .logo-label {
@@ -73,14 +74,15 @@ const FirstPage = styled(Grid)`
     margin-top: 20px;
     & h1 {
       margin: 0;
+      font-weight: bold;
     }
     & p {
       margin: 0;
-      font-size: 6vw;
+      font-size: 22px;
     }
     & div {
-      font-size: 6vw;
-      padding: 0 35px;
+      font-size: 22px;
+      padding: 0 55px;
     }
   }
 `;
@@ -91,18 +93,19 @@ const ToolbarWrapper = styled(Toolbar)`
 `;
 
 const GridArea = styled(Grid)`
-  height: 80%;
+  height: 60%;
   width: 100%;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 80%;
   margin-top: 10px;
+  position: absolute;
+  justify-content: flex-end;
+  bottom: 0;
 
   & .row {
     display: flex;
     width: 100%;
-    margin: 5px 0;
+    height: 100px;
     & .column {
       width: 50%;
       text-align: center;
@@ -116,7 +119,7 @@ const GridArea = styled(Grid)`
 const BigText = styled.p`
   justify-self: center;
   font-weight: bold;
-  font-size: 7vw;
+  font-size: 6vw;
   align-self: center;
   margin: 5px 0;
 `;
@@ -205,14 +208,36 @@ const TicketContainer = styled.div`
   }
 `;
 
+const MainContentWrapper = styled(Grid)`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  & h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    text-align: center;
+    @media (min-width: 340px) {
+      font-size: 28px;
+    }
+  }
+
+  & h3 {
+    font-size: 20px;
+    line-height: 1.4;
+    word-wrap: break-word;
+    text-align: center;
+    font-weight: normal;
+    margin: 0 20px;
+    @media (min-width: 340px) {
+      font-size: 22px;
+    }
+  }
+`;
+
 const MainContentMobile = props => (
-  <Grid
-    style={{
-      flex: 1,
-      display: "flex",
-      flexDirection: "column"
-    }}
-  >
+  <MainContentWrapper>
     <Grid
       style={{
         display: "flex",
@@ -222,32 +247,18 @@ const MainContentMobile = props => (
     >
       <Grid item style={{ width: "100%" }}>
         {props.title && (
-          <Typography
-            variant="h3"
-            style={{
-              fontSize: "20px",
-              marginBottom: "10px",
-              textAlign: "center"
-            }}
-          >
-            {props.t(props.title)}
-          </Typography>
+          <Typography variant="h2">{props.t(props.title)}</Typography>
         )}
         {props.text && (
           <Typography
-            variant="h2"
-            style={{
-              fontSize: "6vw",
-              wordWrap: "break-word",
-              textAlign: "center"
-            }}
+            variant="h3"
             dangerouslySetInnerHTML={{ __html: props.t(props.text) }}
           />
         )}
       </Grid>
     </Grid>
     {props.rightColumn}
-  </Grid>
+  </MainContentWrapper>
 );
 
 const Layout = ({ children, endOnBoarding }) => {
@@ -300,8 +311,8 @@ const Layout = ({ children, endOnBoarding }) => {
         title="Lojista - Como funciona"
         pageId="operator_tutorial"
       />
-      <Grid direction="column" style={{ height: "100vh", display: "flex" }}>
-        <Grid container direction="column" style={{ height: "56px" }}>
+      <Grid direction="column" style={{ height: "100%", display: "flex" }}>
+        <Grid container direction="column" style={{ height: "60px" }}>
           <ToolbarWrapper>
             <LogoMini style={{ flex: 1 }} onClick={handleLogoOnClick} />
           </ToolbarWrapper>
@@ -325,7 +336,7 @@ const Layout = ({ children, endOnBoarding }) => {
               <b>Saltar</b>
             </Button>
           </Grid>
-          <Grid item style={{ width: "100%", height: "70%" }}>
+          <Grid item style={{ width: "100%", height: "60%" }}>
             <MobileStepper
               variant="dots"
               steps={children.length}
@@ -359,7 +370,9 @@ const OnBoardingLayout = props => {
               justifyContent: "center",
               width: "100%",
               height: "100%",
-              marginTop: "10px"
+              marginTop: "10px",
+              position: "absolute",
+              bottom: 0
             }}
           >
             <FirstPage>
@@ -369,7 +382,7 @@ const OnBoardingLayout = props => {
               <div style={{ position: "absolute", right: 0, bottom: 0 }}>
                 <img src={rightPerson} alt="person" />
               </div>
-              <img src={logoSrc} height="50%" alt="naFilaLogo" />
+              <img src={logoSrc} width="50%" height="50%" alt="naFilaLogo" />
               <div style={{ width: "100%", textAlign: "center" }}>
                 <p
                   className="logo-label"
@@ -400,10 +413,12 @@ const OnBoardingLayout = props => {
               justifyContent: "center",
               width: "100%",
               height: "60%",
-              marginTop: "10px"
+              marginTop: "10px",
+              position: "absolute",
+              bottom: 0
             }}
           >
-            <img src={storeIcon} alt="asset" width="100%" height="100%" />
+            <img src={storeIcon} alt="asset" width="80%" height="100%" />
           </Grid>
         }
       />
@@ -416,22 +431,22 @@ const OnBoardingLayout = props => {
             <BigText>{t("admin#onboarding_autonomous")}</BigText>
             <div className="row">
               <div className="column">
-                <img src={smsIcon} alt="smsIcon" height="70%" />
+                <img src={smsIcon} alt="smsIcon" height="50%" />
                 <TextDesc>{t("admin#onboarding_sms")}</TextDesc>
               </div>
               <div className="column">
-                <img src={siteIcon} alt="siteIcon" height="70%" />
+                <img src={siteIcon} alt="siteIcon" height="50%" />
                 <TextDesc>{t("admin#onboarding_site")}</TextDesc>
               </div>
             </div>
             <BigText>{t("admin#onboarding_shopkeeper")}</BigText>
             <div className="row">
               <div className="column">
-                <img src={chamadaIcon} alt="chamada" height="70%" />
+                <img src={chamadaIcon} alt="chamada" height="50%" />
                 <TextDesc>{t("admin#onboarding_call")}</TextDesc>
               </div>
               <div className="column">
-                <img src={smsIcon} alt="smsIcon" height="70%" />
+                <img src={smsIcon} alt="smsIcon" height="50%" />
                 <TextDesc>{t("admin#onboarding_phone")}</TextDesc>
               </div>
             </div>
@@ -499,8 +514,10 @@ const OnBoardingLayout = props => {
               alignItems: "flex-end",
               justifyContent: "center",
               width: "100%",
-              height: "80%",
-              marginTop: "10px"
+              height: "70%",
+              marginTop: "10px",
+              position: "absolute",
+              bottom: 0
             }}
           >
             <img src={howToUseIcon} alt="asset" width="100%" height="100%" />
@@ -515,27 +532,28 @@ const OnBoardingLayout = props => {
             style={{
               display: "flex",
               flexDirection: "column",
-              alignItems: "flex-end",
-              justifyContent: "center",
+              alignItems: "center",
+              justifyContent: "flex-end",
               width: "100%",
-              height: "100%"
+              position: "absolute",
+              bottom: 0
             }}
           >
-            <img src={storeIcon} alt="asset" width="100%" height="60%" />
+            <img
+              src={storeIcon}
+              alt="asset"
+              width="70%"
+              style={{ margin: "20px 0" }}
+            />
             <Typography
-              variant="h2"
-              style={{
-                fontSize: "6vw",
-                wordWrap: "break-word",
-                textAlign: "center",
-                margin: "10px"
-              }}
+              variant="h3"
               dangerouslySetInnerHTML={{
                 __html: t("admin#onboarding_sixthText")
               }}
             />
             <div style={{ width: "100%", textAlign: "center" }}>
               <StyledButton
+                variant="secondary"
                 forward
                 onClick={endOnBoarding}
                 dangerouslySetInnerHTML={{

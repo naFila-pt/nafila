@@ -23,19 +23,19 @@ i18n
             "Visite <b>nafila.pt</b>, insira <b>o código da fila</b> e <b>o seu telemóvel</b>, para ser notificado.",
           "onboarding#phone_number": "Número de Telemóvel",
           "onboarding#store_description":
-            "A sua Loja Favorita afixa <b>um código por dia</b>, que deve utilizar para <b>entrar</b> na<b>fila</b>.",
+            "Verifique o <b>Código da Fila</b> para esse dia, que estará <b>afixado à entrada da loja.</b>",
           "onboarding#useCode_title": "Utilize o código",
           "onboarding#three_ways": "3 maneiras",
           "onboarding#signup_ways":
             "Pode inscrever-se na<b>fila</b> através de <b>SMS</b>, <b>Email</b> ou com o <b>seu Nome</b>.",
           "onboarding#one_sms": "Basta uma SMS!",
           "onboarding#register_nafila":
-            "Registe-se na<b>fila</b> enviando uma <b>SMS grátis</b> para o 4902 com: <b>nafila {código da Fila}",
+            "Para tirar uma senha, envie uma <b>SMS grátis</b> para o 4902 com <b>nafila</b> (espaço) <b>Código da Fila</b>.",
           "onboarding#difficulties":
             "Se tiver alguma dificuldade, fale com o colaborador de loja.",
           "onboarding#prefer_register_site": "Prefere tirar senha no site?",
           "onboarding#insertCodeEmail":
-            "Visite <b>nafila.pt</b>, insira o <b>código da fila</b> e <b>o seu email</b> para ser notificado.",
+            "<b>Use o QR Code</b> ou visite <b>nafila.pt</b>, insira o <b>Código da Fila</b> e o <b>seu telemóvel</b> para ser notificado.",
           "onboarding#prefer_name": "Prefere ser chamado pelo Nome?",
           "onboarding#ask_colaborator_register":
             "Peça ao colaborador de loja para registar <b>o seu Nome.</b>",
@@ -175,9 +175,9 @@ i18n
           "about_us#title_support_instructions": "Cartaz de instruções",
           "about_us#text_support_instructions":
             "Faça aqui o <b>download do cartaz de instruções</b> (<b><a href='{{filepathColorful}}' target='_blank' rel='noopener noreferrer'>versão a cores</a></b> ou <b><a href='{{filepathBlackWhite}}' target='_blank' rel='noopener noreferrer'>versão a preto e branco</a></b>) para colocar à porta do seu estabelecimento.",
-          "about_us#title_support_implementation_kit": "Kit de implementação",
+          "about_us#title_support_implementation_kit": "Guia de implementação",
           "about_us#text_support_implementation_kit":
-            "Faça <b><a href='{{filepath}}' target='_blank' rel='noopener noreferrer'>download do kit de implementação</a></b> do na<b>fila</b> onde poderá ver passo-a-passo como utilizar o nosso sistema de senhas.",
+            "Faça <b><a href='{{filepath}}' target='_blank' rel='noopener noreferrer'>download do guia de implementação</a></b> do na<b>fila</b> onde poderá ver passo-a-passo como utilizar o nosso sistema de senhas.",
 
           "leave#title": "Saiu da Fila",
           "leave#title-failed": "Senha não encontrada",
@@ -198,7 +198,7 @@ i18n
           "admin#onboarding_firstText_mobile":
             "<h1>Tem uma loja</h1> <p>ou trabalha num serviço de atendimento ao público? <br/>  <div>Gostava de utilizar o nafila na sua loja?</div> </p>",
           "admin#onboarding_secondText":
-            "Faça o <b>pré-registo</b> e será contactado pela nossa equipa de suporte. Assim que receber o contacto do Suporte, <b>poderá começar a usar o nafila.</b>",
+            "Registe <b>a sua Loja para começar a usar o nafila</b> imediatamente.",
           "admin#onboarding_secondTitle": "É simples!",
           "admin#onboarding_thirdTitle": "Tirar uma Senha",
           "admin#onboarding_thirdText":
@@ -220,12 +220,12 @@ i18n
             "O seu Cliente <b>recebe a notificação,</b> enquanto aguarda em segurança.",
           "admin#onboarding_sixthTitle": "O Cliente entra na Loja na sua vez.",
           "admin#onboarding_sixthText":
-            "<b>E já está!</b> O seu Cliente é atendido em segurança.",
+            "<b>E já está!</b> <br/> O seu Cliente é atendido em segurança.",
 
           // Admin SignUp
           "admin#signup_title": "Introduza os dados de Registo",
           "admin#signup_weakPassword":
-            "A password tem que ter mais de 6 caracteres",
+            "A sua password deve ter pelo menos 6 caracteres.",
           "admin#signup_emailInUse": "Email já se encontra registrado",
           "admin#signup_invalidEmail": "O email que inseriu não é válido",
           "admin#signup_operationNotAllowed": "Operação não permitida",
@@ -240,6 +240,7 @@ i18n
             "O seu registo foi efetuado com sucesso!",
           "admin#signup_successHeroText":
             "Verifique a sua caixa de email e confirme o registo, para poder começar a usar o na<b>fila</b>.",
+          "admin#signup_helperPassword": "Mínimo 6 caracteres",
 
           // Admin Login
           "admin#login_title": "Introduza os dados da Loja",
@@ -301,7 +302,7 @@ i18n
           "main#addConsumerPhone_placeholder": "Número de Telemóvel",
 
           // AfterLogin Add Consumer Name
-          "main#addConsumerName_title": "Insira o Nome\ndo cliente",
+          "main#addConsumerName_title": "Insira o Nome\ndo Cliente",
           "main#addConsumerName_placeholder": "Nome",
 
           // AfterLogin Add Consumer Success
@@ -339,7 +340,7 @@ i18n
           "admin#queueManagement_remaining": "Restantes",
           "admin#queueManagement_wait": "Aguarde ...",
           "admin#queueManagement_warning_message":
-            "Está acima da lotação escolhida.",
+            "Atingiu a lotação máxima definida.",
 
           // End Queue
           "main#endQueue_title": "Pretende terminar a Fila actual?",
@@ -348,8 +349,8 @@ i18n
 
           //End Queue Success
           "main#endQueueSuccess_title": "Fila terminada.",
-          "main#endQueueSuccess_text":
-            "A sua fila foi terminada.<br/>Até Amanhã!",
+          "main#endQueueSuccess_text": "A sua fila foi terminada.",
+          "main#endQueueSuccess_second_text": "Até Amanhã!",
           "main#endQueueSuccess_back": "Voltar ao Início",
 
           // Queue Poster
@@ -368,7 +369,7 @@ i18n
           "admin#queueStatus_ticketLabel": "<b>Não consegue tirar senha?</b>",
           "admin#queueStatus_ticketText": "Peça ajuda ao colaborador.",
           "admin#queueStatus_naFilaLabel":
-            "<span> na<b>fila.</b> </span><span>Sem filas.</span><span>www.nafila.pt</span>",
+            "<span> na<b>fila.</b> Sem filas.</span><span>www.nafila.pt</span>",
 
           //Create Queue
           "admin#createQueue_title": "Painel de Gestão do Ecrã Público",
@@ -379,7 +380,17 @@ i18n
             "Inserir email ou código de lojista",
           "admin#table_column_1_name": "Nome da Loja",
           "admin#table_column_2_name": "Apagar",
-          "admin#create_status_screen": "Criar novo ecrã"
+          "admin#create_status_screen": "Criar novo ecrã",
+
+          //burger menu
+          "burger#your_store": "A sua Loja",
+          "burger#poster": "Cartaz da Fila",
+          "burger#end_queue": "Terminar Fila",
+          "burger#logout": "Sair",
+          "burger#how_it_works": "Como funciona?",
+          "burger#about_us": "Sobre",
+          "burger#login": "Entrar",
+          "burger#lojista": "É Lojista?"
         }
       }
     },

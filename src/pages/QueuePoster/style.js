@@ -32,13 +32,13 @@ export const PosterContainer = styled.div`
 
   .logo-container {
     position: relative;
-    height: 358px;
+    height: 450px;
     margin-top: 57px;
   }
 
   .queue-info {
     position: absolute;
-    top: 50%;
+    top: 45%;
     left: 50%;
     transform: translate3d(-50%, -50%, 0);
   }
@@ -72,5 +72,44 @@ export const PosterContainer = styled.div`
     font-size: 24px;
     line-height: 29px;
     font-weight: 900;
+  }
+`;
+
+export const QRCodeWrapper = styled.div`
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  padding: 10px 10px 7px 10px;
+  border: 2px solid black;
+
+  &.cross {
+    width: 100px;
+    height: 100px;
+    position: relative;
+  }
+
+  & .cross:before,
+  .cross:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    background: #fafafa;
+  }
+
+  & .cross:before {
+    left: 45%;
+    width: 40%;
+    margin-left: -15%;
+    height: 110%;
+    bottom: -6px;
+  }
+
+  & .cross:after {
+    top: 45%;
+    height: 40%;
+    margin-top: -15%;
+    width: 110%;
+    left: -6px;
   }
 `;

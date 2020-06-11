@@ -197,8 +197,7 @@ function Manage({ queueId, openSnackbar }) {
   };
 
   const handleAddCounter = () => {
-    //TODO validate max capacity, if it capped, an error message should appear.
-    if (counter >= maxCapacity) {
+    if (counter + 1 === maxCapacity) {
       setAlertOpen(true);
     }
     setCounter(prevState => prevState + 1);
@@ -310,9 +309,8 @@ function Manage({ queueId, openSnackbar }) {
             .doc(data.counterId)
             .get()
             .then(response => {
-              console.log(response.data());
               const counterData = response.data();
-              setMaxCapacity(counterData.maxCapacity);
+              setMaxCapacity(Number(counterData.maxCapacity));
               setCounter(counterData.current);
             });
         });
@@ -335,7 +333,10 @@ function Manage({ queueId, openSnackbar }) {
         style={{ position: "relative", minHeight: pageMinHeight + 56 }}
         bg={Bg}
       >
-        <TitleComponent title="Gerir fila" pageId="manage_queue" />
+        <TitleComponent
+          title={queue ? `Gerir Fila - ${queue.name}` : "Gerir Fila"}
+          pageId="manage_queue"
+        />
         <Modal
           open={showModal}
           onClose={handleCloseModal}

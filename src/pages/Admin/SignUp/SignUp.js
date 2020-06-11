@@ -127,7 +127,7 @@ const inputProps = {
 
 function SignUp({ openSnackbar, isDesktop }) {
   const { t } = useTranslation();
-  const [fields, setFields] = useState();
+  const [fields, setFields] = useState({});
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -158,7 +158,10 @@ function SignUp({ openSnackbar, isDesktop }) {
       })
       .catch(error => {
         setLoading(false);
-        openSnackbar(mappedMessages[error.code] || t("admin#signup_failed"));
+        openSnackbar(mappedMessages[error.code] || t("admin#signup_failed"), 5);
+        if (error.code === "auth/weak-password") {
+          setFields({ ...fields, password: "" });
+        }
       });
   };
 
@@ -185,6 +188,7 @@ function SignUp({ openSnackbar, isDesktop }) {
             <TextField
               label={t("admin#signup_nameLabel")}
               name="defaultQueueName"
+              value={fields["defaultQueueName"]}
               onChange={e => handleChange(e)}
               helperText="ex: Farmácia Rita Falcão"
               inputProps={{ maxLength: 30 }}
@@ -194,6 +198,7 @@ function SignUp({ openSnackbar, isDesktop }) {
             <TextField
               label={t("admin#signup_emailLabel")}
               name="email"
+              value={fields["email"]}
               onChange={e => handleChange(e)}
               {...inputProps}
             />
@@ -201,7 +206,9 @@ function SignUp({ openSnackbar, isDesktop }) {
             <PasswordInput
               label={t("admin#signup_passwordLabel")}
               name="password"
+              value={fields["password"]}
               onChange={e => handleChange(e)}
+              helperText={t("admin#signup_helperPassword")}
               min="6"
               {...inputProps}
             />
