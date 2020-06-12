@@ -153,13 +153,8 @@ const BigCircle = styled.div`
     }
 `;
 
-const handleClassUpdate = (queueId, updatedQueue, setUpdatedQueue) => {
-  setTimeout(() => {
-    setUpdatedQueue("");
-  }, 650);
-  // eslint-disable-next-line
-    return updatedQueue == queueId ? "circle circle-blink" : "circle";
-};
+const handleClassUpdate = (queueId, updatedQueues) =>
+  updatedQueues.includes(queueId) ? "circle circle-blink" : "circle";
 
 const getChunks = (arr, chunkSize) => {
   var c = [];
@@ -168,13 +163,7 @@ const getChunks = (arr, chunkSize) => {
   return c;
 };
 
-const renderQueues = (
-  isDesktop,
-  requestQueues,
-  queuesData,
-  updatedQueue,
-  setUpdatedQueue
-) => {
+const renderQueues = (isDesktop, requestQueues, queuesData, updatedQueues) => {
   if (requestQueues) {
     if (Object.keys(queuesData).length === 1) {
       const queueKey = Object.keys(queuesData)[0];
@@ -184,8 +173,7 @@ const renderQueues = (
             <div
               className={handleClassUpdate(
                 queuesData[queueKey].owner_id,
-                updatedQueue,
-                setUpdatedQueue
+                updatedQueues
               )}
             >
               <p>{queuesData[queueKey].currentTicketNumber}</p>
@@ -210,8 +198,7 @@ const renderQueues = (
                       <div
                         className={handleClassUpdate(
                           queuesData[key].owner_id,
-                          updatedQueue,
-                          setUpdatedQueue
+                          updatedQueues
                         )}
                       >
                         <p>{queuesData[key].currentTicketNumber}</p>
@@ -233,13 +220,12 @@ const renderQueues = (
 };
 
 export const Queues = ({ isDesktop }) => {
-  const [updatedQueue, setUpdatedQueue] = useState("");
+  const [updatedQueues, setUpdatedQueues] = useState([]);
   const [queuesData, setQueuesData] = useState({});
   const [requestQueues, setRequest] = useState(false);
 
   useEffect(() => {
     if (!requestQueues) {
-      setUpdatedQueue("");
       const urlParams = new URLSearchParams(window.location.search);
       const userParams = urlParams.get("users");
       if (!userParams) return null;
@@ -262,7 +248,18 @@ export const Queues = ({ isDesktop }) => {
             //Check for updates
             snapshot.docChanges().forEach(function (change) {
               if (change.type === "modified") {
-                setUpdatedQueue(change.doc.data().owner_id);
+                const { owner_id } = change.doc.data();
+                setUpdatedQueues(prevState => {
+                  if (prevState.find(el => el === owner_id))
+                    return [...prevState];
+                  return [...prevState, owner_id];
+                });
+                //Remove id after blink animation gets finished
+                setTimeout(() => {
+                  setUpdatedQueues(prevState =>
+                    prevState.filter(el => el !== owner_id)
+                  );
+                }, 650);
               }
             });
           });
@@ -284,13 +281,7 @@ export const Queues = ({ isDesktop }) => {
 
   return (
     <QueuesWrapper isDesktop={isDesktop}>
-      {renderQueues(
-        isDesktop,
-        requestQueues,
-        queuesData,
-        updatedQueue,
-        setUpdatedQueue
-      )}
+      {renderQueues(isDesktop, requestQueues, queuesData, updatedQueues)}
     </QueuesWrapper>
   );
 };
