@@ -153,13 +153,8 @@ const BigCircle = styled.div`
     }
 `;
 
-const handleClassUpdate = (queueId, updatedQueue, setUpdatedQueue) => {
-  setTimeout(() => {
-    setUpdatedQueue("");
-  }, 650);
-  // eslint-disable-next-line
-  return updatedQueue === queueId ? "circle circle-blink" : "circle";
-};
+const handleClassUpdate = (queueId, updatedQueues) =>
+  updatedQueues.includes(queueId) ? "circle circle-blink" : "circle";
 
 const getChunks = (arr, chunkSize) => {
   var c = [];
@@ -168,7 +163,7 @@ const getChunks = (arr, chunkSize) => {
   return c;
 };
 
-const renderQueues = (isDesktop, queuesData, updatedQueue, setUpdatedQueue) => {
+const renderQueues = (isDesktop, queuesData, updatedQueues) => {
   if (!queuesData.length) {
     return <></>;
   }
@@ -179,13 +174,7 @@ const renderQueues = (isDesktop, queuesData, updatedQueue, setUpdatedQueue) => {
     return (
       <>
         <BigCircle>
-          <div
-            className={handleClassUpdate(
-              owner_id,
-              updatedQueue,
-              setUpdatedQueue
-            )}
-          >
+          <div className={handleClassUpdate(owner_id, updatedQueues)}>
             <p>{currentTicketNumber}</p>
           </div>
         </BigCircle>
@@ -207,13 +196,7 @@ const renderQueues = (isDesktop, queuesData, updatedQueue, setUpdatedQueue) => {
             <GridArea isDesktop={isDesktop}>
               {chunk.map(({ id, owner_id, currentTicketNumber, name }) => (
                 <QueueWrapper key={id} isDesktop={isDesktop}>
-                  <div
-                    className={handleClassUpdate(
-                      owner_id,
-                      updatedQueue,
-                      setUpdatedQueue
-                    )}
-                  >
+                  <div className={handleClassUpdate(owner_id, updatedQueues)}>
                     <p>{currentTicketNumber}</p>
                   </div>
                   <div className="name">
@@ -231,7 +214,7 @@ const renderQueues = (isDesktop, queuesData, updatedQueue, setUpdatedQueue) => {
 };
 
 export const Queues = ({ isDesktop }) => {
-  const [updatedQueue, setUpdatedQueue] = useState("");
+  const [updatedQueues, setUpdatedQueues] = useState([]);
   const [queuesData, setQueuesData] = useState([]);
 
   useEffect(() => {
@@ -258,7 +241,18 @@ export const Queues = ({ isDesktop }) => {
               queues = queues.map(queue =>
                 queue.id === doc.id ? data : queue
               );
-              setUpdatedQueue(data.owner_id);
+              const { owner_id } = data;
+              setUpdatedQueues(prevState => {
+                if (prevState.find(el => el === owner_id))
+                  return [...prevState];
+                return [...prevState, owner_id];
+              });
+              //Remove id after blink animation gets finished
+              setTimeout(() => {
+                setUpdatedQueues(prevState =>
+                  prevState.filter(el => el !== owner_id)
+                );
+              }, 650);
             }
 
             if (type === "removed") {
@@ -290,7 +284,7 @@ export const Queues = ({ isDesktop }) => {
 
   return (
     <QueuesWrapper isDesktop={isDesktop}>
-      {renderQueues(isDesktop, queuesData, updatedQueue, setUpdatedQueue)}
+      {renderQueues(isDesktop, queuesData, updatedQueues)}
     </QueuesWrapper>
   );
 };
