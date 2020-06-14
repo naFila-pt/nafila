@@ -153,13 +153,8 @@ const BigCircle = styled.div`
     }
 `;
 
-const handleClassUpdate = (queueId, updatedQueue, setUpdatedQueue) => {
-  setTimeout(() => {
-    setUpdatedQueue("");
-  }, 650);
-  // eslint-disable-next-line
-    return updatedQueue == queueId ? "circle circle-blink" : "circle";
-};
+const handleClassUpdate = (queueId, updatedQueues) =>
+  updatedQueues.includes(queueId) ? "circle circle-blink" : "circle";
 
 const getChunks = (arr, chunkSize) => {
   var c = [];
@@ -168,107 +163,112 @@ const getChunks = (arr, chunkSize) => {
   return c;
 };
 
-const renderQueues = (
-  isDesktop,
-  requestQueues,
-  queuesData,
-  updatedQueue,
-  setUpdatedQueue
-) => {
-  if (requestQueues) {
-    if (Object.keys(queuesData).length === 1) {
-      const queueKey = Object.keys(queuesData)[0];
-      return (
-        <>
-          <BigCircle>
-            <div
-              className={handleClassUpdate(
-                queuesData[queueKey].owner_id,
-                updatedQueue,
-                setUpdatedQueue
-              )}
-            >
-              <p>{queuesData[queueKey].currentTicketNumber}</p>
-            </div>
-          </BigCircle>
-          <BigLabel>
-            <p>{queuesData[queueKey].name}</p>
-          </BigLabel>
-        </>
-      );
-    } else if (Object.keys(queuesData).length) {
-      const chuncksSize = isDesktop ? 12 : 8;
-      const chunks = getChunks(Object.keys(queuesData), chuncksSize);
-      return (
-        <div class="swiper-container">
-          <div class="swiper-wrapper">
-            {chunks.map(c => (
-              <div class="swiper-slide">
-                <GridArea isDesktop={isDesktop}>
-                  {c.map(key => (
-                    <QueueWrapper isDesktop={isDesktop}>
-                      <div
-                        className={handleClassUpdate(
-                          queuesData[key].owner_id,
-                          updatedQueue,
-                          setUpdatedQueue
-                        )}
-                      >
-                        <p>{queuesData[key].currentTicketNumber}</p>
-                      </div>
-                      <div className="name">
-                        <p>{queuesData[key].name}</p>
-                      </div>
-                    </QueueWrapper>
-                  ))}
-                </GridArea>
-              </div>
-            ))}
-          </div>
-          <div class="swiper-pagination"></div>
-        </div>
-      );
-    }
+const renderQueues = (isDesktop, queuesData, updatedQueues) => {
+  if (!queuesData.length) {
+    return <></>;
   }
+
+  if (queuesData.length === 1) {
+    const [{ owner_id, currentTicketNumber, name }] = queuesData;
+
+    return (
+      <>
+        <BigCircle>
+          <div className={handleClassUpdate(owner_id, updatedQueues)}>
+            <p>{currentTicketNumber}</p>
+          </div>
+        </BigCircle>
+        <BigLabel>
+          <p>{name}</p>
+        </BigLabel>
+      </>
+    );
+  }
+
+  const chunksSize = isDesktop ? 12 : 8;
+  const chunks = getChunks(queuesData, chunksSize);
+
+  return (
+    <div className="swiper-container">
+      <div className="swiper-wrapper">
+        {chunks.map((chunk, index) => (
+          <div key={index} className="swiper-slide">
+            <GridArea isDesktop={isDesktop}>
+              {chunk.map(({ id, owner_id, currentTicketNumber, name }) => (
+                <QueueWrapper key={id} isDesktop={isDesktop}>
+                  <div className={handleClassUpdate(owner_id, updatedQueues)}>
+                    <p>{currentTicketNumber}</p>
+                  </div>
+                  <div className="name">
+                    <p>{name}</p>
+                  </div>
+                </QueueWrapper>
+              ))}
+            </GridArea>
+          </div>
+        ))}
+      </div>
+      <div className="swiper-pagination"></div>
+    </div>
+  );
 };
 
 export const Queues = ({ isDesktop }) => {
-  const [updatedQueue, setUpdatedQueue] = useState("");
-  const [queuesData, setQueuesData] = useState({});
-  const [requestQueues, setRequest] = useState(false);
+  const [updatedQueues, setUpdatedQueues] = useState([]);
+  const [queuesData, setQueuesData] = useState([]);
 
   useEffect(() => {
-    if (!requestQueues) {
-      setUpdatedQueue("");
-      const urlParams = new URLSearchParams(window.location.search);
-      const userParams = urlParams.get("users");
-      if (!userParams) return null;
-      const users = userParams.split(",");
-      const chunks = getChunks(users, 10);
-      chunks.forEach((c, i) => {
-        firestore
-          .collection("queues")
-          .where("owner_id", "in", c)
-          .onSnapshot(snapshot => {
-            let queueDocs = snapshot.docs;
-            queueDocs.forEach(qd => {
-              queuesData[qd.ref.id] = qd.data();
-            });
-            // const updated
-            const queuesClone = Object.assign({}, queuesData);
-            setQueuesData(queuesClone);
-            if (i === chunks.length - 1) setRequest(true);
+    const urlParams = new URLSearchParams(window.location.search);
+    const userParams = urlParams.get("users");
+    const users = userParams.split(",");
+    const chunks = getChunks(users, 10);
+    const firebaseUnsubscribeFns = [];
+    let queues = [];
 
-            //Check for updates
-            snapshot.docChanges().forEach(function (change) {
-              if (change.type === "modified") {
-                setUpdatedQueue(change.doc.data().owner_id);
-              }
-            });
+    chunks.forEach(chunk => {
+      const unsubscribe = firestore
+        .collection("queues")
+        .where("owner_id", "in", chunk)
+        .onSnapshot(snapshot => {
+          snapshot.docChanges().forEach(({ type, doc }) => {
+            const data = Object.assign({ id: doc.id }, doc.data());
+
+            if (type === "added") {
+              queues.push(data);
+            }
+
+            if (type === "modified") {
+              queues = queues.map(queue =>
+                queue.id === doc.id ? data : queue
+              );
+              const { owner_id } = data;
+              setUpdatedQueues(prevState => {
+                if (prevState.find(el => el === owner_id))
+                  return [...prevState];
+                return [...prevState, owner_id];
+              });
+              //Remove id after blink animation gets finished
+              setTimeout(() => {
+                setUpdatedQueues(prevState =>
+                  prevState.filter(el => el !== owner_id)
+                );
+              }, 650);
+            }
+
+            if (type === "removed") {
+              queues = queues.filter(({ id }) => id !== doc.id);
+            }
           });
-      });
-    }
-  }, [queuesData, requestQueues]);
+
+          setQueuesData([...queues]);
+        });
+
+      firebaseUnsubscribeFns.push(unsubscribe);
+    });
+
+    return () =>
+      firebaseUnsubscribeFns.forEach(unsubscribeFn => unsubscribeFn());
+  }, []);
 
   new Swiper(".swiper-container", {
     slidesPerView: 1,
@@ -284,13 +284,7 @@ export const Queues = ({ isDesktop }) => {
 
   return (
     <QueuesWrapper isDesktop={isDesktop}>
-      {renderQueues(
-        isDesktop,
-        requestQueues,
-        queuesData,
-        updatedQueue,
-        setUpdatedQueue
-      )}
+      {renderQueues(isDesktop, queuesData, updatedQueues)}
     </QueuesWrapper>
   );
 };
