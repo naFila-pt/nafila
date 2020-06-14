@@ -67,9 +67,9 @@ const HomeContent = ({ openSnackbar }) => {
   const { t } = useTranslation();
 
   const [activeStep, setActiveStep] = useState(initialActiveStep);
-  const [queueId, setQueueId] = useState("");
+  const [queueId, setQueueId] = useState(urlQueueId.length ? urlQueueId : "");
   const [userMobilePhone, setUserMobilePhone] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [ticketsStoreInfo, setTicketsStoreInfo] = useState({
     name: null,
