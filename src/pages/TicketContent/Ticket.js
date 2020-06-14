@@ -69,7 +69,7 @@ const HomeContent = ({ openSnackbar }) => {
   const [activeStep, setActiveStep] = useState(initialActiveStep);
   const [queueId, setQueueId] = useState("");
   const [userMobilePhone, setUserMobilePhone] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [ticketsStoreInfo, setTicketsStoreInfo] = useState({
     name: null,
