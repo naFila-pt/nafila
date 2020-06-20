@@ -1,0 +1,208 @@
+{
+  "coordination": [
+    {
+      "name": "Nuno Góis",
+      "link": "https://www.linkedin.com/in/nunogois",
+      "main": true
+    }
+  ],
+  "design": [
+    {
+      "name": "Rita Falcão",
+      "link": "https://www.linkedin.com/in/ritafalcao/",
+      "main": true
+    },
+    {
+      "name": "Sónia Brioso",
+      "link": "https://www.linkedin.com/in/soniaqbrioso/",
+      "main": true
+    },
+    {
+      "name": "Sara Antunes",
+      "link": "https://www.linkedin.com/in/saantunes/"
+    },
+    {
+      "name": "Sofia Martins",
+      "link": "https://industriacriativa.pt/anamartins"
+    },
+    {
+      "name": "Rui Carvalho",
+      "link": "https://www.linkedin.com/in/ruicarvalho1/"
+    },
+    {
+      "name": "Maria Costa",
+      "link": "https://www.linkedin.com/in/isabel-costa-ux/"
+    },
+    {
+      "name": "Ida Sandes",
+      "link": "https://www.linkedin.com/in/idasandessobral/"
+    },
+    {
+      "name": "Rita Santos",
+      "link": "https://www.linkedin.com/in/rita-santos-77147a27/"
+    },
+    {
+      "name": "Ricardo Matos",
+      "link": ""
+    },
+    {
+      "name": "Natália Mendes",
+      "link": "https://www.linkedin.com/in/nat%C3%A1lia-mendes-b31a7427/"
+    },
+    {
+      "name": "Flávia Carvalho",
+      "link": ""
+    },
+    {
+      "name": "Diana Magalhães",
+      "link": "https://www.linkedin.com/in/diana-magalhaes/"
+    },
+    {
+      "name": "Élio Santos",
+      "link": ""
+    }
+  ],
+  "dev": [
+    {
+      "name": "Carlos Ouro",
+      "link": "https://www.linkedin.com/in/carlosouro/",
+      "main": true
+    },
+    {
+      "name": "Francisco Santos",
+      "link": "https://www.linkedin.com/in/francisco-santos-877258153/",
+      "main": true
+    },
+    {
+      "name": "Ricardo Ferreira",
+      "link": "https://thegiantbeast.tech/"
+    },
+    {
+      "name": "Telmo Gonçalves",
+      "link": ""
+    },
+    {
+      "name": "Sérgio Monteiro",
+      "link": "https://www.linkedin.com/in/sextafeira13/"
+    },
+    {
+      "name": "Rosana Caiado",
+      "link": "https://www.linkedin.com/in/rosana-caiado-b95b2429/"
+    },
+    {
+      "name": "Alex Brou",
+      "link": "https://www.linkedin.com/in/alex-brou-39b917a4/"
+    },
+    {
+      "name": "Luís Almeida",
+      "link": "http://linkedin.com/in/lpalmeida"
+    },
+    {
+      "name": "André Morpanini",
+      "link": "https://www.linkedin.com/in/andremorpanini/"
+    },
+    {
+      "name": "Tiago Sardinha",
+      "link": "https://www.linkedin.com/in/tiago-sardinha/"
+    },
+    {
+      "name": "João Ferreira",
+      "link": "https://www.linkedin.com/in/joaocortezferreira/"
+    },
+    {
+      "name": "Rui Saraiva",
+      "link": "https://www.linkedin.com/in/ruisaraiva19/"
+    }
+  ],
+  "qa": [
+    {
+      "name": "Natália Trevisan",
+      "link": "https://www.linkedin.com/in/nataliatrevisan/",
+      "main": true
+    },
+    {
+      "name": "Joyce Fernandes",
+      "link": "https://www.linkedin.com/in/joyce-fernandes-a6a8aa71/",
+      "main": true
+    },
+    {
+      "name": "Santiago Mesa",
+      "link": "https://www.linkedin.com/in/santiagomesab/"
+    }
+  ],
+  "comunication": [
+    {
+      "name": "Rita Figueiredo",
+      "link": "https://www.linkedin.com/in/ritafragosofigueiredo/",
+      "main": true
+    },
+    {
+      "name": "Sandra Pestana",
+      "link": "https://www.linkedin.com/in/sandracamarapestana/"
+    },
+    {
+      "name": "Irina Ribeiro",
+      "link": "https://www.linkedin.com/in/irina-ribeiro-622950114/"
+    },
+    {
+      "name": "Ângelo Delgado",
+      "link": "https://www.linkedin.com/in/%C3%A2ngelo-delgado-5a03122b/"
+    },
+    {
+      "name": "Daniela Rosa",
+      "link": "https://www.linkedin.com/in/danielaqrosa/"
+    },
+    {
+      "name": "Mariana Jacinto",
+      "link": "https://www.linkedin.com/in/mariana-eiras-jacinto/"
+    },
+    {
+      "name": "Sofia Correia",
+      "link": "https://www.linkedin.com/in/sofiaisabelcorreia/"
+    },
+    {
+      "name": "Francisco Afonso",
+      "link": "https://www.linkedin.com/in/franciscorfafonso/"
+    },
+    {
+      "name": "Pedro Paixão",
+      "link": "https://www.linkedin.com/in/zepedropaixao/"
+    }
+  ],
+  "support": [
+    {
+      "name": "Afonso Coelho",
+      "link": "https://www.linkedin.com/in/afonsodiascoelho/",
+      "main": true
+    },
+    {
+      "name": "Gonçalo Baião",
+      "link": "https://www.linkedin.com/in/goncalobaiao/",
+      "main": true
+    },
+    {
+      "name": "Leonor Russo",
+      "link": "https://www.linkedin.com/in/leonor-russo-34b891175"
+    },
+    {
+      "name": "Carolina Silva",
+      "link": "https://pt.linkedin.com/in/carolina-cardoso-da-silva-464b95182"
+    },
+    {
+      "name": "João Silva",
+      "link": "https://www.linkedin.com/in/japsilva/"
+    },
+    {
+      "name": "Daniel Ramos",
+      "link": ""
+    },
+    {
+      "name": "Guilherme Batista",
+      "link": ""
+    },
+    {
+      "name": "Carina Olival",
+      "link": "https://www.linkedin.com/in/carina-olival-8274a958/"
+    }
+  ]
+}

@@ -166,11 +166,14 @@ i18n
           "about_us#title_partners": "Parceiros",
           "about_us#title_contact": "Contacto",
           "about_us#button_label_contact": "Enviar mensagem",
-          "about_us#text_tech4Covid":
-            "Este projeto faz parte do movimento #tech4COVID19, um grupo de voluntários que se juntou para encontrar soluções mais rápidas do que a disseminação do novo coronavírus, responsável pela doença COVID-19 nos seres humanos.",
+          "about_us#text_support":
+            "Para saber mais sobre o projeto, entre em contacto connosco.",
           "about_us#title_illustrations": "Ilustrações",
           "about_us#text_illustrations":
             "As ilustrações usadas foram adaptadas, com base no Projecto <b><a href='https://www.humaaans.com/' target='_blank' rel='noopener noreferrer'>humaaans</a></b>, de Pablo Stanley, sob a <b>licença <a href='https://creativecommons.org/licenses/by/4.0/deed.pt' target='_blank' rel='noopener noreferrer'>CC BY 4.0</a></b>.",
+          "about_us#title_github": "Github",
+          "about_us#text_github":
+            "Board do projeto naFila. Código fonte <b><a href='https://github.com/naFila-pt/nafila'> naFila.pt no Github</a></b>",
           "about_us#title_support": "Suporte para lojistas",
           "about_us#title_support_instructions": "Cartaz de instruções",
           "about_us#text_support_instructions":
@@ -178,6 +181,12 @@ i18n
           "about_us#title_support_implementation_kit": "Guia de implementação",
           "about_us#text_support_implementation_kit":
             "Faça <b><a href='{{filepath}}' target='_blank' rel='noopener noreferrer'>download do guia de implementação</a></b> do na<b>fila</b> onde poderá ver passo-a-passo como utilizar o nosso sistema de senhas.",
+          "about_us#column_title_coordination": "Coordenação",
+          "about_us#column_title_design": "Design",
+          "about_us#column_title_dev": "Desenvolvimento",
+          "about_us#column_title_qa": "Qualidade",
+          "about_us#column_title_comunication": "Comunicação",
+          "about_us#column_title_support": "Suporte",
 
           "leave#title": "Saiu da Fila",
           "leave#title-failed": "Senha não encontrada",
