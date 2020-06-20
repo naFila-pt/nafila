@@ -5,6 +5,8 @@ import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
 
 import Tech4CovidIcon from "@src/assets/icons/Logo-Tech4COVID19-white.svg";
+import FacebookLogo from "@src/components/Icons/facebook";
+import LinkedinLogo from "@src/components/Icons/linkedin";
 import naFilaIcon from "@src/assets/icons/nafila-text.svg";
 import GoogleIcon from "@src/components/Icons/google";
 import NosIcon from "@src/components/Icons/nos";
@@ -23,14 +25,25 @@ const FooterWrapper = styled(Grid)`
   background-color: #8464ac;
   z-index: 1;
 
-  & .logos {
+  & .left {
     width: 100%;
     & a {
       color: white;
       font-size: 13px;
     }
     @media (min-width: 768px) {
-      width: 77%;
+      width: auto;
+      & a {
+        color: white;
+        font-size: 16px;
+      }
+    }
+  }
+
+  & .right {
+    width: 100%;
+    @media (min-width: 768px) {
+      width: auto;
       & a {
         color: white;
         font-size: 16px;
@@ -74,8 +87,25 @@ const FooterWrapper = styled(Grid)`
     height: 125px;
     align-items: center;
     flex-direction: row;
+    justify-content: space-between;
 
-    padding: 10px 15% 10px 15%;
+    padding: 10px 10% 10px 10%;
+  }
+
+  .links {
+    margin: 0;
+    color: white;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+
+    & .facebook {
+      margin-left: 10px;
+    }
+
+    & .linkedin {
+      margin-left: 10px;
+    }
   }
 `;
 
@@ -91,7 +121,7 @@ const Footer = () => {
 
   return (
     <FooterWrapper>
-      <div className="logos">
+      <div className="left">
         <div style={{ display: "flex", alignItems: "center" }}>
           <Logo src={naFilaIcon} />
         </div>
@@ -114,7 +144,7 @@ const Footer = () => {
           </Link>
         </div>
       </div>
-      <div>
+      <div className="right">
         <div className="partners">
           <p>Parceiros</p>
           <div
@@ -145,9 +175,9 @@ const Footer = () => {
             height: "30%"
           }}
         >
-          <p style={{ margin: 0, color: "white", fontSize: "13px" }}>
+          <p className="links">
             <Link
-              style={{ color: "white" }}
+              style={{ color: "white", marginRight: "5px" }}
               href={ABOUT_US_PATH}
               rel="noopener"
             >
@@ -155,7 +185,7 @@ const Footer = () => {
             </Link>
             {" | "}
             <Link
-              style={{ color: "white" }}
+              style={{ color: "white", margin: "0 5px" }}
               href={TCS_PATH}
               target="_blank"
               rel="noopener"
@@ -164,7 +194,7 @@ const Footer = () => {
             </Link>
             {" | "}
             <Link
-              style={{ color: "white" }}
+              style={{ color: "white", margin: "0 5px" }}
               target="_blank"
               href={PRIVACY_PATH}
               rel="noopener"
@@ -174,15 +204,25 @@ const Footer = () => {
             {/* {" | "}
             <Link style={{ color: "white" }} target="_blank" rel="noopener">
               {t("terms#contact")}
-            </Link> */}
-            {" | "}
+            </Link> 
+            {" | "} */}
+            <Link
+              style={{ color: "white", margin: "0 10px" }}
+              href="https://facebook.com/nafila.pt"
+              target="_blank"
+              rel="noopener"
+              className="facebook"
+            >
+              <LinkedinLogo width="24px" height="24px" />
+            </Link>
             <Link
               style={{ color: "white" }}
               href="https://facebook.com/nafila.pt"
               target="_blank"
               rel="noopener"
+              className="facebook"
             >
-              Facebook
+              <FacebookLogo width="24px" height="24px" />
             </Link>
           </p>
         </div>
