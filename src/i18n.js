@@ -166,18 +166,27 @@ i18n
           "about_us#title_partners": "Parceiros",
           "about_us#title_contact": "Contacto",
           "about_us#button_label_contact": "Enviar mensagem",
-          "about_us#text_tech4Covid":
-            "Este projeto faz parte do movimento #tech4COVID19, um grupo de voluntários que se juntou para encontrar soluções mais rápidas do que a disseminação do novo coronavírus, responsável pela doença COVID-19 nos seres humanos.",
+          "about_us#text_support":
+            "Para saber mais sobre o projeto, entre em contacto connosco.",
           "about_us#title_illustrations": "Ilustrações",
           "about_us#text_illustrations":
             "As ilustrações usadas foram adaptadas, com base no Projecto <b><a href='https://www.humaaans.com/' target='_blank' rel='noopener noreferrer'>humaaans</a></b>, de Pablo Stanley, sob a <b>licença <a href='https://creativecommons.org/licenses/by/4.0/deed.pt' target='_blank' rel='noopener noreferrer'>CC BY 4.0</a></b>.",
+          "about_us#title_github": "Github",
+          "about_us#text_github":
+            "Board do projeto naFila. Código fonte <b><a href='https://github.com/naFila-pt/nafila'> naFila.pt no Github</a></b>",
           "about_us#title_support": "Suporte para lojistas",
           "about_us#title_support_instructions": "Cartaz de instruções",
           "about_us#text_support_instructions":
             "Faça aqui o <b>download do cartaz de instruções</b> (<b><a href='{{filepathColorful}}' target='_blank' rel='noopener noreferrer'>versão a cores</a></b> ou <b><a href='{{filepathBlackWhite}}' target='_blank' rel='noopener noreferrer'>versão a preto e branco</a></b>) para colocar à porta do seu estabelecimento.",
-          "about_us#title_support_implementation_kit": "Kit de implementação",
+          "about_us#title_support_implementation_kit": "Guia de implementação",
           "about_us#text_support_implementation_kit":
-            "Faça <b><a href='{{filepath}}' target='_blank' rel='noopener noreferrer'>download do kit de implementação</a></b> do na<b>fila</b> onde poderá ver passo-a-passo como utilizar o nosso sistema de senhas.",
+            "Faça <b><a href='{{filepath}}' target='_blank' rel='noopener noreferrer'>download do guia de implementação</a></b> do na<b>fila</b> onde poderá ver passo-a-passo como utilizar o nosso sistema de senhas.",
+          "about_us#column_title_coordination": "Coordenação",
+          "about_us#column_title_design": "Design",
+          "about_us#column_title_dev": "Desenvolvimento",
+          "about_us#column_title_qa": "Qualidade",
+          "about_us#column_title_comunication": "Comunicação",
+          "about_us#column_title_support": "Suporte",
 
           "leave#title": "Saiu da Fila",
           "leave#title-failed": "Senha não encontrada",
@@ -198,7 +207,7 @@ i18n
           "admin#onboarding_firstText_mobile":
             "<h1>Tem uma loja</h1> <p>ou trabalha num serviço de atendimento ao público? <br/>  <div>Gostava de utilizar o nafila na sua loja?</div> </p>",
           "admin#onboarding_secondText":
-            "Faça o <b>pré-registo</b> e será contactado pela nossa equipa de suporte. Assim que receber o contacto do Suporte, <b>poderá começar a usar o nafila.</b>",
+            "Registe <b>a sua Loja para começar a usar o nafila</b> imediatamente.",
           "admin#onboarding_secondTitle": "É simples!",
           "admin#onboarding_thirdTitle": "Tirar uma Senha",
           "admin#onboarding_thirdText":
@@ -220,7 +229,7 @@ i18n
             "O seu Cliente <b>recebe a notificação,</b> enquanto aguarda em segurança.",
           "admin#onboarding_sixthTitle": "O Cliente entra na Loja na sua vez.",
           "admin#onboarding_sixthText":
-            "<b>E já está!</b> O seu Cliente é atendido em segurança.",
+            "<b>E já está!</b> <br/> O seu Cliente é atendido em segurança.",
 
           // Admin SignUp
           "admin#signup_title": "Introduza os dados de Registo",
@@ -340,7 +349,7 @@ i18n
           "admin#queueManagement_remaining": "Restantes",
           "admin#queueManagement_wait": "Aguarde ...",
           "admin#queueManagement_warning_message":
-            "Está acima da lotação escolhida.",
+            "Atingiu a lotação máxima definida.",
 
           // End Queue
           "main#endQueue_title": "Pretende terminar a Fila actual?",
@@ -369,7 +378,7 @@ i18n
           "admin#queueStatus_ticketLabel": "<b>Não consegue tirar senha?</b>",
           "admin#queueStatus_ticketText": "Peça ajuda ao colaborador.",
           "admin#queueStatus_naFilaLabel":
-            "<span> na<b>fila.</b> </span><span>Sem filas.</span><span>www.nafila.pt</span>",
+            "<span> na<b>fila.</b> Sem filas.</span><span>www.nafila.pt</span>",
 
           //Create Queue
           "admin#createQueue_title": "Painel de Gestão do Ecrã Público",
@@ -380,7 +389,17 @@ i18n
             "Inserir email ou código de lojista",
           "admin#table_column_1_name": "Nome da Loja",
           "admin#table_column_2_name": "Apagar",
-          "admin#create_status_screen": "Criar novo ecrã"
+          "admin#create_status_screen": "Criar novo ecrã",
+
+          //burger menu
+          "burger#your_store": "A sua Loja",
+          "burger#poster": "Cartaz da Fila",
+          "burger#end_queue": "Terminar Fila",
+          "burger#logout": "Sair",
+          "burger#how_it_works": "Como funciona?",
+          "burger#about_us": "Sobre",
+          "burger#login": "Entrar",
+          "burger#lojista": "É Lojista?"
         }
       }
     },

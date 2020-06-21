@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import readingTime from "reading-time";
 
 import { MuiThemeProvider } from "@material-ui/core/styles";
+import { BrowserRouter } from "react-router-dom";
 
 import { CssBaseline, Grid, Snackbar } from "@material-ui/core";
 
@@ -18,6 +19,10 @@ import LaunchScreen from "../LaunchScreen";
 import Router from "../Router";
 
 import CookieBanner from "../CookieBanner";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import BurgerMenu from "../BurgerMenu/BurgerMenu";
+import { QUEUE_POSTER_PATH } from "../../constants/RoutesConstants";
 
 function detectIsDesktop() {
   return window.innerWidth >= 768;
@@ -42,6 +47,7 @@ const initialState = {
     severity: null
   },
 
+  isMenuOpen: false,
   isDesktop: detectIsDesktop(),
 
   shouldSkipOnBoarding: false
@@ -72,6 +78,10 @@ class App extends Component {
       default:
         break;
     }
+  };
+
+  toggleMenuOpen = () => {
+    this.setState({ isMenuOpen: !this.state.isMenuOpen });
   };
 
   resetState = callback => {
@@ -182,59 +192,85 @@ class App extends Component {
     } = this.state;
 
     return (
-      <MuiThemeProvider theme={theme}>
-        <CssBaseline />
+      <BrowserRouter basename={process.env.REACT_APP_BASENAME}>
+        <MuiThemeProvider theme={theme}>
+          <CssBaseline />
 
-        <ErrorBoundary>
-          {!ready && <LaunchScreen />}
+          <ErrorBoundary>
+            {!ready && <LaunchScreen />}
 
-          {ready && (
-            <>
-              {showCookieBanner && (
-                <CookieBanner
-                  handleBannerCloseClick={this.handleBannerCloseClick}
-                />
-              )}
-              <Grid container justify="center" style={{ height: "100%" }}>
-                <Grid
-                  item
-                  style={{
-                    position: "relative",
-                    width: "100%",
-                    height: "100%"
-                  }}
-                >
-                  <Router
-                    user={user}
-                    userData={userData}
-                    performingAction={performingAction}
-                    openSnackbar={this.openSnackbar}
-                    isDesktop={isDesktop}
-                    shouldSkipOnBoarding={shouldSkipOnBoarding}
+            {ready && (
+              <>
+                {showCookieBanner && (
+                  <CookieBanner
+                    handleBannerCloseClick={this.handleBannerCloseClick}
                   />
+                )}
+                <Grid container justify="center" style={{ height: "100%" }}>
+                  {!window.location.pathname.startsWith(
+                    `${QUEUE_POSTER_PATH.replace("/:queueId", "")}`
+                  ) && (
+                    <div
+                      style={{ position: "absolute", left: "20px", zIndex: 1 }}
+                    >
+                      <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={this.toggleMenuOpen}
+                        edge="start"
+                      >
+                        <MenuIcon />
+                      </IconButton>
+                    </div>
+                  )}
+                  <Grid
+                    item
+                    style={{
+                      position: "relative",
+                      width: "100%",
+                      height: "100%"
+                    }}
+                  >
+                    <Router
+                      user={user}
+                      userData={userData}
+                      performingAction={performingAction}
+                      openSnackbar={this.openSnackbar}
+                      isDesktop={isDesktop}
+                      shouldSkipOnBoarding={shouldSkipOnBoarding}
+                    />
+                  </Grid>
                 </Grid>
-              </Grid>
 
-              {snackbar.severity ? (
-                <Snackbar
-                  open={snackbar.open}
-                  autoHideDuration={snackbar.autoHideDuration}
-                  onClose={this.closeSnackbar}
-                >
-                  <Alert severity={snackbar.severity}>{snackbar.message}</Alert>
-                </Snackbar>
-              ) : (
-                <Snackbar
-                  autoHideDuration={snackbar.autoHideDuration}
-                  message={snackbar.message}
-                  open={snackbar.open}
-                  onClose={this.closeSnackbar}
+                {snackbar.severity ? (
+                  <Snackbar
+                    open={snackbar.open}
+                    autoHideDuration={snackbar.autoHideDuration}
+                    onClose={this.closeSnackbar}
+                  >
+                    <Alert severity={snackbar.severity}>
+                      {snackbar.message}
+                    </Alert>
+                  </Snackbar>
+                ) : (
+                  <Snackbar
+                    autoHideDuration={snackbar.autoHideDuration}
+                    message={snackbar.message}
+                    open={snackbar.open}
+                    onClose={this.closeSnackbar}
+                  />
+                )}
+
+                <BurgerMenu
+                  userInfo={{ user, userData }}
+                  isOpen={this.state.isMenuOpen}
+                  toggleMenu={this.toggleMenuOpen}
                 />
-              )}
-            </>
-          )}
-        </ErrorBoundary>
-      </MuiThemeProvider>
+              </>
+            )}
+          </ErrorBoundary>
+        </MuiThemeProvider>
+      </BrowserRouter>
     );
   }
 
