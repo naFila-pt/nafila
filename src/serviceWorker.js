@@ -64,9 +64,6 @@ function registerValidSW(swUrl, config) {
           return;
         }
         installingWorker.onstatechange = () => {
-          if (installingWorker.state === "activated") {
-            window.location.reload();
-          }
           if (installingWorker.state === "installed") {
             if (navigator.serviceWorker.controller) {
               // At this point, the updated precached content has been fetched,
@@ -76,7 +73,6 @@ function registerValidSW(swUrl, config) {
                 "New content is available and will be used when all " +
                   "tabs for this page are closed. See http://bit.ly/CRA-PWA."
               );
-              installingWorker.postMessage({ type: "SKIP_WAITING" });
 
               // Execute callback
               if (config && config.onUpdate) {
