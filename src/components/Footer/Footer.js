@@ -99,11 +99,8 @@ const FooterWrapper = styled(Grid)`
     display: flex;
     align-items: center;
 
-    & .facebook {
-      margin-left: 10px;
-    }
-
-    & .linkedin {
+    & .facebook,
+    linkedin {
       margin-left: 10px;
     }
   }
@@ -208,10 +205,10 @@ const Footer = () => {
             {" | "} */}
             <Link
               style={{ color: "white", margin: "0 10px" }}
-              href="https://facebook.com/nafila.pt"
+              href="https://www.linkedin.com/company/nafila-pt/"
               target="_blank"
               rel="noopener"
-              className="facebook"
+              className="linkedin"
             >
               <LinkedinLogo width="24px" height="24px" />
             </Link>
