@@ -21,3 +21,4 @@ export const QUEUE_POSTER_PATH = "/loja/cartaz-fila/:queueId";
 export const TICKET_STATUS_PATH = "/t";
 export const QUEUE_STATUS = "/queue-status";
 export const CREATE_QUEUE = "/create-queue";
+export const FAQ = "/faq";

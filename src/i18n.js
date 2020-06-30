@@ -399,7 +399,178 @@ i18n
           "burger#how_it_works": "Como funciona?",
           "burger#about_us": "Sobre",
           "burger#login": "Entrar",
-          "burger#lojista": "É Lojista?"
+          "burger#lojista": "É Lojista?",
+
+          //faqs page
+          "faq#lojista_label": "Lojista",
+          "faq#consumidor_label": "Consumidor",
+          // faqs lojista
+          "faq#lojista_question_1": "Como posso registar a minha loja?",
+          "faq#lojista_answer_1": `Para poder registar a sua loja terá de seguir os seguintes passo: <br/>
+            <ol>
+              <li>Entrar em <a target="_blank" href='https://nafila.pt'>https://nafila.pt</a> </li>
+              <li>Carregar em "É lojista?" e de seguida em "Registo de loja" </li>
+            </ol>
+            Na página de registo de loja terá de inserir a seguinte informação:
+            <ul>
+              <li>Nome/local da loja</li>
+              <li>Email do lojista</li>
+              <li>Password</li>
+            </ul>
+            De seguida, clique em registar e irá receber um email de confirmação da criação da loja. Após a validação do email estará pronto para criar as suas filas virtuais. <br/>
+            Para esclarecer este e outros temas pode também consultar o nosso <a target="_blank" href='https://nafila.pt/naFila_Guia_Implementacao.pdf'>guia de implementação.</a>
+            `,
+          "faq#lojista_question_2": "Como fazer o login na solução?",
+          "faq#lojista_answer_2": `Para poder fazer login e dar início à tua fila, tudo o que tem de fazer é entrar em <a target="_blank" href='https://nafila.pt'>https://nafila.pt</a> e utilizar os seus dados: <br/> 
+              Entrar em <a target="_blank" href='https://nafila.pt'>https://nafila.pt</a>,
+              <ol>
+                <li>Carregar em "É lojista?"</li>
+                <li>Inserir os seus dados de acesso (email e password)</li>
+                <li>Clicar em "Entrar"</li>
+              </ol>
+              Pronto para dar início a uma nova fila! <br/>
+              Para esclarecer este e outros temas pode também consultar o nosso <a target="_blank" href='https://nafila.pt/naFila_Guia_Implementacao.pdf'>guia de implementação.</a>
+            `,
+          "faq#lojista_question_3": "Como iniciar uma fila?",
+          "faq#lojista_answer_3": `Para poder dar início a uma fila deve primeiro entrar em <a target="_blank" href='https://nafila.pt'>https://nafila.pt</a> e utilizar o seu email e password para fazer o login.<br/>
+            Após o login deverá seguir os seguintes passos:
+            <ul>
+              <li>Verificar ou alterar o nome da fila</li>
+              <li>Inserir o a lotação máxima para a loja</li>
+              <li>Clicar em "COMEÇAR"</li>
+            </ul>
+            De seguida, receberá no seu email um link para o poster com o código da fila que acabou de criar. Após imprimir, deve colocar o poster de forma visível para que os clientes possam tirar a respetiva senha.<br/>
+            E já está. Pronto para começar a atender clientes.
+            `,
+          "faq#lojista_question_4": "Como inserir pessoas na fila?",
+          "faq#lojista_answer_4": `Para inserir clientes na fila de espera deverá clicar em "GERAR SENHA" no menu de gestão de senhas e selecionar uma das seguintes opções: <br/>
+            <ul>
+              <li>"TELEMÓVEL": ao colocar o número de telemóvel do cliente, o mesmo irá receber uma SMS com a senha</li>
+              <li>"NOME": para clientes que não usem telemóvel, poderá colocar o nome do cliente de forma a ser chamado quando chegar a sua vez</li>
+            </ul>
+            Em ambos os casos, terá acesso à senha criada. Assim que for a vez de chamar o cliente, aparecerá uma notificação a alertá-lo para a chamada pelo respetivo nome. <br/>
+            Assim, já está pronto para continuar o processo de atendimento. <br/>
+            Para esclarecer este e outros temas pode também consultar o nosso <a target="_blank" href='https://nafila.pt/naFila_Guia_Implementacao.pdf'>guia de implementação.</a>
+          `,
+          "faq#lojista_question_5": "Como chamar o próximo cliente?",
+          "faq#lojista_answer_5": `Para poder chamar o próximo cliente basta clicar em "PRÓXIMO nafila" no menu de gestão de atendimento e já está. Pronto para mais um atendimento. <br/>
+            Para esclarecer este e outros temas pode também consultar o nosso <a target="_blank" href='https://nafila.pt/naFila_Guia_Implementacao.pdf'>guia de implementação.</a>
+          `,
+          "faq#lojista_question_6": "Como terminar/encerrar a fila?",
+          "faq#lojista_answer_6": `Para poder encerrar a fila deverá clicar em "TERMINAR nafila" no menu de gestão de atendimento. <br/>
+            De forma a garantir que não carregou por engano na opção anterior, será questionado se "Pretende terminar a Fila atual?". Caso tenha a certeza, por favor clique "SIM". <br/>
+            <b>NOTA:</b> Após carregar em "SIM" de "TERMINAR nafila" não será possível:
+            <ul>
+              <li>Existirem novas entradas na fila virtual;</li>
+              <li>Atender mais clientes (muito embora possam ter tirado a sua senha).</li>
+            </ul>
+          `,
+          "faq#lojista_question_7": "Como recuperar a password?",
+          "faq#lojista_answer_7": `Para poder recuperar a sua password deverá clicar em "recuperar password" no menu de login em <a target="_blank" href='https://nafila.pt'>https://nafila.pt</a> e:
+            <ul>
+              <li>Inserir o seu email</li>
+              <li>Clicar em "RECUPERAR"</li>
+              <li>Verificar o email e clicar no link de recuperação de password</li>
+            </ul>
+            Após redefinir a sua password será direcionado para o menu de login e já está. Pronto para fazer login e começar a chamar clientes. </br>
+            Para esclarecer este e outros temas pode também consultar o nosso <a target="_blank" href='https://nafila.pt/naFila_Guia_Implementacao.pdf'>guia de implementação.</a>
+          `,
+          "faq#lojista_question_8":
+            "Qual o horário de afixação das instruções e código de fila?",
+          "faq#lojista_answer_8": `No contexto atual, pode existir o caso de os clientes se dirigirem à loja antes da sua abertura de forma a garantirem o lugar. Dado que os colaboradores da loja chegam ao local antes da sua abertura, recomendamos que a impressão e afixação do código da fila do dia seja das primeiras coisas a fazer. </br>
+            Caso os clientes cheguem antes da afixação do código da loja, deve-se recomendar que estes façam uma fila:
+            <ul>
+              <li>entrando na loja os primeiros clientes (de acordo com os limites de entrada em vigor)</li>
+              <li>pedindo aos restantes para ordenadamente fazerem o registo naFila</li>
+            </ul>
+          `,
+          "faq#lojista_question_9":
+            "Onde afixar as instruções e o código de fila?",
+          "faq#lojista_answer_9": `Estas informações devem ser colocadas de forma a que os clientes da loja as consigam visualizar de forma confortável, diminuindo a aglomeração de pessoas no mesmo espaço. Para tal, dependendo da dimensão da loja, pode fazer sentido colocar mais do que um exemplar na montra nos casos em que existam: <br/> 
+            <ul>
+              <li>frentes amplas e ou</li>
+              <li>mais do que uma frente</li>
+            </ul>
+            Para esclarecer este e outros temas pode também consultar o nosso <a target="_blank" href='https://nafila.pt/naFila_Guia_Implementacao.pdf'>guia de implementação.</a>
+          `,
+          "faq#lojista_question_10":
+            "Posso usar o mesmo email para duas filas?",
+          "faq#lojista_answer_10": `Para registar uma loja será necessário a utilização de um único email e como tal não é possível usar o mesmo email para duas ou mais filas de espera simultâneas. </br>
+            Para esclarecer este e outros temas pode também consultar o nosso <a target="_blank" href='https://nafila.pt/naFila_Guia_Implementacao.pdf'>guia de implementação.</a>
+          `,
+          "faq#lojista_question_11":
+            "Como posso criar um ecrã com o status da fila ?",
+          "faq#lojista_answer_11": `Ainda que os seus clientes possam facilmente consultar o estado da fila em <a target="_blank" href='https://nafila.pt'>https://nafila.pt</a>, é possível a sua loja dispor o número da última senha chamada num Tablet ou Smart TV. Para isso basta aceder a <a target="_blank" href='http://www.nafila.pt/create-queue'>http://www.nafila.pt/create-queue</a>, introduzir o email da sua conta, clicar em "Adicionar Fila" e de seguida em "Criar Novo Ecrã". </br>
+            Irá ser gerado um URL único que pode utilizar em qualquer navegador de Internet. </br>
+            Para esclarecer este e outros temas pode também consultar o nosso <a target="_blank" href='https://nafila.pt/naFila_Guia_Implementacao.pdf'>guia de implementação.</a>
+          `,
+          "faq#lojista_question_12": "Como devo utilizar o contador ?",
+          "faq#lojista_answer_12": `Quando criar uma fila pode, opcionalmente, definir qual é numero máximo de pessoas que pode por lei ter dentro da sua loja. Quando estiver a chamar alguém, e à medida que os clientes entrarem e sair na loja, poderá carregar em “+” ou “-” de acordo com o número de pessoas que entrem ou saiam para garantir que controla o número total de clientes. </br>
+            Para esclarecer este e outros temas pode também consultar o nosso <a target="_blank" href='https://nafila.pt/naFila_Guia_Implementacao.pdf'>guia de implementação.</a>
+          `,
+          "faq#lojista_question_13": "Pretendo usar o nafila, e agora ?",
+          "faq#lojista_answer_13": `Para dar início à utilização da solução, deve seguir o documento do link abaixo que indica os principais passos a seguir para poder criar filas virtuais: </br>
+            <a target="_blank" href='https://nafila.pt/naFila_Guia_Implementacao.pdf'>Guia de Implementação.</a>
+          `,
+          "faq#lojista_question_14":
+            "Estou a tentar fazer o registo e no final recebo sempre a mensagem 'Registo de Conta Falhou'",
+          "faq#lojista_answer_14": `Quando existe o registo de uma nova loja no naFila, o utilizador recebe um email com pedido de confirmação do novo registo. Esse e-mail contém um link que deverá ser carregado para assim ativar a conta. <br/>
+            Deverá validar que recebeu este email e que carregou no link de confirmação. </br>
+            Para esclarecer este e outros temas pode também consultar o nosso <a target="_blank" href='https://nafila.pt/naFila_Guia_Implementacao.pdf'>guia de implementação.</a>
+          `,
+          // faqs consumidor
+          "faq#consumidor_question_1": "Como me registo numa fila ?",
+          "faq#consumidor_answer_1": `Para se poder registar na fila de uma loja deve primeiro identificar o código da fila do dia que se encontra afixado na loja.</br>
+            De seguida, terá quatro opções: </br></br>
+            <b>Aceder a <a target="_blank" href='https://nafila.pt'>https://nafila.pt</a></b></br>
+            Ao aceder a nafila.pt, pode registar o código da fila e inserir o seu número de telemóvel. De seguida, irá receber uma SMS com  a sua senha. </br></br>
+            <b>Utilizar o QR Code do poster da fila</b></br>
+            Ao utilizar o QR Code será encaminhado para o website do naFila já com o registo do código que pretende utilizar. Bastará apenas inserir o seu número de telemóvel e, de seguida, irá receber uma SMS com  a sua senha. </br></br>
+            <b>Enviar SMS</b></br>
+            Pode enviar uma SMS para o 4902 com o código da fila, recebendo de seguida uma SMS com a sua senha. </br></br>
+            <b>Solicitar ajuda ao funcionário da loja </b></br>
+            Poderá ainda solicitar o apoio do funcionário da loja para o registar na fila com o seu nome ou número de telemóvel, recebendo de seguida o seu número da senha. Para obter este apoio, deve permanecer num local visível ao funcionário e com as distâncias recomendadas face a outras pessoas. Conforme o seu tipo de inscrição na fila, será chamado através de uma SMS ou pela voz do funcionário. </br>
+          `,
+          "faq#consumidor_question_2":
+            "Registei-me na fila mas não recebi qualquer aviso",
+          "faq#consumidor_answer_2": `Podem existir os seguintes motivos para não receber a sua senha virtual: </br></br>
+            <b>1. Registo do número errado da fila</b> </br>
+            Caso indique o código da fila errado (em <a target="_blank" href='https://nafila.pt'>https://nafila.pt</a> ou por sms) receberá um aviso sobre a inexistência dessa fila. Deve voltar a observar o código da fila e obter de novo a sua senha. </br></br>
+            <b>2. Caixa de sms cheia </b></br>
+            Pode-se dar o caso de não estar a receber a senha virtual devido à inexistência de espaço na sua caixa de sms. </br></br>
+            <b>3. Loja encerrada </b></br>
+            Receberá um aviso semelhante ao observado no primeiro ponto.
+          `,
+          "faq#consumidor_question_3": "Onde devo esperar pela minha vez ?",
+          "faq#consumidor_answer_3": ` A obtenção de uma senha virtual permite que possa aguardar pela sua vez num local seguro e/ou diferente da loja. Ainda assim, recomendamos que esse local (exemplo: carro) se situe perto da loja para que possa chegar rapidamente quando se der a sua chamada. </br>
+            Nos casos em que a senha obtida não é através de sms, recomendamos que permaneça num local visível ao funcionário e com as distâncias recomendadas face a outras pessoas.
+          `,
+          "faq#consumidor_question_4":
+            "Como serei chamado para a loja aquando da minha vez?",
+          "faq#consumidor_answer_4": `A sua chamada à loja dependerá do seu método de inscrição na fila: </br></br>
+              <b>Inscrição via <a target="_blank" href='https://nafila.pt'>https://nafila.pt</a></b></br>
+            Receberá um email com o aviso de que chegou a sua vez. </br></br>
+              <b>Inscrição via número de telemóvel</b></br>
+            Receberá um email com o aviso de que chegou a sua vez. </br></br>
+              <b>Inscrição por parte do funcionário da loja</b></br>
+            Caso o funcionário o tenha inscrito pelo seu nome, deverá permanecer à espera da sua vez em local próximo da loja para que consiga ouvir a sua chamada. Caso a sua inscrição tenha sido realizada através do número de telemóvel, observar-se-á o mesmo que o ponto anterior. </br>
+          `,
+          "faq#consumidor_question_5":
+            "A loja irá fechar e ainda tenho a minha senha ... e agora ?",
+          "faq#consumidor_answer_5": `Ao retirar uma senha virtual deve observar o horário de funcionamento da loja. Dependendo do tamanho da fila, podem-se dar 2 casos:
+            <ol>
+              <li>A sua chamada apenas ser apenas possível em horário após o encerramento da loja.</li>
+              <li>A fila ser encerrada pela loja.</li>
+            </ol>
+            Em ambos os casos, poderá não ser atendido e ter de voltar à loja noutro dia. </br>
+          `,
+          "faq#consumidor_question_6": "Como faço para sair da fila ?",
+          "faq#consumidor_answer_6": `A saída de uma fila dependerá do seu método de inscrição: </br></br>
+            <b>Inscrição via número de telemóvel</b></br>
+            Enviar uma sms para o 4902 com o "Código da Fila" + "sair" </br></br>
+            <b>Inscrição, com o nome, por parte do funcionário da loja</b></br>
+            Avisar o funcionário da sua intenção de saída.
+          `
         }
       }
     },
