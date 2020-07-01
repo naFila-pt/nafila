@@ -9,7 +9,8 @@ import {
   ADMIN_HOME_ONBOARDING_PATH,
   ABOUT_US_PATH,
   ADMIN_LOGIN_PATH,
-  ADMIN_HOME_PATH
+  ADMIN_HOME_PATH,
+  CREATE_QUEUE
 } from "../../constants/RoutesConstants";
 import { useLocation, useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -71,6 +72,21 @@ const StoreMenuOptions = ({ toggleMenu, queueId, user }) => {
                 : classes.listItem
           }}
           primary={t("burger#your_store")}
+        />
+      </ListItem>
+      <ListItem
+        disableGutters
+        button
+        onClick={() => handleOptionClick(CREATE_QUEUE)}
+      >
+        <ListItemText
+          classes={{
+            primary:
+              pathname === CREATE_QUEUE
+                ? classes.listItemActive
+                : classes.listItem
+          }}
+          primary={t("burger#criar-status")}
         />
       </ListItem>
       {queueId != null && (
