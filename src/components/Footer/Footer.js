@@ -14,7 +14,8 @@ import NosIcon from "@src/components/Icons/nos";
 import {
   ABOUT_US_PATH,
   TCS_PATH,
-  PRIVACY_PATH
+  PRIVACY_PATH,
+  FAQ
 } from "@src/constants/RoutesConstants";
 
 const FooterWrapper = styled(Grid)`
@@ -198,11 +199,20 @@ const Footer = () => {
             >
               {t("terms#privacy")}
             </Link>
+            {" | "}
             {/* {" | "}
             <Link style={{ color: "white" }} target="_blank" rel="noopener">
               {t("terms#contact")}
             </Link> 
             {" | "} */}
+            <Link
+              style={{ color: "white", margin: "0 5px" }}
+              target="_blank"
+              href={FAQ}
+              rel="noopener"
+            >
+              {t("burger#faqs")}
+            </Link>
             <Link
               style={{ color: "white", margin: "0 10px" }}
               href="https://www.linkedin.com/company/nafila-pt/"

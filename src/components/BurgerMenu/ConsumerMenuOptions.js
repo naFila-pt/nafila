@@ -4,7 +4,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
   ABOUT_US_PATH,
   ONBOARDING_PATH,
-  ADMIN_HOME_PATH
+  ADMIN_HOME_PATH,
+  FAQ
 } from "../../constants/RoutesConstants";
 import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -63,9 +64,7 @@ const ConsumerMenuOptions = ({ toggleMenu }) => {
       <ListItem
         disableGutters
         button
-        divider
         onClick={() => handleListItemClick(ABOUT_US_PATH)}
-        classes={{ divider: classes.divider }}
       >
         <ListItemText
           classes={{
@@ -77,7 +76,21 @@ const ConsumerMenuOptions = ({ toggleMenu }) => {
           primary={t("burger#about_us")}
         />
       </ListItem>
-
+      <ListItem
+        disableGutters
+        button
+        divider
+        classes={{ divider: classes.divider }}
+        onClick={() => handleListItemClick(FAQ)}
+      >
+        <ListItemText
+          classes={{
+            primary:
+              pathname === FAQ ? classes.listItemActive : classes.listItem
+          }}
+          primary={t("burger#faqs")}
+        />
+      </ListItem>
       <ListItem
         disableGutters
         button
