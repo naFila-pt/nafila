@@ -251,10 +251,10 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
     );
   } else if (!!result.ticket.phone) {
     let message;
-    if (!result.queue.language || result.queue.language === "pt") {
-      message = `\nChegou a sua vez! Por favor dirija-se a ${result.queue.name} (${queueRef.id}). A sua senha é a ${result.ticket.number}. Obrigado por aguardar naFila!`;
-    } else {
+    if (result.queue.language && result.queue.language === "en") {
       message = `\nIt's your turn! Please head to ${result.queue.name} (${queueRef.id}). Your ticket is ${result.ticket.number}. Thank you for waiting with naFila!`;
+    } else {
+      message = `\nChegou a sua vez! Por favor dirija-se a ${result.queue.name} (${queueRef.id}). A sua senha é a ${result.ticket.number}. Obrigado por aguardar naFila!`;
     }
 
     //send notification SMS
@@ -280,10 +280,10 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
       );
     } else if (!!notifyTicketData.phone) {
       let message;
-      if (!result.queue.language || result.queue.language === "pt") {
-        message = `\nFaltam 3 senhas para a sua vez naFila ${result.queue.name} (${queueRef.id}). Dirija-se à entrada da loja. Receberá outra mensagem quando for a sua vez.`;
-      } else {
+      if (result.queue.language && result.queue.language === "en") {
         message = `\nThere are 3 tickets remaining in ${result.queue.name} (${queueRef.id}). Head to the shop entrance. You will get another message when it's your turn.`;
+      } else {
+        message = `\nFaltam 3 senhas para a sua vez naFila ${result.queue.name} (${queueRef.id}). Dirija-se à entrada da loja. Receberá outra mensagem quando for a sua vez.`;
       }
       //send notification SMS
       await sendSMS([notifyTicketData.phone], message);
@@ -544,12 +544,12 @@ async function processNewSMSs(replies) {
         });
 
         let message;
-        if (!result.queue.language || result.queue.language === "pt") {
-          message =
-            "\nFoi removido da fila com sucesso. Obrigado por aguardar naFila.";
-        } else {
+        if (result.queue.language && result.queue.language === "en") {
           message =
             "\nYou have been removed from the queue. Thank you for using naFila.";
+        } else {
+          message =
+            "\nFoi removido da fila com sucesso. Obrigado por aguardar naFila.";
         }
 
         await sendSMS([m["MSISDN"]], message);
@@ -655,15 +655,7 @@ async function createTicketInQueue(
     });
   } else if (!!ticketData.phone) {
     let message;
-    if (!result.queue.language || result.queue.language === "pt") {
-      message = `\nJá está naFila para ${result.queue.name}! A sua senha é ${
-        result.ticket.number
-      } e tem ${
-        result.queue.remainingTicketsInQueue - 1
-      } pessoas à sua frente. Para sair da fila, envie "nafila ${
-        queueRef.id
-      } sair" para 4902.`;
-    } else {
+    if (result.queue.language && result.queue.language === "en") {
       message = `\nWelcome to ${result.queue.name}! This is ticket ${
         result.ticket.number
       } and you have ${
@@ -671,6 +663,14 @@ async function createTicketInQueue(
       } tickets in front. To leave the queue, send "nafila ${
         queueRef.id
       } sair" to 4902.`;
+    } else {
+      message = `\nJá está naFila para ${result.queue.name}! A sua senha é ${
+        result.ticket.number
+      } e tem ${
+        result.queue.remainingTicketsInQueue - 1
+      } pessoas à sua frente. Para sair da fila, envie "nafila ${
+        queueRef.id
+      } sair" para 4902.`;
     }
     //send notification SMS
     await sendSMS([result.ticket.phone], message);
