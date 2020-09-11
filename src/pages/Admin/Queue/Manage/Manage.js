@@ -281,38 +281,37 @@ function Manage({ queueId, openSnackbar }) {
         .onSnapshot(snapshot => {
           const data = snapshot.data();
 
-          if (
-            data &&
-            data.analyticsServerEvents &&
-            data.analyticsServerEvents.length >= currentAnalyticsIndex
-          ) {
-            //log server (smsm-routine) events into google analytics
-            data.analyticsServerEvents
-              .slice(currentAnalyticsIndex)
-              .forEach(ev => {
-                analytics.logEvent(ev);
+          if (data) {
+            setQueue(data);
+            //get counter
+            firestore
+              .collection("counters")
+              .doc(data.counterId)
+              .get()
+              .then(response => {
+                const counterData = response.data();
+                setMaxCapacity(Number(counterData.maxCapacity));
+                setCounter(counterData.current);
               });
+            if (
+              data.analyticsServerEvents &&
+              data.analyticsServerEvents.length >= currentAnalyticsIndex
+            ) {
+              //log server (smsm-routine) events into google analytics
+              data.analyticsServerEvents
+                .slice(currentAnalyticsIndex)
+                .forEach(ev => {
+                  analytics.logEvent(ev);
+                });
 
-            //store analyticsServerEventsIndexes update
-            currentAnalyticsIndex = data.analyticsServerEvents.length + 1;
-            let key = `analyticsServerEventsIndexes.${queueId}`;
-            let updateData = {};
-            updateData[key] = currentAnalyticsIndex;
-            userDocumentReference.update(updateData);
+              //store analyticsServerEventsIndexes update
+              currentAnalyticsIndex = data.analyticsServerEvents.length + 1;
+              let key = `analyticsServerEventsIndexes.${queueId}`;
+              let updateData = {};
+              updateData[key] = currentAnalyticsIndex;
+              userDocumentReference.update(updateData);
+            }
           }
-
-          setQueue(data);
-
-          //get counter
-          firestore
-            .collection("counters")
-            .doc(data.counterId)
-            .get()
-            .then(response => {
-              const counterData = response.data();
-              setMaxCapacity(Number(counterData.maxCapacity));
-              setCounter(counterData.current);
-            });
         });
     });
 
