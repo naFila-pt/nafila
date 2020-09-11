@@ -28,9 +28,7 @@ const functions = functionsMain.region(functionsRegion).runWith(runtimeOpts);
 
 //create queue
 exports.createQueue = functions.https.onCall(async (data, context) => {
-  //generates queueId
-  const queueId = fiveRandomChars();
-  //assigns userId as owner_id
+  // assigns userId as owner_id
   if (!context.auth || !context.auth.uid) {
     throw new functionsMain.https.HttpsError(
       "unauthenticated",
@@ -72,13 +70,14 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
     current: 0
   };
 
+  const userRef = firestore.collection("users").doc(queue.owner_id);
+  const userDoc = await userRef.get();
+  const userData = userDoc.data();
+
+  const queueId = userData.fixedQueueId || fiveRandomChars();
   const queueRef = firestore.collection("queues").doc(queueId);
 
   //updates user
-  const userRef = firestore.collection("users").doc(queue.owner_id);
-  const userDoc = await userRef.get();
-
-  const userData = userDoc.data();
   if (!userData.queues) userData.queues = [];
   userData.queues.push(queueRef.id);
   userData.defaultQueueName = queue.name;
