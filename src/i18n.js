@@ -400,6 +400,8 @@ i18n
           "burger#about_us": "Sobre",
           "burger#login": "Entrar",
           "burger#lojista": "É Lojista?",
+          "burger#criar-status": "Ecrã de loja(s)",
+          "burger#faqs": "FAQ",
 
           //faqs page
           "faq#lojista_label": "Lojista",
