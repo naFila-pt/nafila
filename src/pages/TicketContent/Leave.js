@@ -50,7 +50,7 @@ const Leave = ({
       const removeMeFromQueue = functions.httpsCallable("removeMeFromQueue");
 
       removeMeFromQueue({ queueId, ticketId })
-        .then(function ({ queue }) {
+        .then(function ({ data: { queue } }) {
           analytics.setUserProperties({
             shop: queue.owner_id,
             retailerGroup: queue.retailerGroup,

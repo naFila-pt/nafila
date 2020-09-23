@@ -12,6 +12,7 @@ import QueuePoster from "../../pages/QueuePoster";
 import QueueStatus from "../../pages/QueueStatus";
 import CreateQueue from "../../pages/CreateQueue";
 import Admin from "../../pages/Admin";
+import FAQ from "../../pages/FAQ";
 import NotFoundContent from "../../pages/NotFoundContent";
 import * as Routes from "../../constants/RoutesConstants";
 
@@ -71,6 +72,10 @@ class Router extends Component {
 
         <Route path={Routes.ABOUT_US_PATH} exact>
           <AboutUs {...this.props} />
+        </Route>
+
+        <Route path={Routes.FAQ} exact>
+          <FAQ {...this.props} />
         </Route>
 
         <Route path={Routes.ADMIN_WELCOME_PATH} exact>

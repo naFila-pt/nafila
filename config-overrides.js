@@ -1,5 +1,10 @@
 const path = require("path");
-const { fixBabelImports, override, addWebpackAlias } = require("customize-cra");
+const {
+  fixBabelImports,
+  override,
+  addWebpackAlias,
+  adjustWorkbox
+} = require("customize-cra");
 
 module.exports = override(
   fixBabelImports("@material-ui/core", {
@@ -14,5 +19,13 @@ module.exports = override(
 
   addWebpackAlias({
     "@src": path.resolve(__dirname, "./src/")
-  })
+  }),
+
+  adjustWorkbox(wb =>
+    Object.assign(wb, {
+      skipWaiting: true,
+      clientsClaim: true,
+      cleanupOutdatedCaches: true
+    })
+  )
 );

@@ -28,9 +28,7 @@ const functions = functionsMain.region(functionsRegion).runWith(runtimeOpts);
 
 //create queue
 exports.createQueue = functions.https.onCall(async (data, context) => {
-  //generates queueId
-  const queueId = fiveRandomChars();
-  //assigns userId as owner_id
+  // assigns userId as owner_id
   if (!context.auth || !context.auth.uid) {
     throw new functionsMain.https.HttpsError(
       "unauthenticated",
@@ -72,18 +70,20 @@ exports.createQueue = functions.https.onCall(async (data, context) => {
     current: 0
   };
 
+  const userRef = firestore.collection("users").doc(queue.owner_id);
+  const userDoc = await userRef.get();
+  const userData = userDoc.data();
+
+  const queueId = userData.fixedQueueId || fiveRandomChars();
   const queueRef = firestore.collection("queues").doc(queueId);
 
   //updates user
-  const userRef = firestore.collection("users").doc(queue.owner_id);
-  const userDoc = await userRef.get();
-
-  const userData = userDoc.data();
   if (!userData.queues) userData.queues = [];
   userData.queues.push(queueRef.id);
   userData.defaultQueueName = queue.name;
   queue.retailerGroup = userData.retailerGroup || "";
   queue.shoppingCentre = userData.shoppingCentre || "";
+  queue.language = userData.language || "";
 
   //batch commit
   const batch = firestore.batch();
@@ -250,11 +250,15 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
       }
     );
   } else if (!!result.ticket.phone) {
+    let message;
+    if (result.queue.language && result.queue.language === "en") {
+      message = `\nIt's your turn! Please head to ${result.queue.name} (${queueRef.id}). Your ticket is ${result.ticket.number}. Thank you for waiting with naFila!`;
+    } else {
+      message = `\nChegou a sua vez! Por favor dirija-se a ${result.queue.name} (${queueRef.id}). A sua senha é a ${result.ticket.number}. Obrigado por aguardar naFila!`;
+    }
+
     //send notification SMS
-    await sendSMS(
-      [result.ticket.phone],
-      `\nChegou a sua vez! Por favor dirija-se a ${result.queue.name} (${queueRef.id}). A sua senha é a ${result.ticket.number}. Obrigado por aguardar naFila!`
-    );
+    await sendSMS([result.ticket.phone], message);
   }
 
   //notification ahead of time (nearly your time)
@@ -275,11 +279,14 @@ exports.callNextOnQueue = functions.https.onCall(async (data, context) => {
         }
       );
     } else if (!!notifyTicketData.phone) {
+      let message;
+      if (result.queue.language && result.queue.language === "en") {
+        message = `\nThere are 3 tickets remaining in ${result.queue.name} (${queueRef.id}). Head to the shop entrance. You will get another message when it's your turn.`;
+      } else {
+        message = `\nFaltam 3 senhas para a sua vez naFila ${result.queue.name} (${queueRef.id}). Dirija-se à entrada da loja. Receberá outra mensagem quando for a sua vez.`;
+      }
       //send notification SMS
-      await sendSMS(
-        [notifyTicketData.phone],
-        `\nFaltam 3 senhas para a sua vez naFila ${result.queue.name} (${queueRef.id}). Dirija-se à entrada da loja. Receberá outra mensagem quando for a sua vez.`
-      );
+      await sendSMS([notifyTicketData.phone], message);
     }
   }
 
@@ -331,7 +338,7 @@ exports.removeMeFromQueue = functions.https.onCall(async (data, context) => {
 });
 
 exports.getUserByEmailOrId = functions.https.onCall(async (data, context) => {
-  console.log("data", data);
+  //console.log("data", data);
   let user;
 
   if (!!data.email) {
@@ -497,7 +504,9 @@ async function processNewSMSs(replies) {
         let queueRef = firestore.collection("queues").doc(queueId);
         //get the ticket
         //transaction is cheaper
-        await firestore.runTransaction(async function (transaction) {
+        let result = await firestore.runTransaction(async function (
+          transaction
+        ) {
           let queueDoc = await transaction.get(queueRef);
           //get next ticket
           let querySnap = await transaction.get(
@@ -533,10 +542,17 @@ async function processNewSMSs(replies) {
             false
           );
         });
-        await sendSMS(
-          [m["MSISDN"]],
-          "\nFoi removido da fila com sucesso. Obrigado por aguardar naFila."
-        );
+
+        let message;
+        if (result.queue.language && result.queue.language === "en") {
+          message =
+            "\nYou have been removed from the queue. Thank you for using naFila.";
+        } else {
+          message =
+            "\nFoi removido da fila com sucesso. Obrigado por aguardar naFila.";
+        }
+
+        await sendSMS([m["MSISDN"]], message);
       } else {
         throw new functionsMain.https.HttpsError(
           "invalid-argument",
@@ -638,17 +654,26 @@ async function createTicketInQueue(
       exitQueueUrl: `https://nafila.pt/sair/${queueRef.id}/${ticketRef.id}`
     });
   } else if (!!ticketData.phone) {
-    //send notification SMS
-    await sendSMS(
-      [result.ticket.phone],
-      `\nJá está naFila para ${result.queue.name}! A sua senha é ${
+    let message;
+    if (result.queue.language && result.queue.language === "en") {
+      message = `\nWelcome to ${result.queue.name}! This is ticket ${
+        result.ticket.number
+      } and you have ${
+        result.queue.remainingTicketsInQueue - 1
+      } tickets in front. To leave the queue, send "nafila ${
+        queueRef.id
+      } sair" to 4902.`;
+    } else {
+      message = `\nJá está naFila para ${result.queue.name}! A sua senha é ${
         result.ticket.number
       } e tem ${
         result.queue.remainingTicketsInQueue - 1
       } pessoas à sua frente. Para sair da fila, envie "nafila ${
         queueRef.id
-      } sair" para 4902.`
-    );
+      } sair" para 4902.`;
+    }
+    //send notification SMS
+    await sendSMS([result.ticket.phone], message);
   }
 
   return result;

@@ -26,6 +26,7 @@ import Store from "../../../assets/images/ilust_loja.svg";
 const EndQueueGrid = styled(Grid)`
   display: flex;
   flex-direction: column;
+  max-width: 100vh;
 `;
 
 const ButtonGroupWrapper = styled.div`
@@ -53,6 +54,7 @@ const ImagesGrid = styled(Grid)`
 
   @media (min-width: 768px) {
     display: flex;
+    max-width: 100%;
   }
 `;
 
