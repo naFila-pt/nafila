@@ -146,7 +146,7 @@ const TicketStatus = ({ openSnackbar }) => {
                   fontWeight: "900"
                 }}
               >
-                {ticketNumber - queue.currentTicketNumber}
+                {queue.remainingTicketsInQueue - 1}
               </div>
             ) : (
               ""

@@ -338,7 +338,7 @@ exports.removeMeFromQueue = functions.https.onCall(async (data, context) => {
 });
 
 exports.getUserByEmailOrId = functions.https.onCall(async (data, context) => {
-  console.log("data", data);
+  //console.log("data", data);
   let user;
 
   if (!!data.email) {
